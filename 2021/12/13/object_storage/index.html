@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>資料儲存的基礎知識 - Object storage | 我的生活記事</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="description" content="Object storage(物件儲存)
+Object Storage - 雲端系統上最流行的儲存方式">
+  
+  
+    <link rel="alternate" href="../../../../atom.xml" title="我的生活記事" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+  
+  
+    
+<link rel="stylesheet" href="../../../../fancybox/jquery.fancybox-1.3.4.css">
+
+  
+  
+<link rel="stylesheet" href="../../../../css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">我的生活記事</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">記錄心情生活的地方</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+          <a class="main-nav-link" href="../../../../about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../../../atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-object_storage" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time class="dt-published" datetime="2021-12-12T16:00:00.000Z" itemprop="datePublished">2021-12-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="../../../../categories/%E5%84%B2%E5%AD%98/">儲存</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      資料儲存的基礎知識 - Object storage
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="object-storage(物件儲存)">Object storage(物件儲存)</h3>
+<p>Object Storage - 雲端系統上最流行的儲存方式</p>
+<span id="more"></span>
+<p>Object storage和File storage一樣, 是基於Block storage的, 首先, 與File storage方式不同, File storage就像是一棵樹, 從點進去一個資料夾開始, 裡面有很多檔案(葉子), 也有資料夾(樹枝), 再點進去資料夾, 又會有檔案、資料夾, 是一個樹狀結構, Object storage是扁平化結構, 可以理解為所有檔案都存在一個資料夾裡, 包括Object的metadata, 且資料夾裡不會有資料夾, Object就是一個檔案, 也可以是多個檔案的非結構化組合</p>
+<p>Metadata的部分, 他不像File system是固定的inode資料結構, Object storage可以隨意自己定義metadata的資料結構, 可以非常詳細以幫助快速檢索目標object</p>
+<p>綜上所述, Object storage非常適合存靜態不常使用的大數據, 例如大量的影片、音樂等等, 為使用者提供大量、安全、低成本的資料儲存服務</p>
+<p>從high level講, 也就是使用方式講, Object storage是透過http API對資料進行增刪改查, 與File systemAPI和Block storage的SCSI不同, Object storage更加方便各個語言的使用</p>
+<p>正因為他的扁平化架構, 他天生就適合作為分散式儲存的儲存方式, 為何這麼說呢? 首先, 分散式儲存必須要 “方便” 分散且&quot;容易&quot;伸縮, 由於是扁平化架構, 我們容易把object切塊平均分散在不同機器, 伸縮也非常方便, 加了一台機器, 等於對這個 “資料夾” 加大了空間</p>
+<p>加了機器除了可以提升儲存空間之外, 還能提升資料的” 安全性 “, 例如一個object, 我可以複製兩份, 這樣我們可以說他的空間使用率是200%, 保護力是1, 因為他容許一台機器掛掉資料還在, 雖然這種保護方法直觀簡單, 但是現在各大雲端廠商為了節省成本, 透過一些奇偶校驗法會使用例如Raid5這種空間使用率只要150%, 但是保護力也有1</p>
+<p><strong>優點</strong></p>
+<ul>
+<li><strong>方便擴增</strong>:<br>
+由於Object storage是扁平化架構, 只要增加機器就是增加這個大平面的面積, 不需要額外修改架構</li>
+<li><strong>成本低</strong>:<br>
+公有雲端上的Object storage都特別便宜, 例如Amazon S3</li>
+<li><strong>API 簡單</strong>:<br>
+單純的使用HTTP進行增刪改查, 進而支持長距離使用, 例如你在台灣可以使用位在美國的Amazon S3儲存服務</li>
+</ul>
+<p><strong>缺點</strong></p>
+<ul>
+<li><strong>不能修改</strong>:<br>
+由於最小單位就是一個Object, 所以想要修改一個Object代表需要上傳一個新的Object替換他, 而File system還能在末尾增加一行資料</li>
+<li><strong>無法和database整合</strong>:<br>
+傳統的database是結構化數據, 例如SQL, Mysql等等, 而object storage存放的主要是非結構化數據, 且object storage的讀寫慢</li>
+<li><strong>無法與一般作業系統整合</strong>:<br>
+因為一般的作業系統都是File system, 下載一個object就像是下載一個檔案</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../../../tags/object-storage/" rel="tag">object storage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../../../tags/%E7%89%A9%E4%BB%B6%E5%84%B2%E5%AD%98/" rel="tag">物件儲存</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="../../08/file_storage/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          資料儲存的基礎知識 - File storage
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 Kaichia Chen<br>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="../../../../about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+
+<script src="../../../../js/jquery-1.4.3.min.js"></script>
+
+
+  
+<script src="../../../../fancybox/jquery.fancybox-1.3.4.js"></script>
+
+
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+
+
+
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+  </div>
+</body>
+</html>
