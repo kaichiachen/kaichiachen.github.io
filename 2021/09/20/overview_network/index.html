@@ -40,7 +40,7 @@
 
   
   
-  <link href="../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,29 +48,27 @@
 
 
 
-<link href="../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="../../../images/apple-touch-icon-next.png?v=5.1.4">
+<link href="../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="../../../images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="../../../images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="../../../images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.4">
 
 
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.4" color="#222">
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
 
 
+  <meta name="keywords" content="網路,TCP/IP," />
 
 
 
@@ -79,14 +77,23 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="我的生活記事">
-<meta property="og:url" content="https://kaichiachen.github.io/categories/aCategory/anotherCategory/index.html">
+
+
+<meta name="description" content="《聖經》裡面有一個巴別塔的故事，大致是說，上帝為了阻止人類聯合起來，就讓人類說不同的語言。人類之間沒法溝通，達不成&quot;協議&quot;，巴別塔的計劃就失敗了。 但是千年以後，有一種叫&quot;程序猿&quot;的物種，敲著一種這個群體通用的語言，連接著全世界所有的人，打造這網路世界的通天塔。如今的世界，正是因為網路，才連接在一起。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[網路]TCP&#x2F;IP - 計算機網路是什麼?">
+<meta property="og:url" content="https://kaichiachen.github.io/2021/09/20/overview_network/index.html">
 <meta property="og:site_name" content="我的生活記事">
+<meta property="og:description" content="《聖經》裡面有一個巴別塔的故事，大致是說，上帝為了阻止人類聯合起來，就讓人類說不同的語言。人類之間沒法溝通，達不成&quot;協議&quot;，巴別塔的計劃就失敗了。 但是千年以後，有一種叫&quot;程序猿&quot;的物種，敲著一種這個群體通用的語言，連接著全世界所有的人，打造這網路世界的通天塔。如今的世界，正是因為網路，才連接在一起。">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://kaichiachen.github.io/images/tcpiplayer.png">
+<meta property="article:published_time" content="2021-09-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-14T16:24:49.835Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="鍇嘉">
+<meta property="article:tag" content="網路">
+<meta property="article:tag" content="TCP&#x2F;IP">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kaichiachen.github.io/images/tcpiplayer.png">
 
 
 
@@ -116,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/categories/aCategory/anotherCategory/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2021/09/20/overview_network/"/>
 
 
 
 
 
-  <title>Category: anotherCategory | 我的生活記事</title>
+  <title>[網路]TCP/IP - 計算機網路是什麼? | 我的生活記事</title>
   
 
 
@@ -141,7 +148,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -269,55 +276,207 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>anotherCategory<small>Category</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的生活記事">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="../../../2013/11/06/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">[網路]TCP/IP - 計算機網路是什麼?</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2013-11-06T06:40:12+08:00"
-              content="2013-11-06" >
-          11-06
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-20T00:00:00+08:00">
+                2021-09-20
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/%E7%B6%B2%E8%B7%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">網路</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  741
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>《聖經》裡面有一個巴別塔的故事，大致是說，上帝為了阻止人類聯合起來，就讓人類說不同的語言。人類之間沒法溝通，達不成&quot;協議&quot;，巴別塔的計劃就失敗了。<br>
+但是千年以後，有一種叫&quot;程序猿&quot;的物種，敲著一種這個群體通用的語言，連接著全世界所有的人，打造這網路世界的通天塔。如今的世界，正是因為網路，才連接在一起。</p>
+<span id="more"></span>
+<p>電腦之間的資料交換大部分都是透過網際網路，每台電腦上獨一無二的MAC地址就是電腦的唯一地址，傳輸過程中遵循公認的協議(TCP/IP stack)進行編解碼，並借由MAC和IP地址一層一層的送達指定的目的</p>
+<h6 id="為何我們常見的tcp/ip要分層呢？">為何我們常見的TCP/IP要分層呢？</h6>
+<p>因為任何複雜的程式或應用都要分，這是大型程式設計的要求。例如，複雜的電商還會分資料庫層、Cache層、Compose 層和Controller 層等等，每一層專注做本層的事情。</p>
+<p>雖然寫網路服務使用TCP/IP五層協議進行交互，我會介紹TCP/IP的五層結構，如果有開發相關的應用，能更好的理解，如果沒有也沒關係，我會帶著利用Python開發一個類似wireshark或tcpdump的應用，解析TCP/IP stack的原理。</p>
+<p>Github: <a target="_blank" rel="noopener" href="https://github.com/kaichiachen/pytcpdump">https://github.com/kaichiachen/pytcpdump</a></p>
+<p>TCP/IP是一個公認的網路通訊協議，是OSI七層的簡化，五層分別為物理層、鏈結層、網路層、傳輸層和應用層，下面用簡短的話分別解釋這五層是做什麼的</p>
+<p><strong>物理層(Physical):</strong> 處理網路線、無線傳輸設備，例如光纖<br>
+<strong>鏈接層(Link):</strong> 乙太網，由於資料經由網路線傳輸過程中難免會錯誤，這一層具有資料糾錯的功能，例如漢明碼<br>
+<strong>網路層(Internet):</strong> 保證路由，如何把數據從MAC傳輸到另一個MAC<br>
+<strong>傳輸層(Transport):</strong> TCP、UDP，其中TCP保證邏輯上end-to-end的可靠性<br>
+<strong>應用層(Application):</strong> 用於與網路相關應用交互的地方，例如http, ssh等等</p>
+<p>那麼層與層之間有沒有明確的界線呢？雖然傳進來的封包都是bytes array，但是可以利用TCP/IP每一層固定的Header長度定義明確的界線，Header放在每一層數據包的最前面，如下圖所示<br>
+<img src="/images/tcpiplayer.png" alt=""></p>
+<p>所以網路封包的傳輸過程是從應用層開始，加header，一直加到下面傳輸層，然後路由器會根據header路由封包到目的地，到了目的地電腦再根據header進行往上逐層解析，再回到應用層</p>
+<p>網路應用開發人員主要了解第三到第五層就好，之後也會偏重解析這三層並基於這三層建構應用。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/%E7%B6%B2%E8%B7%AF/" rel="tag"># 網路</a>
+          
+            <a href="../../../../tags/TCP-IP/" rel="tag"># TCP/IP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../13/object_storage/" rel="next" title="[儲存]資料儲存的基礎知識 - Object storage">
+                <i class="fa fa-chevron-left"></i> [儲存]資料儲存的基礎知識 - Object storage
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -325,6 +484,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -351,7 +514,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="../../../images/avatar.jpg"
+                src="../../../../images/avatar.jpg"
                 alt="" />
             
               <p class="site-author-name" itemprop="name"></p>
@@ -363,7 +526,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="../../../archives">
+                <a href="../../../../archives">
               
                   <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
@@ -375,7 +538,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="../../index.html">
+                <a href="../../../../categories/index.html">
                   <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
@@ -386,7 +549,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="../../../tags/index.html">
+                <a href="../../../../tags/index.html">
                   <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
@@ -517,60 +680,64 @@
 
   
   
-    <script type="text/javascript" src="../../../lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 
   
 
 
-  <script type="text/javascript" src="../../../js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.4"></script>
 
-  <script type="text/javascript" src="../../../js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="../../../js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.4"></script>
 
 
 
   
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
 
-  <script type="text/javascript" src="../../../js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.4"></script>
 
 
 

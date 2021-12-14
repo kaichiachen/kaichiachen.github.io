@@ -40,7 +40,7 @@
 
   
   
-  <link href="../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,29 +48,27 @@
 
 
 
-<link href="../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="../../../images/apple-touch-icon-next.png?v=5.1.4">
+<link href="../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="../../../images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="../../../images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="../../../images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.4">
 
 
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.4" color="#222">
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
 
 
+  <meta name="keywords" content="物件儲存,object storage," />
 
 
 
@@ -79,13 +77,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="我的生活記事">
-<meta property="og:url" content="https://kaichiachen.github.io/categories/aCategory/anotherCategory/index.html">
+
+
+<meta name="description" content="Object storage(物件儲存) Object Storage - 雲端系統上最流行的儲存方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[儲存]資料儲存的基礎知識 - Object storage">
+<meta property="og:url" content="https://kaichiachen.github.io/2021/09/13/object_storage/index.html">
 <meta property="og:site_name" content="我的生活記事">
+<meta property="og:description" content="Object storage(物件儲存) Object Storage - 雲端系統上最流行的儲存方式">
 <meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-09-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-14T16:24:58.269Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="鍇嘉">
+<meta property="article:tag" content="物件儲存">
+<meta property="article:tag" content="object storage">
 <meta name="twitter:card" content="summary">
 
 
@@ -116,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/categories/aCategory/anotherCategory/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2021/09/13/object_storage/"/>
 
 
 
 
 
-  <title>Category: anotherCategory | 我的生活記事</title>
+  <title>[儲存]資料儲存的基礎知識 - Object storage | 我的生活記事</title>
   
 
 
@@ -141,7 +146,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -269,55 +274,220 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>anotherCategory<small>Category</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的生活記事">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="../../../2013/11/06/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">[儲存]資料儲存的基礎知識 - Object storage</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2013-11-06T06:40:12+08:00"
-              content="2013-11-06" >
-          11-06
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-13T00:00:00+08:00">
+                2021-09-13
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/%E5%84%B2%E5%AD%98/" itemprop="url" rel="index">
+                    <span itemprop="name">儲存</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  793
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="object-storage(物件儲存)">Object storage(物件儲存)</h3>
+<p>Object Storage - 雲端系統上最流行的儲存方式</p>
+<span id="more"></span>
+<p>Object storage和File storage一樣，是基於Block storage的，首先，與File storage方式不同，File storage就像是一棵樹，從點進去一個資料夾開始，裡面有很多檔案(葉子)，也有資料夾(樹枝)，再點進去資料夾，又會有檔案、資料夾，是一個樹狀結構，Object storage是扁平化結構，可以理解為所有檔案都存在一個資料夾裡，包括Object的metadata，且資料夾裡不會有資料夾，Object就是一個檔案，也可以是多個檔案的非結構化組合</p>
+<p>Metadata的部分，他不像File system是固定的inode資料結構，Object storage可以隨意自己定義metadata的資料結構，可以非常詳細以幫助快速檢索目標object</p>
+<p>綜上所述，Object storage非常適合存靜態不常使用的大數據，例如大量的影片、音樂等等，為使用者提供大量、安全、低成本的資料儲存服務</p>
+<p>從high level講，也就是使用方式講，Object storage是透過http API對資料進行增刪改查，與File systemAPI和Block storage的SCSI不同，Object storage更加方便各個語言的使用</p>
+<p>正因為他的扁平化架構，他天生就適合作為分散式儲存的儲存方式，為何這麼說呢？首先，分散式儲存必須要“方便”分散且&quot;容易&quot;伸縮，由於是扁平化架構，我們容易把object切塊平均分散在不同機器，伸縮也非常方便，加了一台機器，等於對這個“資料夾”加大了空間</p>
+<p>加了機器除了可以提升儲存空間之外，還能提升資料的”安全性“，例如一個object，我可以複製兩份，這樣我們可以說他的空間使用率是200%，保護力是1，因為他容許一台機器掛掉資料還在，雖然這種保護方法直觀簡單，但是現在各大雲端廠商為了節省成本，透過一些奇偶校驗法會使用例如Raid5這種空間使用率只要150%，但是保護力也有1</p>
+<p><strong>優點</strong></p>
+<ul>
+<li><strong>方便擴增</strong>:<br>
+由於Object storage是扁平化架構，只要增加機器就是增加這個大平面的面積，不需要額外修改架構</li>
+<li><strong>成本低</strong>：<br>
+公有雲端上的Object storage都特別便宜，例如Amazon S3</li>
+<li><strong>API 簡單</strong>:<br>
+單純的使用HTTP進行增刪改查，進而支持長距離使用，例如你在台灣可以使用位在美國的Amazon S3儲存服務</li>
+</ul>
+<p><strong>缺點</strong></p>
+<ul>
+<li><strong>不能修改</strong>:<br>
+由於最小單位就是一個Object，所以想要修改一個Object代表需要上傳一個新的Object替換他，而File system還能在末尾增加一行資料</li>
+<li><strong>無法和database整合</strong>:<br>
+傳統的database是結構化數據，例如SQL, Mysql等等，而object storage存放的主要是非結構化數據，且object storage的讀寫慢</li>
+<li><strong>無法與一般作業系統整合</strong>:<br>
+因為一般的作業系統都是File system，下載一個object就像是下載一個檔案</li>
+</ul>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/%E7%89%A9%E4%BB%B6%E5%84%B2%E5%AD%98/" rel="tag"># 物件儲存</a>
+          
+            <a href="../../../../tags/object-storage/" rel="tag"># object storage</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../12/file_storage/" rel="next" title="[儲存]資料儲存的基礎知識 - File storage">
+                <i class="fa fa-chevron-left"></i> [儲存]資料儲存的基礎知識 - File storage
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../../20/overview_network/" rel="prev" title="[網路]TCP/IP - 計算機網路是什麼?">
+                [網路]TCP/IP - 計算機網路是什麼? <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -325,6 +495,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -351,7 +525,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="../../../images/avatar.jpg"
+                src="../../../../images/avatar.jpg"
                 alt="" />
             
               <p class="site-author-name" itemprop="name"></p>
@@ -363,7 +537,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="../../../archives">
+                <a href="../../../../archives">
               
                   <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
@@ -375,7 +549,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="../../index.html">
+                <a href="../../../../categories/index.html">
                   <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
@@ -386,7 +560,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="../../../tags/index.html">
+                <a href="../../../../tags/index.html">
                   <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
@@ -517,60 +691,64 @@
 
   
   
-    <script type="text/javascript" src="../../../lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 
   
 
 
-  <script type="text/javascript" src="../../../js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.4"></script>
 
-  <script type="text/javascript" src="../../../js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="../../../js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.4"></script>
 
 
 
   
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
 
-  <script type="text/javascript" src="../../../js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.4"></script>
 
 
 

@@ -40,7 +40,7 @@
 
   
   
-  <link href="../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,29 +48,27 @@
 
 
 
-<link href="../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="../../../images/apple-touch-icon-next.png?v=5.1.4">
+<link href="../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="../../../images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="../../../images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="../../../images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.4">
 
 
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.4" color="#222">
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
 
 
+  <meta name="keywords" content="塊儲存,block storage,SSD,HDD," />
 
 
 
@@ -79,14 +77,25 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="我的生活記事">
-<meta property="og:url" content="https://kaichiachen.github.io/categories/aCategory/anotherCategory/index.html">
+
+
+<meta name="description" content="Block storage(塊儲存) Block storage是最基本的儲存系統，所以讓我們從這裡開始">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[儲存]資料儲存的基礎知識 - Block storage">
+<meta property="og:url" content="https://kaichiachen.github.io/2021/09/05/block_storage/index.html">
 <meta property="og:site_name" content="我的生活記事">
+<meta property="og:description" content="Block storage(塊儲存) Block storage是最基本的儲存系統，所以讓我們從這裡開始">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://kaichiachen.github.io/images/sector.png">
+<meta property="article:published_time" content="2021-09-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-14T16:24:03.043Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="鍇嘉">
+<meta property="article:tag" content="塊儲存">
+<meta property="article:tag" content="block storage">
+<meta property="article:tag" content="SSD">
+<meta property="article:tag" content="HDD">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kaichiachen.github.io/images/sector.png">
 
 
 
@@ -116,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/categories/aCategory/anotherCategory/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2021/09/05/block_storage/"/>
 
 
 
 
 
-  <title>Category: anotherCategory | 我的生活記事</title>
+  <title>[儲存]資料儲存的基礎知識 - Block storage | 我的生活記事</title>
   
 
 
@@ -141,7 +150,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -269,55 +278,224 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>anotherCategory<small>Category</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的生活記事">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="../../../2013/11/06/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">[儲存]資料儲存的基礎知識 - Block storage</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2013-11-06T06:40:12+08:00"
-              content="2013-11-06" >
-          11-06
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-05T00:00:00+08:00">
+                2021-09-05
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/%E5%84%B2%E5%AD%98/" itemprop="url" rel="index">
+                    <span itemprop="name">儲存</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  610
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="block-storage(塊儲存)">Block storage(塊儲存)</h3>
+<p>Block storage是最基本的儲存系統，所以讓我們從這裡開始</p>
+<span id="more"></span>
+<p>我們都知道資料是以1和0儲存在某個&quot;介質&quot;上面，例如機械式硬碟(HDD)利用磁性，而固態硬碟(SSD)利用電子，而Block storage簡單來說就是我們能看到的一塊塊的硬碟</p>
+<p>接下來，我們有了作業系統，才能把資料存進去硬碟了，那麼回答一個問題，作業系統是如何與硬碟打交道呢？首先，作業系統利用LUN ID識別硬碟，LUN是一個或一組或半個硬碟的邏輯代號，為何有半個呢？例如我們的windows有一個硬碟，把他分成C槽和D槽，那麼他們就是各半個，LUN他不是獨佔式的，也方便了多台主機共享一個儲存設備</p>
+<p>為什麼叫做block呢？從作業系統的角度，資料的讀取和寫入都是以block為最小單位，一個block是一段固定長度的bytes，大約是512，這樣的設定能提升資料讀寫的速度，一個block對應一個或多個硬體的扇區(sector)，所以block是邏輯地址，sector是實體地址</p>
+<p>我們拿機械式硬碟HDD舉例，如下圖所示<br>
+<img src="/images/sector.png" alt=""><br>
+HDD就是用類似光碟的圓盤一個個堆疊出來了，剛剛提到的&quot;扇區&quot;就是上圖的sector，代表同個半徑下一小塊長度</p>
+<p>最後總結一下Block storage有什麼優缺點<br>
+<strong>優點</strong><br>
+Block storage最大的優點就是他使得計算與儲存分離，我們能輕易地透過LUN ID外接一個硬碟或硬碟組</p>
+<ul>
+<li><strong>高性能</strong>:<br>
+IOPS(Inputs Outputs per Seconds)高，延遲低，適合用作database server</li>
+<li><strong>易於修改</strong>:<br>
+如果想改變文件裡的一個小部分資料，直接改那個block就可以，如果是文件系統或object system，需要整個file或object都改</li>
+<li><strong>擴充容易</strong>:<br>
+擴充非常簡單，一個LUN ID就可以接上系統了，較沒有性能瓶頸</li>
+</ul>
+<p><strong>缺點</strong></p>
+<ul>
+<li><strong>不能同時讀寫</strong>：<br>
+不能多台機器同時讀寫同一塊硬碟，雖然可以透過軟體解決此問題但是會造成性能下降</li>
+<li><strong>Metadata</strong>:<br>
+沒有什麼Metadata，File system有檔案路徑、名字、大小等等快速定位資料，Block storage只有地址起始位置(LBA)、長度</li>
+</ul>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/%E5%A1%8A%E5%84%B2%E5%AD%98/" rel="tag"># 塊儲存</a>
+          
+            <a href="../../../../tags/block-storage/" rel="tag"># block storage</a>
+          
+            <a href="../../../../tags/SSD/" rel="tag"># SSD</a>
+          
+            <a href="../../../../tags/HDD/" rel="tag"># HDD</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../../../2013/11/06/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../../12/file_storage/" rel="prev" title="[儲存]資料儲存的基礎知識 - File storage">
+                [儲存]資料儲存的基礎知識 - File storage <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -325,6 +503,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -351,7 +533,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="../../../images/avatar.jpg"
+                src="../../../../images/avatar.jpg"
                 alt="" />
             
               <p class="site-author-name" itemprop="name"></p>
@@ -363,7 +545,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="../../../archives">
+                <a href="../../../../archives">
               
                   <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
@@ -375,7 +557,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="../../index.html">
+                <a href="../../../../categories/index.html">
                   <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
@@ -386,7 +568,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="../../../tags/index.html">
+                <a href="../../../../tags/index.html">
                   <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
@@ -517,60 +699,64 @@
 
   
   
-    <script type="text/javascript" src="../../../lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 
   
 
 
-  <script type="text/javascript" src="../../../js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.4"></script>
 
-  <script type="text/javascript" src="../../../js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="../../../js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.4"></script>
 
 
 
   
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
 
-  <script type="text/javascript" src="../../../js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
