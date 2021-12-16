@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="python," />
+  <meta name="keywords" content="Python," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="Python的任何variable都是C++的Object 所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較 12if a &#x3D;&#x3D; b:    ...">
+<meta name="description" content="Python的任何variable都是C++的Object 所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較 12if a &#x3D;&#x3D; b:    ... variable複製 12&gt;&gt; a &#x3D; [1, 2, 3]&gt;&gt; b &#x3D; list(a) 可是如果只是&quot;賦予&quot;新的variable，例如 12">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Python進階]Python Object的比較和複製">
 <meta property="og:url" content="https://kaichiachen.github.io/2021/09/16/object-op-python/index.html">
 <meta property="og:site_name" content="我的生活記事">
-<meta property="og:description" content="Python的任何variable都是C++的Object 所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較 12if a &#x3D;&#x3D; b:    ...">
+<meta property="og:description" content="Python的任何variable都是C++的Object 所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較 12if a &#x3D;&#x3D; b:    ... variable複製 12&gt;&gt; a &#x3D; [1, 2, 3]&gt;&gt; b &#x3D; list(a) 可是如果只是&quot;賦予&quot;新的variable，例如 12">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-09-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-16T11:29:45.932Z">
+<meta property="article:modified_time" content="2021-12-16T12:27:29.279Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="python">
+<meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
 
 
@@ -339,8 +339,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="../../../../categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="../../../../categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
                   </a>
                 </span>
 
@@ -370,7 +370,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  687
+                  856
                 </span>
               
 
@@ -398,7 +398,6 @@
         <p>Python的任何variable都是C++的Object<br>
 所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> a == b:</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
 <p>variable複製</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">&gt;&gt; b = <span class="built_in">list</span>(a)</span><br></pre></td></tr></table></figure>
 <p>可是如果只是&quot;賦予&quot;新的variable，例如</p>
@@ -430,7 +429,13 @@
 而deep copy，相對於shadow copy來說，會遞歸的方式往裡面一直copy，所以新的Object和舊的Object沒有任何關聯<br>
 Python中透過copy.deepcopy(object)實現deep copy，比如</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> copy</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=[<span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b=copy.deepcopy(a)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b[<span class="number">1</span>].append(<span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">[<span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]]</span><br></pre></td></tr></table></figure>
-<p>我們可以看到a不受任何影響即使b append了4</p>
+<p>我們可以看到a不受任何影響即使b append了4<br>
+最後我們再來探討mutable(可變) Object和unmutable(不可變) object，看一下下面的例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=<span class="number">1000</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b=a</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a+=<span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b</span><br><span class="line"><span class="number">1000</span></span><br></pre></td></tr></table></figure>
+<p>我們可以看到，a+=1後竟然沒有影響b，不是說Python一切variable皆是object嗎？<br>
+這是因為在Python中int, float, string, tuple等等屬於unmutable object，不能改object裡面的值，我們可以看到a+=1之後，a的id變了，代表他被重新賦予新的object</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=<span class="number">1000</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">id</span>(a)</span><br><span class="line"><span class="number">140628677809328</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a+=<span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">id</span>(a)</span><br><span class="line"><span class="number">140628677809168</span></span><br></pre></td></tr></table></figure>
+<p>而dict, array, set等等，屬於mutable object，在assign或是當作參數傳進去function的時候，會影響該variable</p>
 
       
     </div>
@@ -448,7 +453,7 @@ Python中透過copy.deepcopy(object)實現deep copy，比如</p>
       
         <div class="post-tags">
           
-            <a href="../../../../tags/python/" rel="tag"># python</a>
+            <a href="../../../../tags/Python/" rel="tag"># Python</a>
           
         </div>
       
