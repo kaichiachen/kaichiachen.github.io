@@ -88,7 +88,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/tcpiplayer.png">
 <meta property="article:published_time" content="2021-09-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-14T16:24:49.835Z">
+<meta property="article:modified_time" content="2021-12-16T04:45:16.389Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="網路">
 <meta property="article:tag" content="TCP&#x2F;IP">
@@ -373,7 +373,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  741
+                  656
                 </span>
               
 
@@ -402,10 +402,8 @@
 但是千年以後，有一種叫&quot;程序猿&quot;的物種，敲著一種這個群體通用的語言，連接著全世界所有的人，打造這網路世界的通天塔。如今的世界，正是因為網路，才連接在一起。</p>
 <span id="more"></span>
 <p>電腦之間的資料交換大部分都是透過網際網路，每台電腦上獨一無二的MAC地址就是電腦的唯一地址，傳輸過程中遵循公認的協議(TCP/IP stack)進行編解碼，並借由MAC和IP地址一層一層的送達指定的目的</p>
-<h6 id="為何我們常見的tcp/ip要分層呢？">為何我們常見的TCP/IP要分層呢？</h6>
+<h4 id="為何我們常見的tcp/ip要分層呢？">為何我們常見的TCP/IP要分層呢？</h4>
 <p>因為任何複雜的程式或應用都要分，這是大型程式設計的要求。例如，複雜的電商還會分資料庫層、Cache層、Compose 層和Controller 層等等，每一層專注做本層的事情。</p>
-<p>雖然寫網路服務使用TCP/IP五層協議進行交互，我會介紹TCP/IP的五層結構，如果有開發相關的應用，能更好的理解，如果沒有也沒關係，我會帶著利用Python開發一個類似wireshark或tcpdump的應用，解析TCP/IP stack的原理。</p>
-<p>Github: <a target="_blank" rel="noopener" href="https://github.com/kaichiachen/pytcpdump">https://github.com/kaichiachen/pytcpdump</a></p>
 <p>TCP/IP是一個公認的網路通訊協議，是OSI七層的簡化，五層分別為物理層、鏈結層、網路層、傳輸層和應用層，下面用簡短的話分別解釋這五層是做什麼的</p>
 <p><strong>物理層(Physical):</strong> 處理網路線、無線傳輸設備，例如光纖<br>
 <strong>鏈接層(Link):</strong> 乙太網，由於資料經由網路線傳輸過程中難免會錯誤，這一層具有資料糾錯的功能，例如漢明碼<br>
@@ -457,6 +455,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="../../23/ipbasic_network/" rel="prev" title="[網路]IP&MAC地址 - 網路通訊世界的大門">
+                [網路]IP&MAC地址 - 網路通訊世界的大門 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -528,7 +530,7 @@
               
                 <a href="../../../../archives">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -550,7 +552,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
