@@ -40,7 +40,7 @@
 
   
   
-  <link href="../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,29 +48,27 @@
 
 
 
-<link href="../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon-next.png?v=5.1.4">
+<link href="../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="../images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.4">
 
 
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.4" color="#222">
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
 
 
+  <meta name="keywords" content="python," />
 
 
 
@@ -79,17 +77,19 @@
 
 
 
-<meta name="description" content="這是什麼 這是我的部落格，分享關於工作上、生活上的學習體會 我是誰 一位上海交通大學畢業，在VMware工作的RD，負責vSAN開發的相關工作，擅長分散式儲存系統 喜歡打網球、乒乓球，歡迎跟我切磋  人這一輩子兩件事千萬不能隨便，一是找對事業，二是找對愛人 因為太陽升起時我們要投身於工作，夕陽西下時要與愛人相擁">
-<meta property="og:type" content="website">
-<meta property="og:title" content="關於我">
-<meta property="og:url" content="https://kaichiachen.github.io/about/index.html">
+
+
+<meta name="description" content="Python的任何variable都是C++的Object 所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較 12if a &#x3D;&#x3D; b:    ...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Python進階]Python Object的比較和複製">
+<meta property="og:url" content="https://kaichiachen.github.io/2021/09/16/object-op-python/index.html">
 <meta property="og:site_name" content="我的生活記事">
-<meta property="og:description" content="這是什麼 這是我的部落格，分享關於工作上、生活上的學習體會 我是誰 一位上海交通大學畢業，在VMware工作的RD，負責vSAN開發的相關工作，擅長分散式儲存系統 喜歡打網球、乒乓球，歡迎跟我切磋  人這一輩子兩件事千萬不能隨便，一是找對事業，二是找對愛人 因為太陽升起時我們要投身於工作，夕陽西下時要與愛人相擁">
+<meta property="og:description" content="Python的任何variable都是C++的Object 所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較 12if a &#x3D;&#x3D; b:    ...">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2021-11-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-12T03:55:54.832Z">
+<meta property="article:published_time" content="2021-09-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-16T11:29:45.932Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="鍇嘉">
+<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/about/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2021/09/16/object-op-python/"/>
 
 
 
 
 
-  <title>關於我 | 我的生活記事</title>
+  <title>[Python進階]Python Object的比較和複製 | 我的生活記事</title>
   
 
 
@@ -275,42 +275,224 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的生活記事">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">關於我</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h3 id="這是什麼">這是什麼</h3>
-<p>這是我的部落格，分享關於工作上、生活上的學習體會</p>
-<h3 id="我是誰">我是誰</h3>
-<p>一位上海交通大學畢業，在<a target="_blank" rel="noopener" href="https://www.vmware.com/">VMware</a>工作的RD，負責vSAN開發的相關工作，擅長分散式儲存系統</p>
-<p>喜歡打網球、乒乓球，歡迎跟我切磋</p>
-<blockquote>
-<p>人這一輩子兩件事千萬不能隨便，一是找對事業，二是找對愛人<br>
-因為太陽升起時我們要投身於工作，夕陽西下時要與愛人相擁</p>
-</blockquote>
-
+          <h1 class="post-title" itemprop="name headline">[Python進階]Python Object的比較和複製</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-16T00:00:00+08:00">
+                2021-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  687
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>Python的任何variable都是C++的Object<br>
+所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> a == b:</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>variable複製</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">&gt;&gt; b = <span class="built_in">list</span>(a)</span><br></pre></td></tr></table></figure>
+<p>可是如果只是&quot;賦予&quot;新的variable，例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">&gt;&gt; b = a</span><br><span class="line">&gt;&gt; b.append(<span class="number">4</span>)</span><br><span class="line">&gt;&gt; a</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<p>b會影響a，因為他們共享同個記憶體上的address<br>
+不過透過上面的範例，你可能還是不太清楚</p>
+<ul>
+<li><code>a==b</code>是比較兩個object address相等呢？還是value相等呢?</li>
+<li><code>b = list(a)</code>是shallow copy還是deep copy呢？</li>
+</ul>
+<h4 id="比較語法">比較語法</h4>
+<p>在Python中你應該遇過下面兩個語法，你能分辨出有什麼不同嗎？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> a == b:</span><br><span class="line">   ...</span><br><span class="line"><span class="keyword">if</span> a <span class="keyword">is</span> b:</span><br><span class="line">   ...</span><br></pre></td></tr></table></figure>
+<p><code>==</code>表示兩個varaibles的&quot;值&quot;是否相等，<code>is</code>表示兩個varaibles是否為同一個Object，是否address也相同<br>
+在Python中，我們可以透過<code>id(variable)</code>去拿variable的唯一ID，所以判斷<code>a is b</code>如同<code>id(a) == id(b)</code><br>
+我們再看一個百思不得其解的例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; a = <span class="number">10</span></span><br><span class="line">&gt;&gt; b = <span class="number">10</span></span><br><span class="line">&gt;&gt; a <span class="keyword">is</span> b</span><br><span class="line"><span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<p>咦？a和b是兩個不同的變數呀，為何他們的id會相同呢？<br>
+我們說過，Python的任何variable都是C++的Object，int也不例外，然而為了提升性能，C++把常用的數字-5到256是先定義好，作為cache使用，當Python需要時，直接從這個pool拿去引用，於是乎</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; a = <span class="number">257</span></span><br><span class="line">&gt;&gt; b = <span class="number">257</span></span><br><span class="line">&gt;&gt; a <span class="keyword">is</span> b</span><br><span class="line"><span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<p>有興趣的讀者可以試試<br>
+再來，我們來探討<code>==</code>和<code>is</code>性能的部分<br>
+通常，<code>is</code>會比<code>==</code>快很多，因為<code>is</code>不會被overload，這樣Python就不需要去尋找<code>__eq__</code>，<code>a == b</code>實際上做的事情等同於<code>a.__eq__(b)</code></p>
+<h4 id="copy語法">copy語法</h4>
+<p>所謂的copy，指的是重新分配一塊記憶體，創建一個新的Object，所以他們的id肯定是不同的，而copy又分shallow copy和deep copy<br>
+所謂的shallow copy，新的Object裡面的元素是原本Object裡面元素的引用，所以如果Object裡面的Object被改了，新舊Object都會被連動，例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=[<span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b=<span class="built_in">list</span>(a)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b[<span class="number">1</span>].append(<span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b[<span class="number">0</span>]=<span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">[<span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]]</span><br></pre></td></tr></table></figure>
+<p>可以看到variable b append 4之後，a裡面的list也被影響了<br>
+而deep copy，相對於shadow copy來說，會遞歸的方式往裡面一直copy，所以新的Object和舊的Object沒有任何關聯<br>
+Python中透過copy.deepcopy(object)實現deep copy，比如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> copy</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=[<span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b=copy.deepcopy(a)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b[<span class="number">1</span>].append(<span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">[<span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]]</span><br></pre></td></tr></table></figure>
+<p>我們可以看到a不受任何影響即使b append了4</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../13/object_storage/" rel="next" title="[儲存]資料儲存的基礎知識 - Object storage">
+                <i class="fa fa-chevron-left"></i> [儲存]資料儲存的基礎知識 - Object storage
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../../20/overview_network/" rel="prev" title="[網路]TCP/IP - 計算機網路是什麼?">
+                [網路]TCP/IP - 計算機網路是什麼? <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -349,7 +531,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="../images/avatar.jpg"
+                src="../../../../images/avatar.jpg"
                 alt="" />
             
               <p class="site-author-name" itemprop="name"></p>
@@ -361,7 +543,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="../archives">
+                <a href="../../../../archives">
               
                   <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">posts</span>
@@ -373,7 +555,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="../categories/index.html">
+                <a href="../../../../categories/index.html">
                   <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
@@ -384,7 +566,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="../tags/index.html">
+                <a href="../../../../tags/index.html">
                   <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
@@ -515,64 +697,64 @@
 
   
   
-    <script type="text/javascript" src="../lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="../lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
-
-
-  
-
-
-  <script type="text/javascript" src="../js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="../js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="../js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="../js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="../js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="../js/src/post-details.js?v=5.1.4"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="../js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
