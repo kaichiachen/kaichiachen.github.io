@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="儲存,塊儲存,block storage,SSD,HDD," />
+  <meta name="keywords" content="網路,IP,MAC," />
 
 
 
@@ -79,24 +79,20 @@
 
 
 
-<meta name="description" content="Block storage(塊儲存) Block storage是最基本的儲存系統，所以讓我們從這裡開始">
+<meta name="description" content="每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼 警察撿到了你的身分證，看了上面的戶籍地址，想把身分證歸還給你，他是怎麼找到你的呢？ 透過了地址(IP)，找到了你的家，按下你家的門鈴後，大喊了身分證號碼(MAC)，歸還給了對的人">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[儲存]資料儲存的基礎知識 - Block storage">
-<meta property="og:url" content="https://kaichiachen.github.io/2021/09/05/block_storage/index.html">
+<meta property="og:title" content="[網路]IP&amp;MAC地址 - 網路通訊世界的大門">
+<meta property="og:url" content="https://kaichiachen.github.io/2021/09/23/ipbasic-network/index.html">
 <meta property="og:site_name" content="我的生活記事">
-<meta property="og:description" content="Block storage(塊儲存) Block storage是最基本的儲存系統，所以讓我們從這裡開始">
+<meta property="og:description" content="每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼 警察撿到了你的身分證，看了上面的戶籍地址，想把身分證歸還給你，他是怎麼找到你的呢？ 透過了地址(IP)，找到了你的家，按下你家的門鈴後，大喊了身分證號碼(MAC)，歸還給了對的人">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://kaichiachen.github.io/images/sector.png">
-<meta property="article:published_time" content="2021-09-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-16T09:52:11.170Z">
+<meta property="article:published_time" content="2021-09-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-16T04:46:09.079Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="儲存">
-<meta property="article:tag" content="塊儲存">
-<meta property="article:tag" content="block storage">
-<meta property="article:tag" content="SSD">
-<meta property="article:tag" content="HDD">
+<meta property="article:tag" content="網路">
+<meta property="article:tag" content="IP">
+<meta property="article:tag" content="MAC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kaichiachen.github.io/images/sector.png">
 
 
 
@@ -126,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/2021/09/05/block_storage/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2021/09/23/ipbasic-network/"/>
 
 
 
 
 
-  <title>[儲存]資料儲存的基礎知識 - Block storage | 我的生活記事</title>
+  <title>[網路]IP&MAC地址 - 網路通訊世界的大門 | 我的生活記事</title>
   
 
 
@@ -322,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[儲存]資料儲存的基礎知識 - Block storage</h1>
+          <h1 class="post-title" itemprop="name headline">[網路]IP&MAC地址 - 網路通訊世界的大門</h1>
         
 
         <div class="post-meta">
@@ -334,8 +330,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-05T00:00:00+08:00">
-                2021-09-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-23T00:00:00+08:00">
+                2021-09-23
               </time>
             
 
@@ -357,8 +353,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="../../../../categories/%E5%84%B2%E5%AD%98/" itemprop="url" rel="index">
-                    <span itemprop="name">儲存</span>
+                  <a href="../../../../categories/%E7%B6%B2%E8%B7%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">網路</span>
                   </a>
                 </span>
 
@@ -377,7 +373,7 @@
                 </span>
                 <a href="#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2021/09/05/block_storage/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2021/09/23/ipbasic-network/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -399,7 +395,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  610
+                  1.1k
                 </span>
               
 
@@ -424,33 +420,53 @@
       
 
       
-        <h3 id="block-storage(塊儲存)">Block storage(塊儲存)</h3>
-<p>Block storage是最基本的儲存系統，所以讓我們從這裡開始</p>
+        <h3 id="每一個網卡都有一個ip和mac，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼">每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼</h3>
+<p>警察撿到了你的身分證，看了上面的戶籍地址，想把身分證歸還給你，他是怎麼找到你的呢？<br>
+透過了地址(IP)，找到了你的家，按下你家的門鈴後，大喊了身分證號碼(MAC)，歸還給了對的人</p>
 <span id="more"></span>
-<p>我們都知道資料是以1和0儲存在某個&quot;介質&quot;上面，例如機械式硬碟(HDD)利用磁性，而固態硬碟(SSD)利用電子，而Block storage簡單來說就是我們能看到的一塊塊的硬碟</p>
-<p>接下來，我們有了作業系統，才能把資料存進去硬碟了，那麼回答一個問題，作業系統是如何與硬碟打交道呢？首先，作業系統利用LUN ID識別硬碟，LUN是一個或一組或半個硬碟的邏輯代號，為何有半個呢？例如我們的windows有一個硬碟，把他分成C槽和D槽，那麼他們就是各半個，LUN他不是獨佔式的，也方便了多台主機共享一個儲存設備</p>
-<p>為什麼叫做block呢？從作業系統的角度，資料的讀取和寫入都是以block為最小單位，一個block是一段固定長度的bytes，大約是512，這樣的設定能提升資料讀寫的速度，一個block對應一個或多個硬體的扇區(sector)，所以block是邏輯地址，sector是實體地址</p>
-<p>我們拿機械式硬碟HDD舉例，如下圖所示<br>
-<img src="/images/sector.png" alt=""><br>
-HDD就是用類似光碟的圓盤一個個堆疊出來了，剛剛提到的&quot;扇區&quot;就是上圖的sector，代表同個半徑下一小塊長度</p>
-<p>最後總結一下Block storage有什麼優缺點<br>
-<strong>優點</strong><br>
-Block storage最大的優點就是他使得計算與儲存分離，我們能輕易地透過LUN ID外接一個硬碟或硬碟組</p>
-<ul>
-<li><strong>高性能</strong>:<br>
-IOPS(Inputs Outputs per Seconds)高，延遲低，適合用作database server</li>
-<li><strong>易於修改</strong>:<br>
-如果想改變文件裡的一個小部分資料，直接改那個block就可以，如果是文件系統或object system，需要整個file或object都改</li>
-<li><strong>擴充容易</strong>:<br>
-擴充非常簡單，一個LUN ID就可以接上系統了，較沒有性能瓶頸</li>
-</ul>
-<p><strong>缺點</strong></p>
-<ul>
-<li><strong>不能同時讀寫</strong>：<br>
-不能多台機器同時讀寫同一塊硬碟，雖然可以透過軟體解決此問題但是會造成性能下降</li>
-<li><strong>Metadata</strong>:<br>
-沒有什麼Metadata，File system有檔案路徑、名字、大小等等快速定位資料，Block storage只有地址起始位置(LBA)、長度</li>
-</ul>
+<h3 id="ip地址">IP地址</h3>
+<p>那麼，在你的電腦裡，我們要怎麼查我們電腦裡的IP門牌號碼呢？</p>
+<p>在Linux，有兩個指令可以查詢，分別為<code>ifconfig</code>和<code>ip addr</code><br>
+<strong>ifconfig</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; ifconfig</span></span><br><span class="line">eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 172.17.0.3  netmask 255.255.0.0  broadcast 172.17.255.255</span><br><span class="line">        ether 02:42:ac:11:00:03  txqueuelen 0  (Ethernet)</span><br><span class="line">        RX packets 6251  bytes 9073424 (8.6 MiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 3111  bytes 170522 (166.5 KiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line"></span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
+<p><strong>ip addr</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; ip addr</span></span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: tunl0@NONE: &lt;NOARP&gt; mtu 1480 qdisc noop state DOWN group default qlen 1000</span><br><span class="line">    link/ipip 0.0.0.0 brd 0.0.0.0</span><br><span class="line">3: ip6tnl0@NONE: &lt;NOARP&gt; mtu 1452 qdisc noop state DOWN group default qlen 1000</span><br><span class="line">    link/tunnel6 :: brd ::</span><br><span class="line">13: eth0@if14: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default</span><br><span class="line">    link/ether 02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0</span><br><span class="line">    inet 172.17.0.3/16 brd 172.17.255.255 scope global eth0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>ifconfig來自於Linux的net-tools而ip addr來自於iproute2．net-tools起源於BSD，自2001年起，Linux社群已經對其停止維護，而iproute2旨在取代net-tools，並提供了一些新功能。一些Linux發行版已經停止支援net-tools，只支援iproute2。 net-tools通過procfs(/proc)和ioctl system call去訪問和改變kernel網路設定，而iproute2則通過netlink socket interface與kernel通訊。 net-tools中工具的名字比較雜亂，而iproute2則相對整齊和直觀，基本是ip command加後面的sub-command。不過這麼多年過去了，net-tool依然還在被廣泛使用，最好還是兩套指令都掌握吧。</p>
+</blockquote>
+<p>IP地址是門牌號碼，所以不能大家都一樣，不然就會起衝突．舉個例子，<code>132.128.200.32</code>是一個IP地址，由三個&quot;.&quot;分成四個部分，每個部分有8個bit，四個部分加起來總共有32個bit，也就是最多只能產生{2**32}個門牌號碼．因為不夠用，所以有了IPv6，也就是上面的輸出結果<code>fe80::ca61:d665:1750:e806</code>，總共有128位，看起來應該是夠了．</p>
+<p>由於現有的32bit ip地址不這麼夠用，其中ip又有分私人ip(自己內網的ip)和公共ip(任何地方都能連的ip，例如Google)，其中，下面的ip地址範圍就是私人地址</p>
+<table>
+<thead>
+<tr>
+<th>地址範圍</th>
+<th>數量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.0.0.0–10.255.255.255</td>
+<td>16,777,216</td>
+</tr>
+<tr>
+<td>172.16.0.0–172.31.255.255</td>
+<td>1,048,576</td>
+</tr>
+<tr>
+<td>192.168.0.0–192.168.255.255</td>
+<td>65,536</td>
+</tr>
+<tr>
+<td>所以說，下次你跑<code>ip addr</code>看到你的ip是<code>192.168.2.132</code>不用懷疑，你在私人ip裡，外面的電腦無法和你的電腦連結</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="mac地址">MAC地址</h3>
+<p>MAC地址是一個容易和IP地址誤解的地址，因為MAC地址號稱全世界唯一，那既然唯一了，為何我們還要IP地址呢？其實MAC地址與其說是個地址，不如說他是個網路ID<br>
+舉個例子，我們想找的一個人，他的身分證是A123456789，然後他的身分證上面寫的地址是，<code>台北市文山區興隆路五段9弄18號4樓</code>，後面的地址就是像是電腦的IP，而身分證就是這個人．<br>
+或許你也有聽過，MAC地址其實是可以改的，只要不要在同個內網下有多個MAC地址就好，就像是同個家庭，不要有重複的&quot;身分證&quot;<br>
+MAC地址從上面的<code>ip addr</code>指令我們可以看到是<code>02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff</code></p>
 
       
     </div>
@@ -468,15 +484,11 @@ IOPS(Inputs Outputs per Seconds)高，延遲低，適合用作database server</l
       
         <div class="post-tags">
           
-            <a href="../../../../tags/%E5%84%B2%E5%AD%98/" rel="tag"># 儲存</a>
+            <a href="../../../../tags/%E7%B6%B2%E8%B7%AF/" rel="tag"># 網路</a>
           
-            <a href="../../../../tags/%E5%A1%8A%E5%84%B2%E5%AD%98/" rel="tag"># 塊儲存</a>
+            <a href="../../../../tags/IP/" rel="tag"># IP</a>
           
-            <a href="../../../../tags/block-storage/" rel="tag"># block storage</a>
-          
-            <a href="../../../../tags/SSD/" rel="tag"># SSD</a>
-          
-            <a href="../../../../tags/HDD/" rel="tag"># HDD</a>
+            <a href="../../../../tags/MAC/" rel="tag"># MAC</a>
           
         </div>
       
@@ -489,8 +501,8 @@ IOPS(Inputs Outputs per Seconds)高，延遲低，適合用作database server</l
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="../../../../2013/11/06/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="../../20/overview-network/" rel="next" title="[網路]TCP/IP - 計算機網路是什麼?">
+                <i class="fa fa-chevron-left"></i> [網路]TCP/IP - 計算機網路是什麼?
               </a>
             
           </div>
@@ -499,8 +511,8 @@ IOPS(Inputs Outputs per Seconds)高，延遲低，適合用作database server</l
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="../../12/file_storage/" rel="prev" title="[儲存]資料儲存的基礎知識 - File storage">
-                [儲存]資料儲存的基礎知識 - File storage <i class="fa fa-chevron-right"></i>
+              <a href="../../25/iterator-generator-python/" rel="prev" title="[Python進階]Python的iterator和generator">
+                [Python進階]Python的iterator和generator <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -583,7 +595,7 @@ IOPS(Inputs Outputs per Seconds)高，延遲低，適合用作database server</l
               
                 <a href="../../../../archives">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -605,7 +617,7 @@ IOPS(Inputs Outputs per Seconds)高，延遲低，適合用作database server</l
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -808,9 +820,9 @@ IOPS(Inputs Outputs per Seconds)高，延遲低，適合用作database server</l
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://kaichiachen.github.io/2021/09/05/block_storage/';
-          this.page.identifier = '2021/09/05/block_storage/';
-          this.page.title = '[儲存]資料儲存的基礎知識 - Block storage';
+          this.page.url = 'https://kaichiachen.github.io/2021/09/23/ipbasic-network/';
+          this.page.identifier = '2021/09/23/ipbasic-network/';
+          this.page.title = '[網路]IP&MAC地址 - 網路通訊世界的大門';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://kaichiablog.disqus.com/embed.js';
