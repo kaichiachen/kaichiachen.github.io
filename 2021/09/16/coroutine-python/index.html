@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="python,iterator,generator," />
+  <meta name="keywords" content="python,coroutine," />
 
 
 
@@ -79,19 +79,18 @@
 
 
 
-<meta name="description" content="剛寫Python的時候，你可能對於Python的語法for i in [2, 4, 6, 8, 10]嘆為觀止，理解起來也非常直觀，比起C++或java的語法，簡潔了不少 可是你有想過，Python在處理for in的時候，發生了什麼嗎？什麼樣的object可以被放進for in loop呢？">
+<meta name="description" content="Coroutine(協程)和我們常聽到的multithread, multiprocess一樣，是一种併發(councurrent)的一種方式，注意的是，併發和併行的不同在於，併發是快速的context switch讓user覺得程式同時執行，而併行是指不同CPU同時執行">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[Python進階]Python的iterator和generator">
-<meta property="og:url" content="https://kaichiachen.github.io/2021/09/25/iterator-generator-python/index.html">
+<meta property="og:title" content="[Python進階]Python的coroutine">
+<meta property="og:url" content="https://kaichiachen.github.io/2021/09/16/coroutine-python/index.html">
 <meta property="og:site_name" content="我的生活記事">
-<meta property="og:description" content="剛寫Python的時候，你可能對於Python的語法for i in [2, 4, 6, 8, 10]嘆為觀止，理解起來也非常直觀，比起C++或java的語法，簡潔了不少 可是你有想過，Python在處理for in的時候，發生了什麼嗎？什麼樣的object可以被放進for in loop呢？">
+<meta property="og:description" content="Coroutine(協程)和我們常聽到的multithread, multiprocess一樣，是一种併發(councurrent)的一種方式，注意的是，併發和併行的不同在於，併發是快速的context switch讓user覺得程式同時執行，而併行是指不同CPU同時執行">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2021-09-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-17T07:26:31.067Z">
+<meta property="article:published_time" content="2021-09-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-17T12:24:18.963Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="python">
-<meta property="article:tag" content="iterator">
-<meta property="article:tag" content="generator">
+<meta property="article:tag" content="coroutine">
 <meta name="twitter:card" content="summary">
 
 
@@ -122,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/2021/09/25/iterator-generator-python/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2021/09/16/coroutine-python/"/>
 
 
 
 
 
-  <title>[Python進階]Python的iterator和generator | 我的生活記事</title>
+  <title>[Python進階]Python的coroutine | 我的生活記事</title>
   
 
 
@@ -318,7 +317,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[Python進階]Python的iterator和generator</h1>
+          <h1 class="post-title" itemprop="name headline">[Python進階]Python的coroutine</h1>
         
 
         <div class="post-meta">
@@ -330,8 +329,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-25T00:00:00+08:00">
-                2021-09-25
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-16T00:00:00+08:00">
+                2021-09-16
               </time>
             
 
@@ -373,7 +372,7 @@
                 </span>
                 <a href="#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2021/09/25/iterator-generator-python/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2021/09/16/coroutine-python/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -395,7 +394,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  979
+                  1.2k
                 </span>
               
 
@@ -420,34 +419,43 @@
       
 
       
-        <p>剛寫Python的時候，你可能對於Python的語法<code>for i in [2, 4, 6, 8, 10]</code>嘆為觀止，理解起來也非常直觀，比起C++或java的語法，簡潔了不少<br>
-可是你有想過，Python在處理for in的時候，發生了什麼嗎？什麼樣的object可以被放進for in loop呢？</p>
+        <p>Coroutine(協程)和我們常聽到的multithread, multiprocess一樣，是一种併發(councurrent)的一種方式，注意的是，併發和併行的不同在於，併發是快速的context switch讓user覺得程式同時執行，而併行是指不同CPU同時執行</p>
 <span id="more"></span>
-<h3 id="container和iterator">Container和Iterator</h3>
-<p>Container非常好理解，Python一切皆為object，object的集合就是Container，例如list, set, tuple等等的<br>
-所有的Container都是iterable(可迭代的)，可迭代是什麼意思呢？你可以想像一下你去水果攤買蘋果，老闆不跟你說庫存，然後你每次都只需要跟老闆說，我要一個蘋果，直到老闆跟你說蘋果沒了<br>
-Container透過<code>iter()</code>返回一個Iterator，然後我們可以透過<code>next()</code>就能像和老闆要蘋果那樣，一個個要</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>iter_arr = <span class="built_in">iter</span>(arr)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">next</span>(iter_arr)</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">next</span>(iter_arr)</span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">next</span>(iter_arr)</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">next</span>(iter_arr)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">StopIteration</span><br></pre></td></tr></table></figure>
-<p>當老闆說沒有蘋果的時候，就會throw exception出來</p>
-<h3 id="generator">Generator</h3>
-<p>Generator可以理解為懶人版的Container<br>
-生成一個Container很簡單，<code>[i for i in range(100000000)]</code>就可以生成一億個int的array，每個元素都會保存在記憶體當中，當然，轉成Iterator後也是，只是他們取用元素的方式不同而已<br>
-而Generator的使用方法和Iterator比較類似，都是需要後再取，只是Iterator會預先把所有元素放進記憶體，而Generator會等有需要拿的時候才會把該元素載入記憶體</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> psutil</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_memory_info</span>(<span class="params">hint</span>):</span></span><br><span class="line">    pid = os.getpid()</span><br><span class="line">    p = psutil.Process(pid)</span><br><span class="line">    info = p.memory_full_info()</span><br><span class="line">    memory = info.uss / <span class="number">1024.</span> / <span class="number">1024</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;&#123;&#125; memory used: &#123;&#125; MB&#x27;</span>.<span class="built_in">format</span>(hint, memory))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_iterator</span>():</span></span><br><span class="line">    show_memory_info(<span class="string">&#x27;initing iterator&#x27;</span>)</span><br><span class="line">    list_1 = [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100000000</span>)]</span><br><span class="line">    show_memory_info(<span class="string">&#x27;after iterator initiated&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">sum</span>(list_1))</span><br><span class="line">    show_memory_info(<span class="string">&#x27;after sum called&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_generator</span>():</span></span><br><span class="line">    show_memory_info(<span class="string">&#x27;initing generator&#x27;</span>)</span><br><span class="line">    list_2 = (i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100000000</span>))</span><br><span class="line">    show_memory_info(<span class="string">&#x27;after generator initiated&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">sum</span>(list_2))</span><br><span class="line">    show_memory_info(<span class="string">&#x27;after sum called&#x27;</span>)</span><br><span class="line"></span><br><span class="line">test_iterator()</span><br><span class="line">test_generator()</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># initing iterator memory used: 7.28125 MB</span></span><br><span class="line"><span class="comment"># after iterator initiated memory used: 2015.828125 MB</span></span><br><span class="line"><span class="comment"># 4999999950000000</span></span><br><span class="line"><span class="comment"># after sum called memory used: 3869.05078125 MB</span></span><br><span class="line"><span class="comment"># initing generator memory used: 9.5703125 MB</span></span><br><span class="line"><span class="comment"># after generator initiated memory used: 9.58203125 MB</span></span><br><span class="line"><span class="comment"># 4999999950000000</span></span><br><span class="line"><span class="comment"># after sum called memory used: 9.58203125 MB</span></span><br></pre></td></tr></table></figure>
-<p>我們可以看到記憶體驚人的差異，在Iterator和Generator初始記憶體都差不多的情況下，Iterator需要2GB的記憶體，而Generator只需要9.5MB，如果遇到不需要同時在記憶體保存這麼多東西的場景，例如元素總和，可以使用Generator<br>
-由上面的範例可以看到，Generator的初始化寫法是<code>(i for i in range(100000000))</code><br>
-那麼Generator還能怎麼玩呢？例如我們想要驗證一個數學公式{(1+2+3+…+n)^2 = 1^3 + 2^3 + 3^3 + … + n^3}</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generator</span>(<span class="params">k</span>):</span></span><br><span class="line">   i = <span class="number">1</span></span><br><span class="line">   <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">      <span class="keyword">yield</span> i ** k</span><br><span class="line">      i+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">gen_1 = generator(<span class="number">1</span>)</span><br><span class="line">gen_3 = generator(<span class="number">3</span>)</span><br><span class="line">sum_1 = <span class="number">0</span></span><br><span class="line">sum_3 = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">   sum_1 += <span class="built_in">next</span>(gen_1)</span><br><span class="line">   sum_2 = sum_1 ** <span class="number">2</span></span><br><span class="line">   sum_3 += <span class="built_in">next</span>(gen_3)</span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&quot;sum_2: %s, sum_3: %s&quot;</span> % (sum_2, sum_3))</span><br><span class="line">   time.sleep(<span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
-<p>yield是Generator獨有的，你可以理解為，在next之前，他就會被卡在這裡，call next之後yield就會return值出來<br>
-你看，有了Generator，我就能一直無限的驗證下去，不用擔心記憶體爆炸，Iterator是一個有限集合，Generator是一個無限集合！</p>
-<p>除此之外，Generator也能讓程式碼更加簡潔有力！讓我們看下面的例子，輸入一個array和一個數字，找出該數字在array的位置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># Iterator</span><br><span class="line">def find_iter(arr, val):</span><br><span class="line">   res = []</span><br><span class="line">   for idx, v in enumerate(arr):</span><br><span class="line">      if v == val:</span><br><span class="line">         res.append(idx)</span><br><span class="line">   return res</span><br><span class="line">   </span><br><span class="line"># Generator</span><br><span class="line">def find_gen(arr, val):</span><br><span class="line">   for idx, v in enumerate(arr):</span><br><span class="line">      if v == val:</span><br><span class="line">         yield idx</span><br><span class="line"></span><br><span class="line">arr = [1, 5, 2, 9, 1, 7, 2, 1, 2]</span><br><span class="line">val = 2</span><br><span class="line">print(find_iter(arr, val))</span><br><span class="line">print(list(find_gen(arr, val)))</span><br><span class="line"># Output</span><br><span class="line"># [2, 6, 8]</span><br><span class="line"># [2, 6, 8]</span><br></pre></td></tr></table></figure>
-<p>顯然的，Generator清爽多了</p>
-<h3 id="總結">總結</h3>
-<p>本篇講了Container, Iterator和Generator</p>
+<p>隨著互聯網快速發展，我們逐漸遇到了C10k的瓶頸，也就是同時連接到Server的數量到達一萬個，這會造成process上下文切換佔用了大量的資源，即使是Thread也頂不住這麼大的壓力，於是Coroutine登場了</p>
+<p>很多人說，Coroutine是輕量化的Thread，那麼Coroutine和Thread有什麼不同呢？<br>兩者最大的差別是，Thread的搶佔式多工，Coroutine是協同式多工</p>
+<h5 id="搶佔式多工"><a href="#搶佔式多工" class="headerlink" title="搶佔式多工"></a>搶佔式多工</h5><p>程式有各自的優先權，作業系統會根據程式的優先權安排當下哪個程式能擁有CPU資源去執行，另外作業系統有權中斷任何正在執行中的程式。</p>
+<h5 id="協同式多工"><a href="#協同式多工" class="headerlink" title="協同式多工"></a>協同式多工</h5><p>程式會定時放棄已佔有的執行資源讓其它程式執行。由於是由程式自己讓出執行資源，不需要由底層的作業系統來處理，所以 Coroutine 交替時所產生的Context switch負擔比 Thread 小</p>
+<p>接下來，我們給個範例，看一下Python的Coroutine怎麼寫，Python的Coroutine library是<code>asyncio</code>，需要跑在Python3.7以上的環境</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">loading</span>(<span class="params">sec</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;loading... needs &#123;&#125; secs to load&#x27;</span>.<span class="built_in">format</span>(sec))</span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(sec)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;OK &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(sec))</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">main</span>(<span class="params">secs</span>):</span></span><br><span class="line">    <span class="keyword">for</span> sec <span class="keyword">in</span> secs:</span><br><span class="line">        <span class="keyword">await</span> loading(sec)</span><br><span class="line"></span><br><span class="line">asyncio.run(main([<span class="number">5</span>, <span class="number">3</span>]))</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># loading... needs 5 secs to load</span></span><br><span class="line"><span class="comment"># OK 5</span></span><br><span class="line"><span class="comment"># loading... needs 3 secs to load</span></span><br><span class="line"><span class="comment"># OK 5</span></span><br></pre></td></tr></table></figure>
+<p>async代表這個函數是非同步函數，意思是會順序執行的<br>然後再來説説執行，執行有三種方法</p>
+<ol>
+<li>透過 await來call<br>await的執行效果，和Python平常運行程式的效果一樣，會阻塞在這裡，執行完後再繼續</li>
+<li>透過asyncio.create_task()來創建任務</li>
+<li>透過asyncio.run()來執行，不用去理會Event loop怎麼運行的</li>
+</ol>
+<p>上面的程式碼順序的跑了10秒是正常的，因為async會阻塞，接下來我們要來講Coroutine一個重要的概念-Task</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">loading</span>(<span class="params">sec</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;loading... needs &#123;&#125; secs to load&#x27;</span>.<span class="built_in">format</span>(sec))</span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(sec)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;OK &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(sec))</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">main</span>(<span class="params">secs</span></span></span><br><span class="line"><span class="params"><span class="function">    tasks = [asyncio.create_task(<span class="params">loading(<span class="params">sec</span>)</span>) <span class="keyword">for</span> sec <span class="keyword">in</span> secs]</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="comment"># await asyncio.gather(*tasks)</span></span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">for</span> task <span class="keyword">in</span> tasks:</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="keyword">await</span> task</span></span></span><br><span class="line"><span class="params"><span class="function"></span></span></span><br><span class="line"><span class="params"><span class="function">asyncio.run(<span class="params">main(<span class="params">[<span class="number">5</span>, <span class="number">3</span>]</span>)</span>)</span></span></span><br><span class="line"><span class="params"><span class="function"><span class="comment"># Output:</span></span></span></span><br><span class="line"><span class="params"><span class="function"><span class="comment"># loading... needs 5 secs to load</span></span></span></span><br><span class="line"><span class="params"><span class="function"><span class="comment"># loading... needs 3 secs to load</span></span></span></span><br><span class="line"><span class="params"><span class="function"><span class="comment"># OK 3</span></span></span></span><br><span class="line"><span class="params"><span class="function"><span class="comment"># OK 5</span></span></span></span><br></pre></td></tr></table></figure>
+<p>我們可以看到，當Task被create之後就會把上執行，然後我們對每個task加了await，等所有task都執行完後才能繼續下一步，或是可以看我註解掉的那一行<code>await asyncio.gather(*tasks)</code>，也能達到同樣的目的</p>
+<h3 id="Coroutine-runtime"><a href="#Coroutine-runtime" class="headerlink" title="Coroutine runtime"></a>Coroutine runtime</h3><p>接下來我們來解析Coroutine的runtime和背後的邏輯，我們一樣用上面的例子，步驟有點多，我們慢慢來</p>
+<ol>
+<li>asyncio.run(main())，程式进入 main() 函数，同時也開啟了Event loop</li>
+<li>兩個task都被創建，進入Event loop等待被執行，執行到print，輸出loading…</li>
+<li>await 五秒的task, Event loop開始調度worker1</li>
+<li>worker1開始執行，遇到await.sleep，從現在的Task切出，Event loop開始調度worker2</li>
+<li>worker2開始執行，一樣遇到await.sleep，從現在的Task切出</li>
+<li>以上的時間都非常快，由於兩個都在sleep，所以Event loop暫停調度</li>
+<li>3秒鐘後worker2的sleep完成，Event loop將控制權交給三秒task，print出OK 3，Task完成，從Event loop退出</li>
+<li>再兩秒鐘後，同理worker1的sleep完成，print完後，從Event loop退出</li>
+<li>Coroutine全部結束</li>
+</ol>
+<p>接下來我們進階一下，如果想給Coroutine任務限定執行時間，一但超時就取消，該怎麼做呢？以及如果runtime發生錯誤，又該怎麼處理？我們來看看下面的程式碼</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">worker1</span>():</span></span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">worker2</span>():</span></span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span> / <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">worker3</span>():</span></span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(<span class="number">3</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    task_1 = asyncio.create_task(worker1())</span><br><span class="line">    task_2 = asyncio.create_task(worker2())</span><br><span class="line">    task_3 = asyncio.create_task(worker3())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(<span class="number">2</span>)</span><br><span class="line">    task_3.cancel()</span><br><span class="line"></span><br><span class="line">    res = <span class="keyword">await</span> asyncio.gather(task_1, task_2, task_3, return_exceptions=<span class="literal">True</span>)</span><br><span class="line">    <span class="built_in">print</span>(res)</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># [1, ZeroDivisionError(&#x27;division by zero&#x27;), CancelledError()]</span></span><br></pre></td></tr></table></figure>
+<p>我們可以看到，worker1正常執行，worker2執行中遇到錯誤，worker3執行太久被我們cancel了<br>到這裡，其實thread能做的coroutine也能做</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>本篇講解了Python Coroutine的基本概念和用法，這裡簡單總結一下</p>
 <ul>
-<li>Container是Iterable的，代表將Container放進for in裡我們可以一個個迭代</li>
-<li>Generator是一個特殊的Iterator，使用Generator可以寫出更清新，更省資源的程式碼</li>
+<li>Coroutine和threading的差別主要是Coroutine只能用一個CPU core，以及Coroutine是程式決定什麼時候要切換任務</li>
+<li>Coroutine的寫法更加簡潔清晰，滿足中小級別的併發需求</li>
+<li>寫Coroutine的時候，腦海要有清晰的Event loop概念，知道什麼時候需要暫停、等待I/O，什麼時候可以執行到底</li>
 </ul>
 
       
@@ -468,9 +476,7 @@ Container透過<code>iter()</code>返回一個Iterator，然後我們可以透�
           
             <a href="../../../../tags/python/" rel="tag"># python</a>
           
-            <a href="../../../../tags/iterator/" rel="tag"># iterator</a>
-          
-            <a href="../../../../tags/generator/" rel="tag"># generator</a>
+            <a href="../../../../tags/coroutine/" rel="tag"># coroutine</a>
           
         </div>
       
@@ -483,8 +489,8 @@ Container透過<code>iter()</code>返回一個Iterator，然後我們可以透�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="../../23/ipbasic-network/" rel="next" title="[網路]IP&MAC地址 - 網路通訊世界的大門">
-                <i class="fa fa-chevron-left"></i> [網路]IP&MAC地址 - 網路通訊世界的大門
+              <a href="../object-op-python/" rel="next" title="[Python進階]Python Object的比較和複製">
+                <i class="fa fa-chevron-left"></i> [Python進階]Python Object的比較和複製
               </a>
             
           </div>
@@ -492,6 +498,10 @@ Container透過<code>iter()</code>返回一個Iterator，然後我們可以透�
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="../../18/decorector-python/" rel="prev" title="[Python進階]Python的@Decoractor">
+                [Python進階]Python的@Decoractor <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -573,7 +583,7 @@ Container透過<code>iter()</code>返回一個Iterator，然後我們可以透�
               
                 <a href="../../../../archives">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -595,7 +605,7 @@ Container透過<code>iter()</code>返回一個Iterator，然後我們可以透�
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -798,9 +808,9 @@ Container透過<code>iter()</code>返回一個Iterator，然後我們可以透�
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://kaichiachen.github.io/2021/09/25/iterator-generator-python/';
-          this.page.identifier = '2021/09/25/iterator-generator-python/';
-          this.page.title = '[Python進階]Python的iterator和generator';
+          this.page.url = 'https://kaichiachen.github.io/2021/09/16/coroutine-python/';
+          this.page.identifier = '2021/09/16/coroutine-python/';
+          this.page.title = '[Python進階]Python的coroutine';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://kaichiablog.disqus.com/embed.js';

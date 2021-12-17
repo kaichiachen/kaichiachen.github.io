@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="儲存,檔案系統,file storage,file system," />
+  <meta name="keywords" content="python,iterator,generator," />
 
 
 
@@ -79,20 +79,19 @@
 
 
 
-<meta name="description" content="File storage(檔案系統)有了File storage，我們用滑鼠鍵盤就能操控資料">
+<meta name="description" content="剛寫Python的時候，你可能對於Python的語法for i in [2, 4, 6, 8, 10]嘆為觀止，理解起來也非常直觀，比起C++或java的語法，簡潔了不少可是你有想過，Python在處理for in的時候，發生了什麼嗎？什麼樣的object可以被放進for in loop呢？">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[儲存]資料儲存的基礎知識 - File storage">
-<meta property="og:url" content="https://kaichiachen.github.io/2021/09/12/file-storage/index.html">
+<meta property="og:title" content="[Python進階]Python的iterator和generator">
+<meta property="og:url" content="https://kaichiachen.github.io/2021/09/29/iterator-generator-python/index.html">
 <meta property="og:site_name" content="我的生活記事">
-<meta property="og:description" content="File storage(檔案系統)有了File storage，我們用滑鼠鍵盤就能操控資料">
+<meta property="og:description" content="剛寫Python的時候，你可能對於Python的語法for i in [2, 4, 6, 8, 10]嘆為觀止，理解起來也非常直觀，比起C++或java的語法，簡潔了不少可是你有想過，Python在處理for in的時候，發生了什麼嗎？什麼樣的object可以被放進for in loop呢？">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2021-09-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-16T09:52:54.967Z">
+<meta property="article:published_time" content="2021-09-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-17T12:34:44.597Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="儲存">
-<meta property="article:tag" content="檔案系統">
-<meta property="article:tag" content="file storage">
-<meta property="article:tag" content="file system">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="iterator">
+<meta property="article:tag" content="generator">
 <meta name="twitter:card" content="summary">
 
 
@@ -123,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/2021/09/12/file-storage/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2021/09/29/iterator-generator-python/"/>
 
 
 
 
 
-  <title>[儲存]資料儲存的基礎知識 - File storage | 我的生活記事</title>
+  <title>[Python進階]Python的iterator和generator | 我的生活記事</title>
   
 
 
@@ -319,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[儲存]資料儲存的基礎知識 - File storage</h1>
+          <h1 class="post-title" itemprop="name headline">[Python進階]Python的iterator和generator</h1>
         
 
         <div class="post-meta">
@@ -331,8 +330,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-12T00:00:00+08:00">
-                2021-09-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-29T00:00:00+08:00">
+                2021-09-29
               </time>
             
 
@@ -354,8 +353,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="../../../../categories/%E5%84%B2%E5%AD%98/" itemprop="url" rel="index">
-                    <span itemprop="name">儲存</span>
+                  <a href="../../../../categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -374,7 +373,7 @@
                 </span>
                 <a href="#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2021/09/12/file-storage/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2021/09/29/iterator-generator-python/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -396,7 +395,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  752
+                  975
                 </span>
               
 
@@ -421,32 +420,24 @@
       
 
       
-        <h3 id="File-storage-檔案系統"><a href="#File-storage-檔案系統" class="headerlink" title="File storage(檔案系統)"></a>File storage(檔案系統)</h3><p>有了File storage，我們用滑鼠鍵盤就能操控資料</p>
+        <p>剛寫Python的時候，你可能對於Python的語法<code>for i in [2, 4, 6, 8, 10]</code>嘆為觀止，理解起來也非常直觀，比起C++或java的語法，簡潔了不少<br>可是你有想過，Python在處理for in的時候，發生了什麼嗎？什麼樣的object可以被放進for in loop呢？</p>
 <span id="more"></span>
 
-<p>如果要和硬碟直接打交道，Block storage是唯一的方式，只是對人非常不友好，我們怎麼知道我的資料存在哪裏？是連續的存呢？還是分散的存？如果每筆資料都連續的存，那肯定對硬碟的利用率不友好</p>
-<p>任何架構的難題只需要加一層就可以解決，如果不行，那就兩層，為了讓人能夠輕鬆的操作儲存資料，我們在Block storage上面加了一層File system</p>
-<p>我們平常用的Windows就File system，這大家應該很熟悉，由於File system就是Block storage上面加一層，所以檔案的內容都是存在一個個的block中</p>
-<p>除了檔案的內容之外，文件的metadata比如創建時間、權限、大小等等也需要存在另一個地方，專門存這些文件metadata的就叫做inode</p>
-<p>一個檔案的inode可以透過stat來查詢</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#&gt; stat demo.txt</span><br><span class="line">  File: ‘demo.txt’</span><br><span class="line">  Size: 12        	Blocks: 8          IO Block: 4096   regular file</span><br><span class="line">Device: fd02h/64770d	Inode: 238749826   Links: 1</span><br><span class="line">Access: (0644/-rw-r--r--)  Uid: (51426876/ ckaijia)   Gid: (  201/     mts)</span><br><span class="line">Access: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line">Modify: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line">Change: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line"> Birth: -</span><br></pre></td></tr></table></figure>
-
-<p> inode也會消耗儲存空間，所以格式化硬碟的時候，作業系統會將硬碟分成兩個區域，一個存數據，一個存inode，並且指定一個inode的大小，所以就算檔案很小，一塊硬碟裡還是有檔案數量的限制</p>
-<p>那作業系統是如何讀取檔案資料呢？</p>
-<p>首先，不是透過檔案名字，文件名字只是讓使用者方便識別，作業系統透過inode ID，每個inode都有一個號碼，根據使用者點開的文件找到inode號碼，可以透過<code>ls -i demo.txt</code>看到對應的inode號碼</p>
-<p>第二，根據inode號碼找到inode的data</p>
-<p>最後，根據indoe的data，找到檔案裡的數據存在哪個block</p>
-<p><strong>優點</strong><br>File system最大的優點就是他對人類友好，有目錄結構、好記得名字等等，方便UI呈現，除此之外還有如下優點</p>
+<h3 id="Container和Iterator"><a href="#Container和Iterator" class="headerlink" title="Container和Iterator"></a>Container和Iterator</h3><p>Container非常好理解，Python一切皆為object，object的集合就是Container，例如list, set, tuple等等的<br>所有的Container都是iterable(可迭代的)，可迭代是什麼意思呢？你可以想像一下你去水果攤買蘋果，老闆不跟你說庫存，然後你每次都只需要跟老闆說，我要一個蘋果，直到老闆跟你說蘋果沒了<br>Container透過<code>iter()</code>返回一個Iterator，然後我們可以透過<code>next()</code>就能像和老闆要蘋果那樣，一個個要</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>iter_arr = <span class="built_in">iter</span>(arr)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">next</span>(iter_arr)</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">next</span>(iter_arr)</span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">next</span>(iter_arr)</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">next</span>(iter_arr)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">StopIteration</span><br></pre></td></tr></table></figure>
+<p>當老闆說沒有蘋果的時候，就會throw exception出來</p>
+<h3 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h3><p>Generator可以理解為懶人版的Container<br>生成一個Container很簡單，<code>[i for i in range(100000000)]</code>就可以生成一億個int的array，每個元素都會保存在記憶體當中，當然，轉成Iterator後也是，只是他們取用元素的方式不同而已<br>而Generator的使用方法和Iterator比較類似，都是需要後再取，只是Iterator會預先把所有元素放進記憶體，而Generator會等有需要拿的時候才會把該元素載入記憶體</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> psutil</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_memory_info</span>(<span class="params">hint</span>):</span></span><br><span class="line">    pid = os.getpid()</span><br><span class="line">    p = psutil.Process(pid)</span><br><span class="line">    info = p.memory_full_info()</span><br><span class="line">    memory = info.uss / <span class="number">1024.</span> / <span class="number">1024</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;&#123;&#125; memory used: &#123;&#125; MB&#x27;</span>.<span class="built_in">format</span>(hint, memory))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_iterator</span>():</span></span><br><span class="line">    show_memory_info(<span class="string">&#x27;initing iterator&#x27;</span>)</span><br><span class="line">    list_1 = [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100000000</span>)]</span><br><span class="line">    show_memory_info(<span class="string">&#x27;after iterator initiated&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">sum</span>(list_1))</span><br><span class="line">    show_memory_info(<span class="string">&#x27;after sum called&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_generator</span>():</span></span><br><span class="line">    show_memory_info(<span class="string">&#x27;initing generator&#x27;</span>)</span><br><span class="line">    list_2 = (i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100000000</span>))</span><br><span class="line">    show_memory_info(<span class="string">&#x27;after generator initiated&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">sum</span>(list_2))</span><br><span class="line">    show_memory_info(<span class="string">&#x27;after sum called&#x27;</span>)</span><br><span class="line"></span><br><span class="line">test_iterator()</span><br><span class="line">test_generator()</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># initing iterator memory used: 7.28125 MB</span></span><br><span class="line"><span class="comment"># after iterator initiated memory used: 2015.828125 MB</span></span><br><span class="line"><span class="comment"># 4999999950000000</span></span><br><span class="line"><span class="comment"># after sum called memory used: 3869.05078125 MB</span></span><br><span class="line"><span class="comment"># initing generator memory used: 9.5703125 MB</span></span><br><span class="line"><span class="comment"># after generator initiated memory used: 9.58203125 MB</span></span><br><span class="line"><span class="comment"># 4999999950000000</span></span><br><span class="line"><span class="comment"># after sum called memory used: 9.58203125 MB</span></span><br></pre></td></tr></table></figure>
+<p>我們可以看到記憶體驚人的差異，在Iterator和Generator初始記憶體都差不多的情況下，Iterator需要2GB的記憶體，而Generator只需要9.5MB，如果遇到不需要同時在記憶體保存這麼多東西的場景，例如元素總和，可以使用Generator<br>由上面的範例可以看到，Generator的初始化寫法是<code>(i for i in range(100000000))</code><br>那麼Generator還能怎麼玩呢？例如我們想要驗證一個數學公式<code>(1+2+3+...+n)^2 = 1^3 + 2^3 + 3^3 + ... + n^3</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generator</span>(<span class="params">k</span>):</span></span><br><span class="line">   i = <span class="number">1</span></span><br><span class="line">   <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">      <span class="keyword">yield</span> i ** k</span><br><span class="line">      i+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">gen_1 = generator(<span class="number">1</span>)</span><br><span class="line">gen_3 = generator(<span class="number">3</span>)</span><br><span class="line">sum_1 = <span class="number">0</span></span><br><span class="line">sum_3 = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">   sum_1 += <span class="built_in">next</span>(gen_1)</span><br><span class="line">   sum_2 = sum_1 ** <span class="number">2</span></span><br><span class="line">   sum_3 += <span class="built_in">next</span>(gen_3)</span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&quot;sum_2: %s, sum_3: %s&quot;</span> % (sum_2, sum_3))</span><br><span class="line">   time.sleep(<span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
+<p>yield是Generator獨有的，你可以理解為，在next之前，他就會被卡在這裡，call next之後yield就會return值出來<br>你看，有了Generator，我就能一直無限的驗證下去，不用擔心記憶體爆炸，Iterator是一個有限集合，Generator是一個無限集合！</p>
+<p>除此之外，Generator也能讓程式碼更加簡潔有力！讓我們看下面的例子，輸入一個array和一個數字，找出該數字在array的位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># Iterator</span><br><span class="line">def find_iter(arr, val):</span><br><span class="line">   res = []</span><br><span class="line">   for idx, v in enumerate(arr):</span><br><span class="line">      if v == val:</span><br><span class="line">         res.append(idx)</span><br><span class="line">   return res</span><br><span class="line">   </span><br><span class="line"># Generator</span><br><span class="line">def find_gen(arr, val):</span><br><span class="line">   for idx, v in enumerate(arr):</span><br><span class="line">      if v == val:</span><br><span class="line">         yield idx</span><br><span class="line"></span><br><span class="line">arr = [1, 5, 2, 9, 1, 7, 2, 1, 2]</span><br><span class="line">val = 2</span><br><span class="line">print(find_iter(arr, val))</span><br><span class="line">print(list(find_gen(arr, val)))</span><br><span class="line"># Output</span><br><span class="line"># [2, 6, 8]</span><br><span class="line"># [2, 6, 8]</span><br></pre></td></tr></table></figure>
+<p>顯然的，Generator清爽多了</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>本篇講了Container, Iterator和Generator</p>
 <ul>
-<li><strong>方便共享</strong>:<br>一個inode就能與其他同台電腦上的user直接分享檔案，而且有權限控制</li>
-<li><strong>安全</strong>:<br>如上述所示，Linux有三種權限控制 - 自己、組和其他</li>
-<li><strong>成本低</strong>：<br>不需要昂貴的光纖，只要買機器，接上外接硬碟，透過作業系統上的File system，就可以使用</li>
-</ul>
-<p><strong>缺點</strong></p>
-<ul>
-<li><strong>資料讀寫慢</strong>:<br>因為讀取跟寫入都有兩層，除了讀寫本身資料(Block storage)之外，還有inode裡的metadata需要處理</li>
-<li><strong>難以遷移</strong>:<br>如過想把文件都搬遷到另一個作業系統有點困難，如果file storage的格式不同或inode的演算法不同就更糟了</li>
-<li><strong>權限控制</strong>:<br>權限控制只有三層 - 自己、group、others，無法滿足更複雜的需求</li>
+<li>Container是Iterable的，代表將Container放進for in裡我們可以一個個迭代</li>
+<li>Generator是一個特殊的Iterator，使用Generator可以寫出更清新，更省資源的程式碼</li>
 </ul>
 
       
@@ -465,13 +456,11 @@
       
         <div class="post-tags">
           
-            <a href="../../../../tags/%E5%84%B2%E5%AD%98/" rel="tag"># 儲存</a>
+            <a href="../../../../tags/python/" rel="tag"># python</a>
           
-            <a href="../../../../tags/%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1/" rel="tag"># 檔案系統</a>
+            <a href="../../../../tags/iterator/" rel="tag"># iterator</a>
           
-            <a href="../../../../tags/file-storage/" rel="tag"># file storage</a>
-          
-            <a href="../../../../tags/file-system/" rel="tag"># file system</a>
+            <a href="../../../../tags/generator/" rel="tag"># generator</a>
           
         </div>
       
@@ -484,8 +473,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="../../05/block-storage/" rel="next" title="[儲存]資料儲存的基礎知識 - Block storage">
-                <i class="fa fa-chevron-left"></i> [儲存]資料儲存的基礎知識 - Block storage
+              <a href="../../23/ipbasic-network/" rel="next" title="[網路]IP&MAC地址 - 網路通訊世界的大門">
+                <i class="fa fa-chevron-left"></i> [網路]IP&MAC地址 - 網路通訊世界的大門
               </a>
             
           </div>
@@ -493,10 +482,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="../../13/object-storage/" rel="prev" title="[儲存]資料儲存的基礎知識 - Object storage">
-                [儲存]資料儲存的基礎知識 - Object storage <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -803,9 +788,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://kaichiachen.github.io/2021/09/12/file-storage/';
-          this.page.identifier = '2021/09/12/file-storage/';
-          this.page.title = '[儲存]資料儲存的基礎知識 - File storage';
+          this.page.url = 'https://kaichiachen.github.io/2021/09/29/iterator-generator-python/';
+          this.page.identifier = '2021/09/29/iterator-generator-python/';
+          this.page.title = '[Python進階]Python的iterator和generator';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://kaichiablog.disqus.com/embed.js';
