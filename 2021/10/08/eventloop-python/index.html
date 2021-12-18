@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="python,decorator," />
+  <meta name="keywords" content="python,eventloop," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="今天這篇文章，我們來學習一下Python的Decorator裝飾器 Decorator在Python是一個非常經典的feature，在工程中也應用廣泛，例如Log, Cache, Threading等等">
+<meta name="description" content="之前我們講過了Python的Coroutine，提到了我們用的是asyncio library，不同於Coroutine那一篇，我們這一篇注重於原理的理解 我們知道，multi threading能夠使得效率及CPU使用率大大提高，那為什麼我們需要Asyncio(Coroutine)呢？  因為在multi threading下，程式碼容易被作業系統打斷，因此可能會出現race condition">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[Python進階]Python的@Decoractor">
-<meta property="og:url" content="https://kaichiachen.github.io/2021/09/18/decorector-python/index.html">
+<meta property="og:title" content="[Python進階]Asyncio的Event loop">
+<meta property="og:url" content="https://kaichiachen.github.io/2021/10/08/eventloop-python/index.html">
 <meta property="og:site_name" content="我的生活記事">
-<meta property="og:description" content="今天這篇文章，我們來學習一下Python的Decorator裝飾器 Decorator在Python是一個非常經典的feature，在工程中也應用廣泛，例如Log, Cache, Threading等等">
+<meta property="og:description" content="之前我們講過了Python的Coroutine，提到了我們用的是asyncio library，不同於Coroutine那一篇，我們這一篇注重於原理的理解 我們知道，multi threading能夠使得效率及CPU使用率大大提高，那為什麼我們需要Asyncio(Coroutine)呢？  因為在multi threading下，程式碼容易被作業系統打斷，因此可能會出現race condition">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2021-09-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-17T06:19:40.251Z">
+<meta property="article:published_time" content="2021-10-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-18T10:29:53.712Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="python">
-<meta property="article:tag" content="decorator">
+<meta property="article:tag" content="eventloop">
 <meta name="twitter:card" content="summary">
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/2021/09/18/decorector-python/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2021/10/08/eventloop-python/"/>
 
 
 
 
 
-  <title>[Python進階]Python的@Decoractor | 我的生活記事</title>
+  <title>[Python進階]Asyncio的Event loop | 我的生活記事</title>
   
 
 
@@ -317,7 +317,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[Python進階]Python的@Decoractor</h1>
+          <h1 class="post-title" itemprop="name headline">[Python進階]Asyncio的Event loop</h1>
         
 
         <div class="post-meta">
@@ -329,8 +329,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-18T00:00:00+08:00">
-                2021-09-18
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-08T00:00:00+08:00">
+                2021-10-08
               </time>
             
 
@@ -372,7 +372,7 @@
                 </span>
                 <a href="#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2021/09/18/decorector-python/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2021/10/08/eventloop-python/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -394,7 +394,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  973
+                  883
                 </span>
               
 
@@ -419,36 +419,36 @@
       
 
       
-        <p>今天這篇文章，我們來學習一下Python的Decorator裝飾器</p>
-<p>Decorator在Python是一個非常經典的feature，在工程中也應用廣泛，例如Log, Cache, Threading等等</p>
-<span id="more"></span>
-
-<h3 id="Function-Decorator"><a href="#Function-Decorator" class="headerlink" title="Function Decorator"></a>Function Decorator</h3><p>其實Decorator是對function的封裝，可以理解為對這個function的前後做一點”裝飾”，我們會從python<code>lambda</code>切入講解，引入Decorator的基本概念和用法，最後透過一個實際的例子加深理解</p>
-<p>前面說過，Python的一切皆為Object，連function也不例外，我們看下面的例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">helloworld = func</span><br><span class="line">helloworld()</span><br><span class="line"><span class="comment"># Output:</span></span><br><span class="line"><span class="comment"># hello world</span></span><br></pre></td></tr></table></figure>
-<p>從上面的例子，我們把func作為一個variable賦予helloworld，然後call helloworld，相當於call了func<br>所以我們也可以把function作為一個參數傳到另外一個function裡面</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printer</span>(<span class="params">func</span>):</span></span><br><span class="line">    func()</span><br><span class="line">printer(print_hello_world)</span><br><span class="line"><span class="comment"># Output:</span></span><br><span class="line"><span class="comment"># hello world</span></span><br></pre></td></tr></table></figure>
-<p>有了這些基礎概念後，我們接下來可以深入挖掘Decorator<br>按照Decorator的思路，就是對某一個function做前後包裝，例如我們想要計算每個傳進來的function執行花了多少時間，可以這樣寫</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printer</span>(<span class="params">func</span>):</span></span><br><span class="line">    start = time.time()</span><br><span class="line">    func()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Time consumed: %s secs&#x27;</span> % (time.time()-start))</span><br><span class="line">printer(print_hello_world)</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># Time consumed: 4.220008850097656e-05 secs</span></span><br></pre></td></tr></table></figure>
-<p>更通用一點，我們可以把printer封裝成更generic一點的function直接return</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decorator_benchmark</span>(<span class="params">func</span>):</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span>():</span></span><br><span class="line">       start = time.time()</span><br><span class="line">       func()</span><br><span class="line">       <span class="built_in">print</span>(<span class="string">&#x27;Time consumed: %s secs&#x27;</span> % (time.time()-start))</span><br><span class="line">   <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line">printer = decorator_benchmark(print_hello_world)</span><br><span class="line">printer()</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># Time consumed: 5.2928924560546875e-05 secs</span></span><br></pre></td></tr></table></figure>
-<p>我們把原本的<code>print_hello_world</code>封裝成<code>decorator_benchmark</code>的內置函數，這樣在外面call就會非常的簡潔，不過這樣還是有點浪費唇舌，如果我們總是需要對<code>print_hello_world</code>測量性能，call之前都需要對他封裝一次，那有沒有一個更簡潔的方法呢？</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decorator_benchmark</span>(<span class="params">func</span>):</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span>():</span></span><br><span class="line">       start = time.time()</span><br><span class="line">       func()</span><br><span class="line">       <span class="built_in">print</span>(<span class="string">&#x27;Time consumed: %s secs&#x27;</span> % (time.time()-start))</span><br><span class="line">   <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@decorator_benchmark</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"></span><br><span class="line">print_hello_world()</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># Time consumed: 4.38690185546875e-05 secs</span></span><br></pre></td></tr></table></figure>
-<p>我們在<code>print_hello_world</code>上面加了<code>@decorator_benchmark</code>，其中<code>@</code>，是Python裡的語法糖，我們可以對一些常見的功能例如benchmark、Log等等寫成一個Decorator function，然後再對其他函數進行”裝飾”，這樣就大大提高了程式的重複利用和可讀性</p>
-<p>當然，Decorator具有強大的靈活性，我們也可以對其傳入參數，例如</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">repeat</span>(<span class="params">num</span>):</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">decorator</span>(<span class="params">func</span>):</span></span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span>(<span class="params">*args, **kwargs</span>):</span></span><br><span class="line">         <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">            func(*args, **kwargs)</span><br><span class="line">      <span class="keyword">return</span> wrapper</span><br><span class="line">   <span class="keyword">return</span> decorator</span><br><span class="line"></span><br><span class="line"><span class="meta">@repeat(<span class="params"><span class="number">4</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line"></span><br><span class="line">print_hello_world()</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># hello world</span></span><br></pre></td></tr></table></figure>
-
-<p>不過這樣寫有個副作用是，我們裝飾後的<code>print_hello_world</code>的metadata就被改變了</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">help</span>(print_hello_world)</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># Help on function wrapper in module __main__:</span></span><br><span class="line"><span class="comment"># wrapper(*args, **kwargs)</span></span><br></pre></td></tr></table></figure>
-<p>他告訴了我們function不再是原來的<code>print_hello_world</code>，而是被<code>wrapper</code>取代了<br>不過俗話說的好，見招拆招，為了解決這個問題，我們可以使用Python已有的Decorator <code>@functools.wrap</code>，他會保留原本函數的metadata(也就是將原本函數的metadata copy到Decorator裡面)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> functools</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">repeat</span>(<span class="params">num</span>):</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">decorator</span>(<span class="params">func</span>):</span></span><br><span class="line"><span class="meta">      @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span>(<span class="params">*args, **kwargs</span>):</span></span><br><span class="line">         <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">            func(*args, **kwargs)</span><br><span class="line">      <span class="keyword">return</span> wrapper</span><br><span class="line">   <span class="keyword">return</span> decorator</span><br><span class="line"></span><br><span class="line"><span class="meta">@repeat(<span class="params"><span class="number">4</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">help</span>(print_hello_world)</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># Help on function print_hello_world in module __main__:</span></span><br><span class="line"><span class="comment"># print_hello_world()</span></span><br></pre></td></tr></table></figure>
-<h4 id="Class-Decorator"><a href="#Class-Decorator" class="headerlink" title="Class Decorator"></a>Class Decorator</h4><p>最後來說說Class Decorator，前面提到的Decorator是以function為形式的，其實class也可以做為Decorator，這樣可以持久化存一些資料．Class Decorator藉由函數<code>__call__</code>，每當call一次被裝飾的function時，就會call一次<code>__call__</code>，我們以”計算函數被call的次數”作為例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Count</span>:</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, func</span>):</span></span><br><span class="line">      self.num_call = <span class="number">0</span></span><br><span class="line">      self.func = func</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">__call__</span>(<span class="params">self, *args, **kwargs</span>):</span></span><br><span class="line">      self.num_call += <span class="number">1</span></span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Num of call is %s&quot;</span> % self.num_call)</span><br><span class="line">      <span class="keyword">return</span> self.func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line"><span class="meta">@Count</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line"></span><br><span class="line">print_hello_world()</span><br><span class="line">print_hello_world()</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># Num of call is 1</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># Num of call is 2</span></span><br><span class="line"><span class="comment"># hello world</span></span><br></pre></td></tr></table></figure>
-<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>所謂的Decorator，就是透過去”裝飾”函數，增加或改變已有函數的功能，使得原有函數不需要修改，有如下優點</p>
+        <p>之前我們講過了Python的Coroutine，提到了我們用的是asyncio library，不同於Coroutine那一篇，我們這一篇注重於原理的理解</p>
+<p>我們知道，multi threading能夠使得效率及CPU使用率大大提高，那為什麼我們需要Asyncio(Coroutine)呢？</p>
 <ul>
-<li>封裝原有程式碼</li>
-<li>程式碼簡潔</li>
-<li>易讀</li>
+<li>因為在multi threading下，程式碼容易被作業系統打斷，因此可能會出現race condition</li>
+<li>以及，context switch會造成性能損耗，如果I/O過多，不停的context switch，會損失很多性能</li>
+</ul>
+<p>於是乎有了Asyncio</p>
+<span id="more"></span>
+<h3 id="Asyncio原理"><a href="#Asyncio原理" class="headerlink" title="Asyncio原理"></a>Asyncio原理</h3><p>Asyncio和Python的程式一樣，實際上是single thread的，不過可以不停地切換，只要拿到GIL就可以進行任務，這裡的任務，就是特殊的future object，並且被Event loop所控制<br>我們可以假設任務只有兩個狀態 - 預備狀態和完成狀態，預備狀態指的是任務目前空閒，隨時可以執行，而等待狀態就是任務已經執行，但是被掛著等待某個操作完成，例如I/O<br>於是乎，Event loop有兩個job list，分別對應兩種狀態，並且選取一個預備狀態的任務，執行它，一直到他被交還給Event loop<br>當任務被交還給Event loop時，Event loop會根據其是否完成，把任務放進預備或完成狀態的list</p>
+<ul>
+<li>如果完成，則放進去預備狀態</li>
+<li>如果未完成，則放進去等待狀態</li>
+</ul>
+<p>然後再遍歷等待狀態list，看他們是否完成，如果完成再放進去預備狀態</p>
+<p>然後週而復始，直到所有任務完成，由於Asyncio的任務不會被外部的因素打斷，所以Asyncio裡面的操作不會出現race condition的問題，再讓我們複習一下這段程式碼</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">loading</span>(<span class="params">sec</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;loading... needs &#123;&#125; secs to load&#x27;</span>.<span class="built_in">format</span>(sec))</span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(sec)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;OK &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(sec))</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">main</span>(<span class="params">secs</span>):</span></span><br><span class="line">    tasks = [asyncio.create_task(loading(sec)) <span class="keyword">for</span> sec <span class="keyword">in</span> secs]</span><br><span class="line">    <span class="keyword">await</span> asyncio.gather(*tasks)</span><br><span class="line"></span><br><span class="line">asyncio.run(main([<span class="number">5</span>, <span class="number">3</span>]))</span><br><span class="line"><span class="comment"># Output:</span></span><br><span class="line"><span class="comment"># loading... needs 5 secs to load</span></span><br><span class="line"><span class="comment"># loading... needs 3 secs to load</span></span><br><span class="line"><span class="comment"># OK 3</span></span><br><span class="line"><span class="comment"># OK 5</span></span><br></pre></td></tr></table></figure>
+<p>async/await是aysncio的一種寫法，代表這個函數或這行程式碼是non-blocking的，如果這裡很耗時，那們就把控制權交還給Event loop，放進等待狀態list<br>另外，<code>asyncio.run()</code>是Python3.7才有的，在舊版本是這樣寫</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line">loop = asyncio.get_event_loop()</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">loading</span>(<span class="params">sec</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;loading... needs &#123;&#125; secs to load&#x27;</span>.<span class="built_in">format</span>(sec))</span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(sec)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;OK &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(sec))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>(<span class="params">secs</span>):</span></span><br><span class="line">    loop.run_until_complete(</span><br><span class="line">          asyncio.wait(</span><br><span class="line">             [asyncio.ensure_future(loading(sec)) <span class="keyword">for</span> sec <span class="keyword">in</span> secs]</span><br><span class="line">          )</span><br><span class="line">      )</span><br><span class="line">main([<span class="number">5</span>, <span class="number">3</span>])</span><br><span class="line">loop.close()</span><br><span class="line"><span class="comment"># Output:</span></span><br><span class="line"><span class="comment"># loading... needs 5 secs to load</span></span><br><span class="line"><span class="comment"># loading... needs 3 secs to load</span></span><br><span class="line"><span class="comment"># OK 3</span></span><br><span class="line"><span class="comment"># OK 5</span></span><br></pre></td></tr></table></figure>
+<h3 id="Asyncio有缺點嗎？"><a href="#Asyncio有缺點嗎？" class="headerlink" title="Asyncio有缺點嗎？"></a>Asyncio有缺點嗎？</h3><p>當然有，我們知道Asyncio的eventloop藉由async/await去把job控制權交還給Event loop，所以相應的第三方library也要做調整才能完美地利用Coroutine提升性能，例如，著名的<code>requests</code>library就沒有支持Asyncio，而相同功能的<code>aiohttp</code>有兼容Asyncio</p>
+<h3 id="multli-processing-multi-threading-or-coroutine"><a href="#multli-processing-multi-threading-or-coroutine" class="headerlink" title="multli-processing? multi-threading? or coroutine?"></a>multli-processing? multi-threading? or coroutine?</h3><p>總結來說</p>
+<ul>
+<li>CPU heavy -&gt; 使用multli-processing</li>
+<li>如果I/O慢或太多 -&gt; 使用Coroutine</li>
+<li>反之，如果I/O快 -&gt; 使用multi-threading</li>
+</ul>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>這篇文章帶大家過了Asyncio Event loop的原理</p>
+<ul>
+<li>Asyncio是single thread的，但是透過Event loop，併發的執行不同任務，在程式端享有自主控制權</li>
+<li>由於打斷是自己控制的，不會出現race condition的問題，在I/O heavy的情況下，比multi-threading的效率更好，因為不用context switch，且能開啟的任務數量更多</li>
+<li>不過Asyncio的缺點是，需要第三方library的支持</li>
 </ul>
 
       
@@ -469,7 +469,7 @@
           
             <a href="../../../../tags/python/" rel="tag"># python</a>
           
-            <a href="../../../../tags/decorator/" rel="tag"># decorator</a>
+            <a href="../../../../tags/eventloop/" rel="tag"># eventloop</a>
           
         </div>
       
@@ -482,8 +482,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="../../16/object-op-python/" rel="next" title="[Python進階]Python Object的比較和複製">
-                <i class="fa fa-chevron-left"></i> [Python進階]Python Object的比較和複製
+              <a href="../../05/futures-python/" rel="next" title="[Python進階]Python的並行計算 - Futures">
+                <i class="fa fa-chevron-left"></i> [Python進階]Python的並行計算 - Futures
               </a>
             
           </div>
@@ -491,10 +491,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="../../20/overview-network/" rel="prev" title="[網路]TCP/IP - 計算機網路是什麼?">
-                [網路]TCP/IP - 計算機網路是什麼? <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -801,9 +797,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://kaichiachen.github.io/2021/09/18/decorector-python/';
-          this.page.identifier = '2021/09/18/decorector-python/';
-          this.page.title = '[Python進階]Python的@Decoractor';
+          this.page.url = 'https://kaichiachen.github.io/2021/10/08/eventloop-python/';
+          this.page.identifier = '2021/10/08/eventloop-python/';
+          this.page.title = '[Python進階]Asyncio的Event loop';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://kaichiablog.disqus.com/embed.js';
