@@ -40,7 +40,7 @@
 
   
   
-  <link href="../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,29 +48,27 @@
 
 
 
-<link href="../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="../../images/apple-touch-icon-next.png?v=5.1.4">
+<link href="../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="../../images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.4">
 
 
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.4" color="#222">
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
 
 
+  <meta name="keywords" content="python,concurrent,parallel," />
 
 
 
@@ -79,13 +77,21 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="我的生活記事">
-<meta property="og:url" content="https://kaichiachen.github.io/tags/generator/index.html">
+
+
+<meta name="description" content="無論是哪門程式語言，併發(Concurrent)和並行(Parallel)都是很常用且重要的知識點．例如爬蟲，被廣泛運用在工業界資料收集領域，其用的核心技術，就是併發並行程式正確合理的使用併發並行，無疑會給我們的程式帶來巨大的性能提升，之前我們聊到Python Coroutine，今天我們來聊聊Python的Futures">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Python進階]Python的並行計算 - Futures">
+<meta property="og:url" content="https://kaichiachen.github.io/2021/10/05/futures-python/index.html">
 <meta property="og:site_name" content="我的生活記事">
+<meta property="og:description" content="無論是哪門程式語言，併發(Concurrent)和並行(Parallel)都是很常用且重要的知識點．例如爬蟲，被廣泛運用在工業界資料收集領域，其用的核心技術，就是併發並行程式正確合理的使用併發並行，無疑會給我們的程式帶來巨大的性能提升，之前我們聊到Python Coroutine，今天我們來聊聊Python的Futures">
 <meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-10-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-18T06:34:50.352Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="鍇嘉">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="concurrent">
+<meta property="article:tag" content="parallel">
 <meta name="twitter:card" content="summary">
 
 
@@ -116,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/tags/generator/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2021/10/05/futures-python/"/>
 
 
 
 
 
-  <title>Tag: generator | 我的生活記事</title>
+  <title>[Python進階]Python的並行計算 - Futures | 我的生活記事</title>
   
 
 
@@ -153,7 +159,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,54 +287,221 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>generator<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的生活記事">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="../../2021/09/25/iterator-generator-python/" itemprop="url">
-              
-                <span itemprop="name">[Python進階]Python的iterator和generator</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">[Python進階]Python的並行計算 - Futures</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-09-25T00:00:00+08:00"
-              content="2021-09-25" >
-          09-25
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-05T00:00:00+08:00">
+                2021-10-05
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2021/10/05/futures-python/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  920
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>無論是哪門程式語言，併發(Concurrent)和並行(Parallel)都是很常用且重要的知識點．例如爬蟲，被廣泛運用在工業界資料收集領域，其用的核心技術，就是併發並行程式<br>正確合理的使用併發並行，無疑會給我們的程式帶來巨大的性能提升，之前我們聊到Python Coroutine，今天我們來聊聊Python的Futures</p>
+<span id="more"></span>
+<p>再稍微複習一下併發(Concurrent)和並行(Parallel)的差別，併發指的是在同一個CPU下，透過上下文切換(Context switch)，讓使用者覺得不同程式段同時執行，並行則是真正意義上的多個CPU同時執行，所以說</p>
+<ul>
+<li>併發 - 通常應用在I/O頻繁或耗時的場景，例如要下載多個檔案，I/O所消耗的時間會比CPU還要多</li>
+<li>並行 - 適合CPU heavy的場景，例如MapReduce的計算，為了加快速度，會需要更多的CPU去完成</li>
+</ul>
+<p>不過需要提到的一點是，如果電腦有四顆CPU，照理說可以同時並行的跑四個Threads，然而在Python卻不能這樣，Python的直譯器天生有race condition的問題，所以同一時刻只能允許一個Thread執行，具體原因後面有機會聊到GIL的時候會提到</p>
+<p>Python的Futures library提供了我們方便建立併發併行的框架，也能夠建立threading pool, process pool等等，我們來看下面簡單的例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> concurrent.futures</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loading_one</span>(<span class="params">name</span>):</span></span><br><span class="line">    <span class="comment"># Return value of random.random will be 0 ~ 1</span></span><br><span class="line">    time.sleep(random.random())</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Job %s is completed.&#x27;</span> % name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loading</span>(<span class="params">names</span>):</span></span><br><span class="line">    <span class="keyword">with</span> concurrent.futures.ThreadPoolExecutor(max_workers=<span class="number">5</span>) <span class="keyword">as</span> executor:</span><br><span class="line">        executor.<span class="built_in">map</span>(loading_one, names)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    jobnames = [</span><br><span class="line">        <span class="string">&#x27;JobA&#x27;</span>, <span class="string">&#x27;JobB&#x27;</span>, <span class="string">&#x27;JobC&#x27;</span>, <span class="string">&#x27;JobD&#x27;</span></span><br><span class="line">    ]</span><br><span class="line">    start_time = time.perf_counter()</span><br><span class="line">    loading(jobnames)</span><br><span class="line">    end_time = time.perf_counter()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Load &#123;&#125; jobs in &#123;&#125; seconds&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">len</span>(jobnames), end_time - start_time))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br><span class="line">    </span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># Job JobB is completed.</span></span><br><span class="line"><span class="comment"># Job JobD is completed.</span></span><br><span class="line"><span class="comment"># Job JobA is completed.</span></span><br><span class="line"><span class="comment"># Job JobC is completed.</span></span><br><span class="line"><span class="comment"># Load 4 jobs in 0.706298665 seconds</span></span><br></pre></td></tr></table></figure>
+<p>耗時不到一秒，由於<code>random.random()</code> return介於0和1之間，代表確實是併發執行的<br>這裡我們建立的threading pool</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> concurrent.futures.ThreadPoolExecutor(max_workers=<span class="number">5</span>) <span class="keyword">as</span> executor:</span><br><span class="line">        executor.<span class="built_in">map</span>(loading_one, names)</span><br></pre></td></tr></table></figure>
+<p>最多可以同時使用五個Threads，而<code>executor.map</code>就像python裡的map一樣，對每個names的元素去call loading_one fucntion<br>另外，雖然我們可以自己設定thread的數量，但是不是越多越好，因為thread的創建、維護、刪除也有一定的性能消耗，設定很大可能會導致速度更慢<br>當然，我們也可以把上述程式碼改成”併行”，併行就是多個CPU一起跑，只要做出下面的變化即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> concurrent.futures.ProcessPoolExecutor(max_workers=<span class="number">5</span>) <span class="keyword">as</span> executor:</span><br><span class="line">    executor.<span class="built_in">map</span>(loading_one, names)</span><br></pre></td></tr></table></figure>
+<p>函數<code>ProcessPoolExecutor</code>代表創建Process pool，有興趣的讀者可以嘗試，一般會遇到改成<code>ProcessPoolExecutor</code>後，耗時更多了，這是因為並行的方式適合在CPU heavy的情況中</p>
+<p>有沒有發覺Python的Futures library和asyncio非常像？，他們都會將處於等待的job放進去list裡，這些job隨時都可以查詢，當然，他們的結果和異常(<code>job.result()</code>)也能在結束之後拿到</p>
+<p>再介紹一個Futures常用的方法 - <code>done()</code>，表示該job是否已經完成，done()是non-blocking的，代表call了他之後會立即返回，還有一個方法是<code>add_done_callback(func)</code>，當job完成後，會被通知並call callback function</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>首先，我們學習了併發(Concurrent)和並行(Parallel)的差別<br>併發通常用於I/O密集的場景，並行則適合CPU heavy的場景</p>
+<p>隨後，我們展示了Python Futures library的例子，透過Thread Pool和Process Pool展示如何優雅的利用併發和並行執行程式</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/python/" rel="tag"># python</a>
+          
+            <a href="../../../../tags/concurrent/" rel="tag"># concurrent</a>
+          
+            <a href="../../../../tags/parallel/" rel="tag"># parallel</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../03/7habits_book/" rel="next" title="[閱讀]與成功有約：高效能人士的七個習慣">
+                <i class="fa fa-chevron-left"></i> [閱讀]與成功有約：高效能人士的七個習慣
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -336,6 +509,20 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -362,7 +549,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="../../images/avatar.jpg"
+                src="../../../../images/avatar.jpg"
                 alt="" />
             
               <p class="site-author-name" itemprop="name"></p>
@@ -374,7 +561,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="../../archives">
+                <a href="../../../../archives">
               
                   <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">posts</span>
@@ -386,7 +573,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="../../categories/index.html">
+                <a href="../../../../categories/index.html">
                   <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
@@ -397,7 +584,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="../index.html">
+                <a href="../../../../tags/index.html">
                   <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
@@ -528,60 +715,64 @@
 
   
   
-    <script type="text/javascript" src="../../lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 
   
 
 
-  <script type="text/javascript" src="../../js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.4"></script>
 
-  <script type="text/javascript" src="../../js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="../../js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="../../js/src/schemes/pisces.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.4"></script>
 
 
 
   
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
 
-  <script type="text/javascript" src="../../js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -594,6 +785,18 @@
       <script id="dsq-count-scr" src="https://kaichiablog.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://kaichiachen.github.io/2021/10/05/futures-python/';
+          this.page.identifier = '2021/10/05/futures-python/';
+          this.page.title = '[Python進階]Python的並行計算 - Futures';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kaichiablog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   
