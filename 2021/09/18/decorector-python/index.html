@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-TW">
+<html class="theme-next pisces use-motion" lang="zh-tw">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -107,7 +107,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -151,7 +151,7 @@
 
 <meta name="generator" content="Hexo 5.4.0"></head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -199,7 +199,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            首頁
           </a>
         </li>
       
@@ -209,7 +209,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            About
+            關於
           </a>
         </li>
       
@@ -219,7 +219,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
-            Tags
+            標籤
           </a>
         </li>
       
@@ -229,7 +229,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Categories
+            分類
           </a>
         </li>
       
@@ -242,7 +242,7 @@
             
               <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
-            Search
+            搜尋
           </a>
         </li>
       
@@ -262,7 +262,7 @@
     </span>
     <div class="local-search-input-wrapper">
       <input autocomplete="off"
-             placeholder="Searching..." spellcheck="false"
+             placeholder="搜索..." spellcheck="false"
              type="text" id="local-search-input">
     </div>
   </div>
@@ -327,9 +327,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">發表於</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-18T00:00:00+08:00">
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-09-18T00:00:00+08:00">
                 2021-09-18
               </time>
             
@@ -348,7 +348,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分類於</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -396,10 +396,10 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                  <span class="post-meta-item-text">字數統計&#58;</span>
                 
-                <span title="Words count in article">
-                  973
+                <span title="字數統計">
+                  985
                 </span>
               
 
@@ -427,29 +427,33 @@
         <p>今天這篇文章，我們來學習一下Python的Decorator裝飾器</p>
 <p>Decorator在Python是一個非常經典的feature，在工程中也應用廣泛，例如Log, Cache, Threading等等</p>
 <span id="more"></span>
-
-<h3 id="Function-Decorator"><a href="#Function-Decorator" class="headerlink" title="Function Decorator"></a>Function Decorator</h3><p>其實Decorator是對function的封裝，可以理解為對這個function的前後做一點”裝飾”，我們會從python<code>lambda</code>切入講解，引入Decorator的基本概念和用法，最後透過一個實際的例子加深理解</p>
+<h3 id="function-decorator">Function Decorator</h3>
+<p>其實Decorator是對function的封裝，可以理解為對這個function的前後做一點&quot;裝飾&quot;，我們會從python<code>lambda</code>切入講解，引入Decorator的基本概念和用法，最後透過一個實際的例子加深理解</p>
 <p>前面說過，Python的一切皆為Object，連function也不例外，我們看下面的例子</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">helloworld = func</span><br><span class="line">helloworld()</span><br><span class="line"><span class="comment"># Output:</span></span><br><span class="line"><span class="comment"># hello world</span></span><br></pre></td></tr></table></figure>
-<p>從上面的例子，我們把func作為一個variable賦予helloworld，然後call helloworld，相當於call了func<br>所以我們也可以把function作為一個參數傳到另外一個function裡面</p>
+<p>從上面的例子，我們把func作為一個variable賦予helloworld，然後call helloworld，相當於call了func<br>
+所以我們也可以把function作為一個參數傳到另外一個function裡面</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printer</span>(<span class="params">func</span>):</span></span><br><span class="line">    func()</span><br><span class="line">printer(print_hello_world)</span><br><span class="line"><span class="comment"># Output:</span></span><br><span class="line"><span class="comment"># hello world</span></span><br></pre></td></tr></table></figure>
-<p>有了這些基礎概念後，我們接下來可以深入挖掘Decorator<br>按照Decorator的思路，就是對某一個function做前後包裝，例如我們想要計算每個傳進來的function執行花了多少時間，可以這樣寫</p>
+<p>有了這些基礎概念後，我們接下來可以深入挖掘Decorator<br>
+按照Decorator的思路，就是對某一個function做前後包裝，例如我們想要計算每個傳進來的function執行花了多少時間，可以這樣寫</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printer</span>(<span class="params">func</span>):</span></span><br><span class="line">    start = time.time()</span><br><span class="line">    func()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Time consumed: %s secs&#x27;</span> % (time.time()-start))</span><br><span class="line">printer(print_hello_world)</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># Time consumed: 4.220008850097656e-05 secs</span></span><br></pre></td></tr></table></figure>
 <p>更通用一點，我們可以把printer封裝成更generic一點的function直接return</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decorator_benchmark</span>(<span class="params">func</span>):</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span>():</span></span><br><span class="line">       start = time.time()</span><br><span class="line">       func()</span><br><span class="line">       <span class="built_in">print</span>(<span class="string">&#x27;Time consumed: %s secs&#x27;</span> % (time.time()-start))</span><br><span class="line">   <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line">printer = decorator_benchmark(print_hello_world)</span><br><span class="line">printer()</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># Time consumed: 5.2928924560546875e-05 secs</span></span><br></pre></td></tr></table></figure>
 <p>我們把原本的<code>print_hello_world</code>封裝成<code>decorator_benchmark</code>的內置函數，這樣在外面call就會非常的簡潔，不過這樣還是有點浪費唇舌，如果我們總是需要對<code>print_hello_world</code>測量性能，call之前都需要對他封裝一次，那有沒有一個更簡潔的方法呢？</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decorator_benchmark</span>(<span class="params">func</span>):</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span>():</span></span><br><span class="line">       start = time.time()</span><br><span class="line">       func()</span><br><span class="line">       <span class="built_in">print</span>(<span class="string">&#x27;Time consumed: %s secs&#x27;</span> % (time.time()-start))</span><br><span class="line">   <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@decorator_benchmark</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"></span><br><span class="line">print_hello_world()</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># Time consumed: 4.38690185546875e-05 secs</span></span><br></pre></td></tr></table></figure>
-<p>我們在<code>print_hello_world</code>上面加了<code>@decorator_benchmark</code>，其中<code>@</code>，是Python裡的語法糖，我們可以對一些常見的功能例如benchmark、Log等等寫成一個Decorator function，然後再對其他函數進行”裝飾”，這樣就大大提高了程式的重複利用和可讀性</p>
+<p>我們在<code>print_hello_world</code>上面加了<code>@decorator_benchmark</code>，其中<code>@</code>，是Python裡的語法糖，我們可以對一些常見的功能例如benchmark、Log等等寫成一個Decorator function，然後再對其他函數進行&quot;裝飾&quot;，這樣就大大提高了程式的重複利用和可讀性</p>
 <p>當然，Decorator具有強大的靈活性，我們也可以對其傳入參數，例如</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">repeat</span>(<span class="params">num</span>):</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">decorator</span>(<span class="params">func</span>):</span></span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span>(<span class="params">*args, **kwargs</span>):</span></span><br><span class="line">         <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">            func(*args, **kwargs)</span><br><span class="line">      <span class="keyword">return</span> wrapper</span><br><span class="line">   <span class="keyword">return</span> decorator</span><br><span class="line"></span><br><span class="line"><span class="meta">@repeat(<span class="params"><span class="number">4</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line"></span><br><span class="line">print_hello_world()</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># hello world</span></span><br></pre></td></tr></table></figure>
-
 <p>不過這樣寫有個副作用是，我們裝飾後的<code>print_hello_world</code>的metadata就被改變了</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">help</span>(print_hello_world)</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># Help on function wrapper in module __main__:</span></span><br><span class="line"><span class="comment"># wrapper(*args, **kwargs)</span></span><br></pre></td></tr></table></figure>
-<p>他告訴了我們function不再是原來的<code>print_hello_world</code>，而是被<code>wrapper</code>取代了<br>不過俗話說的好，見招拆招，為了解決這個問題，我們可以使用Python已有的Decorator <code>@functools.wrap</code>，他會保留原本函數的metadata(也就是將原本函數的metadata copy到Decorator裡面)</p>
+<p>他告訴了我們function不再是原來的<code>print_hello_world</code>，而是被<code>wrapper</code>取代了<br>
+不過俗話說的好，見招拆招，為了解決這個問題，我們可以使用Python已有的Decorator <code>@functools.wrap</code>，他會保留原本函數的metadata(也就是將原本函數的metadata copy到Decorator裡面)</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> functools</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">repeat</span>(<span class="params">num</span>):</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">decorator</span>(<span class="params">func</span>):</span></span><br><span class="line"><span class="meta">      @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span>(<span class="params">*args, **kwargs</span>):</span></span><br><span class="line">         <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">            func(*args, **kwargs)</span><br><span class="line">      <span class="keyword">return</span> wrapper</span><br><span class="line">   <span class="keyword">return</span> decorator</span><br><span class="line"></span><br><span class="line"><span class="meta">@repeat(<span class="params"><span class="number">4</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">help</span>(print_hello_world)</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># Help on function print_hello_world in module __main__:</span></span><br><span class="line"><span class="comment"># print_hello_world()</span></span><br></pre></td></tr></table></figure>
-<h4 id="Class-Decorator"><a href="#Class-Decorator" class="headerlink" title="Class Decorator"></a>Class Decorator</h4><p>最後來說說Class Decorator，前面提到的Decorator是以function為形式的，其實class也可以做為Decorator，這樣可以持久化存一些資料．Class Decorator藉由函數<code>__call__</code>，每當call一次被裝飾的function時，就會call一次<code>__call__</code>，我們以”計算函數被call的次數”作為例子</p>
+<h4 id="class-decorator">Class Decorator</h4>
+<p>最後來說說Class Decorator，前面提到的Decorator是以function為形式的，其實class也可以做為Decorator，這樣可以持久化存一些資料．Class Decorator藉由函數<code>__call__</code>，每當call一次被裝飾的function時，就會call一次<code>__call__</code>，我們以&quot;計算函數被call的次數&quot;作為例子</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Count</span>:</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, func</span>):</span></span><br><span class="line">      self.num_call = <span class="number">0</span></span><br><span class="line">      self.func = func</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">__call__</span>(<span class="params">self, *args, **kwargs</span>):</span></span><br><span class="line">      self.num_call += <span class="number">1</span></span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;Num of call is %s&quot;</span> % self.num_call)</span><br><span class="line">      <span class="keyword">return</span> self.func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line"><span class="meta">@Count</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello_world</span>():</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line"></span><br><span class="line">print_hello_world()</span><br><span class="line">print_hello_world()</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># Num of call is 1</span></span><br><span class="line"><span class="comment"># hello world</span></span><br><span class="line"><span class="comment"># Num of call is 2</span></span><br><span class="line"><span class="comment"># hello world</span></span><br></pre></td></tr></table></figure>
-<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>所謂的Decorator，就是透過去”裝飾”函數，增加或改變已有函數的功能，使得原有函數不需要修改，有如下優點</p>
+<h3 id="總結">總結</h3>
+<p>所謂的Decorator，就是透過去&quot;裝飾&quot;函數，增加或改變已有函數的功能，使得原有函數不需要修改，有如下優點</p>
 <ul>
 <li>封裝原有程式碼</li>
 <li>程式碼簡潔</li>
@@ -582,7 +586,7 @@
                 <a href="../../../../archives">
               
                   <span class="site-state-item-count">15</span>
-                  <span class="site-state-item-name">posts</span>
+                  <span class="site-state-item-name">文章</span>
                 </a>
               </div>
             
@@ -593,7 +597,7 @@
               <div class="site-state-item site-state-categories">
                 <a href="../../../../categories/index.html">
                   <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">categories</span>
+                  <span class="site-state-item-name">分類</span>
                 </a>
               </div>
             
@@ -604,7 +608,7 @@
               <div class="site-state-item site-state-tags">
                 <a href="../../../../tags/index.html">
                   <span class="site-state-item-count">27</span>
-                  <span class="site-state-item-name">tags</span>
+                  <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
             
