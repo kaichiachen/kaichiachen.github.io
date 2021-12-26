@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="python," />
+  <meta name="keywords" content="閱讀,金錢超思考,理財," />
 
 
 
@@ -79,18 +79,22 @@
 
 
 
-<meta name="description" content="我們知道，Python應用在執行的時候，需要從記憶體規劃出一段空間，用於存放臨時產生的變數，計算完後再放進永久儲存介質，如果所需要存放的臨時變數過大，則會造成OOM(Out of Memory)記憶體錯誤，程式可能會被作業系統終止對於伺服器應用來說，為了設計永遠不中斷的系統，記憶體管理會變得非常重要，不然容易引發記憶體洩漏(Memory Leak) 什麼是記憶體洩漏呢？我們的應用一般都是執行過程中">
+<meta name="description" content="金錢超思考 - 5大金錢迷思 x 25道創造財富的關鍵思考金錢超思考這本書不是一本教你投資致富的書，而是「如何思考金錢？」，這一個問題的背後，作者娓娓道來背後蘊藏的智慧從出社會開始，邁入職場後都在比誰賺的多，然而我們對於金錢的追求與渴望到底是為了什麼？這又衍伸出更多的問題：我到底該把錢花在哪些地方？如何正確看待金錢？擁有很多金錢的意義是什麼？即使財務自由之後又如何？讀完這本書後，我覺得在我們有限的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[Python進階]Python的記憶體垃圾回收機制">
-<meta property="og:url" content="https://kaichiachen.github.io/2021/10/14/garbage-collection-python/index.html">
-<meta property="og:site_name" content="我的生活記事">
-<meta property="og:description" content="我們知道，Python應用在執行的時候，需要從記憶體規劃出一段空間，用於存放臨時產生的變數，計算完後再放進永久儲存介質，如果所需要存放的臨時變數過大，則會造成OOM(Out of Memory)記憶體錯誤，程式可能會被作業系統終止對於伺服器應用來說，為了設計永遠不中斷的系統，記憶體管理會變得非常重要，不然容易引發記憶體洩漏(Memory Leak) 什麼是記憶體洩漏呢？我們的應用一般都是執行過程中">
+<meta property="og:title" content="[閱讀]金錢超思考">
+<meta property="og:url" content="https://kaichiachen.github.io/2021/10/15/think_money_book/index.html">
+<meta property="og:site_name" content="凱文熊">
+<meta property="og:description" content="金錢超思考 - 5大金錢迷思 x 25道創造財富的關鍵思考金錢超思考這本書不是一本教你投資致富的書，而是「如何思考金錢？」，這一個問題的背後，作者娓娓道來背後蘊藏的智慧從出社會開始，邁入職場後都在比誰賺的多，然而我們對於金錢的追求與渴望到底是為了什麼？這又衍伸出更多的問題：我到底該把錢花在哪些地方？如何正確看待金錢？擁有很多金錢的意義是什麼？即使財務自由之後又如何？讀完這本書後，我覺得在我們有限的">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2021-10-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-21T13:31:34.675Z">
+<meta property="og:image" content="https://kaichiachen.github.io/images/think_money.jpg">
+<meta property="article:published_time" content="2021-10-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-26T06:26:03.061Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="python">
+<meta property="article:tag" content="閱讀">
+<meta property="article:tag" content="金錢超思考">
+<meta property="article:tag" content="理財">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kaichiachen.github.io/images/think_money.jpg">
 
 
 
@@ -120,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/2021/10/14/garbage-collection-python/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2021/10/15/think_money_book/"/>
 
 
 
 
 
-  <title>[Python進階]Python的記憶體垃圾回收機制 | 我的生活記事</title>
+  <title>[閱讀]金錢超思考 | 凱文熊</title>
   
 
 
@@ -168,12 +172,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">我的生活記事</span>
+        <span class="site-title">凱文熊</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle">記錄心情生活的地方</p>
+        <p class="site-subtitle">技術、閱讀、生活</p>
       
   </div>
 
@@ -308,7 +312,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的生活記事">
+      <meta itemprop="name" content="凱文熊">
     </span>
 
     
@@ -316,7 +320,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[Python進階]Python的記憶體垃圾回收機制</h1>
+          <h1 class="post-title" itemprop="name headline">[閱讀]金錢超思考</h1>
         
 
         <div class="post-meta">
@@ -328,8 +332,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-14T00:00:00+08:00">
-                2021-10-14
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-15T00:00:00+08:00">
+                2021-10-15
               </time>
             
 
@@ -351,8 +355,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="../../../../categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="../../../../categories/%E9%96%B1%E8%AE%80/" itemprop="url" rel="index">
+                    <span itemprop="name">閱讀</span>
                   </a>
                 </span>
 
@@ -371,7 +375,7 @@
                 </span>
                 <a href="#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2021/10/14/garbage-collection-python/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2021/10/15/think_money_book/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -380,6 +384,11 @@
           
           
 
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
           
 
           
@@ -393,7 +402,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  1.4k
+                  2.4k
                 </span>
               
 
@@ -418,35 +427,56 @@
       
 
       
-        <p>我們知道，Python應用在執行的時候，需要從記憶體規劃出一段空間，用於存放臨時產生的變數，計算完後再放進永久儲存介質，如果所需要存放的臨時變數過大，則會造成OOM(Out of Memory)記憶體錯誤，程式可能會被作業系統終止<br>對於伺服器應用來說，為了設計永遠不中斷的系統，記憶體管理會變得非常重要，不然容易引發記憶體洩漏(Memory Leak)</p>
-<p>什麼是記憶體洩漏呢？我們的應用一般都是執行過程中不停的對作業系統申請記憶體、釋放記憶體，這裡的洩漏不是指被攻擊，而是程式沒有釋放已不再使用的記憶體，造成記憶體的浪費</p>
-<p>那麼Python是怎麼處理的呢？需要工程師們有意識的申請變數記憶體，用完再手動清除嗎？答案是: NO，Python會幫你自動找出不再使用的變數，然後釋放歸還給作業系統</p>
+        <h3 id="金錢超思考-5大金錢迷思-x-25道創造財富的關鍵思考"><a href="#金錢超思考-5大金錢迷思-x-25道創造財富的關鍵思考" class="headerlink" title="金錢超思考 - 5大金錢迷思 x 25道創造財富的關鍵思考"></a>金錢超思考 - 5大金錢迷思 x 25道創造財富的關鍵思考</h3><p><img src="/images/think_money.jpg"><br><strong>金錢超思考</strong>這本書不是一本教你投資致富的書，而是<strong>「如何思考金錢？」</strong>，這一個問題的背後，作者娓娓道來背後蘊藏的智慧<br>從出社會開始，邁入職場後都在比誰賺的多，然而我們對於金錢的追求與渴望到底是為了什麼？這又衍伸出更多的問題：我到底該把錢花在哪些地方？如何正確看待金錢？擁有很多金錢的意義是什麼？即使財務自由之後又如何？<br>讀完這本書後，我覺得在我們有限的時間及精力裡，賺更多的錢不是唯一，我們需要懂的如何花錢、賺錢和存錢，三者缺一不可，下面我將用條列式的方式，把書中的精華做一個摘要</p>
 <span id="more"></span>
-
-<h3 id="Reference-Count-引用計數"><a href="#Reference-Count-引用計數" class="headerlink" title="Reference Count(引用計數)"></a>Reference Count(引用計數)</h3><p>Python中一切皆為Object，每個Object都有多個pointer指向它<br>那麼怎麼知道這個Object之後永遠都不會被使用呢？Python使用的是Reference Count(pointer指向數量)，當它為0的時候，代表這個Object不可達，不會再被使用了，需要被回收<br>我們來舉個例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> psutil</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_memory_info</span>(<span class="params">hint</span>):</span></span><br><span class="line">    pid = os.getpid()</span><br><span class="line">    p = psutil.Process(pid)</span><br><span class="line">    info = p.memory_full_info()</span><br><span class="line">    memory = info.uss / <span class="number">1024.</span> / <span class="number">1024</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;&#123;&#125; memory used: &#123;&#125; MB&#x27;</span>.<span class="built_in">format</span>(hint, memory))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    show_memory_info(<span class="string">&#x27;initial&#x27;</span>)</span><br><span class="line">    a = [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000000</span>)]</span><br><span class="line">    show_memory_info(<span class="string">&#x27;after a created&#x27;</span>)</span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line">show_memory_info(<span class="string">&#x27;finished&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># initial memory used: 7.30859375 MB</span></span><br><span class="line"><span class="comment"># after a created memory used: 404.09765625 MB</span></span><br><span class="line"><span class="comment"># finished memory used: 11.61328125 MB</span></span><br></pre></td></tr></table></figure>
-<p><code>show_memory_info</code>裡面用到了python裡面的library <code>psutil</code>，能夠取得process所消耗的memory bytes，程式剛執行的時候，佔用了7MB左右的記憶體，在我們宣告了長度為一千萬的list之後，記憶體飆漲到了404MB，然而在離開main函數後，變數a不會被用到了，所以reference count=0，就被Python給回收了，所以最後的記憶體消耗又降回來，變成11MB</p>
-<p>再給大家一個例子，如果我們把變數a改成global呢？</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">a= []</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">global</span> a</span><br><span class="line">    show_memory_info(<span class="string">&#x27;initial&#x27;</span>)</span><br><span class="line">    a = [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000000</span>)]</span><br><span class="line">    show_memory_info(<span class="string">&#x27;after a created&#x27;</span>)</span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line">show_memory_info(<span class="string">&#x27;finished&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># initial memory used: 7.28125 MB</span></span><br><span class="line"><span class="comment"># after a created memory used: 404.0859375 MB</span></span><br><span class="line"><span class="comment"># finished memory used: 404.0859375 MB</span></span><br></pre></td></tr></table></figure>
-<p>即使程式跑到最後一刻，記憶體使用量還是高的誇張，所以Python的記憶體垃圾回收機制並不是一勞永逸的做法，在程式設計上也要謹慎<br>最後，面試官問你，Reference count=0是Python執行垃圾回收的必備條件嗎？還有沒有其他可能性會導致垃圾回收？</p>
-<h3 id="循環引用"><a href="#循環引用" class="headerlink" title="循環引用"></a>循環引用</h3><p>還有一種情況是，變數往後都不會再被用到了，但是他的Reference count不是0，會是什麼樣的情況呢？就是循環引用，例如</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    show_memory_info(<span class="string">&#x27;initial&#x27;</span>)</span><br><span class="line">    a = [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000000</span>)]</span><br><span class="line">    b = [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000000</span>)]</span><br><span class="line">    a.append(b)</span><br><span class="line">    b.append(a)</span><br><span class="line">    show_memory_info(<span class="string">&#x27;after a created&#x27;</span>)</span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line">show_memory_info(<span class="string">&#x27;finished&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># initial memory used: 7.2890625 MB</span></span><br><span class="line"><span class="comment"># after a created memory used: 790.67578125 MB</span></span><br><span class="line"><span class="comment"># finished memory used: 790.67578125 MB</span></span><br></pre></td></tr></table></figure>
-<p>承接上個範例，變數a和b都是個長度為一千萬的list，然後互相append，我們發現程式運行結束時，記憶體還是沒有被回收<br>這還只是比較簡單明顯的狀況，很多循環引用是很難被發現的，那麼我們應該要怎麼做呢？<br>遇到這種情況，我們可以手動的call垃圾回收</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gc</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    show_memory_info(<span class="string">&#x27;initial&#x27;</span>)</span><br><span class="line">    a = [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000000</span>)]</span><br><span class="line">    b = [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000000</span>)]</span><br><span class="line">    a.append(b)</span><br><span class="line">    b.append(a)</span><br><span class="line">    show_memory_info(<span class="string">&#x27;after a created&#x27;</span>)</span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line">gc.collect()</span><br><span class="line">show_memory_info(<span class="string">&#x27;finished&#x27;</span>)</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># initial memory used: 7.37890625 MB</span></span><br><span class="line"><span class="comment"># after a created memory used: 790.03515625 MB</span></span><br><span class="line"><span class="comment"># finished memory used: 12.12890625 MB</span></span><br></pre></td></tr></table></figure>
-
-<p>針對循環引用的垃圾回收，Python使用標記清除(mark-sweep)和分代收集(generational)，這裡來簡單介紹一下</p>
-<h4 id="標記清除演算法"><a href="#標記清除演算法" class="headerlink" title="標記清除演算法"></a>標記清除演算法</h4><p>我們先用圖論來表達不可達概念，對於一個有向圖，從任意一個節點出發進行遍歷，遍歷結束後發現有節點沒有被標記，則為不可達，不可達節點我們就能視為循環引用，需要對其回收<br>然而每次都要遍歷全圖，對Python來說是一個巨大了浪費，所以在Python裡面維護了一個雙向linked-list，並且只維護Container類的變數(只有Container類的變數才會循環引用)</p>
-<h4 id="分代收集演算法"><a href="#分代收集演算法" class="headerlink" title="分代收集演算法"></a>分代收集演算法</h4><p>Python將所有變數分為三代，剛創立的變數為第一代，垃圾回收過一次還存在的變數會從上一代移到下一代，例如第一代到第二代，當垃圾回收中，新增的變數減去刪去的變數超過某個閥值，就對這一代執行垃圾回收</p>
-<h3 id="記憶體洩漏debug"><a href="#記憶體洩漏debug" class="headerlink" title="記憶體洩漏debug"></a>記憶體洩漏debug</h3><p>即使Python有了強大的記憶體管理機制，但是難免還是有漏網之魚，那有沒有什麼好的Debug手段呢？<br>Python有個Library <code>objgraph</code>，使用方法如下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> objgraph</span><br><span class="line"></span><br><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">b = [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"></span><br><span class="line">a.append(b)</span><br><span class="line">b.append(a)</span><br><span class="line"></span><br><span class="line">objgraph.show_refs([a])</span><br><span class="line">objgraph.show_backrefs([a])</span><br></pre></td></tr></table></figure>
-
-<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>今天我們深入了瞭解了Python垃圾回收機制，主要有下面幾點</p>
-<ul>
-<li>垃圾回收在Python用於釋放不會再用到的記憶體給作業系統</li>
-<li>Reference count是最常見的方式，不過不是回收的唯一條件</li>
-<li>Python的垃圾回收還包含了標記清除和分代收集演算法，主要針對防循環引用</li>
-<li>Debug記憶體洩漏方面，objgraph是個好工具</li>
-</ul>
+<h5 id="如何用錢買到快樂"><a href="#如何用錢買到快樂" class="headerlink" title="如何用錢買到快樂?"></a>如何用錢買到快樂?</h5><p>似乎從小到大，我們的學歷越來越好，賺的錢越來越多，職位越爬越高，但我們仍然沒有感覺更快樂，為什麼會這樣？這是因為我們的「與他人比較」心態，例如我們有錢了，就搬到豪宅區置產，但看到鄰居們更富有，車更豪華，你又開心不起來了。<br>第二個是，我們東西總會越買越好，讓我們陷入無止盡的物質追逐，然而這種快樂是暫時的，作者給出的建議是，<strong>屏除與外界的比較，回歸自己的內心。</strong><br>那麼要如何用錢買到長久的快樂呢？第一個，把錢花在別人身上比花在自己更快樂，當自己有閒錢的時候，幫助弱勢族群所帶來的快樂是無與倫比的</p>
+<ol>
+<li>不要追逐物質，改為追求體驗</li>
+<li>錢可以買到自由</li>
+<li>有錢不一定會快樂，但是沒有錢肯定不快樂</li>
+<li>錢能解決生活中80%的問題，剩下20%可以用錢來緩解</li>
+</ol>
+<h5 id="把退休當成永遠的財務目標"><a href="#把退休當成永遠的財務目標" class="headerlink" title="把退休當成永遠的財務目標"></a>把退休當成永遠的財務目標</h5><p>我們可能在年輕時努力存錢買房買車、關注小孩的教育資源，直到五十歲後才驚覺退休的問題，但時常為時已晚。我們投資的目的並不是要變得大富大貴，而是避免年老得過著窮困潦倒的生活。以退休為首要的財務規劃，可以奉行這三個理財策略:</p>
+<ol>
+<li>長期投資</li>
+<li>減少舉債</li>
+<li>習慣儲蓄</li>
+</ol>
+<h5 id="長期投資，減少債務"><a href="#長期投資，減少債務" class="headerlink" title="長期投資，減少債務"></a>長期投資，減少債務</h5><p>除了長期投資之外，短期要盡可能減少舉債，例如：優先償還學貸、提高繳納房貸的月付額、不要動用信用卡的現金借貸。債務纏身的最大隱憂，就是你會在不知不覺間，離財務自由的目標越來越遠。</p>
+<h5 id="愛上儲蓄"><a href="#愛上儲蓄" class="headerlink" title="愛上儲蓄"></a>愛上儲蓄</h5><p>現在花少一點錢其實算不上犧牲，因為大部分的消費（尤其是物質上的）並不會帶來更多的快樂。反而，為了將來的消費而進行儲蓄，這種對未來產生的期待的「延遲享樂」心態，反而能為心靈帶來更多的富足。只要意識到以下三個儲蓄能帶來的效益:</p>
+<ol>
+<li>降低固定成本，不僅可以存更多錢，手頭上也可以有更多金錢用於自主性消費。</li>
+<li>如果我們習慣了生活成本遠低於收入的日子，等到退休時，不需要太多的積蓄也能過得很舒適。</li>
+<li>如果在二十幾歲時就過著節儉的生活，日後便能享受到生活水準逐步提高所帶來的快樂感受。</li>
+</ol>
+<h5 id="賺錢的同時請思考風險"><a href="#賺錢的同時請思考風險" class="headerlink" title="賺錢的同時請思考風險"></a>賺錢的同時請思考風險</h5><p>對於投資，首重「分散持有」與「股債搭配」，避免金融海嘯或單一市場的巨幅崩跌，對資產帶來的鉅額損失。對於仍是家庭經濟支柱的個人，首重「壽險」、「重大疾病險」，避免人身意外對家庭財務帶來巨大的衝擊。</p>
+<p>最後，這是書中一字不漏總結的12點建議，我覺得能納入人生原則，善加運用我們的金錢:</p>
+<ol>
+<li><p><strong>我們偏愛物品的使用價值，但是把錢花費在體驗上會比較快樂</strong>。不要再想著買新車，不如來一場橫跨歐洲的旅行。</p>
+</li>
+<li><p><strong>我們應該運用金錢與朋友和家人共度特別的時光</strong>。帶小孩參加運動比賽，帶你的另一半去看戲，和朋友吃頓晚餐，預訂好行程去探望你的孫子。</p>
+</li>
+<li><p><strong>當我們有時間可以做自己熱愛的工作時，應該好好為自己規劃生活</strong>。為了達到這個目標，我們應該在二十幾歲時盡可能地存錢，才能買到某種程度的財務自由。等到我們四十或五十多歲，就可以運用財務自由轉換到收入不是那麼優渥、但卻能讓我們感到心滿意足的工作。</p>
+</li>
+<li><p><strong>我們不應該擔心退休後會早死，而是要有心理準備，我們的壽命可能會比預期要長</strong>。面對這樣的風險，多數人應該要延遲領取政府退休金福利，以換取每個月能夠獲得較高的固定收入。你也可考慮購買即期年金，如此一來終身都能擁有固定的收入來源。</p>
+</li>
+<li><p><strong>我們的投資期限不是以月或是年，而是以數十年來計算</strong>。我們應該擺脫市場短期下跌的影響，而是像那些分散投資全球股票，並長抱三十、甚至五十年的投資人一樣，才能累積驚人的報酬。確實，對於債券持有或是現金投資不足的退休人士來說，長期的熊市可能會嚴重衝擊他們的報酬，但是對於善於存錢的年輕人來說，卻是一份寶貴的禮物，因為他們可以趁機逢低買進。</p>
+</li>
+<li><p><strong>我們應該盡可能降低每月的固定成本，例如房貸或租金、水電費、雜費、保費等</strong>。降低固定成本才能擁有更大的財務空間，降低財務壓力，可以因此有更多的錢自由地投入「有趣」的消費，同時更積極地存錢。</p>
+</li>
+<li><p><strong>良好的儲蓄習慣並非是自然而然形成，我們必須盡可能讓存錢的過程少一些痛苦</strong>。我們可以固定提撥一定比例的薪資，投入雇主的退休計畫。或是設下定期定額投資計畫，也就是每個月從銀行帳戶中扣除一筆資金，直接投資我們選定的基金。此外，你可以選擇較容易執行的財務策略，例如每個月的房貸還款金額增加兩、三千元，有任何意外之財都應該好好存起來，例如退稅或是兼差的收入。</p>
+</li>
+<li><p><strong>愈是努力想要打敗股市大盤，就愈可能失敗，因為會產生投資成本</strong>。為了避免這樣的結果，我們不應該再認為自己比其他投資人聰明，而是要抱持謹慎的態度，作法是購買分散投資全球的低成本指數型基金。</p>
+</li>
+<li><p><strong>永遠不要忘了股票的基本價值</strong>。如果你的股票投資組合足夠分散，整體基本價值的變動會比市場價格要緩慢。我們應該抱持務實的心態，把重點放在我們投資的金錢能創造多少的股息和盈餘；有效掌握市場可能的長期報酬率；我們應該像購物者一樣思考，看到市場走跌就像是看到地方上的百貨公司推出促銷活動時一樣的興奮。</p>
+</li>
+<li><p><strong>長期而言，退休可能是我們這一生最後一個財務目標，但是我們必須把它放在第一位</strong>。退休是成本最高昂的目標，需要花費數十年的時間儲蓄和累積投資所得，才能存夠需要的金錢。退休的目標也和其他目標很不一樣，不像是買房或是支付小孩教育費用。有什麼不一樣？對多數人來說，退休並非是選擇性的，退休後我們便沒有薪水，因此沒有固定的收入可花用。</p>
+</li>
+<li><p><strong>我們應該採取宏觀的視角，依據我們能夠創造的收入來整合規劃我們的財務</strong>。我們賺取的固定收入就好比是債券，能創造長達四十年的穩定收入來源。擁有了這筆穩定收入，我們可以讓投資組合分散投資全球股票，累積退休之後需要的積蓄；我們可以在二十幾歲時舉債，然後在退休之前還清債務。我們必須保障自己賺錢的本事，因此應該要購買適合的健康保險以及足額的失能與人壽保險。</p>
+</li>
+<li><p><strong>我們的目標不是變有錢。我們的目標是擁有足夠的金錢，去過我們想要的生活</strong>。我們不應該產生過高的投資成本、過度遠離追蹤全球指數的投資策略，或忽略可預防重大財務風險的保險，唯有如此才有可能達成我們希望的目標。</p>
+</li>
+</ol>
 
       
     </div>
@@ -464,7 +494,11 @@
       
         <div class="post-tags">
           
-            <a href="../../../../tags/python/" rel="tag"># python</a>
+            <a href="../../../../tags/%E9%96%B1%E8%AE%80/" rel="tag"># 閱讀</a>
+          
+            <a href="../../../../tags/%E9%87%91%E9%8C%A2%E8%B6%85%E6%80%9D%E8%80%83/" rel="tag"># 金錢超思考</a>
+          
+            <a href="../../../../tags/%E7%90%86%E8%B2%A1/" rel="tag"># 理財</a>
           
         </div>
       
@@ -487,8 +521,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="../../20/think_money_book/" rel="prev" title="[閱讀]金錢超思考">
-                [閱讀]金錢超思考 <i class="fa fa-chevron-right"></i>
+              <a href="../../20/garbage-collection-python/" rel="prev" title="[Python進階]Python的記憶體垃圾回收機制">
+                [Python進階]Python的記憶體垃圾回收機制 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -670,6 +704,26 @@
 
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -796,9 +850,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://kaichiachen.github.io/2021/10/14/garbage-collection-python/';
-          this.page.identifier = '2021/10/14/garbage-collection-python/';
-          this.page.title = '[Python進階]Python的記憶體垃圾回收機制';
+          this.page.url = 'https://kaichiachen.github.io/2021/10/15/think_money_book/';
+          this.page.identifier = '2021/10/15/think_money_book/';
+          this.page.title = '[閱讀]金錢超思考';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://kaichiablog.disqus.com/embed.js';
