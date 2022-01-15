@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="儲存,檔案系統,file storage,file system," />
+  <meta name="keywords" content="網路,socket," />
 
 
 
@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="File storage(檔案系統)有了File storage，就能方便我們寫程式去操作資料！ 如果要和硬碟直接打交道，Block storage是唯一的方式，只是對人非常不友好，我們怎麼知道我的資料的Block存在哪裏？是連續的存呢？還是分散的存？如果每筆資料都連續的存，那肯定對硬碟的利用率不友好，如果是分散存，需要一個Linked-List資料結構去紀錄任何架構的難題只需要加一層就可以解決，">
+<meta name="description" content="我們在寫網路相關的程式最底層就是與socket交互，socket是專用於網路通訊的system call。什麼是system call呢？我們知道作業系統有分kernel和user space，從user space要進行I&#x2F;O操作需要透過system call去呼叫kernel space，kernel space才有權限進行I&#x2F;O的操作。在Linux中，使用socket宣告一個object會回">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[儲存]資料儲存的基礎知識 - File storage">
-<meta property="og:url" content="https://kaichiachen.github.io/2021/09/12/file-storage/index.html">
+<meta property="og:title" content="[網路]Socket - 網路程式的大門">
+<meta property="og:url" content="https://kaichiachen.github.io/2021/10/25/socket_usage_network/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="File storage(檔案系統)有了File storage，就能方便我們寫程式去操作資料！ 如果要和硬碟直接打交道，Block storage是唯一的方式，只是對人非常不友好，我們怎麼知道我的資料的Block存在哪裏？是連續的存呢？還是分散的存？如果每筆資料都連續的存，那肯定對硬碟的利用率不友好，如果是分散存，需要一個Linked-List資料結構去紀錄任何架構的難題只需要加一層就可以解決，">
+<meta property="og:description" content="我們在寫網路相關的程式最底層就是與socket交互，socket是專用於網路通訊的system call。什麼是system call呢？我們知道作業系統有分kernel和user space，從user space要進行I&#x2F;O操作需要透過system call去呼叫kernel space，kernel space才有權限進行I&#x2F;O的操作。在Linux中，使用socket宣告一個object會回">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2021-09-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-25T12:23:49.725Z">
+<meta property="article:published_time" content="2021-10-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-15T16:22:23.149Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="儲存">
-<meta property="article:tag" content="檔案系統">
-<meta property="article:tag" content="file storage">
-<meta property="article:tag" content="file system">
+<meta property="article:tag" content="網路">
+<meta property="article:tag" content="socket">
 <meta name="twitter:card" content="summary">
 
 
@@ -123,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/2021/09/12/file-storage/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2021/10/25/socket_usage_network/"/>
 
 
 
 
 
-  <title>[儲存]資料儲存的基礎知識 - File storage | 安迪熊</title>
+  <title>[網路]Socket - 網路程式的大門 | 安迪熊</title>
   
 
 
@@ -319,7 +317,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[儲存]資料儲存的基礎知識 - File storage</h1>
+          <h1 class="post-title" itemprop="name headline">[網路]Socket - 網路程式的大門</h1>
         
 
         <div class="post-meta">
@@ -331,8 +329,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-09-12T00:00:00+08:00">
-                2021-09-12
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-10-25T00:00:00+08:00">
+                2021-10-25
               </time>
             
 
@@ -354,8 +352,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="../../../../categories/%E5%84%B2%E5%AD%98/" itemprop="url" rel="index">
-                    <span itemprop="name">儲存</span>
+                  <a href="../../../../categories/%E7%B6%B2%E8%B7%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">網路</span>
                   </a>
                 </span>
 
@@ -374,7 +372,7 @@
                 </span>
                 <a href="#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2021/09/12/file-storage/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2021/10/25/socket_usage_network/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -401,7 +399,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  813
+                  1k
                 </span>
               
 
@@ -426,27 +424,44 @@
       
 
       
-        <h3 id="File-storage-檔案系統"><a href="#File-storage-檔案系統" class="headerlink" title="File storage(檔案系統)"></a>File storage(檔案系統)</h3><p>有了File storage，就能方便我們寫程式去操作資料！</p>
-<p>如果要和硬碟直接打交道，Block storage是唯一的方式，只是對人非常不友好，我們怎麼知道我的資料的Block存在哪裏？是連續的存呢？還是分散的存？如果每筆資料都連續的存，那肯定對硬碟的利用率不友好，如果是分散存，需要一個Linked-List資料結構去紀錄<br>任何架構的難題只需要加一層就可以解決，如果不行，那就兩層，為了讓人能夠輕鬆的操作儲存資料，作業系統在Block storage上面加了一層File system</p>
+        <p>我們在寫網路相關的程式最底層就是與socket交互，socket是專用於網路通訊的system call。什麼是system call呢？<br>我們知道作業系統有分kernel和user space，從user space要進行I/O操作需要透過system call去呼叫kernel space，kernel space才有權限進行I/O的操作。<br>在Linux中，使用socket宣告一個object會回傳一個file descriptor。在Linux中，一切都是文件，連socket object也不例外，file descriptor在這裡的作用就是指向那個文件的descriptor。</p>
 <span id="more"></span>
-
-<p>我們平常用的Windows為了讓使用者方便存取資料，就是使用File system，這大家應該很熟悉，用滑鼠鍵盤敲一敲點一點就可以對檔案進行存取，由於File system就是Block storage上面加一層，所以檔案的內容都是存在一個個的block中</p>
-<p>除了檔案的內容之外，檔案的metadata比如創建時間、權限、大小等等也需要存在另一個地方，專門存這些文件metadata的地方就叫做inode</p>
-<p>一個檔案的inode可以透過stat來查詢</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#&gt; stat demo.txt</span><br><span class="line">  File: ‘demo.txt’</span><br><span class="line">  Size: 12        	Blocks: 8          IO Block: 4096   regular file</span><br><span class="line">Device: fd02h/64770d	Inode: 238749826   Links: 1</span><br><span class="line">Access: (0644/-rw-r--r--)  Uid: (51426876/ ckaijia)   Gid: (  201/     mts)</span><br><span class="line">Access: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line">Modify: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line">Change: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line"> Birth: -</span><br></pre></td></tr></table></figure>
-<p>inode也會消耗儲存空間，所以格式化硬碟的時候，作業系統會將硬碟分成兩個區域，一個存數據，一個存inode，並且指定一個inode的大小，所以就算檔案很小，一塊硬碟裡還是有檔案數量的限制</p>
-<h3 id="作業系統是如何讀取檔案資料？"><a href="#作業系統是如何讀取檔案資料？" class="headerlink" title="作業系統是如何讀取檔案資料？"></a>作業系統是如何讀取檔案資料？</h3><p>首先，不是透過檔案名字，文件名字只是讓使用者方便識別，作業系統透過inode ID，每個inode都有一個號碼，根據使用者點開的文件找到inode號碼，可以透過<code>ls -i demo.txt</code>看到對應的inode號碼。<br>第二，根據inode號碼找到inode的data。<br>最後，根據indoe的data，找到檔案裡的數據存在哪個block。</p>
-<h4 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h4><p>File system最大的優點就是他對人類友好，有目錄結構、好記得名字等等，方便UI呈現，除此之外還有如下優點</p>
+<p>下面簡單介紹本Project會用到的socket基本API的使用，首先開啟socket就是宣告了一個socket的object</p>
+<p><code>sock = Socket(family, type, proto)</code></p>
 <ul>
-<li><strong>方便共享</strong>:<br>一個inode就能與其他同台電腦上的user直接分享檔案，而且有權限控制</li>
-<li><strong>安全</strong>:<br>如上述所示，Linux有三種權限控制 - 自己、組和其他</li>
-<li><strong>成本低</strong>：<br>不需要昂貴的光纖，只要買機器，接上外接硬碟，透過作業系統上的File system，就可以使用</li>
+<li><p><strong>family</strong><br>family指的是某個通訊協定，例如ipv4, ipv6等等，如果指定ipv4則只對ipv4的通訊協定的封包進行發放，例如AF_PACKET，他能直接從網卡讀和寫上面的數據</p>
+</li>
+<li><p><strong>type</strong><br>type則是封包數據的格式，主要有SOCK_STREAM和SOCK_DGRAM，分別為TCP和UDP為代表，還有更加原始的格式SOCK_RAW，能自行的組裝數據包，由於我們想監聽所有封包，所以會使用SOCK_RAW</p>
+</li>
+<li><p><strong>proto</strong><br>Proto則是protocol的意思，通常預設為0，那麼我們的應用要監聽所有封包，所以設定為0x0003來監聽所有ethernet上的封包</p>
+</li>
 </ul>
-<h4 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h4><ul>
-<li><strong>資料讀寫慢</strong>:<br>因為讀取跟寫入都有兩層，除了讀寫本身資料(Block storage)之外，還有inode裡的metadata需要處理</li>
-<li><strong>難以遷移</strong>:<br>如過想把文件都搬遷到另一個作業系統有點困難，如果file storage的格式不同或inode的演算法不同就更糟了</li>
-<li><strong>權限控制</strong>:<br>權限控制只有三層 - 自己、group、others，無法滿足更複雜的需求</li>
+<p>定義好socket file descriptor後，然後下面是socket object常用的API。</p>
+<ul>
+<li><p><strong>bind((addr, port))</strong><br>需監聽和發送的地址和port，地址若為0.0.0.0則代表所有，也能監聽網卡</p>
+</li>
+<li><p><strong>recv(1024)</strong><br>如果有封包進來，則kernel space響應這個函數，讓我們的應用程式可以對封包進行處理，若沒有則會被block在這，函數回傳的是小於等於1024長度的string，看封包大小</p>
+</li>
+<li><p><strong>send(packet)</strong><br>packet就是我們做成的封包，在30天的後半段會教大家怎麼做自己的封包，怎麼算checksum，socket會根據封包裡的mac address和ip address進行路由</p>
+</li>
 </ul>
+<p>除了上述這些API，還有很多很多，有興趣的讀者能再深入研究</p>
+<h4 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h4><p>最後，我們試著用socket API來獲取封包的來源MAC地址<br>首先，我們需要監聽所有封包，所以<code>family</code>, <code>type</code>和<code>proto</code>分別為<code>AF_PACKET</code>, <code>SOCK_RAW</code>和<code>0x0003</code>，完整來看如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sock = socket.socket(socket.AF_PACKET, socket.SOCK_RAW , socket.ntohs(<span class="number">0x0003</span>))</span><br></pre></td></tr></table></figure>
+<p>接下來，我們需要綁定一個network interface，可以透過指令<code>ifconfig</code>來看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 02:42:ac:11:00:02</span><br><span class="line">          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:3496 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:1692 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0</span><br><span class="line">          RX bytes:4623164 (4.6 MB)  TX bytes:93240 (93.2 KB)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:36 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:36 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:1800 (1.8 KB)  TX bytes:1800 (1.8 KB)</span><br></pre></td></tr></table></figure>
+<p>在我的環境裡，有<code>eth0</code>這個network interface，所以我決定監聽他</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sock.bind((<span class="string">&quot;eth0&quot;</span>, <span class="number">0</span>))</span><br></pre></td></tr></table></figure>
+<p>監聽的方式如下，需要一個無限循環去監測，如果沒有新封包則會被block在<code>sock.recvfrom</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">while True:</span><br><span class="line">    packet, _ = sock.recvfrom(65565)</span><br></pre></td></tr></table></figure>
+<p>一個封包的來源Mac Address會在封包的前六個bytes，我們需要用到python自有的struct library去解析他</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">src_mac_header = packet[:6]</span><br><span class="line">struct.unpack(&#x27;!6s&#x27;, src_mac_header)</span><br></pre></td></tr></table></figure>
+<p>驚嘆號代表的是bytes順序是big endian，6s代表unpack 6個char，也能unpack integer等等的，具體代表的意思可以參考<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/struct.html#format-characters">這裡</a><br>所以unpack之後，我們就能取得來源的Mac address，完整的程式碼如下所示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import socket, struct</span><br><span class="line"></span><br><span class="line">#define ETH_P_ALL    0x0003          /* Every packet (be careful!!!) */</span><br><span class="line">sock = socket.socket(socket.AF_PACKET, socket.SOCK_RAW , socket.ntohs(0x0003))</span><br><span class="line">sock.bind((&quot;eth0&quot;,0))</span><br><span class="line"></span><br><span class="line">while True:</span><br><span class="line">    packet, _ = sock.recvfrom(65565)</span><br><span class="line">    src_mac_header = packet[:6]</span><br><span class="line">    src_mac = struct.unpack(&#x27;!6s&#x27;, src_mac_header)[0]</span><br><span class="line">    mac = map(&#x27;&#123;:02x&#125;&#x27;.format, src_mac)</span><br><span class="line">    print(&#x27;:&#x27;.join(mac))</span><br></pre></td></tr></table></figure>
+
+<p>實驗方式，可以跑這個程式的電腦發送curl請求，可以看到在我的環境，在eth0的Mac address為<code>02:42:ac:11:00:02</code>，然後我們下指令對自己的電腦產生封包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&gt; curl --interface eth0 127.0.0.1</span><br></pre></td></tr></table></figure>
+<p>在另外一個terminal視窗，就可以看到自己的Mac address被print出來了！</p>
 
       
     </div>
@@ -464,13 +479,9 @@
       
         <div class="post-tags">
           
-            <a href="../../../../tags/%E5%84%B2%E5%AD%98/" rel="tag"># 儲存</a>
+            <a href="../../../../tags/%E7%B6%B2%E8%B7%AF/" rel="tag"># 網路</a>
           
-            <a href="../../../../tags/%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1/" rel="tag"># 檔案系統</a>
-          
-            <a href="../../../../tags/file-storage/" rel="tag"># file storage</a>
-          
-            <a href="../../../../tags/file-system/" rel="tag"># file system</a>
+            <a href="../../../../tags/socket/" rel="tag"># socket</a>
           
         </div>
       
@@ -483,8 +494,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="../../05/block-storage/" rel="next" title="[儲存]資料儲存的基礎知識 - Block storage">
-                <i class="fa fa-chevron-left"></i> [儲存]資料儲存的基礎知識 - Block storage
+              <a href="../../20/garbage-collection-python/" rel="next" title="[Python進階]Python的記憶體垃圾回收機制">
+                <i class="fa fa-chevron-left"></i> [Python進階]Python的記憶體垃圾回收機制
               </a>
             
           </div>
@@ -493,8 +504,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="../../13/object-storage/" rel="prev" title="[儲存]資料儲存的基礎知識 - Object storage">
-                [儲存]資料儲存的基礎知識 - Object storage <i class="fa fa-chevron-right"></i>
+              <a href="../../29/eth_and_ip_network/" rel="prev" title="[網路]解析第二層及第三層的網路封包結構">
+                [網路]解析第二層及第三層的網路封包結構 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -822,9 +833,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://kaichiachen.github.io/2021/09/12/file-storage/';
-          this.page.identifier = '2021/09/12/file-storage/';
-          this.page.title = '[儲存]資料儲存的基礎知識 - File storage';
+          this.page.url = 'https://kaichiachen.github.io/2021/10/25/socket_usage_network/';
+          this.page.identifier = '2021/10/25/socket_usage_network/';
+          this.page.title = '[網路]Socket - 網路程式的大門';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://kaichiablog.disqus.com/embed.js';
