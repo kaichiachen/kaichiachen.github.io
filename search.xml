@@ -4,6 +4,151 @@
   
     
     <entry>
+      <title>[vSAN]資料的存取形式? DAS、NAS和SAN</title>
+      <link href="/2022/06/04/vsan/storage_protocol_overview/"/>
+      <url>/2022/06/04/vsan/storage_protocol_overview/</url>
+      
+        <content type="html"><![CDATA[<p>前面分別講了資料儲存的最小單元、硬碟陣列怎麼做備份以及提高可用性，接下來安迪想講的是儲存系統架構 - DAS、NAS和SAN</p><h3 id="DAS"><a href="#DAS" class="headerlink" title="DAS"></a>DAS</h3><blockquote><p>DAS(Direct Attach Storage) - 本地的檔案系統</p></blockquote><p>DAS可以理解為就是本地的磁碟陣列，透過USB，你的個人電腦或伺服器就可以連結到這個磁碟陣列，根據RAID卡，進行相應的備份，當然，他的缺點就是需要有一條實體USB線，且擴充容量等等比較麻煩。</p><h3 id="NAS"><a href="#NAS" class="headerlink" title="NAS"></a>NAS</h3><span id="more"></span><blockquote><p>NAS - 網路上的檔案系統</p></blockquote><p>接下來會分享兩個常用的雲端基礎架構NAS和SAN的原理和不同之處，NAS和SAN都是利用網路來連接的，簡單來說NAS適合在家裡使用或小範圍同個網段下使用，而SAN適合大範圍甚至外網使用。</p><p>從NAS說起，NAS的原理就是之前提到的File storage，只是我們一般在使用windows的時候，硬碟都在電腦裡的，不透過網路就可以直連，NAS就是一個把硬碟抽離出來，放在網路上，透過網路存取硬碟的技術架構。</p><p>下圖是NAS的架構</p><p><img src="/images/vsan/nas_overview.png"></p><p>我們可以看到，是什麼東西在網路上傳遞呢？是檔案系統的指令，我們雖然只需要告訴檔案系統路徑+檔案名稱即可，但是檔案open需要讀吧，所以傳遞了open指令、read指令等，這些都需要網路傳輸，相比於SAN(下一篇會講)把這些都做在主機上，記憶體的傳輸效率一定比網路高</p><p>用人話說就是 - 程式跟自己的電腦說，幫我把/mnt/nas.txt傳到電腦的記憶體，這些話都透過TCP/IP傳輸，然後NAS上的檔案系統根據這個檔案找到佔用了哪個扇區，從本身的server的硬碟找檔案</p><p><strong>優點</strong></p><ol><li>成本低 - NAS只需要一般的Ethernet，好擴增，只要有IP的地方就可以提供服務</li><li>資源獨立 - 檔案讀寫都需要記憶體和CPU資源，有了NAS可以把這些資源抽離出來集中管理</li><li>易共享 - 可以理解為大家都能連上你的D槽，不怕難分享</li><li>協議多元 - 舉凡是FTP或是HTTP等都可以使用</li></ol><p><strong>缺點</strong></p><ol><li>速度慢 - 因為文件系統的指令複雜，可能使用者的一個操作代表很多個指令，不過最大的瓶頸還是底層的Ethernet通常比較慢，NAS一班也不會使用光纖網路</li><li>不支持遠距離 - 由於上述原因，如果又遠距離就更慢了，另外，文件系統on the fly傳輸本身就不安全</li><li>不可靠 - 文件系統難以做到多機器保護</li></ol><h3 id="SAN"><a href="#SAN" class="headerlink" title="SAN"></a>SAN</h3><blockquote><p>SAN - 網路上的硬碟</p></blockquote><p>安迪的工作就是開發公司的SAN產品，所以安迪對他比較了解</p><p>SAN就是空出一個網路區域，讓硬碟機櫃互相連接，網絡專給I/O使用的一塊區域網絡，外部的伺服器或個人電腦可以透過網路的方式連進去存取資料</p><p>下圖是SAN的架構</p><p><img src="/images/vsan/san_overview.png"></p><p>從上圖可以看出，有別於NAS，SAN就是個block storage，接受block storage的指令，回傳資料，檔案系統的指令和演算法是在前端主機完成的，</p><p>用白話文說就是 - 程式跟自己的電腦說，幫我把/mnt/san.txt傳到電腦的記憶體，檔案系統會計算這個檔案的LBA地址和長度，然後把這個資訊傳給SAN</p><p>我們可以看到SAN有別於NAS，他在網路傳遞的是I/O指令，透過iSCSI或是NVMe包裝，所以速度較NAS快</p><p><strong>優點</strong></p><ol><li>支持遠距離 - iSCSI等協議已經非常成熟</li><li>速度快 - 伺服器與儲存設備傳遞的是I/O指令，較為簡潔</li><li>可靠性高 - 容易做多機器備份、儲存共享</li></ol><p><strong>缺點</strong></p><ol><li>貴 - 通常要做SAN了，代表要買很多台機器、好的網路線等等，通常只有大公司才會使用，不過最近iSCSI逐漸流行，以往SAN都透過光纖，現在也能透過ethernet傳輸了</li><li>複雜度高 - 要用RAID0 1 5 6呢？要用雙主結點還是主從結點還是一主一備呢？這些都要根據實際場景需求決定</li><li>不好管理 - 前端要裝專門的SAN管理系統才能使用</li><li>協議單一 - 只有SCSI協議</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> vSAN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vmware </tag>
+            
+            <tag> vsan </tag>
+            
+            <tag> storage </tag>
+            
+            <tag> nas </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>[vSAN]資料的備份形式? RAID</title>
+      <link href="/2022/05/10/vsan/storage_raid_overview/"/>
+      <url>/2022/05/10/vsan/storage_raid_overview/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>如果資料儲存只是把資料存進去硬碟裡，那就有點單調了，不如我們來加點把戲吧！</p></blockquote><p>資料要存，就要把它存好，萬一硬碟不小心壞了怎麼辦？</p><p>於是有了RAID卡，RAID中文是容錯式硬碟陣列，RAID卡是一個硬體設備，可以理解為他能將多個硬碟組合在一起，利用虛擬儲存技術，形成一個硬碟陣列，用來提升儲存空間和製造冗余。</p><p>分散式儲存很多idea就是從Raid來的，只是Raid是提升機櫃與機櫃之間的可靠性，而一般來說的分散式儲存是透過網路串連不同的儲存裝置，更加的靈活。</p><p>常見的RAID層級有RAID 0、RAID 1、RAID 5、RAID 6，本篇只介紹上述幾個基礎的RAID架構，架構圖都是來源於維基百科</p><span id="more"></span><h3 id="RAID-0"><a href="#RAID-0" class="headerlink" title="RAID 0"></a>RAID 0</h3><p>下圖我們可以看到兩個大圓柱，其中一個大圓柱，例如Disk0，就是一塊硬碟，一個小圓柱，例如A1，就是硬碟中的一個Block，我們可以把多個Disk串連，從上層系統來看就是一塊超大硬碟。</p><p><img src="/images/vsan/raid0.png"></p><p>對於RAID 0，資料寫入的方式會把資料分割然後同時寫入A1、A2同，寫完換A3、A4同時寫，所以當一塊硬碟壞了，全部都壞了，所以RAID 0最簡單，最快，但是也最不安全，因為他不會做任何備份</p><h3 id="RAID-1"><a href="#RAID-1" class="headerlink" title="RAID 1"></a>RAID 1</h3><p>RAID 1 和RAID 0類似，但是寫入會一次寫入兩份，一段資料過來，先寫兩份到各自左右兩邊的A1，A1寫完再寫A2，所以RAID1的資料寫入性能是RAID 0的一半，不過只要一個硬碟活著資料都還在。RAID 1可以並聯更多硬碟以增加可靠性，只是相應的寫入效能會更慢</p><p><img src="/images/vsan/raid1.png"></p><h3 id="RAID-5"><a href="#RAID-5" class="headerlink" title="RAID 5"></a>RAID 5</h3><p>RAID 0速度快但不可靠，RAID 1可靠但是硬碟利用率和效能差，所以RAID 1往後都在找一種儲存效能、可靠性和成本兼顧的方式，直到RAID 5才漸漸被市場所接受</p><p><img src="/images/vsan/raid5.png"></p><p>如上圖所示，RAID 5至少需要三塊硬碟，上圖是四塊硬碟的架構，那RAID5怎麼存資料呢？從第一排開始，資料來了，一樣先存進去A1、A2、A3，然後我們看到了A_p，他是A1、A2、A3的奇偶校驗資料，這樣當一塊硬碟掛了，可以透過奇偶校驗復原資料。</p><p>我們假設A1, A2, A3上的資料分別為1, 3, 5，透過奇偶校驗，1 XOR 3 XOR 5 = 7，A_p設置為7</p><p>如果A2不小心壞了，要復原資料，只需要把剩餘的都做XOR計算就能復原資料，1 XOR 5 XOR 7 = 3</p><p>和RAID 0相比，寫入速度較慢，讀取速度差不多，可靠性好很多。</p><p>和RAID 1相比，需要更多硬碟才能保證可靠度，但是硬碟的利用率高很多，寫入速度也較快。</p><h3 id="RAID-6"><a href="#RAID-6" class="headerlink" title="RAID 6"></a>RAID 6</h3><p>RAID 6和RAID 5非常相似，唯一的差別就是需要比RAID 5多一塊硬碟存放第二個奇偶校驗資料，如下圖所示</p><p><img src="/images/vsan/raid6.png"></p><p>兩個的奇偶校驗演算法不同，所以RAID6至少需要四塊硬碟，可以容許兩塊硬碟損壞。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vSAN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vmware </tag>
+            
+            <tag> vsan </tag>
+            
+            <tag> storage </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>[vSAN]資料的儲存形式? Block、File、Object Storage</title>
+      <link href="/2022/04/27/vsan/storage_overview/"/>
+      <url>/2022/04/27/vsan/storage_overview/</url>
+      
+        <content type="html"><![CDATA[<p>小羚和安迪説，我大概是明白資料中心的組成了，你能不能再多說說vSAN是怎麼儲存資料呢？他是如何能把我的重要檔案自動備份又能同時取用呢？</p><p>安迪說，當然沒問題！儲存是一個很大的領域，我們只能先從最基本的基礎開始，我會先從三個資料儲存系統 - 區塊儲存系統、檔案儲存系統和物件儲存系統說起，這裡說的系統都是軟體層面上的邏輯，不會深入探討到硬碟。</p><h2 id="Block-storage-區塊儲存系統"><a href="#Block-storage-區塊儲存系統" class="headerlink" title="Block storage(區塊儲存系統)"></a>Block storage(區塊儲存系統)</h2><span id="more"></span><blockquote><p>Block storage是最基本的儲存系統，所以讓我們從這裡開始</p></blockquote><p>資料在電腦裡是以1和0儲存在某個”介質”上面，例如機械式硬碟(HDD)利用磁性，而固態硬碟(SSD)利用電子，也有用光的CD，而Block storage簡單來說就是我們能看到的一塊塊的硬碟和儲存裝置，我們把儲存裝置與我們的電腦連接，我們的電腦透過Block storage的API對裡面的資料進行增刪改查。</p><p>接下來，我們有了作業系統，作業系統他方便了我們把資料存進去Block storage裝置，可以說，作業系統是上層應用與Block storage裝置溝通的橋樑，那麼回答一個問題，作業系統是如何與硬碟打交道呢？</p><p>首先，作業系統利用LUN ID識別硬碟，LUN是一個或一組或半個硬碟的邏輯代號，為何有半個呢？</p><p>例如我們的windows有一個硬碟，把他分成C槽和D槽，那麼他們就是各半個，LUN他不是獨佔式的，也就是說多台主機能共享一個儲存設備，不過一般不會這麼用，因為Block storage的資料隔離沒有做得這麼好，若是同時寫入資料容易被混淆。</p><h3 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h3><p>那麼block的由來是什麼呢？從作業系統的角度，資料的讀取和寫入都是以block為最小單位，一個block是一段固定長度的bytes，常見為4096 bytes，這樣的設定的用意是提升資料讀寫的速度，如果一個個byte寫，一來一往速度非常慢。</p><p>對於HDD來說，連續讀寫可以大幅提升I/O速度，然而我們的資料會需要經常性的寫入和刪除，例如我們寫了十筆連續的Block，過一段時間，想把第五個Block資料給刪除，這樣中間就會有空餘的浪費，這樣該怎麼辦呢？</p><p>如果我們時常要求連續讀寫，會造成巨大的資源浪費，所以上層的作業系統會利用Linked-List資料結構把碎片化的Block記錄下來，把整段資料拼湊出來</p><p>一個block對應一個或多個硬體的扇區(sector)，常見的一個sector大小為512 bytes，所以block是給作業系統看的邏輯地址，sector是Block storage上的實體地址。Block大小可以透過作業系統設定，查詢藉由指令<code>stat /boot/ |grep &quot;IO Block&quot;</code> 查詢</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; stat /boot/ |grep &quot;IO Block&quot;</span></span><br><span class="line">Size: 4096          Blocks: 8          IO Block: 4096   directory</span><br></pre></td></tr></table></figure><h3 id="Sector-扇區"><a href="#Sector-扇區" class="headerlink" title="Sector(扇區)"></a>Sector(扇區)</h3><p>sector是Block storage上的實體地址，他也是把多個bytes分組成一個sector，我們拿機械式硬碟HDD舉例，HDD有個針頭會去掃描磁碟，掃描的部分就是一個個扇區，如下圖所示</p><p><img src="/images/vsan/magnectic_disk.png"></p><p>HDD就是用類似光碟的圓盤一個個堆疊出來了，剛剛提到的”扇區”就是上圖的sector，代表同個半徑下一小塊長度</p><p>最後總結一下Block storage有什麼優缺點</p><h3 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h3><p>Block storage最大的優點就是他使得計算與儲存分離，我們能輕易地透過LUN ID外接一個硬碟或硬碟組</p><ul><li><p><strong>高性能:</strong><br>IOPS(Inputs Outputs per Seconds)高，延遲低，適合用作公司的database server或數據中心</p></li><li><p><strong>易於修改:</strong><br>如果想改變block裡的一個小部分資料，直接改那個block就可以，如果是檔案系統或object system，需要整個檔案或object都改</p></li><li><p><strong>擴充容易</strong><br>擴充非常簡單，一個LUN ID就可以接上系統了，適合用在SAN(儲存區域網路)裡</p></li></ul><h3 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h3><ul><li><p><strong>不能同時讀寫</strong><br>不能多台機器同時讀寫同一塊硬碟，雖然可以透過軟體解決此問題但是會造成性能下降</p></li><li><p><strong>Metadata</strong><br>Block storage沒有什麼Metadata，File system有檔案路徑、名字、大小等等快速定位資料，Block storage只有地址起始位置(LBA)、長度</p></li></ul><h2 id="File-storage-檔案系統"><a href="#File-storage-檔案系統" class="headerlink" title="File storage(檔案系統)"></a>File storage(檔案系統)</h2><blockquote><p>有了File storage，就能方便我們寫程式去操作資料！</p></blockquote><p>如果要和硬碟直接打交道，Block storage是唯一的方式，只是對人非常不友好，我怎麼知道我的資料的Block存在哪裏？是連續的存呢？還是分散的存？如果每筆資料都連續的存，那肯定對硬碟的利用率不友好，如果是分散存，需要一個Linked-List資料結構去紀錄。</p><p>任何資訊界的難題只需要加一層就可以解決，如果不行，那就兩層，所以我們就加個一層吧！為了讓使用者能夠輕鬆的操作儲存資料，作業系統在Block storage上面加了一層File system。</p><p>我們平常用的Windows為了讓使用者方便存取資料，就是使用File system，這大家應該很熟悉，用滑鼠鍵盤敲一敲點一點就可以對檔案進行存取，由於File system就是Block storage上面加一層，所以檔案的內容都是存在一個個的block中</p><p>除了檔案的內容之外，檔案的metadata比如創建時間、權限、大小等等也需要存在另一個地方，專門存這些文件metadata的地方就叫做inode。</p><p>一個檔案的inode可以透過stat來查詢</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; stat demo.txt</span></span><br><span class="line">File: ‘demo.txt’</span><br><span class="line">Size: 12            Blocks: 8          IO Block: 4096   regular file</span><br><span class="line">Device: fd02h/64770d    Inode: 238749826   Links: 1</span><br><span class="line">Access: (0644/-rw-r--r--)  Uid: (51426876/ ckaijia)   Gid: (  201/     mts)</span><br><span class="line">Access: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line">Modify: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line">Change: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line">Birth: -</span><br></pre></td></tr></table></figure><p>inode也會消耗儲存空間，所以格式化硬碟的時候，作業系統會將硬碟分成兩個區域，一個存資料，一個存inode，並且指定inode分區的大小，所以就算檔案很小，一塊硬碟裡還是有檔案數量的限制</p><h3 id="作業系統是如何讀取檔案資料？"><a href="#作業系統是如何讀取檔案資料？" class="headerlink" title="作業系統是如何讀取檔案資料？"></a>作業系統是如何讀取檔案資料？</h3><p>首先，不是透過檔案名字，檔案名字只是讓使用者方便識別，作業系統透過inode ID，每個inode都有一個號碼，例如上面的<code>demo.txt</code>就是238749826，根據使用者點開的文件找到inode號碼。</p><p>第二，根據inode號碼去資料分區根據inode找到對應的data。</p><p>最後，根據indoe的data，找到檔案裡的資料存在哪個block。</p><h3 id="優點-1"><a href="#優點-1" class="headerlink" title="優點"></a>優點</h3><p>File system最大的優點就是他對人類友好，有目錄結構、好記得名字等等，方便UI呈現，除此之外還有如下優點</p><ul><li><p><strong>方便共享</strong><br>一個inode就能與其他同台電腦上的user直接分享檔案，而且有權限控制</p></li><li><p><strong>安全</strong><br>如上述所示，Linux有三種權限控制 - 自己、組和其他</p></li><li><p><strong>成本低</strong><br>不需要昂貴的光纖，只要買機器，接上外接硬碟，透過作業系統上的File system，就可以使用</p></li></ul><h3 id="缺點-1"><a href="#缺點-1" class="headerlink" title="缺點"></a>缺點</h3><ul><li><p><strong>資料讀寫慢</strong><br>因為讀取跟寫入都有兩層，除了讀寫本身資料(Block storage)之外，還有inode裡的metadata需要處理</p></li><li><p><strong>難以遷移</strong><br>如過想把文件都搬遷到另一個作業系統有點困難，如果file storage的格式不同或inode的演算法不同就更糟了</p></li><li><p><strong>權限控制</strong><br>權限控制只有三層 - 自己、group、others，無法滿足更複雜的需求</p></li></ul><h3 id="Object-storage-物件儲存"><a href="#Object-storage-物件儲存" class="headerlink" title="Object storage(物件儲存)"></a>Object storage(物件儲存)</h3><blockquote><p>Object Storage - 雲端系統上最流行的儲存方式</p></blockquote><p>Object storage和File storage一樣，是基於Block storage的，首先，與File storage方式不同，File storage就像是一棵樹，從點進去一個資料夾開始，裡面有很多檔案(葉子)，也有資料夾(樹枝)，再點進去資料夾，又會有檔案、資料夾，是一個樹狀結構，Object storage是扁平化結構，可以理解為所有檔案都存在一個資料夾裡，包括Object的metadata，且資料夾裡不會有資料夾，Object就是一個檔案，也可以是多個檔案的非結構化組合，所以Object storage沒有inode這種方式變得更容易索引和訪問。</p><p>Object storage的Metadata就像是File system的inode，用作索引對應的data位置，Object storage可以隨意定義自己的metadata資料結構，幫助快速檢索目標object，甚至是分散在不同主機的data。</p><p>綜上所述，Object storage非常適合存靜態不常使用的大數據，例如大量的影片、音樂等等，為使用者提供大量、安全、低成本的資料儲存服務。</p><p>從high level講，也就是使用方式講，Object storage主要是透過http API對資料進行增刪改查，與File systemAPI和Block storage的SCSI不同，Object storage更加方便各個語言的使用。這些Object實際上可以是任何類型的資料：PDF、影片、音檔、文本、網站資料或任何其他檔案類型。</p><p>正因為他的扁平化架構，他天生就適合作為分散式儲存的儲存方式，為何這麼說呢？首先，分散式儲存必須要資料分散且「容易」伸縮，由於是扁平化架構，我們容易把object切塊平均分散在不同機器，伸縮也非常方便，加了一台機器，等於對這個「資料夾」加大了空間。</p><p>加了機器除了可以提升儲存空間之外，還能提升資料的「可靠性」，例如一個object，我可以複製兩份，這樣我們可以說他的空間使用率是200%，保護力是1，因為他容許一台機器掛掉資料還在，雖然這種保護方法直觀簡單，但是現在各大雲端廠商為了節省成本，透過一些奇偶校驗法會使用例如RAID-5這種空間使用率只要150%，但是保護力也有1。</p><h3 id="優點-2"><a href="#優點-2" class="headerlink" title="優點"></a>優點</h3><ul><li><p><strong>方便擴增</strong><br>由於Object storage是扁平化架構，只要增加機器就是增加這個大平面的面積，不需要額外修改架構</p></li><li><p><strong>成本低</strong><br>公有雲端上的Object storage都特別便宜，例如Amazon S3</p></li><li><p><strong>API 簡單</strong><br>單純的使用HTTP進行增刪改查，進而支持長距離使用，例如你在台灣可以使用位在美國的Amazon S3儲存服務</p></li></ul><h3 id="缺點-2"><a href="#缺點-2" class="headerlink" title="缺點"></a>缺點</h3><ul><li><p><strong>不能修改</strong><br>由於最小單位就是一個Object，所以想要修改一個Object代表需要上傳一個新的Object替換他，而File system還能在末尾增加一行資料</p></li><li><p><strong>無法和database整合</strong><br>傳統的database是結構化數據，例如SQL, Mysql等等，而object storage存放的主要是非結構化數據，且object storage的讀寫慢</p></li><li><p><strong>無法與一般作業系統整合</strong><br>因為一般的作業系統都是File system，下載一個object就像是下載一個檔案</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> vSAN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vmware </tag>
+            
+            <tag> vsan </tag>
+            
+            <tag> storage </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>[vSAN]虛擬機？我摸的到嗎？</title>
+      <link href="/2022/04/12/vsan/vm_overview/"/>
+      <url>/2022/04/12/vsan/vm_overview/</url>
+      
+        <content type="html"><![CDATA[<p>我的電腦是Windows 10系統，然而有一天，我想懷舊一下玩一個只能在Windows XP的遊戲，該怎麼辦呢？</p><p>抑或是公司有50位員工，所以只好每人派發一台電腦，不可能每台電腦都能把硬碟和計算資源無時無刻用滿，但是我想節省成本，該怎麼辦呢？</p><p>虛擬機就是一個實體電腦的數位版本，讓你可以在作業系統上執行一個不同且獨立的作業系統，這麼一來，就能在Windows 10上運行Windows XP，公司也能透過買一台資源豐富的伺服器，在上面透過虛擬機的方式達到資源最大利用率</p><p>個人用的虛擬機軟體最有名的當數付費的VMware Workstation和開源版本的Virtual box</p><span id="more"></span><p>公司用的虛擬機軟體(hypervisor)則多了，有付費的VMware vSphere、Microsoft的HyperV等等和開源的KVM、Xen等等</p><p>如今雲端技術非常流行，三大公有雲廠商Amazon AWS、Microsoft Azure以及Google GCP，他們三個其實就是建置了大量的數據中心，把裡面的伺服器裝上虛擬機軟體，讓外部的開發人員或公司虛擬出「多個實體電腦」，按需使用，像是家家戶戶的水電一樣，不用維護高昂的IT成本。</p><p>上述是公有雲的範疇，若公司有資料隱私的要求，例如銀行、醫院、公家機關等等，也可以自己建制數據中心，把資料和計算留在本地，這時需要一套虛擬機管理軟體，也能透過VMware vSphere、Microsoft的HyperV等等的建立自己的數據中心。</p><h2 id="虛擬機原理"><a href="#虛擬機原理" class="headerlink" title="虛擬機原理"></a>虛擬機原理</h2><p><img src="/images/vsan/vm_structure.png"></p><p>虛擬機架構示意圖,如上所示，VMM(Virtual Machine Monitor)是一個軟體，運行在Ring0，也就是CPU上的特權級別，負責給上面的Guest OS提供虛擬化的環境(CPU, Memory和 I/O虛擬化)，VMM會根據Guest OS提供的指令，做出相應的資源分配措施。</p><h3 id="CPU虛擬化"><a href="#CPU虛擬化" class="headerlink" title="CPU虛擬化"></a>CPU虛擬化</h3><p>目的是利用硬件輔助虛擬化技術(以前是用Binary Translator)攔截敏感指令，會對整個系統造成影響的指令，有了硬件輔助虛擬化技術，實體CPU會自動攔截敏感指令給VMM。</p><h3 id="記憶體虛擬化"><a href="#記憶體虛擬化" class="headerlink" title="記憶體虛擬化"></a>記憶體虛擬化</h3><p>主機使用段頁機制，虛擬機有兩層轉換，Guest Virtual Memory -&gt; Guest Physical Memory -&gt; Machine memory，當然，這部分也有硬體虛擬化輔助技術支持。</p><p><img src="/images/vsan/vm_memory_mapping.png"></p><h3 id="I-O虛擬化"><a href="#I-O虛擬化" class="headerlink" title="I/O虛擬化"></a><strong>I/O虛擬化</strong></h3><p>虛擬各種外接設備(純軟體虛擬化、硬體輔助虛擬化)硬體輔助虛擬化能讓虛擬機直接使用硬體設備，但是具有獨佔性，例如滑鼠和鍵盤就是一種I/O設備，當一台實體電腦只接上一個鍵盤，那他只能在一台虛擬機或是實體機器上進行輸入。</p><h3 id="網路虛擬化"><a href="#網路虛擬化" class="headerlink" title="網路虛擬化"></a><strong>網路虛擬化</strong></h3><p>讓虛擬機同時使用同個網卡，虛擬交換機可以製造虛擬網絡環境，讓一台實體機器上的所有虛擬機共享同個區域網路。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vSAN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vmware </tag>
+            
+            <tag> vsan </tag>
+            
+            <tag> VM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>[vSAN]vSAN簡介-VMware產品中的儲存利器</title>
+      <link href="/2022/03/25/vsan/vsan_overview/"/>
+      <url>/2022/03/25/vsan/vsan_overview/</url>
+      
+        <content type="html"><![CDATA[<p>VMware擁有自己一套的軟體定義資料中心SDDC解決方案，以vSphere作為中心的Hypervisor提供虛擬儲存和網路服務，其中儲存的部分有以下幾種</p><ul><li>Local - VMFS</li><li>NAS - NFS</li><li>iSCSI</li><li>VMware Virtual Volume(VVOL) - virtualize SAN and NAS</li><li>vSAN</li></ul><p>vSAN全名是Virtual SAN，顧名思義，他不是類似NAS這種的遠端檔案系統，這裡我們先介紹SAN是什麼</p><span id="more"></span><h3 id="SAN"><a href="#SAN" class="headerlink" title="SAN"></a>SAN</h3><p>一般來說，我們會把主機上的資料存在主機上的硬碟裡，可能主機A只用了20%的容量，主機B用了50%的容量，主機A和主機B都浪費了很多儲存空間，而現在突然有一個主機C，想要用200%的容量，卻捉襟見肘，這該怎麼辦呢？</p><p>於是乎有了SAN這類的儲存架構，SAN在遠端建立了一個儲存池，讓各個主機共享，儲存池裡面各個主機透過網路或是光纖連接，是專門用作儲存的網絡區域。SAN和前面的NAS最大的差別是SAN的檔案系統是保留在主機端的，而NAS的檔案系統是在遠端的，所以兩者在網路上的傳遞的協議會不同。</p><h3 id="vSAN"><a href="#vSAN" class="headerlink" title="vSAN"></a>vSAN</h3><p>vSAN會把所有主機上的硬碟整合成一個儲存池，如下所示</p><p><img src="/images/vsan/vsan_overall_structure.png"></p><p>我們可以看到，每個vSAN Host，也就是物理機，裡面有若干塊硬碟，只要主機被加入vSAN Cluster，他裡面的硬碟資源就會貢獻給vSAN，所以在vSAN上的主機要存取資料，可能是來自主機本身的，也有可能是其他主機的。</p><p>由於vSAN是軟體定義儲存系統，我們能想到的儲存備份、冗余、延伸集群等等的都可以透過vSAN軟體實現而不需要動到硬體，甚至RAID卡也不用。其關鍵技術就是Storage Policy，透過對主機上的虛擬機設定Storage Policy，我們可以指定該虛擬機要做幾份備份，可以容忍多少台主機故障等等的，此外，由於他是軟體定義儲存，對於主機的擴充非常方便，只要在vCenter(主機叢集的控制面板)「新增主機」，即可為這個叢集增加儲存容量。</p><p>vSAN是採用物件(Object)作為儲存系統，物件儲存系統簡單來說就是沒有資料夾的檔案系統，所以查詢非常快且容易共享及備份，vSAN作為服務vSphere上虛擬機的儲存系統，上面的虛擬機就是一個個物件。除此之外，由於深度和vSphere整合，vSAN同時也支持vSphere HA(High Availability)、vSphere DRS(Distributed Resource Scheduler)和vSphere vMotion(虛擬機不掉電遷移)</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vSAN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vmware </tag>
+            
+            <tag> vsan </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>[閱讀]刻意練習</title>
       <link href="/2022/02/03/proative_practice_book/"/>
       <url>/2022/02/03/proative_practice_book/</url>
@@ -23,6 +168,64 @@
             <tag> 閱讀 </tag>
             
             <tag> 刻意練習 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>[vSAN]雲端? 雲端就是資料中心嗎？</title>
+      <link href="/2022/01/20/vsan/cloud_storage_overview/"/>
+      <url>/2022/01/20/vsan/cloud_storage_overview/</url>
+      
+        <content type="html"><![CDATA[<p>小羚一聽到資料中心，突然頭暈目眩，在他的腦海裡，資料中心就是在一個冰冷冷的屋子裡放滿了各種機器</p><p><img src="/images/vsan/datacenter.png"></p><p>各種機器就是硬體設備，我們已知可以透過虛擬機的方式，把計算軟化，但是資料中心還有「儲存」需求，要怎麼把他也軟化呢？</p><p>軟體定義資料中心(Software-Defined Data Center, SDDC) 顧名思義，就是利用軟體，把資料中心裡的計算、儲存、網路資源「抽象化」和「虛擬化」，當資源都被虛擬化後，IT管理團隊變得更加靈活了。IT人員可以針對使用者需求，提供更細的資源粒度，例如一台CPU 1G Hz，20GB容量的電腦，並且這個電腦還能隨時備份，不但提高了服務和應用的「可用性」及「彈性」，同時也降低了對運維的「複雜度」和「預算」，並簡化服務上線的工作流程和應用的推出時間，接下來的重點將會圍繞在「儲存資源」的部分，也就是VMware vSAN產品相關的技術結構。</p><p>一般的常見解決方案大致分為兩類 - 在雲端的公有雲和在地端的私有雲</p><span id="more"></span><h3 id="公有雲"><a href="#公有雲" class="headerlink" title="公有雲"></a>公有雲</h3><p>常見的如Amazon、Azure、Google Cloud，阿里雲等等，公有雲的好處是資料中心的「硬體設備」可以透過專門的公有雲提供商維護，這樣使用者，也就是工程師們可以專心的開發軟體或應用，不用管資料中心遇到水災、斷電或是地震等自然災害。</p><p>更重要的是，對於新創公司來說，服務的使用量震盪是劇烈的，若事先買了硬體設備，可能會造成大量的浪費，公有雲的按需使用能滿足小型創業公司的需求。</p><h3 id="私有雲"><a href="#私有雲" class="headerlink" title="私有雲"></a>私有雲</h3><p>常見的如VMware vSAN、Nutanix ADSF、HPE StoreVirtual VSA等等，私有雲的好處是資料幾乎100%安全且存取的速度快，不過硬體的選配、維護等等需要抽出部分公司裡的人力去維護。一般來說，是銀行、政府等等對資料安全性比較敏感的單位才會使用私有雲服務</p><p>其中又能細分「融合式解決方案」和「純軟體式解決方案」</p><h3 id="融合式解決方案"><a href="#融合式解決方案" class="headerlink" title="融合式解決方案"></a>融合式解決方案</h3><p>買硬體設備的同時，軟體也裝上去了，例如Dell VxRail、HPE SimpliVity，這樣省去了更多安裝和硬體選配的麻煩，直接購買，直接使用。</p><h3 id="純軟體式解決方案"><a href="#純軟體式解決方案" class="headerlink" title="純軟體式解決方案"></a>純軟體式解決方案</h3><p>此方案對於硬體的配置更有彈性，只要符合「硬體相容性清單」，就能在自己的硬體設備搭建軟體定義儲存的伺服器</p><h3 id="混合雲"><a href="#混合雲" class="headerlink" title="混合雲"></a>混合雲</h3><p>混合雲的意思就是一部分的應用在公有雲，一部份在私有雲，但是操控的介面是同一個。例如VMware有和各大公有雲合作 - Amazon, Google, Microsoft, 阿里巴巴。在他們的硬體上安裝VMware的產品，這樣使用者就能在地端和雲端上自由遷移虛擬機和儲存空間。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vSAN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vmware </tag>
+            
+            <tag> vsan </tag>
+            
+            <tag> cloud </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>[vSAN]雲端，什麼是雲端？</title>
+      <link href="/2021/12/05/vsan/vsan_cloud_overview/"/>
+      <url>/2021/12/05/vsan/vsan_cloud_overview/</url>
+      
+        <content type="html"><![CDATA[<p>小羚是一位老師，有一天小羚費盡了功夫，寫好了本學期的教案，她想要備份在安全的地方。<br>小羚想著想著，要存哪好呢？存行動硬碟不太安全，萬一丟了怎麼辦？存自己的電腦，也沒安全感，萬一中毒了怎麼辦？<br>她的男友安迪跟他說，可以買三個行動硬碟，都分別存在裡面呀。<br>小羚回說，這樣子好麻煩，如果我想更新教案裡的某段內容，這樣還要一個個打開來更新。<br>安迪又說，可以存雲端呀！存雲端既不用擔心硬碟損壞，也不用擔心突然有靈感的時候沒辦法隨時修改。</p><p>小羚問安迪，有什麼常見的雲端儲存服務嗎？</p><p>有的，儲存是一個很大的領域，服務的對象也千差萬別，安迪會用兩篇的篇幅介紹，首先會先介紹什麼是「雲」，再來介紹雲端儲存系統</p><h3 id="那麼，什麼是「雲」呢？"><a href="#那麼，什麼是「雲」呢？" class="headerlink" title="那麼，什麼是「雲」呢？"></a>那麼，什麼是「雲」呢？</h3><span id="more"></span><p>「雲」就是一個大池子，這個池子裡面裝著豐沛的電腦「計算」資源和「儲存」資源，然後透過「網路」的方式，拿到遠端池子裡幫我們運算好或儲存的結果。</p><p>假如我們只想做個簡單的計算，不需要買一台電腦另外算，只需要短暫的租用一下CPU即可，假如我們只想暫時性存個文件，不需要額外買行動硬碟浪費空間，只需要短暫的租用一下硬碟即可。</p><p>雲主要可以分為以下三種服務</p><ol><li>SaaS</li><li>PaaS</li><li>Iaas</li></ol><p>雲端儲存給使用者使用的「介面」可以區分為以上三個，下面依依來介紹</p><h3 id="SaaS"><a href="#SaaS" class="headerlink" title="SaaS"></a>SaaS</h3><p>SaaS(Software as a Service)是雲端中最外層的服務，直接讓使用者能使用的服務，讓使用者能打開瀏覽器透過UI操作，例如Dropbox、Google Doc等等。所以，這也是小羚適合使用的服務。雖然找到了最適合的服務，但是秉持著刨根問底的精神，小羚還是很好奇我在雲端上存的檔案是怎麼儲存賀備份的呢？那讓我們接著繼續看下去。</p><h3 id="PaaS"><a href="#PaaS" class="headerlink" title="PaaS"></a>PaaS</h3><p>PaaS(Platform as a Service)，通常Saas下面這一層就是PaaS，他的目的是給最外層的服務提供一個Platform，讓網路應用可以部署在上面，例如Amazon S3等等，使用者一般為工程師，工程師把寫好的服務部署在上面，他不需要管分散式架構、備份等問題，其中，最有名的當數Amazon S3了，這裡容我簡單介紹一下</p><p><strong>Amazon S3</strong></p><p>Amazon S3(Simple Storage Service)是亞馬遜公司提供的一個Object Storage儲存服務，可以透過Restful API、SOAP等方式，把你的把你的檔案儲存在網路伺服器上，目前每個月收費3元台幣/GB，與iCloud比似乎還是有點貴，iCloud月付30元就有50GB了</p><p>Amazon S3有個關鍵的概念，叫做”Bucket”，Bucket有點像是你的名稱唯一個人資料夾，裡面只能存放檔案，不能再新建資料夾，存取檔案只能透過你的資料夾裡面的檔案名字去讀取或是更新，我們通常說的Object儲存系統，就是把檔案存在一個沒有資料夾的大平面。</p><h3 id="IaaS"><a href="#IaaS" class="headerlink" title="IaaS"></a>IaaS</h3><p>IaaS(Infrastructure as a Service), PaaS下面那一層就是IaaS。我們知道，一台電腦或伺服器，它是由「計算/CPU」和「儲存/Disk」構成，缺一不可，IaaS的目的是讓工程師可以直接使用這些硬體設備，透過虛擬化的方式，切割成獨立的計算資源，透過iSCSI等方式，切割獨立的儲存資源，例如vSphere, vSAN等等，而這也是資料中心提供的Service方式，下一篇，我們將會介紹vSAN的核心思想以及要解決的問題 - 軟體定義資料中心。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vSAN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vmware </tag>
+            
+            <tag> vsan </tag>
+            
+            <tag> cloud </tag>
             
         </tags>
       

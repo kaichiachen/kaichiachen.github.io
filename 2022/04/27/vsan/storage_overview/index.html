@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../../images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../../images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../../images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="../../../../../images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vmware,vsan,storage," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="小羚和安迪説，我大概是明白資料中心的組成了，你能不能再多說說vSAN是怎麼儲存資料呢？他是如何能把我的重要檔案自動備份又能同時取用呢？ 安迪說，當然沒問題！儲存是一個很大的領域，我們只能先從最基本的基礎開始，我會先從三個資料儲存系統 - 區塊儲存系統、檔案儲存系統和物件儲存系統說起，這裡說的系統都是軟體層面上的邏輯，不會深入探討到硬碟。 Block storage(區塊儲存系統)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[vSAN]資料的儲存形式? Block、File、Object Storage">
+<meta property="og:url" content="https://kaichiachen.github.io/2022/04/27/vsan/storage_overview/index.html">
+<meta property="og:site_name" content="安迪熊">
+<meta property="og:description" content="小羚和安迪説，我大概是明白資料中心的組成了，你能不能再多說說vSAN是怎麼儲存資料呢？他是如何能把我的重要檔案自動備份又能同時取用呢？ 安迪說，當然沒問題！儲存是一個很大的領域，我們只能先從最基本的基礎開始，我會先從三個資料儲存系統 - 區塊儲存系統、檔案儲存系統和物件儲存系統說起，這裡說的系統都是軟體層面上的邏輯，不會深入探討到硬碟。 Block storage(區塊儲存系統)">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://kaichiachen.github.io/images/vsan/magnectic_disk.png">
+<meta property="article:published_time" content="2022-04-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-31T12:51:46.030Z">
+<meta property="article:author" content="Kaichia Chen">
+<meta property="article:tag" content="vmware">
+<meta property="article:tag" content="vsan">
+<meta property="article:tag" content="storage">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kaichiachen.github.io/images/vsan/magnectic_disk.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://kaichiachen.github.io/2022/04/27/vsan/storage_overview/"/>
+
+
+
+
+
+  <title>[vSAN]資料的儲存形式? Block、File、Object Storage | 安迪熊</title>
+  
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1CJ8TQMMGC"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-1CJ8TQMMGC');
+    }
+  </script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">安迪熊</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技術、閱讀、生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜尋
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[vSAN]資料的儲存形式? Block、File、Object Storage</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-04-27T00:00:00+08:00">
+                2022-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../../categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/04/27/vsan/storage_overview/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye">&nbsp;閱讀次數:</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  2.8k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>小羚和安迪説，我大概是明白資料中心的組成了，你能不能再多說說vSAN是怎麼儲存資料呢？他是如何能把我的重要檔案自動備份又能同時取用呢？</p>
+<p>安迪說，當然沒問題！儲存是一個很大的領域，我們只能先從最基本的基礎開始，我會先從三個資料儲存系統 - 區塊儲存系統、檔案儲存系統和物件儲存系統說起，這裡說的系統都是軟體層面上的邏輯，不會深入探討到硬碟。</p>
+<h2 id="Block-storage-區塊儲存系統"><a href="#Block-storage-區塊儲存系統" class="headerlink" title="Block storage(區塊儲存系統)"></a>Block storage(區塊儲存系統)</h2><span id="more"></span>
+
+<blockquote>
+<p>Block storage是最基本的儲存系統，所以讓我們從這裡開始</p>
+</blockquote>
+<p>資料在電腦裡是以1和0儲存在某個”介質”上面，例如機械式硬碟(HDD)利用磁性，而固態硬碟(SSD)利用電子，也有用光的CD，而Block storage簡單來說就是我們能看到的一塊塊的硬碟和儲存裝置，我們把儲存裝置與我們的電腦連接，我們的電腦透過Block storage的API對裡面的資料進行增刪改查。</p>
+<p>接下來，我們有了作業系統，作業系統他方便了我們把資料存進去Block storage裝置，可以說，作業系統是上層應用與Block storage裝置溝通的橋樑，那麼回答一個問題，作業系統是如何與硬碟打交道呢？</p>
+<p>首先，作業系統利用LUN ID識別硬碟，LUN是一個或一組或半個硬碟的邏輯代號，為何有半個呢？</p>
+<p>例如我們的windows有一個硬碟，把他分成C槽和D槽，那麼他們就是各半個，LUN他不是獨佔式的，也就是說多台主機能共享一個儲存設備，不過一般不會這麼用，因為Block storage的資料隔離沒有做得這麼好，若是同時寫入資料容易被混淆。</p>
+<h3 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h3><p>那麼block的由來是什麼呢？從作業系統的角度，資料的讀取和寫入都是以block為最小單位，一個block是一段固定長度的bytes，常見為4096 bytes，這樣的設定的用意是提升資料讀寫的速度，如果一個個byte寫，一來一往速度非常慢。</p>
+<p>對於HDD來說，連續讀寫可以大幅提升I/O速度，然而我們的資料會需要經常性的寫入和刪除，例如我們寫了十筆連續的Block，過一段時間，想把第五個Block資料給刪除，這樣中間就會有空餘的浪費，這樣該怎麼辦呢？</p>
+<p>如果我們時常要求連續讀寫，會造成巨大的資源浪費，所以上層的作業系統會利用Linked-List資料結構把碎片化的Block記錄下來，把整段資料拼湊出來</p>
+<p>一個block對應一個或多個硬體的扇區(sector)，常見的一個sector大小為512 bytes，所以block是給作業系統看的邏輯地址，sector是Block storage上的實體地址。Block大小可以透過作業系統設定，查詢藉由指令<code>stat /boot/ |grep &quot;IO Block&quot;</code> 查詢</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; stat /boot/ |grep &quot;IO Block&quot;</span></span><br><span class="line">Size: 4096          Blocks: 8          IO Block: 4096   directory</span><br></pre></td></tr></table></figure>
+
+<h3 id="Sector-扇區"><a href="#Sector-扇區" class="headerlink" title="Sector(扇區)"></a>Sector(扇區)</h3><p>sector是Block storage上的實體地址，他也是把多個bytes分組成一個sector，我們拿機械式硬碟HDD舉例，HDD有個針頭會去掃描磁碟，掃描的部分就是一個個扇區，如下圖所示</p>
+<p><img src="/images/vsan/magnectic_disk.png"></p>
+<p>HDD就是用類似光碟的圓盤一個個堆疊出來了，剛剛提到的”扇區”就是上圖的sector，代表同個半徑下一小塊長度</p>
+<p>最後總結一下Block storage有什麼優缺點</p>
+<h3 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h3><p>Block storage最大的優點就是他使得計算與儲存分離，我們能輕易地透過LUN ID外接一個硬碟或硬碟組</p>
+<ul>
+<li><p><strong>高性能:</strong><br>IOPS(Inputs Outputs per Seconds)高，延遲低，適合用作公司的database server或數據中心</p>
+</li>
+<li><p><strong>易於修改:</strong><br>如果想改變block裡的一個小部分資料，直接改那個block就可以，如果是檔案系統或object system，需要整個檔案或object都改</p>
+</li>
+<li><p><strong>擴充容易</strong><br>擴充非常簡單，一個LUN ID就可以接上系統了，適合用在SAN(儲存區域網路)裡</p>
+</li>
+</ul>
+<h3 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h3><ul>
+<li><p><strong>不能同時讀寫</strong><br>不能多台機器同時讀寫同一塊硬碟，雖然可以透過軟體解決此問題但是會造成性能下降</p>
+</li>
+<li><p><strong>Metadata</strong><br>Block storage沒有什麼Metadata，File system有檔案路徑、名字、大小等等快速定位資料，Block storage只有地址起始位置(LBA)、長度</p>
+</li>
+</ul>
+<h2 id="File-storage-檔案系統"><a href="#File-storage-檔案系統" class="headerlink" title="File storage(檔案系統)"></a>File storage(檔案系統)</h2><blockquote>
+<p>有了File storage，就能方便我們寫程式去操作資料！</p>
+</blockquote>
+<p>如果要和硬碟直接打交道，Block storage是唯一的方式，只是對人非常不友好，我怎麼知道我的資料的Block存在哪裏？是連續的存呢？還是分散的存？如果每筆資料都連續的存，那肯定對硬碟的利用率不友好，如果是分散存，需要一個Linked-List資料結構去紀錄。</p>
+<p>任何資訊界的難題只需要加一層就可以解決，如果不行，那就兩層，所以我們就加個一層吧！為了讓使用者能夠輕鬆的操作儲存資料，作業系統在Block storage上面加了一層File system。</p>
+<p>我們平常用的Windows為了讓使用者方便存取資料，就是使用File system，這大家應該很熟悉，用滑鼠鍵盤敲一敲點一點就可以對檔案進行存取，由於File system就是Block storage上面加一層，所以檔案的內容都是存在一個個的block中</p>
+<p>除了檔案的內容之外，檔案的metadata比如創建時間、權限、大小等等也需要存在另一個地方，專門存這些文件metadata的地方就叫做inode。</p>
+<p>一個檔案的inode可以透過stat來查詢</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; stat demo.txt</span></span><br><span class="line">File: ‘demo.txt’</span><br><span class="line">Size: 12            Blocks: 8          IO Block: 4096   regular file</span><br><span class="line">Device: fd02h/64770d    Inode: 238749826   Links: 1</span><br><span class="line">Access: (0644/-rw-r--r--)  Uid: (51426876/ ckaijia)   Gid: (  201/     mts)</span><br><span class="line">Access: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line">Modify: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line">Change: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line">Birth: -</span><br></pre></td></tr></table></figure>
+
+<p>inode也會消耗儲存空間，所以格式化硬碟的時候，作業系統會將硬碟分成兩個區域，一個存資料，一個存inode，並且指定inode分區的大小，所以就算檔案很小，一塊硬碟裡還是有檔案數量的限制</p>
+<h3 id="作業系統是如何讀取檔案資料？"><a href="#作業系統是如何讀取檔案資料？" class="headerlink" title="作業系統是如何讀取檔案資料？"></a>作業系統是如何讀取檔案資料？</h3><p>首先，不是透過檔案名字，檔案名字只是讓使用者方便識別，作業系統透過inode ID，每個inode都有一個號碼，例如上面的<code>demo.txt</code>就是238749826，根據使用者點開的文件找到inode號碼。</p>
+<p>第二，根據inode號碼去資料分區根據inode找到對應的data。</p>
+<p>最後，根據indoe的data，找到檔案裡的資料存在哪個block。</p>
+<h3 id="優點-1"><a href="#優點-1" class="headerlink" title="優點"></a>優點</h3><p>File system最大的優點就是他對人類友好，有目錄結構、好記得名字等等，方便UI呈現，除此之外還有如下優點</p>
+<ul>
+<li><p><strong>方便共享</strong><br>一個inode就能與其他同台電腦上的user直接分享檔案，而且有權限控制</p>
+</li>
+<li><p><strong>安全</strong><br>如上述所示，Linux有三種權限控制 - 自己、組和其他</p>
+</li>
+<li><p><strong>成本低</strong><br>不需要昂貴的光纖，只要買機器，接上外接硬碟，透過作業系統上的File system，就可以使用</p>
+</li>
+</ul>
+<h3 id="缺點-1"><a href="#缺點-1" class="headerlink" title="缺點"></a>缺點</h3><ul>
+<li><p><strong>資料讀寫慢</strong><br>因為讀取跟寫入都有兩層，除了讀寫本身資料(Block storage)之外，還有inode裡的metadata需要處理</p>
+</li>
+<li><p><strong>難以遷移</strong><br>如過想把文件都搬遷到另一個作業系統有點困難，如果file storage的格式不同或inode的演算法不同就更糟了</p>
+</li>
+<li><p><strong>權限控制</strong><br>權限控制只有三層 - 自己、group、others，無法滿足更複雜的需求</p>
+</li>
+</ul>
+<h3 id="Object-storage-物件儲存"><a href="#Object-storage-物件儲存" class="headerlink" title="Object storage(物件儲存)"></a>Object storage(物件儲存)</h3><blockquote>
+<p>Object Storage - 雲端系統上最流行的儲存方式</p>
+</blockquote>
+<p>Object storage和File storage一樣，是基於Block storage的，首先，與File storage方式不同，File storage就像是一棵樹，從點進去一個資料夾開始，裡面有很多檔案(葉子)，也有資料夾(樹枝)，再點進去資料夾，又會有檔案、資料夾，是一個樹狀結構，Object storage是扁平化結構，可以理解為所有檔案都存在一個資料夾裡，包括Object的metadata，且資料夾裡不會有資料夾，Object就是一個檔案，也可以是多個檔案的非結構化組合，所以Object storage沒有inode這種方式變得更容易索引和訪問。</p>
+<p>Object storage的Metadata就像是File system的inode，用作索引對應的data位置，Object storage可以隨意定義自己的metadata資料結構，幫助快速檢索目標object，甚至是分散在不同主機的data。</p>
+<p>綜上所述，Object storage非常適合存靜態不常使用的大數據，例如大量的影片、音樂等等，為使用者提供大量、安全、低成本的資料儲存服務。</p>
+<p>從high level講，也就是使用方式講，Object storage主要是透過http API對資料進行增刪改查，與File systemAPI和Block storage的SCSI不同，Object storage更加方便各個語言的使用。這些Object實際上可以是任何類型的資料：PDF、影片、音檔、文本、網站資料或任何其他檔案類型。</p>
+<p>正因為他的扁平化架構，他天生就適合作為分散式儲存的儲存方式，為何這麼說呢？首先，分散式儲存必須要資料分散且「容易」伸縮，由於是扁平化架構，我們容易把object切塊平均分散在不同機器，伸縮也非常方便，加了一台機器，等於對這個「資料夾」加大了空間。</p>
+<p>加了機器除了可以提升儲存空間之外，還能提升資料的「可靠性」，例如一個object，我可以複製兩份，這樣我們可以說他的空間使用率是200%，保護力是1，因為他容許一台機器掛掉資料還在，雖然這種保護方法直觀簡單，但是現在各大雲端廠商為了節省成本，透過一些奇偶校驗法會使用例如RAID-5這種空間使用率只要150%，但是保護力也有1。</p>
+<h3 id="優點-2"><a href="#優點-2" class="headerlink" title="優點"></a>優點</h3><ul>
+<li><p><strong>方便擴增</strong><br>由於Object storage是扁平化架構，只要增加機器就是增加這個大平面的面積，不需要額外修改架構</p>
+</li>
+<li><p><strong>成本低</strong><br>公有雲端上的Object storage都特別便宜，例如Amazon S3</p>
+</li>
+<li><p><strong>API 簡單</strong><br>單純的使用HTTP進行增刪改查，進而支持長距離使用，例如你在台灣可以使用位在美國的Amazon S3儲存服務</p>
+</li>
+</ul>
+<h3 id="缺點-2"><a href="#缺點-2" class="headerlink" title="缺點"></a>缺點</h3><ul>
+<li><p><strong>不能修改</strong><br>由於最小單位就是一個Object，所以想要修改一個Object代表需要上傳一個新的Object替換他，而File system還能在末尾增加一行資料</p>
+</li>
+<li><p><strong>無法和database整合</strong><br>傳統的database是結構化數據，例如SQL, Mysql等等，而object storage存放的主要是非結構化數據，且object storage的讀寫慢</p>
+</li>
+<li><p><strong>無法與一般作業系統整合</strong><br>因為一般的作業系統都是File system，下載一個object就像是下載一個檔案</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../../tags/vmware/" rel="tag"># vmware</a>
+          
+            <a href="../../../../../tags/vsan/" rel="tag"># vsan</a>
+          
+            <a href="../../../../../tags/storage/" rel="tag"># storage</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../../12/vsan/vm_overview/" rel="next" title="[vSAN]虛擬機？我摸的到嗎？">
+                <i class="fa fa-chevron-left"></i> [vSAN]虛擬機？我摸的到嗎？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../../../../05/10/vsan/storage_raid_overview/" rel="prev" title="[vSAN]資料的備份形式? RAID">
+                [vSAN]資料的備份形式? RAID <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="../../../../../images/avatar.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../../archives">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../../categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../../tags/index.html">
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/kaichiachen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:kaichiasjtu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/chenkaijia" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kaichia Chen</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">&nbsp;在線人數:</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">&nbsp;進站人數:</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../../js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../../js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="../../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../../js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://kaichiablog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://kaichiachen.github.io/2022/04/27/vsan/storage_overview/';
+          this.page.identifier = '2022/04/27/vsan/storage_overview/';
+          this.page.title = '[vSAN]資料的儲存形式? Block、File、Object Storage';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kaichiablog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
