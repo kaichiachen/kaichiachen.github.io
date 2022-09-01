@@ -4,6 +4,186 @@
   
     
     <entry>
+      <title>[vSAN]FileService &amp; iSCSI</title>
+      <link href="/2022/09/07/vsan/vsan_fileservice_iscsi/"/>
+      <url>/2022/09/07/vsan/vsan_fileservice_iscsi/</url>
+      
+        <content type="html"><![CDATA[<p>我們知道vSAN主要是以Object的形式作為儲存單位，存的是VM Object，而Block和File兩個常用的儲存單位也經常被大企業或是資料中心所用到，vSAN當然也有暴露相關的接口，這裡來聊聊vSAN裡iSCSI存取block storage和Fileservice存取檔案的原理</p><h3 id="iSCSI"><a href="#iSCSI" class="headerlink" title="iSCSI"></a>iSCSI</h3><p>首先，SCSI是SAS/SATA的SSD/HDD用於與作業系統溝通的一種interface protocol，本來是需要透過實體接口才能進行存取，後來又制定了可以透過網路TCP/IP來傳送SCSI指令的技術，叫做iSCSI，使得連接距離可以達到無上限，連結的伺服器數量也是無限</p><p>這也是為何vSAN有提供此接口的原因，vSAN本質上是一塊專用儲存網路，形成了一個儲存池，外部應用可以隨時取用、擴容等等，像是Thin provision，vSAN加上iSCSI技術，把儲存變成「可路由」的，像普通的網路通信一樣，使得遠在天邊的應用或主機可以直接存取vSAN上的儲存池。</p><p><img src="/images/vsan/iscsi_edit_target.png"></p><span id="more"></span><p>在vSAN中，開啟iSCSI服務後，會產生一個home object for iSCSI去存一些相關的metadata</p><p><img src="/images/vsan/iscsi_add_target.png"></p><p>iSCSI服務啟動後，我們可以到vSAN Cluster→Configuration→iSCSI Target→add新增一個iSCSI Target，我們可以把iSCSI target當成一個vSAN的endpoint</p><p><img src="/images/vsan/iscsi_add_lun_to_target.png"></p><p>最後，我們可以根據iSCSI target分配LUN的ID，LUN的單位就是一個磁碟了，這種感覺就像是在一個磁碟組下面創建一個磁碟</p><h3 id="Fileservice"><a href="#Fileservice" class="headerlink" title="Fileservice"></a>Fileservice</h3><p>我們也能基於vSAN Datastore提供NFS的服務，這是vSAN7的新功能，vSAN上的File service是一個分散式的檔案系統(VDFS)，主要的目的是提供VM間的檔案共用，當然也可以透過像NAS那樣在自己的電腦上掛載一個NFS</p><p><img src="/images/vsan/file_service_structure.png"></p><p>從上圖可以看到vSAN FileService是共用vSAN儲存的，當然，ESXi node上必須啟用一台File service node VM，把Object轉換成File格式，也就是上圖的綠色Applicance VM，最後整合再一起，給Clients或VM透過SMB/NFS共享檔案池</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vSAN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vmware </tag>
+            
+            <tag> vsan </tag>
+            
+            <tag> fileservice </tag>
+            
+            <tag> iscsi </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>[vSAN]Datacenter級別的異地備援 - Stretched Cluster</title>
+      <link href="/2022/08/25/vsan/vsan_stretched_cluster/"/>
+      <url>/2022/08/25/vsan/vsan_stretched_cluster/</url>
+      
+        <content type="html"><![CDATA[<p>前面說到了Fault Domain，我們可以把相同機櫃的host匡列成同個Group，這樣Object下的Component就會被分散在不同機櫃裡，那如果擔心地震、火災等等會讓整個Datacenter遭殃，不就造成永久的Data loss嗎？</p><p>Stretched Cluster為一種異地備援機制，可以建立兩個以不同地區Datacenter的Fault Domain，不過由於跨地區，Witness必須是獨立於Cluster之外Host，可以為單個，也可以為多個。</p><span id="more"></span><p>由於是跨地區的Datacenter備份機制，規定了兩個Datacenter互相ping必須是5ms以內，且只能設定兩個Fault Domain - Preferred 和 Secondary Domain，由於只有兩個Domain，所以FTT只能設定為FTT=1，RAID只能設定RAID-1</p><p>然後來說說對於Stretched cluster，資料是如何進行I/O的，Preferred Domain為主要進行I/O的對象，對於寫入，為了確保最終一制性，只有當資料成功寫入兩邊的SSD時，才算是寫入完畢。</p><p>針對資料讀取的部分，vSAN Stretched cluster有支持Site Read Locality，會優先讀取離自己近的資料。</p><p>而Witness作為一個節點或是一個Fault Domain，他的作用就是當Datacenter發生故障時，作為tiebreaker仲裁當VM的I/O過來時，要去哪個Datacenter存取，主要是在故障發生後保證整個系統的可用性。</p><h2 id="故障種類"><a href="#故障種類" class="headerlink" title="故障種類"></a>故障種類</h2><h3 id="一個Datacenter-故障"><a href="#一個Datacenter-故障" class="headerlink" title="一個Datacenter 故障"></a>一個Datacenter 故障</h3><p>當一個Datacenter出現異常的時候，例如掉電，或是失去與Witness的聯繫，Witness就會把路由導向健康的Datacenter。</p><h3 id="兩個Datacenter之間失去聯繫"><a href="#兩個Datacenter之間失去聯繫" class="headerlink" title="兩個Datacenter之間失去聯繫"></a>兩個Datacenter之間失去聯繫</h3><p>當兩個Datacenter出現了網路的問題，但是各自都能連上Witness，所以都覺得自己是健康的，這時需要Witness作為仲裁，投下那個關鍵的一票，指定誰是外部的存取對象。</p><h3 id="Witness-node故障"><a href="#Witness-node故障" class="headerlink" title="Witness node故障"></a>Witness node故障</h3><p>如果只有Ｗitness node故障，Datacenter裡的VM還是可以照常運行，只是會在vCenter上的vSAN Health監控平台提醒恢復Witness node。</p><h3 id="Witness-node和一個Datacenter故障"><a href="#Witness-node和一個Datacenter故障" class="headerlink" title="Witness node和一個Datacenter故障"></a>Witness node和一個Datacenter故障</h3><p>當這種情況發生時，只能人工介入了，在vCenter上的vSAN Health監控平台會對其進行報警。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vSAN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vmware </tag>
+            
+            <tag> vsan </tag>
+            
+            <tag> object </tag>
+            
+            <tag> component </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>[vSAN]vSAN的是怎麼做分散式儲存的</title>
+      <link href="/2022/08/13/vsan/vsan_policy_layout/"/>
+      <url>/2022/08/13/vsan/vsan_policy_layout/</url>
+      
+        <content type="html"><![CDATA[<p>我們知道，vSAN是一個Policy based的分散式儲存系統，vSAN會根據Object所設定的Policy，把Object下的Component妥善地分散儲存在不同Host。</p><p>Policy指的就是RAID 0/1/5/6，目前常見的有這四種，其中RAID 5/6由於需要進行erasure coding和XOR操作，需要耗費一些計算資源以及一些I/O，所以只有當使用all flash架構才能設定。</p><span id="more"></span><p>一般來說，Policy除了設定RAID 0/1/5/6，還可以設定FTT，可以這麼說，RAID設定目的是調整怎麼對資料進行備份，FTT單純就是能容忍幾台host failure。例如我們也可以這樣設定，RAID 1, FTT=2，我們知道RAID 1的寫入邏輯是一模一樣寫多份，由於是FTT=2，vSAN會對他一模一樣寫三份，這樣才能容忍三個Host掛掉。</p><h3 id="Fault-Domain"><a href="#Fault-Domain" class="headerlink" title="Fault Domain"></a>Fault Domain</h3><p>我們把Object下的Component分散在不同的Host目的是為了安全，如果一台Host掛了也不至於資料丟失，但是現在的主機可能是機架式的，這意味著可能機架掉電會讓整個機架上的Host都掛，如果Object下的所有Components都放在同個機架上怎麼辦？</p><p>我們可以對一組Host進行Group，這一組Host我們就稱為Fault Domain，這麼一來，如果Configure Policy RAID 1, FTT=1，Object下的兩個Component加上Witness就會分散在不同的Fault Domain，注意的是vSAN Cluster至少需要三台Host，這意味著如果要設定Fault Domain，也至少需要三個Fault Domain。</p><p>那接下來有個疑問了，如果我想做的是Datacenter層級的備份呢？如果Datacenter失火了，我想要兩個Datacenter，並把Component妥善地分配在這兩個Datacenter? 接下來提到的Stretched cluster就會提到這部分，為的就是解決這個問題。</p><h3 id="Object如何從異常中恢復"><a href="#Object如何從異常中恢復" class="headerlink" title="Object如何從異常中恢復"></a>Object如何從異常中恢復</h3><p>當vSAN偵測到異常事件，例如Host掉電、Disk損壞、網路異常等等，vSAN會確認故障的設備存放哪些Component，並嘗試對這些Component做出相應的修復，同時將資料I/O等等導向健康的Component</p><p>遇到不同的異常事件，vSAN會採用不同的因應方式，優先重建Component，如果無法達成，例如vSAN Cluster只有三個Host並且Policy FTT=1且一個Host掛了，就會標記為無法重建，這裡列舉幾個在vSAN中定義的Object狀態</p><ul><li>Inaccessible<ul><li>vSAN的Object無法重建，需要人工干預和排查Root Cause，屬於嚴重錯誤</li></ul></li><li>Unassociated<ul><li>當vSAN裡的Object沒有和某一台VM關聯起來，就會被判定為unassociated，</li><li>VMware KB: <a href="https://kb.vmware.com/s/article/70726">https://kb.vmware.com/s/article/70726</a></li></ul></li><li>Reduce availability<ul><li>vSAN正在重建Object使之符合Policy Compliance，短暫時間無法取用Object，有時候可以立即重建，有時候需要等待一段時間(預設值為60分鐘)</li></ul></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> vSAN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vmware </tag>
+            
+            <tag> vsan </tag>
+            
+            <tag> object </tag>
+            
+            <tag> component </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>[vSAN]vSAN的儲存基本單位 - Object</title>
+      <link href="/2022/07/29/vsan/vsan_distributed_object/"/>
+      <url>/2022/07/29/vsan/vsan_distributed_object/</url>
+      
+        <content type="html"><![CDATA[<p>再讓我們把主題切回vSAN。現在我們有了儲存系統 - Object Storage的基本知識後，我們可以更深入的探討vSAN是怎麼存Object的。</p><p>vSAN是一種軟體定義儲存的產品，他的儲存單位是Object，Object是什麼呢？回到Day 06，Object可以理解為一個巨大的資料夾，每個檔案就是一個Object，所以搜索Object資料不用一個個資料夾找，今天我們更深入的來理解所謂的「軟體定義」以及Object/Component在vSAN裡面代表著什麼</p><span id="more"></span><p>從傳統的儲存架構來說，我們想對硬碟裡面的資料進行備份，必須透過硬體RAID卡來進行，這就有了缺點了，舉例來說，如果我想對這台虛擬機用RAID 1的方式備份三份，對另外一台虛擬機不需要備份，RAID 0即可，這對於硬體的管理成本非常巨大且可能有資源的浪費</p><p>vSAN裡的「軟體定義」就是指User可以針對這個Object定義他的備份Policy，透過Policy驅動指定備份的方式。透過軟體定義的方式就更方便更彈性多了，VM不受硬體的約束，可以隨時的指定VM的備份Policy。</p><p>講完了Object，最後來說說Component，Component在vSAN中分別代表什麼概念呢？</p><p>假如我們在vSAN有一台虛擬機，其中他的VMDK就是一個Object，裡面存放著虛擬硬碟的資料，我們想對他做一份完整的備份，使用RAID 1，也就是FTT=1。RAID 1前面有提過，這裡就不贅述，FTT 1代表可以容忍一個節點失誤，這樣一來，我們總共需要兩個節點放這個Object，Object變成兩份一模一樣的Components，分散在不同主機上，如下圖所示</p><p><img src="/images/vsan/vsan_object_component_layout.png"></p><p>從上圖可以看到，兩個Components的資料一模一樣，只是被分配在不同的主機上，再加上一個Witness見證節點，Object的metadata就是存在Witness的，我們知道Object的metadata有個重要的功能就是引導Object資料的位置，所以Witness負責當外部Object request過來之後，判斷要從哪個節點拿Compoent，以免發生腦裂現象或是兩台主機連不上線的時候。</p><p>順帶一提，在vSAN中，預設的Object儲存方式就是RAID 1，FTT-1，所以最小的vSAN Cluster配置是三台主機。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vSAN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vmware </tag>
+            
+            <tag> vsan </tag>
+            
+            <tag> object </tag>
+            
+            <tag> component </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>[vSAN]儲存最速的Protocol - NVMe</title>
+      <link href="/2022/07/16/vsan/ssd_nvme_overview/"/>
+      <url>/2022/07/16/vsan/ssd_nvme_overview/</url>
+      
+        <content type="html"><![CDATA[<p>NVMe是一種主機與SSD之間溝通的協議，前面說到PCIe有三層，NVMe屬於第四層，隸屬於協議中的最高層，如下圖所示</p><p><img src="/images/vsan/nvme_structure.png"></p><span id="more"></span><p>NVMe作為應用層協議，理論上可以是配所有物理接口協議，但是NVMe起初的設計是根據PCIe，所以後面都是基於NVMe+PCIe進行探討。</p><p>NVMe協議是為SSD所生，他就像是古代的軍師，運籌帷幄之中，決勝千里之外，將設計好的計謀交給手下大將去執行，也就是PCIe，NVMe+PCIe這兩個天作之合無疑在SSD領域中是最強的。</p><h3 id="NVMe-over-Fabrics"><a href="#NVMe-over-Fabrics" class="headerlink" title="NVMe over Fabrics"></a>NVMe over Fabrics</h3><p>在傳統的儲存伺服器，我們利用iSCSI，透過網路的方式連結遠端的硬碟，形成一個儲存池，如下圖所示</p><p><img src="/images/vsan/storage_overall_structure.png"></p><p>他的好處是非常節省成本，只需要使用ethernet和成熟的iSCSI協議即可。但是這樣的方式會帶來一個問題，NVMe+PCIe的速度非常快，throughput可以做到10us，而iSCSI的極限則是100us，這就像是把一台法拉利跑車放在台北市上班時段的建國高架橋上，縱使有非常快的引擎，還是發揮不出來</p><p>NVMe over Fabrics就是為了解決這個問題，他指定了Transaction Layer的協議例如RDMA、PCIe Fabrics的技術，不過需要專用的硬體網路設備。在眾多的Transaction Layer協議中，重點介紹一下RDMA，RDMA是遠端DMA，他通過網路把資料直接傳入主機的儲存區，不需要CPU一個個編碼協議和解析協議，進而降低了CPU的工作量。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vSAN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ssd </tag>
+            
+            <tag> disk </tag>
+            
+            <tag> nvme </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>[vSAN]SSD PCIe接口</title>
+      <link href="/2022/07/09/vsan/ssd_pcie_overview/"/>
+      <url>/2022/07/09/vsan/ssd_pcie_overview/</url>
+      
+        <content type="html"><![CDATA[<p>PCIe是SSD一項重要和主流的接口技術，所以我們有必要對PCIe有深入的了解</p><p>PCIe從第一代，到最近2022年第六代的規格問世，速度越來越快，相比於SAS/SATA，PCIe資料傳輸的「高速公路」更多，最多可以有32個Lane，SAS/SATA只能有一個Lane，所以我們可以說，PCIe的速度就是Lane的數量x單條Lane的速度</p><h3 id="PCIe-拓樸結構"><a href="#PCIe-拓樸結構" class="headerlink" title="PCIe 拓樸結構"></a>PCIe 拓樸結構</h3><p>PCIe採用的是樹形拓樸結構，如下圖所示</p><p><img src="/images/vsan/pci_topology.png"></p><p>Root Complex是樹的根，為CPU所服務，Root Complex能存取PCIe設備，也能存取記憶體</p><span id="more"></span><p>所以具體來說，Root Complex的spec是什麼呢？他的內部很複雜，PCIe Spec也沒有規定Root Complex該做什麼，不該做什麼，我們可以理解為他是一台筆記型電腦，外部的PCIe設備就是USB的插槽，如果插槽不夠用，我們需要擴充更多設備，就需要一個Switch，像是一個USB的Hub一樣</p><h3 id="PCIe分層結構"><a href="#PCIe分層結構" class="headerlink" title="PCIe分層結構"></a>PCIe分層結構</h3><p>PCIe作為一個資料通訊接口，就某種意義跟跨主機的網路接口類似，都需要分層各司其職的去處理複雜的問題，網路有TCP/IP五層協議，PCIe則定義了三層，Physical, Data Link, Transaction Layer，如下圖所示</p><p><img src="/images/vsan/pci_layer.png"></p><p>和網路通信一樣，PCIe也是以Packet的形式傳輸，每一層都有固定的格式</p><p><strong>Physical Layer</strong></p><p>負責處理Packet物理傳輸，怎麼分到各個Lane傳輸以及匯總</p><p><strong>Data Link Layer</strong></p><p>主要負責Data的檢錯和糾錯、電源管理等等</p><p><strong>Transaction Layer</strong></p><p>主要負責創建Packet、流量控制還有QOS和事物排序等等</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vSAN </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ssd </tag>
+            
+            <tag> disk </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>[vSAN]電子儲存介質 - SSD的介紹</title>
       <link href="/2022/06/30/vsan/ssd_overview/"/>
       <url>/2022/06/30/vsan/ssd_overview/</url>

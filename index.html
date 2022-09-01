@@ -296,6 +296,1073 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/09/07/vsan/vsan_fileservice_iscsi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="2022/09/07/vsan/vsan_fileservice_iscsi/" itemprop="url">[vSAN]FileService & iSCSI</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-09-07T00:00:00+08:00">
+                2022-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="2022/09/07/vsan/vsan_fileservice_iscsi/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/09/07/vsan/vsan_fileservice_iscsi/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  512
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>我們知道vSAN主要是以Object的形式作為儲存單位，存的是VM Object，而Block和File兩個常用的儲存單位也經常被大企業或是資料中心所用到，vSAN當然也有暴露相關的接口，這裡來聊聊vSAN裡iSCSI存取block storage和Fileservice存取檔案的原理</p>
+<h3 id="iSCSI"><a href="#iSCSI" class="headerlink" title="iSCSI"></a>iSCSI</h3><p>首先，SCSI是SAS/SATA的SSD/HDD用於與作業系統溝通的一種interface protocol，本來是需要透過實體接口才能進行存取，後來又制定了可以透過網路TCP/IP來傳送SCSI指令的技術，叫做iSCSI，使得連接距離可以達到無上限，連結的伺服器數量也是無限</p>
+<p>這也是為何vSAN有提供此接口的原因，vSAN本質上是一塊專用儲存網路，形成了一個儲存池，外部應用可以隨時取用、擴容等等，像是Thin provision，vSAN加上iSCSI技術，把儲存變成「可路由」的，像普通的網路通信一樣，使得遠在天邊的應用或主機可以直接存取vSAN上的儲存池。</p>
+<p><img src="/images/vsan/iscsi_edit_target.png"></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="2022/09/07/vsan/vsan_fileservice_iscsi/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/08/25/vsan/vsan_stretched_cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="2022/08/25/vsan/vsan_stretched_cluster/" itemprop="url">[vSAN]Datacenter級別的異地備援 - Stretched Cluster</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-08-25T00:00:00+08:00">
+                2022-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="2022/08/25/vsan/vsan_stretched_cluster/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/08/25/vsan/vsan_stretched_cluster/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  526
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>前面說到了Fault Domain，我們可以把相同機櫃的host匡列成同個Group，這樣Object下的Component就會被分散在不同機櫃裡，那如果擔心地震、火災等等會讓整個Datacenter遭殃，不就造成永久的Data loss嗎？</p>
+<p>Stretched Cluster為一種異地備援機制，可以建立兩個以不同地區Datacenter的Fault Domain，不過由於跨地區，Witness必須是獨立於Cluster之外Host，可以為單個，也可以為多個。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="2022/08/25/vsan/vsan_stretched_cluster/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/08/13/vsan/vsan_policy_layout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="2022/08/13/vsan/vsan_policy_layout/" itemprop="url">[vSAN]vSAN的是怎麼做分散式儲存的</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-08-13T00:00:00+08:00">
+                2022-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="2022/08/13/vsan/vsan_policy_layout/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/08/13/vsan/vsan_policy_layout/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  702
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>我們知道，vSAN是一個Policy based的分散式儲存系統，vSAN會根據Object所設定的Policy，把Object下的Component妥善地分散儲存在不同Host。</p>
+<p>Policy指的就是RAID 0/1/5/6，目前常見的有這四種，其中RAID 5/6由於需要進行erasure coding和XOR操作，需要耗費一些計算資源以及一些I/O，所以只有當使用all flash架構才能設定。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="2022/08/13/vsan/vsan_policy_layout/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/07/29/vsan/vsan_distributed_object/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="2022/07/29/vsan/vsan_distributed_object/" itemprop="url">[vSAN]vSAN的儲存基本單位 - Object</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-07-29T00:00:00+08:00">
+                2022-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="2022/07/29/vsan/vsan_distributed_object/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/07/29/vsan/vsan_distributed_object/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  613
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>再讓我們把主題切回vSAN。現在我們有了儲存系統 - Object Storage的基本知識後，我們可以更深入的探討vSAN是怎麼存Object的。</p>
+<p>vSAN是一種軟體定義儲存的產品，他的儲存單位是Object，Object是什麼呢？回到Day 06，Object可以理解為一個巨大的資料夾，每個檔案就是一個Object，所以搜索Object資料不用一個個資料夾找，今天我們更深入的來理解所謂的「軟體定義」以及Object/Component在vSAN裡面代表著什麼</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="2022/07/29/vsan/vsan_distributed_object/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/07/16/vsan/ssd_nvme_overview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="2022/07/16/vsan/ssd_nvme_overview/" itemprop="url">[vSAN]儲存最速的Protocol - NVMe</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-07-16T00:00:00+08:00">
+                2022-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="2022/07/16/vsan/ssd_nvme_overview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/07/16/vsan/ssd_nvme_overview/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  410
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>NVMe是一種主機與SSD之間溝通的協議，前面說到PCIe有三層，NVMe屬於第四層，隸屬於協議中的最高層，如下圖所示</p>
+<p><img src="/images/vsan/nvme_structure.png"></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="2022/07/16/vsan/ssd_nvme_overview/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/07/09/vsan/ssd_pcie_overview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="2022/07/09/vsan/ssd_pcie_overview/" itemprop="url">[vSAN]SSD PCIe接口</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-07-09T00:00:00+08:00">
+                2022-07-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="2022/07/09/vsan/ssd_pcie_overview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/07/09/vsan/ssd_pcie_overview/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  414
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>PCIe是SSD一項重要和主流的接口技術，所以我們有必要對PCIe有深入的了解</p>
+<p>PCIe從第一代，到最近2022年第六代的規格問世，速度越來越快，相比於SAS/SATA，PCIe資料傳輸的「高速公路」更多，最多可以有32個Lane，SAS/SATA只能有一個Lane，所以我們可以說，PCIe的速度就是Lane的數量x單條Lane的速度</p>
+<h3 id="PCIe-拓樸結構"><a href="#PCIe-拓樸結構" class="headerlink" title="PCIe 拓樸結構"></a>PCIe 拓樸結構</h3><p>PCIe採用的是樹形拓樸結構，如下圖所示</p>
+<p><img src="/images/vsan/pci_topology.png"></p>
+<p>Root Complex是樹的根，為CPU所服務，Root Complex能存取PCIe設備，也能存取記憶體</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="2022/07/09/vsan/ssd_pcie_overview/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/06/30/vsan/ssd_overview/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -999,1092 +2066,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/04/27/vsan/storage_overview/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="2022/04/27/vsan/storage_overview/" itemprop="url">[vSAN]資料的儲存形式? Block、File、Object Storage</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-04-27T00:00:00+08:00">
-                2022-04-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="categories/vSAN/" itemprop="url" rel="index">
-                    <span itemprop="name">vSAN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="2022/04/27/vsan/storage_overview/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2022/04/27/vsan/storage_overview/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  2.8k
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>小羚和安迪説，我大概是明白資料中心的組成了，你能不能再多說說vSAN是怎麼儲存資料呢？他是如何能把我的重要檔案自動備份又能同時取用呢？</p>
-<p>安迪說，當然沒問題！儲存是一個很大的領域，我們只能先從最基本的基礎開始，我會先從三個資料儲存系統 - 區塊儲存系統、檔案儲存系統和物件儲存系統說起，這裡說的系統都是軟體層面上的邏輯，不會深入探討到硬碟。</p>
-<h2 id="Block-storage-區塊儲存系統"><a href="#Block-storage-區塊儲存系統" class="headerlink" title="Block storage(區塊儲存系統)"></a>Block storage(區塊儲存系統)</h2>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="2022/04/27/vsan/storage_overview/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/04/12/vsan/vm_overview/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="2022/04/12/vsan/vm_overview/" itemprop="url">[vSAN]虛擬機？我摸的到嗎？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-04-12T00:00:00+08:00">
-                2022-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="categories/vSAN/" itemprop="url" rel="index">
-                    <span itemprop="name">vSAN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="2022/04/12/vsan/vm_overview/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2022/04/12/vsan/vm_overview/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  787
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>我的電腦是Windows 10系統，然而有一天，我想懷舊一下玩一個只能在Windows XP的遊戲，該怎麼辦呢？</p>
-<p>抑或是公司有50位員工，所以只好每人派發一台電腦，不可能每台電腦都能把硬碟和計算資源無時無刻用滿，但是我想節省成本，該怎麼辦呢？</p>
-<p>虛擬機就是一個實體電腦的數位版本，讓你可以在作業系統上執行一個不同且獨立的作業系統，這麼一來，就能在Windows 10上運行Windows XP，公司也能透過買一台資源豐富的伺服器，在上面透過虛擬機的方式達到資源最大利用率</p>
-<p>個人用的虛擬機軟體最有名的當數付費的VMware Workstation和開源版本的Virtual box</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="2022/04/12/vsan/vm_overview/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/03/25/vsan/vsan_overview/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="2022/03/25/vsan/vsan_overview/" itemprop="url">[vSAN]vSAN簡介-VMware產品中的儲存利器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-03-25T00:00:00+08:00">
-                2022-03-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="categories/vSAN/" itemprop="url" rel="index">
-                    <span itemprop="name">vSAN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="2022/03/25/vsan/vsan_overview/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2022/03/25/vsan/vsan_overview/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  682
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>VMware擁有自己一套的軟體定義資料中心SDDC解決方案，以vSphere作為中心的Hypervisor提供虛擬儲存和網路服務，其中儲存的部分有以下幾種</p>
-<ul>
-<li>Local - VMFS</li>
-<li>NAS - NFS</li>
-<li>iSCSI</li>
-<li>VMware Virtual Volume(VVOL) - virtualize SAN and NAS</li>
-<li>vSAN</li>
-</ul>
-<p>vSAN全名是Virtual SAN，顧名思義，他不是類似NAS這種的遠端檔案系統，這裡我們先介紹SAN是什麼</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="2022/03/25/vsan/vsan_overview/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/02/03/proative_practice_book/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="2022/02/03/proative_practice_book/" itemprop="url">[閱讀]刻意練習</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-02-03T00:00:00+08:00">
-                2022-02-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="categories/%E9%96%B1%E8%AE%80/" itemprop="url" rel="index">
-                    <span itemprop="name">閱讀</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="2022/02/03/proative_practice_book/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2022/02/03/proative_practice_book/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  1k
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="刻意練習"><a href="#刻意練習" class="headerlink" title="刻意練習"></a>刻意練習</h3><p><img src="/images/proactive_practice.jpeg"><br>我們或許有聽過一萬小時定律: 任何人做一件事，只要經過一萬小時的錘煉，都能從普通人變為某一領域的頂級人才 - 格拉德威爾《異類》<br>1萬小時的錘煉是任何人從平凡變成超凡的必要條件，雖然是必要條件，但是也不是唯一條件，更不一定需要一萬小時，而是足夠多的練習<br>讀了這本書《刻意練習》，除了練習之外，我們更應該考慮外部環境跟內部誘因，並且兩者是相輔相成的，讓我更了解怎麼有效率的「學習」，下面是我讀完後的總結，我會從外部和內部視角提出實操性強的步驟:</p>
-<h3 id="開頭"><a href="#開頭" class="headerlink" title="開頭"></a>開頭</h3><ul>
-<li><strong>要成為一個領域的佼佼者，靠的不是天賦，而是刻意並且足夠多的練習</strong><br>  沒有一個人是靠天賦成為頂尖人才的，即便是莫札特也是如此，頂尖人才之所以能持續練主要習並不是因為興趣，而是持續練習</li>
-<li><strong>建立目標</strong> - 你能「做」到什麼，而不是你能「學」到什麼</li>
-<li><strong>刻意練習就是</strong> - 做跳脫舒適圈的事、獲得反饋、改進並回到第一步</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="2022/02/03/proative_practice_book/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/01/20/vsan/cloud_storage_overview/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="2022/01/20/vsan/cloud_storage_overview/" itemprop="url">[vSAN]雲端? 雲端就是資料中心嗎？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-01-20T00:00:00+08:00">
-                2022-01-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="categories/vSAN/" itemprop="url" rel="index">
-                    <span itemprop="name">vSAN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="2022/01/20/vsan/cloud_storage_overview/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2022/01/20/vsan/cloud_storage_overview/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  801
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>小羚一聽到資料中心，突然頭暈目眩，在他的腦海裡，資料中心就是在一個冰冷冷的屋子裡放滿了各種機器</p>
-<p><img src="/images/vsan/datacenter.png"></p>
-<p>各種機器就是硬體設備，我們已知可以透過虛擬機的方式，把計算軟化，但是資料中心還有「儲存」需求，要怎麼把他也軟化呢？</p>
-<p>軟體定義資料中心(Software-Defined Data Center, SDDC) 顧名思義，就是利用軟體，把資料中心裡的計算、儲存、網路資源「抽象化」和「虛擬化」，當資源都被虛擬化後，IT管理團隊變得更加靈活了。IT人員可以針對使用者需求，提供更細的資源粒度，例如一台CPU 1G Hz，20GB容量的電腦，並且這個電腦還能隨時備份，不但提高了服務和應用的「可用性」及「彈性」，同時也降低了對運維的「複雜度」和「預算」，並簡化服務上線的工作流程和應用的推出時間，接下來的重點將會圍繞在「儲存資源」的部分，也就是VMware vSAN產品相關的技術結構。</p>
-<p>一般的常見解決方案大致分為兩類 - 在雲端的公有雲和在地端的私有雲</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="2022/01/20/vsan/cloud_storage_overview/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2021/12/05/vsan/vsan_cloud_overview/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="2021/12/05/vsan/vsan_cloud_overview/" itemprop="url">[vSAN]雲端，什麼是雲端？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-12-05T00:00:00+08:00">
-                2021-12-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="categories/vSAN/" itemprop="url" rel="index">
-                    <span itemprop="name">vSAN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="2021/12/05/vsan/vsan_cloud_overview/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2021/12/05/vsan/vsan_cloud_overview/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  1k
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>小羚是一位老師，有一天小羚費盡了功夫，寫好了本學期的教案，她想要備份在安全的地方。<br>小羚想著想著，要存哪好呢？存行動硬碟不太安全，萬一丟了怎麼辦？存自己的電腦，也沒安全感，萬一中毒了怎麼辦？<br>她的男友安迪跟他說，可以買三個行動硬碟，都分別存在裡面呀。<br>小羚回說，這樣子好麻煩，如果我想更新教案裡的某段內容，這樣還要一個個打開來更新。<br>安迪又說，可以存雲端呀！存雲端既不用擔心硬碟損壞，也不用擔心突然有靈感的時候沒辦法隨時修改。</p>
-<p>小羚問安迪，有什麼常見的雲端儲存服務嗎？</p>
-<p>有的，儲存是一個很大的領域，服務的對象也千差萬別，安迪會用兩篇的篇幅介紹，首先會先介紹什麼是「雲」，再來介紹雲端儲存系統</p>
-<h3 id="那麼，什麼是「雲」呢？"><a href="#那麼，什麼是「雲」呢？" class="headerlink" title="那麼，什麼是「雲」呢？"></a>那麼，什麼是「雲」呢？</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="2021/12/05/vsan/vsan_cloud_overview/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="page/2/">2</a><a class="page-number" href="page/3/">3</a><a class="extend next" rel="next" href="page/2/">&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="page/4/">4</a><a class="extend next" rel="next" href="page/2/">&gt;</a>
   </nav>
 
 
@@ -2134,7 +2120,7 @@
               
                 <a href="archives">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2156,7 +2142,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
