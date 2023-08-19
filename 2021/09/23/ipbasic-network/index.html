@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼警察要找你，他是怎麼透過你的身分證找到你的呢？藉由身分證上的戶籍地址(IP)，找到了你的家，按下你家的門鈴後，大喊了身分證號碼(MAC)，你到了門口，警察就這樣找到你了">
+<meta name="description" content="每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼 警察要找你，他是怎麼透過你的身分證找到你的呢？ 藉由身分證上的戶籍地址(IP)，找到了你的家，按下你家的門鈴後，大喊了身分證號碼(MAC)，你到了門口，警察就這樣找到你了">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[網路]IP&amp;MAC地址 - 網路通訊世界的大門">
 <meta property="og:url" content="https://kaichiachen.github.io/2021/09/23/ipbasic-network/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼警察要找你，他是怎麼透過你的身分證找到你的呢？藉由身分證上的戶籍地址(IP)，找到了你的家，按下你家的門鈴後，大喊了身分證號碼(MAC)，你到了門口，警察就這樣找到你了">
+<meta property="og:description" content="每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼 警察要找你，他是怎麼透過你的身分證找到你的呢？ 藉由身分證上的戶籍地址(IP)，找到了你的家，按下你家的門鈴後，大喊了身分證號碼(MAC)，你到了門口，警察就這樣找到你了">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-09-22T16:00:00.000Z">
 <meta property="article:modified_time" content="2021-12-26T06:28:26.000Z">
@@ -437,21 +437,55 @@
       
 
       
-        <h3 id="每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼"><a href="#每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼" class="headerlink" title="每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼"></a>每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼</h3><p>警察要找你，他是怎麼透過你的身分證找到你的呢？<br>藉由身分證上的戶籍地址(IP)，找到了你的家，按下你家的門鈴後，大喊了身分證號碼(MAC)，你到了門口，警察就這樣找到你了</p>
+        <h3 id="每一個網卡都有一個ip和mac，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼">每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼</h3>
+<p>警察要找你，他是怎麼透過你的身分證找到你的呢？<br>
+藉由身分證上的戶籍地址(IP)，找到了你的家，按下你家的門鈴後，大喊了身分證號碼(MAC)，你到了門口，警察就這樣找到你了</p>
 <span id="more"></span>
-<h3 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h3><p>IP地址就像是電腦網卡裡家家戶戶的門牌號碼，有了IP，資料就能一層層路由到目的地電腦，那麼首先，在你的電腦裡，我們要怎麼查我們電腦裡的IP門牌號碼呢？</p>
-<p>在Linux，有兩個指令可以查詢，分別為<code>ifconfig</code>和<code>ip addr</code><br><strong>ifconfig</strong></p>
+<h3 id="ip地址">IP地址</h3>
+<p>IP地址就像是電腦網卡裡家家戶戶的門牌號碼，有了IP，資料就能一層層路由到目的地電腦，那麼首先，在你的電腦裡，我們要怎麼查我們電腦裡的IP門牌號碼呢？</p>
+<p>在Linux，有兩個指令可以查詢，分別為<code>ifconfig</code>和<code>ip addr</code><br>
+<strong>ifconfig</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; ifconfig</span></span><br><span class="line">eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 172.17.0.3  netmask 255.255.0.0  broadcast 172.17.255.255</span><br><span class="line">        ether 02:42:ac:11:00:03  txqueuelen 0  (Ethernet)</span><br><span class="line">        RX packets 6251  bytes 9073424 (8.6 MiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 3111  bytes 170522 (166.5 KiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line"></span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
 <p><strong>ip addr</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; ip addr</span></span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: tunl0@NONE: &lt;NOARP&gt; mtu 1480 qdisc noop state DOWN group default qlen 1000</span><br><span class="line">    link/ipip 0.0.0.0 brd 0.0.0.0</span><br><span class="line">3: ip6tnl0@NONE: &lt;NOARP&gt; mtu 1452 qdisc noop state DOWN group default qlen 1000</span><br><span class="line">    link/tunnel6 :: brd ::</span><br><span class="line">13: eth0@if14: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default</span><br><span class="line">    link/ether 02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0</span><br><span class="line">    inet 172.17.0.3/16 brd 172.17.255.255 scope global eth0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>ifconfig來自於Linux的net-tools，而ip addr來自於iproute2。net-tools起源於BSD，自2001年起，Linux社群已經對其停止維護，而iproute2旨在取代net-tools，並提供了一些新功能。一些Linux發行版已經停止支援net-tools，只支援iproute2。 net-tools通過procfs(/proc)和ioctl system call去訪問和改變kernel網路設定，而iproute2則通過netlink socket interface與kernel通訊。 net-tools中工具的名字比較雜亂，而iproute2則相對整齊和直觀，基本是ip command加後面的sub-command。不過這麼多年過去了，net-tool依然還在被廣泛使用，最好還是兩套指令都掌握吧。</p>
 </blockquote>
-<p>IP地址是門牌號碼，所以不能大家都一樣，不然就會起衝突．舉個例子，<code>132.128.200.32</code>是一個IP地址，由三個”.”分成四個部分，每個部分有8個bit，四個部分加起來總共有32個bit，也就是最多只能產生<code>2**32</code>個門牌號碼．因為不夠用，所以有了IPv6，也就是上面的輸出結果<code>fe80::ca61:d665:1750:e806</code>，總共有128位，看起來應該是夠了．</p>
-<p>由於現有的32bit ip地址不這麼夠用，其中ip又有分私人ip(自己內網的ip)和公共ip(任何地方都能連的ip，例如Google)，私人ip地址的目的是為了安全以及讓更多電腦能有自己的ip地址，可以試想一下，如果大家都能訪問你的電腦，如果你的電腦被植入了惡意程式，某個port被打開，是如此的不安全，下面的ip地址範圍就是私人地址<br>| 地址範圍                    | 數量       |<br>|—————————–|————|<br>| 10.0.0.0–10.255.255.255     | 16,777,216 |<br>| 172.16.0.0–172.31.255.255   | 1,048,576  |<br>| 192.168.0.0–192.168.255.255 | 65,536     |<br>所以說，下次你跑<code>ip addr</code>看到你的ip是<code>192.168.2.132</code>不用懷疑，你在私人ip裡，外面的電腦無法和你的電腦連結</p>
-<h3 id="MAC地址"><a href="#MAC地址" class="headerlink" title="MAC地址"></a>MAC地址</h3><p>MAC地址是一個容易和IP地址誤解的地址，因為MAC地址號稱全世界唯一，那既然唯一了，為何我們還要IP地址呢？其實MAC地址與其說是個地址，不如說他是個網路ID<br>舉個例子，我們想找的一個人，他的身分證是A123456789，然後他的身分證上面寫的地址是，<code>台北市文山區興隆路五段9弄18號4樓</code>，後面的地址就是像是電腦的IP，而身分證就是這個人．<br>或許你也有聽過，MAC地址其實是可以改的，只要不要在同個內網下有多個MAC地址就好，就像是同個家庭，不要有重複的”身分證”<br>MAC地址從上面的<code>ip addr</code>指令我們可以看到是<code>02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff</code></p>
-<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>本篇文章講述了IP地址和MAC地址的差別，以及怎麼查詢我們的IP和MAC地址</p>
+<p>IP地址是門牌號碼，所以不能大家都一樣，不然就會起衝突．舉個例子，<code>132.128.200.32</code>是一個IP地址，由三個&quot;.&quot;分成四個部分，每個部分有8個bit，四個部分加起來總共有32個bit，也就是最多只能產生<code>2**32</code>個門牌號碼．因為不夠用，所以有了IPv6，也就是上面的輸出結果<code>fe80::ca61:d665:1750:e806</code>，總共有128位，看起來應該是夠了．</p>
+<p>由於現有的32bit ip地址不這麼夠用，其中ip又有分私人ip(自己內網的ip)和公共ip(任何地方都能連的ip，例如Google)，私人ip地址的目的是為了安全以及讓更多電腦能有自己的ip地址，可以試想一下，如果大家都能訪問你的電腦，如果你的電腦被植入了惡意程式，某個port被打開，是如此的不安全，下面的ip地址範圍就是私人地址</p>
+<table>
+<thead>
+<tr>
+<th>地址範圍</th>
+<th>數量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.0.0.0–10.255.255.255</td>
+<td>16,777,216</td>
+</tr>
+<tr>
+<td>172.16.0.0–172.31.255.255</td>
+<td>1,048,576</td>
+</tr>
+<tr>
+<td>192.168.0.0–192.168.255.255</td>
+<td>65,536</td>
+</tr>
+<tr>
+<td>所以說，下次你跑<code>ip addr</code>看到你的ip是<code>192.168.2.132</code>不用懷疑，你在私人ip裡，外面的電腦無法和你的電腦連結</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="mac地址">MAC地址</h3>
+<p>MAC地址是一個容易和IP地址誤解的地址，因為MAC地址號稱全世界唯一，那既然唯一了，為何我們還要IP地址呢？其實MAC地址與其說是個地址，不如說他是個網路ID<br>
+舉個例子，我們想找的一個人，他的身分證是A123456789，然後他的身分證上面寫的地址是，<code>台北市文山區興隆路五段9弄18號4樓</code>，後面的地址就是像是電腦的IP，而身分證就是這個人．<br>
+或許你也有聽過，MAC地址其實是可以改的，只要不要在同個內網下有多個MAC地址就好，就像是同個家庭，不要有重複的&quot;身分證&quot;<br>
+MAC地址從上面的<code>ip addr</code>指令我們可以看到是<code>02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff</code></p>
+<h3 id="總結">總結</h3>
+<p>本篇文章講述了IP地址和MAC地址的差別，以及怎麼查詢我們的IP和MAC地址</p>
 <ul>
 <li>IP地址 - 電腦的門牌地址，目的是<strong>路由</strong>，常見於TCP/IP五層上面三層</li>
 <li>MAC地址 - 電腦的唯一ID，目的是<strong>最終指向目的地電腦</strong>，常見於TCP/IP五層中的第二層-鏈接層</li>
@@ -584,7 +618,7 @@
               
                 <a href="../../../../archives">
               
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -606,7 +640,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../tags/index.html">
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

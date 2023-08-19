@@ -441,13 +441,13 @@
 
       
         <p>NVMe是一種主機與SSD之間溝通的協議，前面說到PCIe有三層，NVMe屬於第四層，隸屬於協議中的最高層，如下圖所示</p>
-<p><img src="/images/vsan/nvme_structure.png"></p>
+<p><img src="/images/vsan/nvme_structure.png" alt=""></p>
 <span id="more"></span>
-
 <p>NVMe作為應用層協議，理論上可以是配所有物理接口協議，但是NVMe起初的設計是根據PCIe，所以後面都是基於NVMe+PCIe進行探討。</p>
 <p>NVMe協議是為SSD所生，他就像是古代的軍師，運籌帷幄之中，決勝千里之外，將設計好的計謀交給手下大將去執行，也就是PCIe，NVMe+PCIe這兩個天作之合無疑在SSD領域中是最強的。</p>
-<h3 id="NVMe-over-Fabrics"><a href="#NVMe-over-Fabrics" class="headerlink" title="NVMe over Fabrics"></a>NVMe over Fabrics</h3><p>在傳統的儲存伺服器，我們利用iSCSI，透過網路的方式連結遠端的硬碟，形成一個儲存池，如下圖所示</p>
-<p><img src="/images/vsan/storage_overall_structure.png"></p>
+<h3 id="nvme-over fabrics">NVMe over Fabrics</h3>
+<p>在傳統的儲存伺服器，我們利用iSCSI，透過網路的方式連結遠端的硬碟，形成一個儲存池，如下圖所示</p>
+<p><img src="/images/vsan/storage_overall_structure.png" alt=""></p>
 <p>他的好處是非常節省成本，只需要使用ethernet和成熟的iSCSI協議即可。但是這樣的方式會帶來一個問題，NVMe+PCIe的速度非常快，throughput可以做到10us，而iSCSI的極限則是100us，這就像是把一台法拉利跑車放在台北市上班時段的建國高架橋上，縱使有非常快的引擎，還是發揮不出來</p>
 <p>NVMe over Fabrics就是為了解決這個問題，他指定了Transaction Layer的協議例如RDMA、PCIe Fabrics的技術，不過需要專用的硬體網路設備。在眾多的Transaction Layer協議中，重點介紹一下RDMA，RDMA是遠端DMA，他通過網路把資料直接傳入主機的儲存區，不需要CPU一個個編碼協議和解析協議，進而降低了CPU的工作量。</p>
 
@@ -578,7 +578,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -600,7 +600,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../../tags/index.html">
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

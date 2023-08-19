@@ -413,7 +413,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  702
+                  704
                 </span>
               
 
@@ -441,24 +441,28 @@
         <p>我們知道，vSAN是一個Policy based的分散式儲存系統，vSAN會根據Object所設定的Policy，把Object下的Component妥善地分散儲存在不同Host。</p>
 <p>Policy指的就是RAID 0/1/5/6，目前常見的有這四種，其中RAID 5/6由於需要進行erasure coding和XOR操作，需要耗費一些計算資源以及一些I/O，所以只有當使用all flash架構才能設定。</p>
 <span id="more"></span>
-
 <p>一般來說，Policy除了設定RAID 0/1/5/6，還可以設定FTT，可以這麼說，RAID設定目的是調整怎麼對資料進行備份，FTT單純就是能容忍幾台host failure。例如我們也可以這樣設定，RAID 1, FTT=2，我們知道RAID 1的寫入邏輯是一模一樣寫多份，由於是FTT=2，vSAN會對他一模一樣寫三份，這樣才能容忍三個Host掛掉。</p>
-<h3 id="Fault-Domain"><a href="#Fault-Domain" class="headerlink" title="Fault Domain"></a>Fault Domain</h3><p>我們把Object下的Component分散在不同的Host目的是為了安全，如果一台Host掛了也不至於資料丟失，但是現在的主機可能是機架式的，這意味著可能機架掉電會讓整個機架上的Host都掛，如果Object下的所有Components都放在同個機架上怎麼辦？</p>
+<h3 id="fault-domain">Fault Domain</h3>
+<p>我們把Object下的Component分散在不同的Host目的是為了安全，如果一台Host掛了也不至於資料丟失，但是現在的主機可能是機架式的，這意味著可能機架掉電會讓整個機架上的Host都掛，如果Object下的所有Components都放在同個機架上怎麼辦？</p>
 <p>我們可以對一組Host進行Group，這一組Host我們就稱為Fault Domain，這麼一來，如果Configure Policy RAID 1, FTT=1，Object下的兩個Component加上Witness就會分散在不同的Fault Domain，注意的是vSAN Cluster至少需要三台Host，這意味著如果要設定Fault Domain，也至少需要三個Fault Domain。</p>
 <p>那接下來有個疑問了，如果我想做的是Datacenter層級的備份呢？如果Datacenter失火了，我想要兩個Datacenter，並把Component妥善地分配在這兩個Datacenter? 接下來提到的Stretched cluster就會提到這部分，為的就是解決這個問題。</p>
-<h3 id="Object如何從異常中恢復"><a href="#Object如何從異常中恢復" class="headerlink" title="Object如何從異常中恢復"></a>Object如何從異常中恢復</h3><p>當vSAN偵測到異常事件，例如Host掉電、Disk損壞、網路異常等等，vSAN會確認故障的設備存放哪些Component，並嘗試對這些Component做出相應的修復，同時將資料I/O等等導向健康的Component</p>
+<h3 id="object如何從異常中恢復">Object如何從異常中恢復</h3>
+<p>當vSAN偵測到異常事件，例如Host掉電、Disk損壞、網路異常等等，vSAN會確認故障的設備存放哪些Component，並嘗試對這些Component做出相應的修復，同時將資料I/O等等導向健康的Component</p>
 <p>遇到不同的異常事件，vSAN會採用不同的因應方式，優先重建Component，如果無法達成，例如vSAN Cluster只有三個Host並且Policy FTT=1且一個Host掛了，就會標記為無法重建，這裡列舉幾個在vSAN中定義的Object狀態</p>
 <ul>
-<li>Inaccessible<ul>
+<li>Inaccessible
+<ul>
 <li>vSAN的Object無法重建，需要人工干預和排查Root Cause，屬於嚴重錯誤</li>
 </ul>
 </li>
-<li>Unassociated<ul>
+<li>Unassociated
+<ul>
 <li>當vSAN裡的Object沒有和某一台VM關聯起來，就會被判定為unassociated，</li>
 <li>VMware KB: <a target="_blank" rel="noopener" href="https://kb.vmware.com/s/article/70726">https://kb.vmware.com/s/article/70726</a></li>
 </ul>
 </li>
-<li>Reduce availability<ul>
+<li>Reduce availability
+<ul>
 <li>vSAN正在重建Object使之符合Policy Compliance，短暫時間無法取用Object，有時候可以立即重建，有時候需要等待一段時間(預設值為60分鐘)</li>
 </ul>
 </li>
@@ -593,7 +597,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -615,7 +619,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../../tags/index.html">
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

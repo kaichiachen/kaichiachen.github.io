@@ -441,7 +441,7 @@
       
         <p>VMware於2014發表了vSAN，在當時HDD仍然是主流，SSD雖然速度快但是成本高昂，為了能達到速度快並且節省成本的目的，vSAN cluster採用的是雙層儲存架構，如下圖所示</p>
 <span id="more"></span>
-<p><img src="/images/vsan/diskgroup_twolayer.png"></p>
+<p><img src="/images/vsan/diskgroup_twolayer.png" alt=""></p>
 <p>磁碟群組的入口是SSD，SSD只存放HDD的Cache資料，其中70%的容量用作Read Cache，30%的容量用作Write Cache，一個磁碟群組最多可以放7個HDD device，每個Host最多支持5個磁碟群組，所以一個Host最多可以有49個容量磁盤。</p>
 <p>當然，我們也可以在維持相同的雙層儲存架構下，把所有HDD替換成SSD，也就是All Flash，全閃存模式。啟用了全閃存模式後，vSAN Cluster可以支援更多功能例如Compression、dedup、RAID-5/6等等功能。</p>
 <p>這種兩層的架構缺點是如果唯一入口SSD掛了，就會使得他後面的HDD容量層都不能使用。另外，剛剛提到的Hybrid和All Flash模式，這兩個模式下cache層會有不同的cache演算法，角色也不完全相同。</p>
@@ -576,7 +576,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -598,7 +598,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../../tags/index.html">
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
