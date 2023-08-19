@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="Python的任何variable都是C++的Object 所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較 12if a &#x3D;&#x3D; b:    ...">
+<meta name="description" content="Python的任何variable都是C++的Object所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較 12if a &#x3D;&#x3D; b:    ...">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Python進階]Python Object的比較和複製">
 <meta property="og:url" content="https://kaichiachen.github.io/2021/09/16/object-op-python/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="Python的任何variable都是C++的Object 所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較 12if a &#x3D;&#x3D; b:    ...">
+<meta property="og:description" content="Python的任何variable都是C++的Object所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較 12if a &#x3D;&#x3D; b:    ...">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-09-15T16:00:00.000Z">
 <meta property="article:modified_time" content="2021-12-17T07:24:14.000Z">
@@ -410,7 +410,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  939
+                  928
                 </span>
               
 
@@ -435,50 +435,35 @@
       
 
       
-        <p>Python的任何variable都是C++的Object<br>
-所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較</p>
+        <p>Python的任何variable都是C++的Object<br>所以我們在對Python的variable做任何操作時，其實就是在對Object做，例如我們做variable比較</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> a == b:</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <p>variable複製</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">&gt;&gt; b = <span class="built_in">list</span>(a)</span><br></pre></td></tr></table></figure>
-<p>可是如果只是&quot;賦予&quot;新的variable，例如</p>
+<p>可是如果只是”賦予”新的variable，例如</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">&gt;&gt; b = a</span><br><span class="line">&gt;&gt; b.append(<span class="number">4</span>)</span><br><span class="line">&gt;&gt; a</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
-<p>b會影響a，因為他們共享同個記憶體上的address<br>
-不過透過上面的範例，你可能還是不太清楚</p>
+<p>b會影響a，因為他們共享同個記憶體上的address<br>不過透過上面的範例，你可能還是不太清楚</p>
 <ul>
 <li><code>a==b</code>是比較兩個object address相等呢？還是value相等呢?</li>
 <li><code>b = list(a)</code>是shallow copy還是deep copy呢？</li>
 </ul>
-<h4 id="比較語法">比較語法</h4>
-<p>在Python中你應該遇過下面兩個語法，你能分辨出有什麼不同嗎？</p>
+<h4 id="比較語法"><a href="#比較語法" class="headerlink" title="比較語法"></a>比較語法</h4><p>在Python中你應該遇過下面兩個語法，你能分辨出有什麼不同嗎？</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> a == b:</span><br><span class="line">   ...</span><br><span class="line"><span class="keyword">if</span> a <span class="keyword">is</span> b:</span><br><span class="line">   ...</span><br></pre></td></tr></table></figure>
-<p><code>==</code>表示兩個varaibles的&quot;值&quot;是否相等，<code>is</code>表示兩個varaibles是否為同一個Object，是否address也相同<br>
-在Python中，我們可以透過<code>id(variable)</code>去拿variable的唯一ID，所以判斷<code>a is b</code>如同<code>id(a) == id(b)</code><br>
-我們再看一個百思不得其解的例子</p>
+<p><code>==</code>表示兩個varaibles的”值”是否相等，<code>is</code>表示兩個varaibles是否為同一個Object，是否address也相同<br>在Python中，我們可以透過<code>id(variable)</code>去拿variable的唯一ID，所以判斷<code>a is b</code>如同<code>id(a) == id(b)</code><br>我們再看一個百思不得其解的例子</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; a = <span class="number">10</span></span><br><span class="line">&gt;&gt; b = <span class="number">10</span></span><br><span class="line">&gt;&gt; a <span class="keyword">is</span> b</span><br><span class="line"><span class="literal">True</span></span><br></pre></td></tr></table></figure>
-<p>咦？a和b是兩個不同的變數呀，為何他們的id會相同呢？<br>
-我們說過，Python的任何variable都是C++的Object，int也不例外，然而為了提升性能，C++把常用的數字-5到256是先定義好，作為cache使用，當Python需要時，直接從這個pool拿去引用，於是乎</p>
+<p>咦？a和b是兩個不同的變數呀，為何他們的id會相同呢？<br>我們說過，Python的任何variable都是C++的Object，int也不例外，然而為了提升性能，C++把常用的數字-5到256是先定義好，作為cache使用，當Python需要時，直接從這個pool拿去引用，於是乎</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; a = <span class="number">257</span></span><br><span class="line">&gt;&gt; b = <span class="number">257</span></span><br><span class="line">&gt;&gt; a <span class="keyword">is</span> b</span><br><span class="line"><span class="literal">False</span></span><br></pre></td></tr></table></figure>
-<p>有興趣的讀者可以試試<br>
-再來，我們來探討<code>==</code>和<code>is</code>性能的部分<br>
-通常，<code>is</code>會比<code>==</code>快很多，因為<code>is</code>不會被overload，這樣Python就不需要去尋找<code>__eq__</code>，<code>a == b</code>實際上做的事情等同於<code>a.__eq__(b)</code></p>
-<h4 id="copy語法">copy語法</h4>
-<p>所謂的copy，指的是重新分配一塊記憶體，創建一個新的Object，所以他們的id肯定是不同的，而copy又分shallow copy和deep copy<br>
-所謂的shallow copy，新的Object裡面的元素是原本Object裡面元素的引用，所以如果Object裡面的Object被改了，新舊Object都會被連動，例如</p>
+<p>有興趣的讀者可以試試<br>再來，我們來探討<code>==</code>和<code>is</code>性能的部分<br>通常，<code>is</code>會比<code>==</code>快很多，因為<code>is</code>不會被overload，這樣Python就不需要去尋找<code>__eq__</code>，<code>a == b</code>實際上做的事情等同於<code>a.__eq__(b)</code></p>
+<h4 id="copy語法"><a href="#copy語法" class="headerlink" title="copy語法"></a>copy語法</h4><p>所謂的copy，指的是重新分配一塊記憶體，創建一個新的Object，所以他們的id肯定是不同的，而copy又分shallow copy和deep copy<br>所謂的shallow copy，新的Object裡面的元素是原本Object裡面元素的引用，所以如果Object裡面的Object被改了，新舊Object都會被連動，例如</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=[<span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b=<span class="built_in">list</span>(a)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b[<span class="number">1</span>].append(<span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b[<span class="number">0</span>]=<span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">[<span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]]</span><br></pre></td></tr></table></figure>
-<p>可以看到variable b append 4之後，a裡面的list也被影響了<br>
-而deep copy，相對於shadow copy來說，會遞迴的方式往裡面一直copy，所以新的Object和舊的Object沒有任何關聯<br>
-Python中透過copy.deepcopy(object)實現deep copy，比如</p>
+<p>可以看到variable b append 4之後，a裡面的list也被影響了<br>而deep copy，相對於shadow copy來說，會遞迴的方式往裡面一直copy，所以新的Object和舊的Object沒有任何關聯<br>Python中透過copy.deepcopy(object)實現deep copy，比如</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> copy</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=[<span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b=copy.deepcopy(a)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b[<span class="number">1</span>].append(<span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">[<span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]]</span><br></pre></td></tr></table></figure>
-<p>我們可以看到a不受任何影響即使b append了4<br>
-最後我們再來探討mutable(可變) Object和unmutable(不可變) object，看一下下面的例子</p>
+<p>我們可以看到a不受任何影響即使b append了4<br>最後我們再來探討mutable(可變) Object和unmutable(不可變) object，看一下下面的例子</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=<span class="number">1000</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b=a</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a+=<span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b</span><br><span class="line"><span class="number">1000</span></span><br></pre></td></tr></table></figure>
-<p>我們可以看到，a+=1後竟然沒有影響b，不是說Python一切variable皆是object嗎？<br>
-這是因為在Python中int, float, string, tuple等等屬於unmutable object，不能改object裡面的值，我們可以看到a+=1之後，a的id變了，代表他被重新賦予新的object</p>
+<p>我們可以看到，a+=1後竟然沒有影響b，不是說Python一切variable皆是object嗎？<br>這是因為在Python中int, float, string, tuple等等屬於unmutable object，不能改object裡面的值，我們可以看到a+=1之後，a的id變了，代表他被重新賦予新的object</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=<span class="number">1000</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">id</span>(a)</span><br><span class="line"><span class="number">140628677809328</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a+=<span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">id</span>(a)</span><br><span class="line"><span class="number">140628677809168</span></span><br></pre></td></tr></table></figure>
 <p>而dict, array, set等等，屬於mutable object，在assign或是當作參數傳進去function的時候，會影響該variable</p>
-<h3 id="總結">總結</h3>
-<p>這篇文章講了Python的variable怎麼做比較和複製</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>這篇文章講了Python的variable怎麼做比較和複製</p>
 <ul>
 <li>Python的一切皆為Object，所以比較和複製的思維可以參考C++</li>
 <li>Object間的比較分成address和value的比較，分別為<code>is</code>和<code>==</code></li>
@@ -608,7 +593,7 @@ Python中透過copy.deepcopy(object)實現deep copy，比如</p>
               
                 <a href="../../../../archives">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -630,7 +615,7 @@ Python中透過copy.deepcopy(object)實現deep copy，比如</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../tags/index.html">
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

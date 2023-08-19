@@ -440,12 +440,13 @@
 
       
         <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
 <p>vSAN DOM(Distributed Object Manager)顧名思義，就是負責管理Object如分何分散Component</p>
 <blockquote>
 <p>Component由LSOM管理，在下一篇會提到</p>
 </blockquote>
 <span id="more"></span>
+
 <p>舉例來説，最常見的RAID-1 Policy會把一個Object完整的複製一份，加上原本的變成兩個Components，把這兩個Components分散在不同主機或是不同Fault Domain上面，再加一個Witness ，Witness的作用是當Cluster發生故障，例如一個node網路發生問題時，去協調I/O request要去access哪個component</p>
 <p>除了RAID-1，還有比較複雜的有RAID-5/6，也是藉由DOM去協調要去哪個Node存取Component資料</p>
 <p>每個DOM Object有兩個角色 - DOM Client 和 DOM Owner，每個ESXi Node都有這三個角色，每個Object有一個他專屬的DOM Owner，DOM Client則是每個Object下的Component存在的node都有一個</p>
@@ -587,7 +588,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -609,7 +610,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../../tags/index.html">
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

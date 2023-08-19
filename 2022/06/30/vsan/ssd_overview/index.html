@@ -441,6 +441,7 @@
         <p>科技日新月異，第一款商用SSD固態硬碟於1991年問世，當時大小只有20MB，然而由於價格太貴，一直到2007年，才開始產生主流需求，在SSD大行其道之前，主要是HDD的天下，到了2022年，SSD單位容量的成本越來越低，所有有興趣想涉略存儲領域的人都必須了解SSD。</p>
 <p>SSD和HDD這兩者最大的差別就是「介質」的不同，HDD使用「磁」的正負極紀錄0和1的資料，SSD使用的是「電子」正負極代表0和1，這間接影響了尋址的速度，HDD需要一個磁碟頭在磁盤上逐一掃描，而SSD利用電子，能快速的定位目標地址，這也說明了為何SSD相較於HDD有這麼大的I/O速度上的差異</p>
 <span id="more"></span>
+
 <table>
 <thead>
 <tr>
@@ -450,8 +451,7 @@
 <th>差別</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>平均開機時間</td>
 <td>27秒</td>
 <td>8秒</td>
@@ -511,26 +511,23 @@
 <td></td>
 <td></td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>如今HDD已經非常成熟，然而SSD還有巨大的進步空間，製程的進步使得晶片密集度越來越高，相同尺寸能容納的容量更多，另外SSD裡面有controller，也就是FTL(Flash Translation Layer)，軟體的迭代升級也能加速的SSD的I/O速度。</p>
 <p>SSD用的半導體元件是NAND Flash，他是一種非易失性儲存技術，即斷電之後資料還會保存，NAND Flash在SSD的排列最小單元為多個bits，根據有幾個bits目前主流有1個~4個，分別為SLC、MLC、TLC和QLC，每次對資料進行I/O，只能對最小單元的所有bits同時操作，這也造就了SLC的I/O速度最快，但是單位容量最貴，QLC的速度最慢，但是單位容量最便宜。</p>
 <p>SSD有個致命的缺點，就是NAND Flash有一定的讀寫數量限制，對同一塊NAND Flash有過多的頻繁寫入，會影響SSD的使用壽命，所以在SSD裏面，假如500GB好了，會預留一小塊空間，作為SSD的firmware，當有I/O過來時，依靠演算法負責「均勻」的對每一塊NAND Flash做寫入和擦除。</p>
 <p>有了上述基本知識後，簡單介紹一下電腦上的一次I/O是如何與SSD固態硬碟交互的，如下圖所示</p>
-<p><img src="/images/vsan/ssd_structure.png" alt=""></p>
+<p><img src="/images/vsan/ssd_structure.png"></p>
 <ol>
 <li>使用者使用鍵盤滑鼠在電腦對資料做讀取/寫入</li>
 <li>電腦的作業系統上的檔案系統針對使用者的操作翻譯成與硬碟交互的Block storage I/O指令</li>
-<li>藉由Interface協議，將I/O指令傳遞給SSD的Controller
-<ol>
+<li>藉由Interface協議，將I/O指令傳遞給SSD的Controller<ol>
 <li>目前SSD有三個Interface協議，分別為SAS，SATA和PCIe，SAS和SATA比較舊，無法發揮NAND的極速，目前PCIe搭配NVMe的SSD越來越主流，能發揮NAND的</li>
 <li>PCIe是接口，NVMe是傳輸協議</li>
 <li>SATA是接口也是傳輸協議，SATA一般是家用，目前可以到6GB/s</li>
 <li>SAS是接口，用的是SCSI傳輸協議，SAS一般是企業用</li>
 </ol>
 </li>
-<li>SSD Controller(FTL)根據要寫入的I/O，判斷寫入到或讀取哪個Block
-<ol>
+<li>SSD Controller(FTL)根據要寫入的I/O，判斷寫入到或讀取哪個Block<ol>
 <li>SSD Controller對NAND Flash的操作有讀取、寫入和擦除，注意，如果要對該NAND Flash上的資料做「更新」，必須要擦除後才能寫入</li>
 <li>影響NAND Flash的壽命就是擦除次數</li>
 <li>Controller做的事就是讓擦除的次數盡量的少，讓擦除盡量平均分配在每一塊NAND Flash</li>
@@ -664,7 +661,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -686,7 +683,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../../tags/index.html">
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

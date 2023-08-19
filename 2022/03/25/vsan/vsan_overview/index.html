@@ -413,7 +413,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  683
+                  682
                 </span>
               
 
@@ -448,12 +448,11 @@
 </ul>
 <p>vSAN全名是Virtual SAN，顧名思義，他不是類似NAS這種的遠端檔案系統，這裡我們先介紹SAN是什麼</p>
 <span id="more"></span>
-<h3 id="san">SAN</h3>
-<p>一般來說，我們會把主機上的資料存在主機上的硬碟裡，可能主機A只用了20%的容量，主機B用了50%的容量，主機A和主機B都浪費了很多儲存空間，而現在突然有一個主機C，想要用200%的容量，卻捉襟見肘，這該怎麼辦呢？</p>
+
+<h3 id="SAN"><a href="#SAN" class="headerlink" title="SAN"></a>SAN</h3><p>一般來說，我們會把主機上的資料存在主機上的硬碟裡，可能主機A只用了20%的容量，主機B用了50%的容量，主機A和主機B都浪費了很多儲存空間，而現在突然有一個主機C，想要用200%的容量，卻捉襟見肘，這該怎麼辦呢？</p>
 <p>於是乎有了SAN這類的儲存架構，SAN在遠端建立了一個儲存池，讓各個主機共享，儲存池裡面各個主機透過網路或是光纖連接，是專門用作儲存的網絡區域。SAN和前面的NAS最大的差別是SAN的檔案系統是保留在主機端的，而NAS的檔案系統是在遠端的，所以兩者在網路上的傳遞的協議會不同。</p>
-<h3 id="vsan">vSAN</h3>
-<p>vSAN會把所有主機上的硬碟整合成一個儲存池，如下所示</p>
-<p><img src="/images/vsan/vsan_overall_structure.png" alt=""></p>
+<h3 id="vSAN"><a href="#vSAN" class="headerlink" title="vSAN"></a>vSAN</h3><p>vSAN會把所有主機上的硬碟整合成一個儲存池，如下所示</p>
+<p><img src="/images/vsan/vsan_overall_structure.png"></p>
 <p>我們可以看到，每個vSAN Host，也就是物理機，裡面有若干塊硬碟，只要主機被加入vSAN Cluster，他裡面的硬碟資源就會貢獻給vSAN，所以在vSAN上的主機要存取資料，可能是來自主機本身的，也有可能是其他主機的。</p>
 <p>由於vSAN是軟體定義儲存系統，我們能想到的儲存備份、冗余、延伸集群等等的都可以透過vSAN軟體實現而不需要動到硬體，甚至RAID卡也不用。其關鍵技術就是Storage Policy，透過對主機上的虛擬機設定Storage Policy，我們可以指定該虛擬機要做幾份備份，可以容忍多少台主機故障等等的，此外，由於他是軟體定義儲存，對於主機的擴充非常方便，只要在vCenter(主機叢集的控制面板)「新增主機」，即可為這個叢集增加儲存容量。</p>
 <p>vSAN是採用物件(Object)作為儲存系統，物件儲存系統簡單來說就是沒有資料夾的檔案系統，所以查詢非常快且容易共享及備份，vSAN作為服務vSphere上虛擬機的儲存系統，上面的虛擬機就是一個個物件。除此之外，由於深度和vSphere整合，vSAN同時也支持vSphere HA(High Availability)、vSphere DRS(Distributed Resource Scheduler)和vSphere vMotion(虛擬機不掉電遷移)</p>
@@ -583,7 +582,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -605,7 +604,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../../tags/index.html">
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

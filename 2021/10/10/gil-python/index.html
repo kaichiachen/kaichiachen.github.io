@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="GIL（Global Interpreter Lock) Python的multi thread讓人不明所以，為何我的電腦明明有四個CPU，用multi thread性能卻沒有增長呢？我們先看一個例子">
+<meta name="description" content="GIL（Global Interpreter Lock)Python的multi thread讓人不明所以，為何我的電腦明明有四個CPU，用multi thread性能卻沒有增長呢？我們先看一個例子">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Python進階]Python的GIL">
 <meta property="og:url" content="https://kaichiachen.github.io/2021/10/10/gil-python/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="GIL（Global Interpreter Lock) Python的multi thread讓人不明所以，為何我的電腦明明有四個CPU，用multi thread性能卻沒有增長呢？我們先看一個例子">
+<meta property="og:description" content="GIL（Global Interpreter Lock)Python的multi thread讓人不明所以，為何我的電腦明明有四個CPU，用multi thread性能卻沒有增長呢？我們先看一個例子">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-10-09T16:00:00.000Z">
 <meta property="article:modified_time" content="2021-12-21T09:01:13.000Z">
@@ -411,7 +411,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  851
+                  847
                 </span>
               
 
@@ -436,36 +436,24 @@
       
 
       
-        <h3 id="gil（global-interpreter lock)">GIL（Global Interpreter Lock)</h3>
-<p>Python的multi thread讓人不明所以，為何我的電腦明明有四個CPU，用multi thread性能卻沒有增長呢？我們先看一個例子</p>
+        <h3 id="GIL（Global-Interpreter-Lock"><a href="#GIL（Global-Interpreter-Lock" class="headerlink" title="GIL（Global Interpreter Lock)"></a>GIL（Global Interpreter Lock)</h3><p>Python的multi thread讓人不明所以，為何我的電腦明明有四個CPU，用multi thread性能卻沒有增長呢？我們先看一個例子</p>
 <span id="more"></span>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">CountDown</span>(<span class="params">n</span>):</span></span><br><span class="line">    <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">        n -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">n = <span class="number">100000000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Single Thread</span></span><br><span class="line">start = time.time()</span><br><span class="line">CountDown(n)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Time consumed: %s&#x27;</span> % (time.time() - start))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Two Threads</span></span><br><span class="line">start = time.time()</span><br><span class="line">t1 = Thread(target=CountDown, args=[n // <span class="number">2</span>])</span><br><span class="line">t2 = Thread(target=CountDown, args=[n // <span class="number">2</span>])</span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br><span class="line">t1.join()</span><br><span class="line">t2.join()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Time consumed: %s&#x27;</span> % (time.time() - start))</span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># Time consumed: 4.894810676574707</span></span><br><span class="line"><span class="comment"># Time consumed: 4.441636085510254</span></span><br></pre></td></tr></table></figure>
-<p><code>CountDown</code>是個CPU heavy的函數，但是神奇的事情發生了，明明用了兩個Threads，耗時卻差不多，都是4秒左右<br>
-這是怎麼回事？難道我買的電腦只有一顆CPU有在工作？不對呀，如果換成C++寫，速度提升馬上有感<br>
-看起來不是電腦的問題，而是Python的multi thread失效了，沒有執行真正的併行運算<br>
-然而Python的Thread是實實在在的Thread，在Linux，他封裝了Pthread(POSIX Thread)，在Windows，是Windows Thread，由於只是做封裝，所以Python的Thread完全受作業系統管理，例如協調何時執行、資源管理等等</p>
-<p>Python之所以用了multi thread起不到性能提升的作用，正是因為GIL，在整個Python的Process，只允許同時跑一個Thread，其他的會被Lock，所以本質來說，Python的Thread只是&quot;輪流&quot;執行</p>
-<h3 id="為什麼有gil?">為什麼有GIL?</h3>
-<p>我們知道Python是基於C，也就是CPython實現的，之所以有GIL就是和CPython有關<br>
-CPython使用Reference Count管理記憶體，用來記錄多少pointer指向這塊記憶體，當Reference Count=0時，就會釋放記憶體，看個例子</p>
+<p><code>CountDown</code>是個CPU heavy的函數，但是神奇的事情發生了，明明用了兩個Threads，耗時卻差不多，都是4秒左右<br>這是怎麼回事？難道我買的電腦只有一顆CPU有在工作？不對呀，如果換成C++寫，速度提升馬上有感<br>看起來不是電腦的問題，而是Python的multi thread失效了，沒有執行真正的併行運算<br>然而Python的Thread是實實在在的Thread，在Linux，他封裝了Pthread(POSIX Thread)，在Windows，是Windows Thread，由於只是做封裝，所以Python的Thread完全受作業系統管理，例如協調何時執行、資源管理等等</p>
+<p>Python之所以用了multi thread起不到性能提升的作用，正是因為GIL，在整個Python的Process，只允許同時跑一個Thread，其他的會被Lock，所以本質來說，Python的Thread只是”輪流”執行</p>
+<h3 id="為什麼有GIL"><a href="#為什麼有GIL" class="headerlink" title="為什麼有GIL?"></a>為什麼有GIL?</h3><p>我們知道Python是基於C，也就是CPython實現的，之所以有GIL就是和CPython有關<br>CPython使用Reference Count管理記憶體，用來記錄多少pointer指向這塊記憶體，當Reference Count=0時，就會釋放記憶體，看個例子</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> sys</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = []</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = a</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sys.getrefcount(a)</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
-<p>3的由來是a, b和sys.getrefcount傳進a所引發的reference，所以總共是3<br>
-所以說，如果兩個Python的Threads同時引用了a，同時reference count += 1，觸發了race condition，最終reference count只會加1而已<br>
-由於有這樣的風險，Python就乾脆的設定了一個GIL，但也不能說Python是天然不用擔心race condition的語言，畢竟Python的一行程式，可能代表著多行的bytescode，例如Python的<code>n+=1</code>，他代表的bytecode是</p>
+<p>3的由來是a, b和sys.getrefcount傳進a所引發的reference，所以總共是3<br>所以說，如果兩個Python的Threads同時引用了a，同時reference count += 1，觸發了race condition，最終reference count只會加1而已<br>由於有這樣的風險，Python就乾脆的設定了一個GIL，但也不能說Python是天然不用擔心race condition的語言，畢竟Python的一行程式，可能代表著多行的bytescode，例如Python的<code>n+=1</code>，他代表的bytecode是</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LOAD_CONST <span class="number">1</span> (<span class="number">1</span>)</span><br><span class="line">INPLACE_ADD</span><br></pre></td></tr></table></figure>
-<p>若我們在<code>INPLACE_ADD</code>前，GIL被釋放了，而其他Thread跑了<code>LOAD_CONST 1 (1)</code>一樣會造成race condition!<br>
-我們舉個例子</p>
+<p>若我們在<code>INPLACE_ADD</code>前，GIL被釋放了，而其他Thread跑了<code>LOAD_CONST 1 (1)</code>一樣會造成race condition!<br>我們舉個例子</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">n = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span>():</span></span><br><span class="line">    <span class="keyword">global</span> n</span><br><span class="line">    n += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">threads = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    t = threading.Thread(target=foo)</span><br><span class="line">    threads.append(t)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> threads:</span><br><span class="line">    t.start()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> threads:</span><br><span class="line">    t.join()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(n)</span><br></pre></td></tr></table></figure>
 <p>所以說，GIL的目的是<strong>為了方便CPython的編寫者，不用顧慮變數記憶體的分配，而不是為了Python應用的開發者</strong>，所以我們還是需要lock等工具，例如下面這個例子</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">n = <span class="number">0</span></span><br><span class="line">lock = threading.Lock()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span>():</span></span><br><span class="line">    <span class="keyword">global</span> n</span><br><span class="line">    <span class="keyword">with</span> lock:</span><br><span class="line">        n += <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h3 id="可以繞過gil嗎？">可以繞過GIL嗎？</h3>
-<ul>
+<h3 id="可以繞過GIL嗎？"><a href="#可以繞過GIL嗎？" class="headerlink" title="可以繞過GIL嗎？"></a>可以繞過GIL嗎？</h3><ul>
 <li>Python的GIL是CPython上的限制，如果要繞過，可以透過JPython(Java實現的Python)等</li>
 <li>把CPU heavy的程式碼放在別的語言實現(C++)，然後提供Python調用的API</li>
 </ul>
-<h3 id="總結">總結</h3>
-<p>我們探究了Python GIL的原理，他的目的是為了避免記憶體回收的race condition設計出來的一套機制，雖然使得CPython更容易開發，但是卻沒有真正意義上的multi threads<br>
-不過我們也不用太過於糾結GIL的影響，對於CPU heavy的程式碼，我們還是可以透過其他語言的實作，讓Python去call，進而利用好CPU性能</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>我們探究了Python GIL的原理，他的目的是為了避免記憶體回收的race condition設計出來的一套機制，雖然使得CPython更容易開發，但是卻沒有真正意義上的multi threads<br>不過我們也不用太過於糾結GIL的影響，對於CPU heavy的程式碼，我們還是可以透過其他語言的實作，讓Python去call，進而利用好CPU性能</p>
 
       
     </div>
@@ -592,7 +580,7 @@ CPython使用Reference Count管理記憶體，用來記錄多少pointer指向這
               
                 <a href="../../../../archives">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -614,7 +602,7 @@ CPython使用Reference Count管理記憶體，用來記錄多少pointer指向這
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../tags/index.html">
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

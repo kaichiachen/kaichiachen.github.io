@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="PCIe是SSD一項重要和主流的接口技術，所以我們有必要對PCIe有深入的了解 PCIe從第一代，到最近2022年第六代的規格問世，速度越來越快，相比於SAS&#x2F;SATA，PCIe資料傳輸的「高速公路」更多，最多可以有32個Lane，SAS&#x2F;SATA只能有一個Lane，所以我們可以說，PCIe的速度就是Lane的數量x單條Lane的速度 PCIe 拓樸結構 PCIe採用的是樹形拓樸結構，如下圖所示">
+<meta name="description" content="PCIe是SSD一項重要和主流的接口技術，所以我們有必要對PCIe有深入的了解 PCIe從第一代，到最近2022年第六代的規格問世，速度越來越快，相比於SAS&#x2F;SATA，PCIe資料傳輸的「高速公路」更多，最多可以有32個Lane，SAS&#x2F;SATA只能有一個Lane，所以我們可以說，PCIe的速度就是Lane的數量x單條Lane的速度 PCIe 拓樸結構PCIe採用的是樹形拓樸結構，如下圖所示">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN]SSD PCIe接口">
 <meta property="og:url" content="https://kaichiachen.github.io/2022/07/09/vsan/ssd_pcie_overview/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="PCIe是SSD一項重要和主流的接口技術，所以我們有必要對PCIe有深入的了解 PCIe從第一代，到最近2022年第六代的規格問世，速度越來越快，相比於SAS&#x2F;SATA，PCIe資料傳輸的「高速公路」更多，最多可以有32個Lane，SAS&#x2F;SATA只能有一個Lane，所以我們可以說，PCIe的速度就是Lane的數量x單條Lane的速度 PCIe 拓樸結構 PCIe採用的是樹形拓樸結構，如下圖所示">
+<meta property="og:description" content="PCIe是SSD一項重要和主流的接口技術，所以我們有必要對PCIe有深入的了解 PCIe從第一代，到最近2022年第六代的規格問世，速度越來越快，相比於SAS&#x2F;SATA，PCIe資料傳輸的「高速公路」更多，最多可以有32個Lane，SAS&#x2F;SATA只能有一個Lane，所以我們可以說，PCIe的速度就是Lane的數量x單條Lane的速度 PCIe 拓樸結構PCIe採用的是樹形拓樸結構，如下圖所示">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/pci_topology.png">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/pci_layer.png">
@@ -414,7 +414,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  415
+                  414
                 </span>
               
 
@@ -441,15 +441,14 @@
       
         <p>PCIe是SSD一項重要和主流的接口技術，所以我們有必要對PCIe有深入的了解</p>
 <p>PCIe從第一代，到最近2022年第六代的規格問世，速度越來越快，相比於SAS/SATA，PCIe資料傳輸的「高速公路」更多，最多可以有32個Lane，SAS/SATA只能有一個Lane，所以我們可以說，PCIe的速度就是Lane的數量x單條Lane的速度</p>
-<h3 id="pcie-拓樸結構">PCIe 拓樸結構</h3>
-<p>PCIe採用的是樹形拓樸結構，如下圖所示</p>
-<p><img src="/images/vsan/pci_topology.png" alt=""></p>
+<h3 id="PCIe-拓樸結構"><a href="#PCIe-拓樸結構" class="headerlink" title="PCIe 拓樸結構"></a>PCIe 拓樸結構</h3><p>PCIe採用的是樹形拓樸結構，如下圖所示</p>
+<p><img src="/images/vsan/pci_topology.png"></p>
 <p>Root Complex是樹的根，為CPU所服務，Root Complex能存取PCIe設備，也能存取記憶體</p>
 <span id="more"></span>
+
 <p>所以具體來說，Root Complex的spec是什麼呢？他的內部很複雜，PCIe Spec也沒有規定Root Complex該做什麼，不該做什麼，我們可以理解為他是一台筆記型電腦，外部的PCIe設備就是USB的插槽，如果插槽不夠用，我們需要擴充更多設備，就需要一個Switch，像是一個USB的Hub一樣</p>
-<h3 id="pcie分層結構">PCIe分層結構</h3>
-<p>PCIe作為一個資料通訊接口，就某種意義跟跨主機的網路接口類似，都需要分層各司其職的去處理複雜的問題，網路有TCP/IP五層協議，PCIe則定義了三層，Physical, Data Link, Transaction Layer，如下圖所示</p>
-<p><img src="/images/vsan/pci_layer.png" alt=""></p>
+<h3 id="PCIe分層結構"><a href="#PCIe分層結構" class="headerlink" title="PCIe分層結構"></a>PCIe分層結構</h3><p>PCIe作為一個資料通訊接口，就某種意義跟跨主機的網路接口類似，都需要分層各司其職的去處理複雜的問題，網路有TCP/IP五層協議，PCIe則定義了三層，Physical, Data Link, Transaction Layer，如下圖所示</p>
+<p><img src="/images/vsan/pci_layer.png"></p>
 <p>和網路通信一樣，PCIe也是以Packet的形式傳輸，每一層都有固定的格式</p>
 <p><strong>Physical Layer</strong></p>
 <p>負責處理Packet物理傳輸，怎麼分到各個Lane傳輸以及匯總</p>
@@ -583,7 +582,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -605,7 +604,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../../tags/index.html">
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

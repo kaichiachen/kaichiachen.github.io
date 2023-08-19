@@ -440,9 +440,10 @@
 
       
         <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
 <p>vSAN CLOM(Cluster-level object manager)負責根據Policy產生Object Configuration，把Object裡的Component放在Cluster下適當的ESXi Node裡面，DOM和CLOM之間溝通緊密無間且是雙向溝通的。</p>
 <span id="more"></span>
+
 <p>DOM負責傳送帶有Policy info的請求給CLOM，CLOM負責回傳結果或是Error message給DOM，兩者之間透過一個專用的vmkernel protocal溝通</p>
 <p>為了性能，CLOM的首要任務是確定Object最初的擺放位置，然後再根據DOM給的Policy決定Component要放在哪裡。此外，CLOM也要負責balance的問題，當一個ESXi Node或是Disk裡的使用容量或是Components過多，要做平衡，遷移Component到較為空閒的Node</p>
 <p>在vSAN cluster裡，每個vSAN node都會運作一個clomd的daemon，負責確認每個vSAN node裡DOM的configuration是否合乎標準，同時還需要與CMMDS相互溝通</p>
@@ -580,7 +581,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -602,7 +603,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="../../../../../tags/index.html">
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
