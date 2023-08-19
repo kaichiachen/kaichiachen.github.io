@@ -42,7 +42,7 @@
 
   
   
-  <link href="../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="../../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -50,29 +50,27 @@
 
 
 
-<link href="../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="../../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="../../images/apple-touch-icon-next.png?v=5.1.4">
+<link href="../../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../../images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../../images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="../../images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../../images/favicon-16x16-next.png?v=5.1.4">
 
 
+  <link rel="mask-icon" href="../../../../../images/logo.svg?v=5.1.4" color="#222">
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
 
 
+  <meta name="keywords" content="vmware,vsan,cmmds," />
 
 
 
@@ -81,14 +79,24 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="安迪熊">
-<meta property="og:url" content="https://kaichiachen.github.io/tags/iscsi/index.html">
+
+
+<meta name="description" content="vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS  vSAN CMMDS(Cluster monitoring, membership, and directory service)主要運作在ESXi的kernel層。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[vSAN] CMMDS (Cluster monitoring, membership, and directory service)">
+<meta property="og:url" content="https://kaichiachen.github.io/2022/09/15/vsan/ioworkflow_cmmds/index.html">
 <meta property="og:site_name" content="安迪熊">
+<meta property="og:description" content="vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS  vSAN CMMDS(Cluster monitoring, membership, and directory service)主要運作在ESXi的kernel層。">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://kaichiachen.github.io/images/vsan/vsan_ioworkflow.png">
+<meta property="article:published_time" content="2022-09-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-19T06:41:52.117Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="鍇嘉">
+<meta property="article:tag" content="vmware">
+<meta property="article:tag" content="vsan">
+<meta property="article:tag" content="cmmds">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kaichiachen.github.io/images/vsan/vsan_ioworkflow.png">
 
 
 
@@ -118,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/tags/iscsi/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2022/09/15/vsan/ioworkflow_cmmds/"/>
 
 
 
 
 
-  <title>標籤: iscsi | 安迪熊</title>
+  <title>[vSAN] CMMDS (Cluster monitoring, membership, and directory service) | 安迪熊</title>
   
 
 
@@ -155,7 +163,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -293,54 +301,220 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>iscsi<small>標籤</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="../../2022/09/07/vsan/vsan_fileservice_iscsi/" itemprop="url">
-              
-                <span itemprop="name">[vSAN]FileService & iSCSI</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">[vSAN] CMMDS (Cluster monitoring, membership, and directory service)</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-09-07T00:00:00+08:00"
-              content="2022-09-07" >
-          09-07
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-09-15T00:00:00+08:00">
+                2022-09-15
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../../categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/09/15/vsan/ioworkflow_cmmds/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye">&nbsp;閱讀次數:</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  519
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
+<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
+<p>vSAN CMMDS(Cluster monitoring, membership, and directory service)主要運作在ESXi的kernel層。負責在vSAN cluster和vSAN Node之間，進行探索、維護等監控任務，並管理cluster裡的各項資源，例如網路、儲存空間、component數量等等，上述這些cluster metadata會以key-value形式存在directory。</p>
+<p>由於vSAN是一個分散式儲存系統，所以directory上面儲存的資料難免有碰撞和衝突，vSAN CMMDS採取的是master-agent架構，vSAN Cluster會透過Paxos演算法選舉出master node，其他node為agent，當Object訊息發生異動時，Agent會向master node提供更新訊息，由master決定是否要更新。同時，master也會單播(unicast)這些metadata訊息給其他節點。節點彼此間會透過經典的heartbeat傳輸以保證Cluster內的所有node都是健康的</p>
+<p>vSAN CMMDS為最終一致性架構，意思就是如果A對一個Object做寫入或修改，同時B讀Object的metadata時可能會有過期的資訊，一般來說，1ms內可以消除這個資訊不對稱的問題。</p>
+<p>到目前為止，vSAN CMMDS聽起來像是vSAN內部的一個Backend Service，專門搜集cluster的metadata然後存著，那麼vSAN的哪個Component會對CMMDS發出request呢？是DOM，我們會在下一篇提到DOM(Distribute Object Manager)</p>
+<p>最後總結，CMMDS是在ESXi kernel層實現的，CMMDS具有如下特性</p>
+<ul>
+<li>CMMDS負責搜集cluster的metadata，例如網路、儲存空間、component數量等等</li>
+<li>CMMDS存metadata的方式是以key value的形式，各個ESXi host可以去query這些data</li>
+<li>CMMDS是分散式系統架構，每個node代表三種角色 - master, agent和backup三中角色之一，agent向master提供cluster metadata，master決定是否要存進去directory，backup負責作為master的備份，萬一master掛了可以替代為master</li>
+<li>CMMDS為最終一致性架構，不過cluster裡的metadata通常可以保證1ms內達成一致</li>
+</ul>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../../tags/vmware/" rel="tag"># vmware</a>
+          
+            <a href="../../../../../tags/vsan/" rel="tag"># vsan</a>
+          
+            <a href="../../../../../tags/cmmds/" rel="tag"># cmmds</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../../07/vsan/vsan_fileservice_iscsi/" rel="next" title="[vSAN]FileService & iSCSI">
+                <i class="fa fa-chevron-left"></i> [vSAN]FileService & iSCSI
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -348,6 +522,20 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -374,7 +562,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="../../images/avatar.jpg"
+                src="../../../../../images/avatar.jpg"
                 alt="" />
             
               <p class="site-author-name" itemprop="name"></p>
@@ -386,7 +574,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="../../archives">
+                <a href="../../../../../archives">
               
                   <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">文章</span>
@@ -398,7 +586,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="../../categories/index.html">
+                <a href="../../../../../categories/index.html">
                   <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
@@ -409,7 +597,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="../index.html">
+                <a href="../../../../../tags/index.html">
                   <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
@@ -560,60 +748,64 @@
 
   
   
-    <script type="text/javascript" src="../../lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="../../../../../lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="../../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="../../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="../../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 
   
 
 
-  <script type="text/javascript" src="../../js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../../js/src/utils.js?v=5.1.4"></script>
 
-  <script type="text/javascript" src="../../js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="../../js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="../../js/src/schemes/pisces.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../../js/src/motion.js?v=5.1.4"></script>
 
 
 
   
+  
+
+
+  <script type="text/javascript" src="../../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
 
-  <script type="text/javascript" src="../../js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../../js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -626,6 +818,18 @@
       <script id="dsq-count-scr" src="https://kaichiablog.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://kaichiachen.github.io/2022/09/15/vsan/ioworkflow_cmmds/';
+          this.page.identifier = '2022/09/15/vsan/ioworkflow_cmmds/';
+          this.page.title = '[vSAN] CMMDS (Cluster monitoring, membership, and directory service)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kaichiablog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   

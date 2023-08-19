@@ -308,6 +308,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/09/15/vsan/ioworkflow_cmmds/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="2022/09/15/vsan/ioworkflow_cmmds/" itemprop="url">[vSAN] CMMDS (Cluster monitoring, membership, and directory service)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-09-15T00:00:00+08:00">
+                2022-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="2022/09/15/vsan/ioworkflow_cmmds/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/09/15/vsan/ioworkflow_cmmds/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  519
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
+<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
+<p>vSAN CMMDS(Cluster monitoring, membership, and directory service)主要運作在ESXi的kernel層。負責在vSAN cluster和vSAN Node之間，進行探索、維護等監控任務，並管理cluster裡的各項資源，例如網路、儲存空間、component數量等等，上述這些cluster metadata會以key-value形式存在directory。</p>
+<p>由於vSAN是一個分散式儲存系統，所以directory上面儲存的資料難免有碰撞和衝突，vSAN CMMDS採取的是master-agent架構，vSAN Cluster會透過Paxos演算法選舉出master node，其他node為agent，當Object訊息發生異動時，Agent會向master node提供更新訊息，由master決定是否要更新。同時，master也會單播(unicast)這些metadata訊息給其他節點。節點彼此間會透過經典的heartbeat傳輸以保證Cluster內的所有node都是健康的</p>
+<p>vSAN CMMDS為最終一致性架構，意思就是如果A對一個Object做寫入或修改，同時B讀Object的metadata時可能會有過期的資訊，一般來說，1ms內可以消除這個資訊不對稱的問題。</p>
+<p>到目前為止，vSAN CMMDS聽起來像是vSAN內部的一個Backend Service，專門搜集cluster的metadata然後存著，那麼vSAN的哪個Component會對CMMDS發出request呢？是DOM，我們會在下一篇提到DOM(Distribute Object Manager)</p>
+<p>最後總結，CMMDS是在ESXi kernel層實現的，CMMDS具有如下特性</p>
+<ul>
+<li>CMMDS負責搜集cluster的metadata，例如網路、儲存空間、component數量等等</li>
+<li>CMMDS存metadata的方式是以key value的形式，各個ESXi host可以去query這些data</li>
+<li>CMMDS是分散式系統架構，每個node代表三種角色 - master, agent和backup三中角色之一，agent向master提供cluster metadata，master決定是否要存進去directory，backup負責作為master的備份，萬一master掛了可以替代為master</li>
+<li>CMMDS為最終一致性架構，不過cluster裡的metadata通常可以保證1ms內達成一致</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/09/07/vsan/vsan_fileservice_iscsi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1896,188 +2080,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2022/05/10/vsan/storage_raid_overview/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="2022/05/10/vsan/storage_raid_overview/" itemprop="url">[vSAN]資料的備份形式? RAID</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-05-10T00:00:00+08:00">
-                2022-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="categories/vSAN/" itemprop="url" rel="index">
-                    <span itemprop="name">vSAN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="2022/05/10/vsan/storage_raid_overview/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2022/05/10/vsan/storage_raid_overview/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  838
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>如果資料儲存只是把資料存進去硬碟裡，那就有點單調了，不如我們來加點把戲吧！</p>
-</blockquote>
-<p>資料要存，就要把它存好，萬一硬碟不小心壞了怎麼辦？</p>
-<p>於是有了RAID卡，RAID中文是容錯式硬碟陣列，RAID卡是一個硬體設備，可以理解為他能將多個硬碟組合在一起，利用虛擬儲存技術，形成一個硬碟陣列，用來提升儲存空間和製造冗余。</p>
-<p>分散式儲存很多idea就是從Raid來的，只是Raid是提升機櫃與機櫃之間的可靠性，而一般來說的分散式儲存是透過網路串連不同的儲存裝置，更加的靈活。</p>
-<p>常見的RAID層級有RAID 0、RAID 1、RAID 5、RAID 6，本篇只介紹上述幾個基礎的RAID架構，架構圖都是來源於維基百科</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="2022/05/10/vsan/storage_raid_overview/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2132,7 +2134,7 @@
               
                 <a href="archives">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2154,7 +2156,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="tags/index.html">
-                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -2213,7 +2215,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
