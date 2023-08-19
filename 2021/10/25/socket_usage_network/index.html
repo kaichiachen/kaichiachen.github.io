@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="我們在寫網路相關的程式最底層就是與socket交互，socket是專用於網路通訊的system call。什麼是system call呢？ 我們知道作業系統有分kernel和user space，從user space要進行I&#x2F;O操作需要透過system call去呼叫kernel space，kernel space才有權限進行I&#x2F;O的操作。 在Linux中，使用socket宣告一個object">
+<meta name="description" content="我們在寫網路相關的程式最底層就是與socket交互，socket是專用於網路通訊的system call。什麼是system call呢？我們知道作業系統有分kernel和user space，從user space要進行I&#x2F;O操作需要透過system call去呼叫kernel space，kernel space才有權限進行I&#x2F;O的操作。在Linux中，使用socket宣告一個object會回">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[網路]Socket - 網路程式的大門">
 <meta property="og:url" content="https://kaichiachen.github.io/2021/10/25/socket_usage_network/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="我們在寫網路相關的程式最底層就是與socket交互，socket是專用於網路通訊的system call。什麼是system call呢？ 我們知道作業系統有分kernel和user space，從user space要進行I&#x2F;O操作需要透過system call去呼叫kernel space，kernel space才有權限進行I&#x2F;O的操作。 在Linux中，使用socket宣告一個object">
+<meta property="og:description" content="我們在寫網路相關的程式最底層就是與socket交互，socket是專用於網路通訊的system call。什麼是system call呢？我們知道作業系統有分kernel和user space，從user space要進行I&#x2F;O操作需要透過system call去呼叫kernel space，kernel space才有權限進行I&#x2F;O的操作。在Linux中，使用socket宣告一個object會回">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-10-24T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-01-15T16:22:23.000Z">
@@ -436,45 +436,29 @@
       
 
       
-        <p>我們在寫網路相關的程式最底層就是與socket交互，socket是專用於網路通訊的system call。什麼是system call呢？<br>
-我們知道作業系統有分kernel和user space，從user space要進行I/O操作需要透過system call去呼叫kernel space，kernel space才有權限進行I/O的操作。<br>
-在Linux中，使用socket宣告一個object會回傳一個file descriptor。在Linux中，一切都是文件，連socket object也不例外，file descriptor在這裡的作用就是指向那個文件的descriptor。</p>
+        <p>我們在寫網路相關的程式最底層就是與socket交互，socket是專用於網路通訊的system call。什麼是system call呢？<br>我們知道作業系統有分kernel和user space，從user space要進行I/O操作需要透過system call去呼叫kernel space，kernel space才有權限進行I/O的操作。<br>在Linux中，使用socket宣告一個object會回傳一個file descriptor。在Linux中，一切都是文件，連socket object也不例外，file descriptor在這裡的作用就是指向那個文件的descriptor。</p>
 <span id="more"></span>
 <p>下面簡單介紹本Project會用到的socket基本API的使用，首先開啟socket就是宣告了一個socket的object</p>
 <p><code>sock = Socket(family, type, proto)</code></p>
 <ul>
-<li>
-<p><strong>family</strong><br>
-family指的是某個通訊協定，例如ipv4, ipv6等等，如果指定ipv4則只對ipv4的通訊協定的封包進行發放，例如AF_PACKET，他能直接從網卡讀和寫上面的數據</p>
+<li><p><strong>family</strong><br>family指的是某個通訊協定，例如ipv4, ipv6等等，如果指定ipv4則只對ipv4的通訊協定的封包進行發放，例如AF_PACKET，他能直接從網卡讀和寫上面的數據</p>
 </li>
-<li>
-<p><strong>type</strong><br>
-type則是封包數據的格式，主要有SOCK_STREAM和SOCK_DGRAM，分別為TCP和UDP為代表，還有更加原始的格式SOCK_RAW，能自行的組裝數據包，由於我們想監聽所有封包，所以會使用SOCK_RAW</p>
+<li><p><strong>type</strong><br>type則是封包數據的格式，主要有SOCK_STREAM和SOCK_DGRAM，分別為TCP和UDP為代表，還有更加原始的格式SOCK_RAW，能自行的組裝數據包，由於我們想監聽所有封包，所以會使用SOCK_RAW</p>
 </li>
-<li>
-<p><strong>proto</strong><br>
-Proto則是protocol的意思，通常預設為0，那麼我們的應用要監聽所有封包，所以設定為0x0003來監聽所有ethernet上的封包</p>
+<li><p><strong>proto</strong><br>Proto則是protocol的意思，通常預設為0，那麼我們的應用要監聽所有封包，所以設定為0x0003來監聽所有ethernet上的封包</p>
 </li>
 </ul>
 <p>定義好socket file descriptor後，然後下面是socket object常用的API。</p>
 <ul>
-<li>
-<p><strong>bind((addr, port))</strong><br>
-需監聽和發送的地址和port，地址若為0.0.0.0則代表所有，也能監聽網卡</p>
+<li><p><strong>bind((addr, port))</strong><br>需監聽和發送的地址和port，地址若為0.0.0.0則代表所有，也能監聽網卡</p>
 </li>
-<li>
-<p><strong>recv(1024)</strong><br>
-如果有封包進來，則kernel space響應這個函數，讓我們的應用程式可以對封包進行處理，若沒有則會被block在這，函數回傳的是小於等於1024長度的string，看封包大小</p>
+<li><p><strong>recv(1024)</strong><br>如果有封包進來，則kernel space響應這個函數，讓我們的應用程式可以對封包進行處理，若沒有則會被block在這，函數回傳的是小於等於1024長度的string，看封包大小</p>
 </li>
-<li>
-<p><strong>send(packet)</strong><br>
-packet就是我們做成的封包，在30天的後半段會教大家怎麼做自己的封包，怎麼算checksum，socket會根據封包裡的mac address和ip address進行路由</p>
+<li><p><strong>send(packet)</strong><br>packet就是我們做成的封包，在30天的後半段會教大家怎麼做自己的封包，怎麼算checksum，socket會根據封包裡的mac address和ip address進行路由</p>
 </li>
 </ul>
 <p>除了上述這些API，還有很多很多，有興趣的讀者能再深入研究</p>
-<h4 id="範例">範例</h4>
-<p>最後，我們試著用socket API來獲取封包的來源MAC地址<br>
-首先，我們需要監聽所有封包，所以<code>family</code>, <code>type</code>和<code>proto</code>分別為<code>AF_PACKET</code>, <code>SOCK_RAW</code>和<code>0x0003</code>，完整來看如下</p>
+<h4 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h4><p>最後，我們試著用socket API來獲取封包的來源MAC地址<br>首先，我們需要監聽所有封包，所以<code>family</code>, <code>type</code>和<code>proto</code>分別為<code>AF_PACKET</code>, <code>SOCK_RAW</code>和<code>0x0003</code>，完整來看如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sock = socket.socket(socket.AF_PACKET, socket.SOCK_RAW , socket.ntohs(<span class="number">0x0003</span>))</span><br></pre></td></tr></table></figure>
 <p>接下來，我們需要綁定一個network interface，可以透過指令<code>ifconfig</code>來看</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 02:42:ac:11:00:02</span><br><span class="line">          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:3496 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:1692 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0</span><br><span class="line">          RX bytes:4623164 (4.6 MB)  TX bytes:93240 (93.2 KB)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:36 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:36 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:1800 (1.8 KB)  TX bytes:1800 (1.8 KB)</span><br></pre></td></tr></table></figure>
@@ -484,9 +468,9 @@ packet就是我們做成的封包，在30天的後半段會教大家怎麼做自
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">while True:</span><br><span class="line">    packet, _ = sock.recvfrom(65565)</span><br></pre></td></tr></table></figure>
 <p>一個封包的來源Mac Address會在封包的前六個bytes，我們需要用到python自有的struct library去解析他</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">src_mac_header = packet[:6]</span><br><span class="line">struct.unpack(&#x27;!6s&#x27;, src_mac_header)</span><br></pre></td></tr></table></figure>
-<p>驚嘆號代表的是bytes順序是big endian，6s代表unpack 6個char，也能unpack integer等等的，具體代表的意思可以參考<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/struct.html#format-characters">這裡</a><br>
-所以unpack之後，我們就能取得來源的Mac address，完整的程式碼如下所示</p>
+<p>驚嘆號代表的是bytes順序是big endian，6s代表unpack 6個char，也能unpack integer等等的，具體代表的意思可以參考<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/struct.html#format-characters">這裡</a><br>所以unpack之後，我們就能取得來源的Mac address，完整的程式碼如下所示</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import socket, struct</span><br><span class="line"></span><br><span class="line">#define ETH_P_ALL    0x0003          /* Every packet (be careful!!!) */</span><br><span class="line">sock = socket.socket(socket.AF_PACKET, socket.SOCK_RAW , socket.ntohs(0x0003))</span><br><span class="line">sock.bind((&quot;eth0&quot;,0))</span><br><span class="line"></span><br><span class="line">while True:</span><br><span class="line">    packet, _ = sock.recvfrom(65565)</span><br><span class="line">    src_mac_header = packet[:6]</span><br><span class="line">    src_mac = struct.unpack(&#x27;!6s&#x27;, src_mac_header)[0]</span><br><span class="line">    mac = map(&#x27;&#123;:02x&#125;&#x27;.format, src_mac)</span><br><span class="line">    print(&#x27;:&#x27;.join(mac))</span><br></pre></td></tr></table></figure>
+
 <p>實驗方式，可以跑這個程式的電腦發送curl請求，可以看到在我的環境，在eth0的Mac address為<code>02:42:ac:11:00:02</code>，然後我們下指令對自己的電腦產生封包</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&gt; curl --interface eth0 127.0.0.1</span><br></pre></td></tr></table></figure>
 <p>在另外一個terminal視窗，就可以看到自己的Mac address被print出來了！</p>

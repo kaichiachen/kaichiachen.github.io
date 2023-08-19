@@ -432,7 +432,7 @@
         
           
             <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
 <p>vSAN CMMDS(Cluster monitoring, membership, and directory service)主要運作在ESXi的kernel層。負責在vSAN cluster和vSAN Node之間，進行探索、維護等監控任務，並管理cluster裡的各項資源，例如網路、儲存空間、component數量等等，上述這些cluster metadata會以key-value形式存在directory。</p>
 <p>由於vSAN是一個分散式儲存系統，所以directory上面儲存的資料難免有碰撞和衝突，vSAN CMMDS採取的是master-agent架構，vSAN Cluster會透過Paxos演算法選舉出master node，其他node為agent，當Object訊息發生異動時，Agent會向master node提供更新訊息，由master決定是否要更新。同時，master也會單播(unicast)這些metadata訊息給其他節點。節點彼此間會透過經典的heartbeat傳輸以保證Cluster內的所有node都是健康的</p>
 <p>vSAN CMMDS為最終一致性架構，意思就是如果A對一個Object做寫入或修改，同時B讀Object的metadata時可能會有過期的資訊，一般來說，1ms內可以消除這個資訊不對稱的問題。</p>
@@ -588,7 +588,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  513
+                  512
                 </span>
               
 
@@ -615,10 +615,9 @@
       
         
           <p>我們知道vSAN主要是以Object的形式作為儲存單位，存的是VM Object，而Block和File兩個常用的儲存單位也經常被大企業或是資料中心所用到，vSAN當然也有暴露相關的接口，這裡來聊聊vSAN裡iSCSI存取block storage和Fileservice存取檔案的原理</p>
-<h3 id="iscsi">iSCSI</h3>
-<p>首先，SCSI是SAS/SATA的SSD/HDD用於與作業系統溝通的一種interface protocol，本來是需要透過實體接口才能進行存取，後來又制定了可以透過網路TCP/IP來傳送SCSI指令的技術，叫做iSCSI，使得連接距離可以達到無上限，連結的伺服器數量也是無限</p>
+<h3 id="iSCSI"><a href="#iSCSI" class="headerlink" title="iSCSI"></a>iSCSI</h3><p>首先，SCSI是SAS/SATA的SSD/HDD用於與作業系統溝通的一種interface protocol，本來是需要透過實體接口才能進行存取，後來又制定了可以透過網路TCP/IP來傳送SCSI指令的技術，叫做iSCSI，使得連接距離可以達到無上限，連結的伺服器數量也是無限</p>
 <p>這也是為何vSAN有提供此接口的原因，vSAN本質上是一塊專用儲存網路，形成了一個儲存池，外部應用可以隨時取用、擴容等等，像是Thin provision，vSAN加上iSCSI技術，把儲存變成「可路由」的，像普通的網路通信一樣，使得遠在天邊的應用或主機可以直接存取vSAN上的儲存池。</p>
-<p><img src="/images/vsan/iscsi_edit_target.png" alt=""></p>
+<p><img src="/images/vsan/iscsi_edit_target.png"></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2022/09/07/vsan/vsan_fileservice_iscsi/" rel="contents">
@@ -768,7 +767,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  527
+                  526
                 </span>
               
 
@@ -945,7 +944,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  704
+                  702
                 </span>
               
 
@@ -1326,7 +1325,7 @@
       
         
           <p>NVMe是一種主機與SSD之間溝通的協議，前面說到PCIe有三層，NVMe屬於第四層，隸屬於協議中的最高層，如下圖所示</p>
-<p><img src="/images/vsan/nvme_structure.png" alt=""></p>
+<p><img src="/images/vsan/nvme_structure.png"></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2022/07/16/vsan/ssd_nvme_overview/" rel="contents">
@@ -1476,7 +1475,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  415
+                  414
                 </span>
               
 
@@ -1504,9 +1503,8 @@
         
           <p>PCIe是SSD一項重要和主流的接口技術，所以我們有必要對PCIe有深入的了解</p>
 <p>PCIe從第一代，到最近2022年第六代的規格問世，速度越來越快，相比於SAS/SATA，PCIe資料傳輸的「高速公路」更多，最多可以有32個Lane，SAS/SATA只能有一個Lane，所以我們可以說，PCIe的速度就是Lane的數量x單條Lane的速度</p>
-<h3 id="pcie-拓樸結構">PCIe 拓樸結構</h3>
-<p>PCIe採用的是樹形拓樸結構，如下圖所示</p>
-<p><img src="/images/vsan/pci_topology.png" alt=""></p>
+<h3 id="PCIe-拓樸結構"><a href="#PCIe-拓樸結構" class="headerlink" title="PCIe 拓樸結構"></a>PCIe 拓樸結構</h3><p>PCIe採用的是樹形拓樸結構，如下圖所示</p>
+<p><img src="/images/vsan/pci_topology.png"></p>
 <p>Root Complex是樹的根，為CPU所服務，Root Complex能存取PCIe設備，也能存取記憶體</p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -2037,12 +2035,11 @@
       
         
           <p>前面分別講了資料儲存的最小單元、硬碟陣列怎麼做備份以及提高可用性，接下來安迪想講的是儲存系統架構 - DAS、NAS和SAN</p>
-<h3 id="das">DAS</h3>
-<blockquote>
+<h3 id="DAS"><a href="#DAS" class="headerlink" title="DAS"></a>DAS</h3><blockquote>
 <p>DAS(Direct Attach Storage) - 本地的檔案系統</p>
 </blockquote>
 <p>DAS可以理解為就是本地的磁碟陣列，透過USB，你的個人電腦或伺服器就可以連結到這個磁碟陣列，根據RAID卡，進行相應的備份，當然，他的缺點就是需要有一條實體USB線，且擴充容量等等比較麻煩。</p>
-<h3 id="nas">NAS</h3>
+<h3 id="NAS"><a href="#NAS" class="headerlink" title="NAS"></a>NAS</h3>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2022/06/04/vsan/storage_protocol_overview/" rel="contents">

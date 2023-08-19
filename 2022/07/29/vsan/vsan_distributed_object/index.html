@@ -443,11 +443,12 @@
         <p>再讓我們把主題切回vSAN。現在我們有了儲存系統 - Object Storage的基本知識後，我們可以更深入的探討vSAN是怎麼存Object的。</p>
 <p>vSAN是一種軟體定義儲存的產品，他的儲存單位是Object，Object是什麼呢？回到Day 06，Object可以理解為一個巨大的資料夾，每個檔案就是一個Object，所以搜索Object資料不用一個個資料夾找，今天我們更深入的來理解所謂的「軟體定義」以及Object/Component在vSAN裡面代表著什麼</p>
 <span id="more"></span>
+
 <p>從傳統的儲存架構來說，我們想對硬碟裡面的資料進行備份，必須透過硬體RAID卡來進行，這就有了缺點了，舉例來說，如果我想對這台虛擬機用RAID 1的方式備份三份，對另外一台虛擬機不需要備份，RAID 0即可，這對於硬體的管理成本非常巨大且可能有資源的浪費</p>
 <p>vSAN裡的「軟體定義」就是指User可以針對這個Object定義他的備份Policy，透過Policy驅動指定備份的方式。透過軟體定義的方式就更方便更彈性多了，VM不受硬體的約束，可以隨時的指定VM的備份Policy。</p>
 <p>講完了Object，最後來說說Component，Component在vSAN中分別代表什麼概念呢？</p>
 <p>假如我們在vSAN有一台虛擬機，其中他的VMDK就是一個Object，裡面存放著虛擬硬碟的資料，我們想對他做一份完整的備份，使用RAID 1，也就是FTT=1。RAID 1前面有提過，這裡就不贅述，FTT 1代表可以容忍一個節點失誤，這樣一來，我們總共需要兩個節點放這個Object，Object變成兩份一模一樣的Components，分散在不同主機上，如下圖所示</p>
-<p><img src="/images/vsan/vsan_object_component_layout.png" alt=""></p>
+<p><img src="/images/vsan/vsan_object_component_layout.png"></p>
 <p>從上圖可以看到，兩個Components的資料一模一樣，只是被分配在不同的主機上，再加上一個Witness見證節點，Object的metadata就是存在Witness的，我們知道Object的metadata有個重要的功能就是引導Object資料的位置，所以Witness負責當外部Object request過來之後，判斷要從哪個節點拿Compoent，以免發生腦裂現象或是兩台主機連不上線的時候。</p>
 <p>順帶一提，在vSAN中，預設的Object儲存方式就是RAID 1，FTT-1，所以最小的vSAN Cluster配置是三台主機。</p>
 
