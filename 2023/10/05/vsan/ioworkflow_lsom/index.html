@@ -441,30 +441,19 @@
 
       
         <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
 <p>vSAN LSOM(Local log-structured object manager)運作在ESXi node裡面，目的是讓Object和Component放在ESXi node裡面，當資料發生I/O時，負責管理cache disk和capacity disk的資料I/O</p>
 <span id="more"></span>
+
 <p>由於LSOM負責硬碟層的I/O，他同時也要負責監控硬碟的健康狀態</p>
 <p>LSOM使用Log的方式從硬碟讀取Component並回傳，目前支持SSD和HDD的硬碟。LSOM處理和硬碟最底層的I/O交互，他藉由Log的方式記錄寫的順序，例如在RAID-1的情況下，對Object寫代表要對兩個不同的ESXi Node的Component寫，如果在Cluster fail掉之前，只有Node A記錄到了寫，那麼就會用Log的方式回溯，Node A會把Write log複製一份給Node B，達成最終一致性。</p>
 <p>DOM是被實現在ESXi的Kernel層，會接收來自DOM的Components的增刪改查，LSOM會負責給予CMMDS所有disk的Metadata</p>
 <p>LSOM有如下Components</p>
 <ul>
-<li>
-<p>LSOM Logical Log(LLOG)</p>
-<p>為VMFS與SSD互動的橋樑，提供若干API</p>
-</li>
-<li>
-<p>Read Cache(RC)</p>
-<p>負責cache的Policy</p>
-</li>
-<li>
-<p>LSOM Physical Log(PLOG)</p>
-<p>為cache tier和capacity tier之間的橋樑</p>
-</li>
-<li>
-<p>SSD Log</p>
-<p>管理SSD的space和Read cache，並提供LLOG、PLOG和RC所需要的log infrastructure</p>
-</li>
+<li>LSOM Logical Log(LLOG)  為VMFS與SSD互動的橋樑，提供若干API</li>
+<li>Read Cache(RC)  負責cache的Policy</li>
+<li>LSOM Physical Log(PLOG)  為cache tier和capacity tier之間的橋樑</li>
+<li>SSD Log  管理SSD的space和Read cache，並提供LLOG、PLOG和RC所需要的log infrastructure</li>
 </ul>
 <p>最後總結，LSOM是在ESXi kernel層實現的，LSOM具有如下特性</p>
 <ul>

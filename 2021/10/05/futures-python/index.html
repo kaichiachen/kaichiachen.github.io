@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="無論是哪門程式語言，併發(Concurrent)和並行(Parallel)都是很常用且重要的知識點．例如爬蟲，被廣泛運用在工業界資料收集領域，其用的核心技術，就是併發並行程式 正確合理的使用併發並行，無疑會給我們的程式帶來巨大的性能提升，之前我們聊到Python Coroutine，今天我們來聊聊Python的Futures">
+<meta name="description" content="無論是哪門程式語言，併發(Concurrent)和並行(Parallel)都是很常用且重要的知識點．例如爬蟲，被廣泛運用在工業界資料收集領域，其用的核心技術，就是併發並行程式正確合理的使用併發並行，無疑會給我們的程式帶來巨大的性能提升，之前我們聊到Python Coroutine，今天我們來聊聊Python的Futures">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Python進階]Python的並行計算 - Futures">
 <meta property="og:url" content="https://kaichiachen.github.io/2021/10/05/futures-python/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="無論是哪門程式語言，併發(Concurrent)和並行(Parallel)都是很常用且重要的知識點．例如爬蟲，被廣泛運用在工業界資料收集領域，其用的核心技術，就是併發並行程式 正確合理的使用併發並行，無疑會給我們的程式帶來巨大的性能提升，之前我們聊到Python Coroutine，今天我們來聊聊Python的Futures">
+<meta property="og:description" content="無論是哪門程式語言，併發(Concurrent)和並行(Parallel)都是很常用且重要的知識點．例如爬蟲，被廣泛運用在工業界資料收集領域，其用的核心技術，就是併發並行程式正確合理的使用併發並行，無疑會給我們的程式帶來巨大的性能提升，之前我們聊到Python Coroutine，今天我們來聊聊Python的Futures">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-10-04T16:00:00.000Z">
 <meta property="article:modified_time" content="2021-12-18T06:34:50.000Z">
@@ -413,7 +413,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  922
+                  920
                 </span>
               
 
@@ -438,8 +438,7 @@
       
 
       
-        <p>無論是哪門程式語言，併發(Concurrent)和並行(Parallel)都是很常用且重要的知識點．例如爬蟲，被廣泛運用在工業界資料收集領域，其用的核心技術，就是併發並行程式<br>
-正確合理的使用併發並行，無疑會給我們的程式帶來巨大的性能提升，之前我們聊到Python Coroutine，今天我們來聊聊Python的Futures</p>
+        <p>無論是哪門程式語言，併發(Concurrent)和並行(Parallel)都是很常用且重要的知識點．例如爬蟲，被廣泛運用在工業界資料收集領域，其用的核心技術，就是併發並行程式<br>正確合理的使用併發並行，無疑會給我們的程式帶來巨大的性能提升，之前我們聊到Python Coroutine，今天我們來聊聊Python的Futures</p>
 <span id="more"></span>
 <p>再稍微複習一下併發(Concurrent)和並行(Parallel)的差別，併發指的是在同一個CPU下，透過上下文切換(Context switch)，讓使用者覺得不同程式段同時執行，並行則是真正意義上的多個CPU同時執行，所以說</p>
 <ul>
@@ -449,19 +448,14 @@
 <p>不過需要提到的一點是，如果電腦有四顆CPU，照理說可以同時並行的跑四個Threads，然而在Python卻不能這樣，Python的直譯器天生有race condition的問題，所以同一時刻只能允許一個Thread執行，具體原因後面有機會聊到GIL的時候會提到</p>
 <p>Python的Futures library提供了我們方便建立併發併行的框架，也能夠建立threading pool, process pool等等，我們來看下面簡單的例子</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> concurrent.futures</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loading_one</span>(<span class="params">name</span>):</span></span><br><span class="line">    <span class="comment"># Return value of random.random will be 0 ~ 1</span></span><br><span class="line">    time.sleep(random.random())</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Job %s is completed.&#x27;</span> % name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loading</span>(<span class="params">names</span>):</span></span><br><span class="line">    <span class="keyword">with</span> concurrent.futures.ThreadPoolExecutor(max_workers=<span class="number">5</span>) <span class="keyword">as</span> executor:</span><br><span class="line">        executor.<span class="built_in">map</span>(loading_one, names)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    jobnames = [</span><br><span class="line">        <span class="string">&#x27;JobA&#x27;</span>, <span class="string">&#x27;JobB&#x27;</span>, <span class="string">&#x27;JobC&#x27;</span>, <span class="string">&#x27;JobD&#x27;</span></span><br><span class="line">    ]</span><br><span class="line">    start_time = time.perf_counter()</span><br><span class="line">    loading(jobnames)</span><br><span class="line">    end_time = time.perf_counter()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Load &#123;&#125; jobs in &#123;&#125; seconds&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">len</span>(jobnames), end_time - start_time))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br><span class="line">    </span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># Job JobB is completed.</span></span><br><span class="line"><span class="comment"># Job JobD is completed.</span></span><br><span class="line"><span class="comment"># Job JobA is completed.</span></span><br><span class="line"><span class="comment"># Job JobC is completed.</span></span><br><span class="line"><span class="comment"># Load 4 jobs in 0.706298665 seconds</span></span><br></pre></td></tr></table></figure>
-<p>耗時不到一秒，由於<code>random.random()</code> return介於0和1之間，代表確實是併發執行的<br>
-這裡我們建立的threading pool</p>
+<p>耗時不到一秒，由於<code>random.random()</code> return介於0和1之間，代表確實是併發執行的<br>這裡我們建立的threading pool</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> concurrent.futures.ThreadPoolExecutor(max_workers=<span class="number">5</span>) <span class="keyword">as</span> executor:</span><br><span class="line">        executor.<span class="built_in">map</span>(loading_one, names)</span><br></pre></td></tr></table></figure>
-<p>最多可以同時使用五個Threads，而<code>executor.map</code>就像python裡的map一樣，對每個names的元素去call loading_one fucntion<br>
-另外，雖然我們可以自己設定thread的數量，但是不是越多越好，因為thread的創建、維護、刪除也有一定的性能消耗，設定很大可能會導致速度更慢<br>
-當然，我們也可以把上述程式碼改成&quot;併行&quot;，併行就是多個CPU一起跑，只要做出下面的變化即可</p>
+<p>最多可以同時使用五個Threads，而<code>executor.map</code>就像python裡的map一樣，對每個names的元素去call loading_one fucntion<br>另外，雖然我們可以自己設定thread的數量，但是不是越多越好，因為thread的創建、維護、刪除也有一定的性能消耗，設定很大可能會導致速度更慢<br>當然，我們也可以把上述程式碼改成”併行”，併行就是多個CPU一起跑，只要做出下面的變化即可</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> concurrent.futures.ProcessPoolExecutor(max_workers=<span class="number">5</span>) <span class="keyword">as</span> executor:</span><br><span class="line">    executor.<span class="built_in">map</span>(loading_one, names)</span><br></pre></td></tr></table></figure>
 <p>函數<code>ProcessPoolExecutor</code>代表創建Process pool，有興趣的讀者可以嘗試，一般會遇到改成<code>ProcessPoolExecutor</code>後，耗時更多了，這是因為並行的方式適合在CPU heavy的情況中</p>
 <p>有沒有發覺Python的Futures library和asyncio非常像？，他們都會將處於等待的job放進去list裡，這些job隨時都可以查詢，當然，他們的結果和異常(<code>job.result()</code>)也能在結束之後拿到</p>
 <p>再介紹一個Futures常用的方法 - <code>done()</code>，表示該job是否已經完成，done()是non-blocking的，代表call了他之後會立即返回，還有一個方法是<code>add_done_callback(func)</code>，當job完成後，會被通知並call callback function</p>
-<h3 id="總結">總結</h3>
-<p>首先，我們學習了併發(Concurrent)和並行(Parallel)的差別<br>
-併發通常用於I/O密集的場景，並行則適合CPU heavy的場景</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>首先，我們學習了併發(Concurrent)和並行(Parallel)的差別<br>併發通常用於I/O密集的場景，並行則適合CPU heavy的場景</p>
 <p>隨後，我們展示了Python Futures library的例子，透過Thread Pool和Process Pool展示如何優雅的利用併發和並行執行程式</p>
 
       

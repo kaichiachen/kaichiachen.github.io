@@ -413,7 +413,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  771
+                  764
                 </span>
               
 
@@ -441,19 +441,14 @@
         <p>Disk由於晶圓問題、firmware問題、driver問題等等會造成ㄧ定機率上的故障，若一塊硬碟，他每天的故障機率是1%，一座資料中心假如有一萬個disk，代表每天有一百塊硬碟損壞，當然，vSAN對於部分類型損壞會嘗試自動修復，這樣能夠大幅減少許多人力成本，畢竟大部分的問題重開機就能解決。</p>
 <p>LSOM是最底層與硬碟打交道的Component，他的DDH(Degraded Device Handling) Service可以幫忙監控硬碟狀態，當DDH偵測到Disk即將要故障或損壞事件，就把Disk標記為有問題的裝置，讓他不參與資料的I/O流程，更多細節，可以參考VMware KB: <a target="_blank" rel="noopener" href="https://kb.vmware.com/s/article/2148358">https://kb.vmware.com/s/article/2148358</a></p>
 <p>這裡列舉vSAN偵測到的硬碟狀態以及他的原因</p>
-<h3 id="pdl">PDL</h3>
-<p>Permanent Disk Loss(PDL)，是一種嚴重的錯誤，需要人工介入，一般情況下是Host與Disk的連結出了問題，沒法連上去，ESXi Host內部或是Disk的bug都有可能</p>
+<h3 id="PDL"><a href="#PDL" class="headerlink" title="PDL"></a>PDL</h3><p>Permanent Disk Loss(PDL)，是一種嚴重的錯誤，需要人工介入，一般情況下是Host與Disk的連結出了問題，沒法連上去，ESXi Host內部或是Disk的bug都有可能</p>
 <span id="more"></span>
-<h3 id="transient-error">Transient Error</h3>
-<p>這種錯誤可以藉由I/O Retry幾次就可以修復，一般來說也是由於ESXi Host內部或是SCSI的bug，例如I/O的workload突然竄上來</p>
-<h3 id="stuck-i/o">Stuck I/O</h3>
-<p>Stuck I/O是發生在ESXi Host外面的，一般是由於firmware或hardware的bug導致I/O一直沒法完成，在vSAN 7.0 Update 3以前，發生了Stuck I/O，vSAN會把整個Host都關機，一個disk的I/O沒有反應會影響整個Cluster處理I/O的進程，不重啟是因為自動重啟之後，I/O還是會繼續Stuck，最好是手動的把Disk移除再重啟，vSAN 7.0 Update 3之後，會在監控平台提示使用者某個Disk發生了Stuck I/O，需要手動的重啟Host</p>
-<h3 id="ure">URE</h3>
-<p>Unrecovered read error(URE)是LSOM遇到metadata read error所遇到的問題，這是由於Disk介質的錯誤，他能夠被自動修復。當Disk發生URE並且DDH打開時，vSAN會藉由把資料撤出並且重構disk來處理如此錯誤</p>
-<h3 id="high-latency">High Latency</h3>
-<p>很好理解，當LSOM偵測到過多的High Latency I/O就會觸發</p>
-<h3 id="congestion">Congestion</h3>
-<p>當LSOM偵測到如下Congestion時，LSOM會通知DOM降低I/O flow直到Congestion解除</p>
+
+<h3 id="Transient-Error"><a href="#Transient-Error" class="headerlink" title="Transient Error"></a>Transient Error</h3><p>這種錯誤可以藉由I/O Retry幾次就可以修復，一般來說也是由於ESXi Host內部或是SCSI的bug，例如I/O的workload突然竄上來</p>
+<h3 id="Stuck-I-O"><a href="#Stuck-I-O" class="headerlink" title="Stuck I/O"></a>Stuck I/O</h3><p>Stuck I/O是發生在ESXi Host外面的，一般是由於firmware或hardware的bug導致I/O一直沒法完成，在vSAN 7.0 Update 3以前，發生了Stuck I/O，vSAN會把整個Host都關機，一個disk的I/O沒有反應會影響整個Cluster處理I/O的進程，不重啟是因為自動重啟之後，I/O還是會繼續Stuck，最好是手動的把Disk移除再重啟，vSAN 7.0 Update 3之後，會在監控平台提示使用者某個Disk發生了Stuck I/O，需要手動的重啟Host</p>
+<h3 id="URE"><a href="#URE" class="headerlink" title="URE"></a>URE</h3><p>Unrecovered read error(URE)是LSOM遇到metadata read error所遇到的問題，這是由於Disk介質的錯誤，他能夠被自動修復。當Disk發生URE並且DDH打開時，vSAN會藉由把資料撤出並且重構disk來處理如此錯誤</p>
+<h3 id="High-Latency"><a href="#High-Latency" class="headerlink" title="High Latency"></a>High Latency</h3><p>很好理解，當LSOM偵測到過多的High Latency I/O就會觸發</p>
+<h3 id="Congestion"><a href="#Congestion" class="headerlink" title="Congestion"></a>Congestion</h3><p>當LSOM偵測到如下Congestion時，LSOM會通知DOM降低I/O flow直到Congestion解除</p>
 <ol>
 <li>Log Congestion</li>
 <li>SSD Congestion</li>
@@ -462,15 +457,11 @@
 <li>IOPS Congestion</li>
 </ol>
 <p>最後，當DDH檢測到Disk的錯誤後，就需要把Disk上Object的Component即時撤離，這時候就會需要用到Evacuation操作</p>
-<h3 id="evacuate">Evacuate</h3>
-<p>由於Disk發生了錯誤，所以需要把Disk上的Component撤出來給其他Disk，以確保Object能服從使用者設定的Policy，當然也有可能Evacuate發生錯誤，這時就需要人工來介入了。關於Evacuation的結果，有如下三種</p>
+<h3 id="Evacuate"><a href="#Evacuate" class="headerlink" title="Evacuate"></a>Evacuate</h3><p>由於Disk發生了錯誤，所以需要把Disk上的Component撤出來給其他Disk，以確保Object能服從使用者設定的Policy，當然也有可能Evacuate發生錯誤，這時就需要人工來介入了。關於Evacuation的結果，有如下三種</p>
 <ol>
-<li><strong>Data evacuation completed</strong><br>
-成功了的意思</li>
-<li><strong>Data evacuation failed due to insufficient resources</strong><br>
-顧名思義，這是由於Cluster的容量不足所觸發的錯誤，需要人工介入</li>
-<li><strong>Data evacuation failed due to inaccessible objects</strong><br>
-當ESXi host重啟或是發生網路問題，就會容易觸發inaccessible object，這時候也需要人工介入看是否把Infra的問題修了，或是是否可以允許刪除該object</li>
+<li><strong>Data evacuation completed</strong><br>成功了的意思</li>
+<li><strong>Data evacuation failed due to insufficient resources</strong><br>顧名思義，這是由於Cluster的容量不足所觸發的錯誤，需要人工介入</li>
+<li><strong>Data evacuation failed due to inaccessible objects</strong><br>當ESXi host重啟或是發生網路問題，就會容易觸發inaccessible object，這時候也需要人工介入看是否把Infra的問題修了，或是是否可以允許刪除該object</li>
 </ol>
 
       

@@ -446,21 +446,17 @@
 <p>虛擬機就是一個實體電腦的數位版本，讓你可以在作業系統上執行一個不同且獨立的作業系統，這麼一來，就能在Windows 10上運行Windows XP，公司也能透過買一台資源豐富的伺服器，在上面透過虛擬機的方式達到資源最大利用率</p>
 <p>個人用的虛擬機軟體最有名的當數付費的VMware Workstation和開源版本的Virtual box</p>
 <span id="more"></span>
+
 <p>公司用的虛擬機軟體(hypervisor)則多了，有付費的VMware vSphere、Microsoft的HyperV等等和開源的KVM、Xen等等</p>
 <p>如今雲端技術非常流行，三大公有雲廠商Amazon AWS、Microsoft Azure以及Google GCP，他們三個其實就是建置了大量的數據中心，把裡面的伺服器裝上虛擬機軟體，讓外部的開發人員或公司虛擬出「多個實體電腦」，按需使用，像是家家戶戶的水電一樣，不用維護高昂的IT成本。</p>
 <p>上述是公有雲的範疇，若公司有資料隱私的要求，例如銀行、醫院、公家機關等等，也可以自己建制數據中心，把資料和計算留在本地，這時需要一套虛擬機管理軟體，也能透過VMware vSphere、Microsoft的HyperV等等的建立自己的數據中心。</p>
-<h2 id="虛擬機原理">虛擬機原理</h2>
-<p><img src="/images/vsan/vm_structure.png" alt=""></p>
+<h2 id="虛擬機原理"><a href="#虛擬機原理" class="headerlink" title="虛擬機原理"></a>虛擬機原理</h2><p><img src="/images/vsan/vm_structure.png"></p>
 <p>虛擬機架構示意圖,如上所示，VMM(Virtual Machine Monitor)是一個軟體，運行在Ring0，也就是CPU上的特權級別，負責給上面的Guest OS提供虛擬化的環境(CPU, Memory和 I/O虛擬化)，VMM會根據Guest OS提供的指令，做出相應的資源分配措施。</p>
-<h3 id="cpu虛擬化">CPU虛擬化</h3>
-<p>目的是利用硬件輔助虛擬化技術(以前是用Binary Translator)攔截敏感指令，會對整個系統造成影響的指令，有了硬件輔助虛擬化技術，實體CPU會自動攔截敏感指令給VMM。</p>
-<h3 id="記憶體虛擬化">記憶體虛擬化</h3>
-<p>主機使用段頁機制，虛擬機有兩層轉換，Guest Virtual Memory -&gt; Guest Physical Memory -&gt; Machine memory，當然，這部分也有硬體虛擬化輔助技術支持。</p>
-<p><img src="/images/vsan/vm_memory_mapping.png" alt=""></p>
-<h3 id="**i/o虛擬化**"><strong>I/O虛擬化</strong></h3>
-<p>虛擬各種外接設備(純軟體虛擬化、硬體輔助虛擬化)硬體輔助虛擬化能讓虛擬機直接使用硬體設備，但是具有獨佔性，例如滑鼠和鍵盤就是一種I/O設備，當一台實體電腦只接上一個鍵盤，那他只能在一台虛擬機或是實體機器上進行輸入。</p>
-<h3 id="**網路虛擬化**"><strong>網路虛擬化</strong></h3>
-<p>讓虛擬機同時使用同個網卡，虛擬交換機可以製造虛擬網絡環境，讓一台實體機器上的所有虛擬機共享同個區域網路。</p>
+<h3 id="CPU虛擬化"><a href="#CPU虛擬化" class="headerlink" title="CPU虛擬化"></a>CPU虛擬化</h3><p>目的是利用硬件輔助虛擬化技術(以前是用Binary Translator)攔截敏感指令，會對整個系統造成影響的指令，有了硬件輔助虛擬化技術，實體CPU會自動攔截敏感指令給VMM。</p>
+<h3 id="記憶體虛擬化"><a href="#記憶體虛擬化" class="headerlink" title="記憶體虛擬化"></a>記憶體虛擬化</h3><p>主機使用段頁機制，虛擬機有兩層轉換，Guest Virtual Memory -&gt; Guest Physical Memory -&gt; Machine memory，當然，這部分也有硬體虛擬化輔助技術支持。</p>
+<p><img src="/images/vsan/vm_memory_mapping.png"></p>
+<h3 id="I-O虛擬化"><a href="#I-O虛擬化" class="headerlink" title="I/O虛擬化"></a><strong>I/O虛擬化</strong></h3><p>虛擬各種外接設備(純軟體虛擬化、硬體輔助虛擬化)硬體輔助虛擬化能讓虛擬機直接使用硬體設備，但是具有獨佔性，例如滑鼠和鍵盤就是一種I/O設備，當一台實體電腦只接上一個鍵盤，那他只能在一台虛擬機或是實體機器上進行輸入。</p>
+<h3 id="網路虛擬化"><a href="#網路虛擬化" class="headerlink" title="網路虛擬化"></a><strong>網路虛擬化</strong></h3><p>讓虛擬機同時使用同個網卡，虛擬交換機可以製造虛擬網絡環境，讓一台實體機器上的所有虛擬機共享同個區域網路。</p>
 
       
     </div>

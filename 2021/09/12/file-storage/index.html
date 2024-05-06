@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="File storage(檔案系統) 有了File storage，就能方便我們寫程式去操作資料！ 如果要和硬碟直接打交道，Block storage是唯一的方式，只是對人非常不友好，我們怎麼知道我的資料的Block存在哪裏？是連續的存呢？還是分散的存？如果每筆資料都連續的存，那肯定對硬碟的利用率不友好，如果是分散存，需要一個Linked-List資料結構去紀錄 任何架構的難題只需要加一層就可以解">
+<meta name="description" content="File storage(檔案系統)有了File storage，就能方便我們寫程式去操作資料！ 如果要和硬碟直接打交道，Block storage是唯一的方式，只是對人非常不友好，我們怎麼知道我的資料的Block存在哪裏？是連續的存呢？還是分散的存？如果每筆資料都連續的存，那肯定對硬碟的利用率不友好，如果是分散存，需要一個Linked-List資料結構去紀錄任何架構的難題只需要加一層就可以解決，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[儲存]資料儲存的基礎知識 - File storage">
 <meta property="og:url" content="https://kaichiachen.github.io/2021/09/12/file-storage/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="File storage(檔案系統) 有了File storage，就能方便我們寫程式去操作資料！ 如果要和硬碟直接打交道，Block storage是唯一的方式，只是對人非常不友好，我們怎麼知道我的資料的Block存在哪裏？是連續的存呢？還是分散的存？如果每筆資料都連續的存，那肯定對硬碟的利用率不友好，如果是分散存，需要一個Linked-List資料結構去紀錄 任何架構的難題只需要加一層就可以解">
+<meta property="og:description" content="File storage(檔案系統)有了File storage，就能方便我們寫程式去操作資料！ 如果要和硬碟直接打交道，Block storage是唯一的方式，只是對人非常不友好，我們怎麼知道我的資料的Block存在哪裏？是連續的存呢？還是分散的存？如果每筆資料都連續的存，那肯定對硬碟的利用率不友好，如果是分散存，需要一個Linked-List資料結構去紀錄任何架構的難題只需要加一層就可以解決，">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-09-11T16:00:00.000Z">
 <meta property="article:modified_time" content="2021-12-25T12:23:49.000Z">
@@ -439,38 +439,26 @@
       
 
       
-        <h3 id="file-storage(檔案系統)">File storage(檔案系統)</h3>
-<p>有了File storage，就能方便我們寫程式去操作資料！</p>
-<p>如果要和硬碟直接打交道，Block storage是唯一的方式，只是對人非常不友好，我們怎麼知道我的資料的Block存在哪裏？是連續的存呢？還是分散的存？如果每筆資料都連續的存，那肯定對硬碟的利用率不友好，如果是分散存，需要一個Linked-List資料結構去紀錄<br>
-任何架構的難題只需要加一層就可以解決，如果不行，那就兩層，為了讓人能夠輕鬆的操作儲存資料，作業系統在Block storage上面加了一層File system</p>
+        <h3 id="File-storage-檔案系統"><a href="#File-storage-檔案系統" class="headerlink" title="File storage(檔案系統)"></a>File storage(檔案系統)</h3><p>有了File storage，就能方便我們寫程式去操作資料！</p>
+<p>如果要和硬碟直接打交道，Block storage是唯一的方式，只是對人非常不友好，我們怎麼知道我的資料的Block存在哪裏？是連續的存呢？還是分散的存？如果每筆資料都連續的存，那肯定對硬碟的利用率不友好，如果是分散存，需要一個Linked-List資料結構去紀錄<br>任何架構的難題只需要加一層就可以解決，如果不行，那就兩層，為了讓人能夠輕鬆的操作儲存資料，作業系統在Block storage上面加了一層File system</p>
 <span id="more"></span>
+
 <p>我們平常用的Windows為了讓使用者方便存取資料，就是使用File system，這大家應該很熟悉，用滑鼠鍵盤敲一敲點一點就可以對檔案進行存取，由於File system就是Block storage上面加一層，所以檔案的內容都是存在一個個的block中</p>
 <p>除了檔案的內容之外，檔案的metadata比如創建時間、權限、大小等等也需要存在另一個地方，專門存這些文件metadata的地方就叫做inode</p>
 <p>一個檔案的inode可以透過stat來查詢</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#&gt; stat demo.txt</span><br><span class="line">  File: ‘demo.txt’</span><br><span class="line">  Size: 12        	Blocks: 8          IO Block: 4096   regular file</span><br><span class="line">Device: fd02h/64770d	Inode: 238749826   Links: 1</span><br><span class="line">Access: (0644/-rw-r--r--)  Uid: (51426876/ ckaijia)   Gid: (  201/     mts)</span><br><span class="line">Access: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line">Modify: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line">Change: 2021-08-28 07:27:02.001795167 -0700</span><br><span class="line"> Birth: -</span><br></pre></td></tr></table></figure>
 <p>inode也會消耗儲存空間，所以格式化硬碟的時候，作業系統會將硬碟分成兩個區域，一個存數據，一個存inode，並且指定一個inode的大小，所以就算檔案很小，一塊硬碟裡還是有檔案數量的限制</p>
-<h3 id="作業系統是如何讀取檔案資料？">作業系統是如何讀取檔案資料？</h3>
-<p>首先，不是透過檔案名字，文件名字只是讓使用者方便識別，作業系統透過inode ID，每個inode都有一個號碼，根據使用者點開的文件找到inode號碼，可以透過<code>ls -i demo.txt</code>看到對應的inode號碼。<br>
-第二，根據inode號碼找到inode的data。<br>
-最後，根據indoe的data，找到檔案裡的數據存在哪個block。</p>
-<h4 id="優點">優點</h4>
-<p>File system最大的優點就是他對人類友好，有目錄結構、好記得名字等等，方便UI呈現，除此之外還有如下優點</p>
+<h3 id="作業系統是如何讀取檔案資料？"><a href="#作業系統是如何讀取檔案資料？" class="headerlink" title="作業系統是如何讀取檔案資料？"></a>作業系統是如何讀取檔案資料？</h3><p>首先，不是透過檔案名字，文件名字只是讓使用者方便識別，作業系統透過inode ID，每個inode都有一個號碼，根據使用者點開的文件找到inode號碼，可以透過<code>ls -i demo.txt</code>看到對應的inode號碼。<br>第二，根據inode號碼找到inode的data。<br>最後，根據indoe的data，找到檔案裡的數據存在哪個block。</p>
+<h4 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h4><p>File system最大的優點就是他對人類友好，有目錄結構、好記得名字等等，方便UI呈現，除此之外還有如下優點</p>
 <ul>
-<li><strong>方便共享</strong>:<br>
-一個inode就能與其他同台電腦上的user直接分享檔案，而且有權限控制</li>
-<li><strong>安全</strong>:<br>
-如上述所示，Linux有三種權限控制 - 自己、組和其他</li>
-<li><strong>成本低</strong>：<br>
-不需要昂貴的光纖，只要買機器，接上外接硬碟，透過作業系統上的File system，就可以使用</li>
+<li><strong>方便共享</strong>:<br>一個inode就能與其他同台電腦上的user直接分享檔案，而且有權限控制</li>
+<li><strong>安全</strong>:<br>如上述所示，Linux有三種權限控制 - 自己、組和其他</li>
+<li><strong>成本低</strong>：<br>不需要昂貴的光纖，只要買機器，接上外接硬碟，透過作業系統上的File system，就可以使用</li>
 </ul>
-<h4 id="缺點">缺點</h4>
-<ul>
-<li><strong>資料讀寫慢</strong>:<br>
-因為讀取跟寫入都有兩層，除了讀寫本身資料(Block storage)之外，還有inode裡的metadata需要處理</li>
-<li><strong>難以遷移</strong>:<br>
-如過想把文件都搬遷到另一個作業系統有點困難，如果file storage的格式不同或inode的演算法不同就更糟了</li>
-<li><strong>權限控制</strong>:<br>
-權限控制只有三層 - 自己、group、others，無法滿足更複雜的需求</li>
+<h4 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h4><ul>
+<li><strong>資料讀寫慢</strong>:<br>因為讀取跟寫入都有兩層，除了讀寫本身資料(Block storage)之外，還有inode裡的metadata需要處理</li>
+<li><strong>難以遷移</strong>:<br>如過想把文件都搬遷到另一個作業系統有點困難，如果file storage的格式不同或inode的演算法不同就更糟了</li>
+<li><strong>權限控制</strong>:<br>權限控制只有三層 - 自己、group、others，無法滿足更複雜的需求</li>
 </ul>
 
       
