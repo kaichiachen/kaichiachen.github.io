@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="Block storage(區塊儲存)Block storage是最基本的儲存系統，所以讓我們從這裡開始 資料在電腦裡是以1和0儲存在某個”介質”上面，例如機械式硬碟(HDD)利用磁性，而固態硬碟(SSD)利用電子，也有用光的CD，而Block storage簡單來說就是我們能看到的一塊塊的硬碟和儲存裝置，我們把儲存裝置與我們的電腦連接，我們的電腦透過Block storage的API對裡面的資料">
+<meta name="description" content="Block storage(區塊儲存) Block storage是最基本的儲存系統，所以讓我們從這裡開始 資料在電腦裡是以1和0儲存在某個&quot;介質&quot;上面，例如機械式硬碟(HDD)利用磁性，而固態硬碟(SSD)利用電子，也有用光的CD，而Block storage簡單來說就是我們能看到的一塊塊的硬碟和儲存裝置，我們把儲存裝置與我們的電腦連接，我們的電腦透過Block storag">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[儲存]資料儲存的基礎知識 - Block storage">
 <meta property="og:url" content="https://kaichiachen.github.io/2021/09/05/block-storage/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="Block storage(區塊儲存)Block storage是最基本的儲存系統，所以讓我們從這裡開始 資料在電腦裡是以1和0儲存在某個”介質”上面，例如機械式硬碟(HDD)利用磁性，而固態硬碟(SSD)利用電子，也有用光的CD，而Block storage簡單來說就是我們能看到的一塊塊的硬碟和儲存裝置，我們把儲存裝置與我們的電腦連接，我們的電腦透過Block storage的API對裡面的資料">
+<meta property="og:description" content="Block storage(區塊儲存) Block storage是最基本的儲存系統，所以讓我們從這裡開始 資料在電腦裡是以1和0儲存在某個&quot;介質&quot;上面，例如機械式硬碟(HDD)利用磁性，而固態硬碟(SSD)利用電子，也有用光的CD，而Block storage簡單來說就是我們能看到的一塊塊的硬碟和儲存裝置，我們把儲存裝置與我們的電腦連接，我們的電腦透過Block storag">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/sector.png">
 <meta property="article:published_time" content="2021-09-04T16:00:00.000Z">
@@ -417,7 +417,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  917
+                  922
                 </span>
               
 
@@ -442,25 +442,35 @@
       
 
       
-        <h3 id="Block-storage-區塊儲存"><a href="#Block-storage-區塊儲存" class="headerlink" title="Block storage(區塊儲存)"></a>Block storage(區塊儲存)</h3><p>Block storage是最基本的儲存系統，所以讓我們從這裡開始</p>
-<p>資料在電腦裡是以1和0儲存在某個”介質”上面，例如機械式硬碟(HDD)利用磁性，而固態硬碟(SSD)利用電子，也有用光的CD，而Block storage簡單來說就是我們能看到的一塊塊的硬碟和儲存裝置，我們把儲存裝置與我們的電腦連接，我們的電腦透過Block storage的API對裡面的資料進行增刪改查。</p>
+        <h3 id="block-storage(區塊儲存)">Block storage(區塊儲存)</h3>
+<p>Block storage是最基本的儲存系統，所以讓我們從這裡開始</p>
+<p>資料在電腦裡是以1和0儲存在某個&quot;介質&quot;上面，例如機械式硬碟(HDD)利用磁性，而固態硬碟(SSD)利用電子，也有用光的CD，而Block storage簡單來說就是我們能看到的一塊塊的硬碟和儲存裝置，我們把儲存裝置與我們的電腦連接，我們的電腦透過Block storage的API對裡面的資料進行增刪改查。</p>
 <span id="more"></span>
-
 <p>接下來，我們有了作業系統，作業系統他方便了我們把資料存進去Block storage裝置，可以說，作業系統是上層應用與Block storage裝置溝通的橋樑，那麼回答一個問題，作業系統是如何與硬碟打交道呢？首先，作業系統利用LUN ID識別硬碟，LUN是一個或一組或半個硬碟的邏輯代號，為何有半個呢？例如我們的windows有一個硬碟，把他分成C槽和D槽，那麼他們就是各半個，LUN他不是獨佔式的，也就是說多台主機能共享一個儲存設備，不過一般不會這麼用，因為Block storage的資料隔離沒有做得這麼好，若是同時寫入資料容易被混淆。</p>
-<h3 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h3><p>為什麼叫做block呢？從作業系統的角度，資料的讀取和寫入都是以block為最小單位，一個block是一段固定長度的bytes，常見為4096 bytes，這樣的設定的用意是提升資料讀寫的速度，如果一個個byte寫，一來一往速度非常慢。我們也不需要連續的儲存這些Block，上層的作業系統會利用Linked-List資料結構把碎片化的Block記錄下來，把整段資料拼湊出來，一個block對應一個或多個硬體的扇區(sector)，常見的一個sector大小為512 bytes，所以block是給作業系統看的邏輯地址，sector是Block storage上的實體地址。Block大小可以透過作業系統設定，查詢藉由指令stat /boot/ |grep “IO Block” 查詢</p>
+<h3 id="block">Block</h3>
+<p>為什麼叫做block呢？從作業系統的角度，資料的讀取和寫入都是以block為最小單位，一個block是一段固定長度的bytes，常見為4096 bytes，這樣的設定的用意是提升資料讀寫的速度，如果一個個byte寫，一來一往速度非常慢。我們也不需要連續的儲存這些Block，上層的作業系統會利用Linked-List資料結構把碎片化的Block記錄下來，把整段資料拼湊出來，一個block對應一個或多個硬體的扇區(sector)，常見的一個sector大小為512 bytes，所以block是給作業系統看的邏輯地址，sector是Block storage上的實體地址。Block大小可以透過作業系統設定，查詢藉由指令stat /boot/ |grep “IO Block” 查詢</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; stat /boot/ |grep &quot;IO Block&quot;</span></span><br><span class="line">  Size: <span class="number">4096</span>      	Blocks: <span class="number">8</span>          IO Block: <span class="number">4096</span>   directory</span><br></pre></td></tr></table></figure>
-
-<h3 id="Sector-扇區"><a href="#Sector-扇區" class="headerlink" title="Sector(扇區)"></a>Sector(扇區)</h3><p>sector是Block storage上的實體地址，他也是把多個bytes分組成一個sector，我們拿機械式硬碟HDD舉例，HDD有個針頭會去掃描磁碟，掃描的部分就是一個個扇區，如下圖所示<br><img src="/images/sector.png"><br>HDD就是用類似光碟的圓盤一個個堆疊出來了，剛剛提到的”扇區”就是上圖的sector，代表同個半徑下一小塊長度</p>
+<h3 id="sector(扇區)">Sector(扇區)</h3>
+<p>sector是Block storage上的實體地址，他也是把多個bytes分組成一個sector，我們拿機械式硬碟HDD舉例，HDD有個針頭會去掃描磁碟，掃描的部分就是一個個扇區，如下圖所示<br>
+<img src="/images/sector.png" alt=""><br>
+HDD就是用類似光碟的圓盤一個個堆疊出來了，剛剛提到的&quot;扇區&quot;就是上圖的sector，代表同個半徑下一小塊長度</p>
 <p>最後總結一下Block storage有什麼優缺點</p>
-<h4 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h4><p>Block storage最大的優點就是他使得計算與儲存分離，我們能輕易地透過LUN ID外接一個硬碟或硬碟組</p>
+<h4 id="優點">優點</h4>
+<p>Block storage最大的優點就是他使得計算與儲存分離，我們能輕易地透過LUN ID外接一個硬碟或硬碟組</p>
 <ul>
-<li><strong>高性能</strong>:<br>IOPS(Inputs Outputs per Seconds)高，延遲低，適合用作公司的database server或數據中心</li>
-<li><strong>易於修改</strong>:<br>如果想改變block裡的一個小部分資料，直接改那個block就可以，如果是檔案系統或object system，需要整個檔案或object都改</li>
-<li><strong>擴充容易</strong>:<br>擴充非常簡單，一個LUN ID就可以接上系統了，適合用在SAN(儲存區域網路)裡</li>
+<li><strong>高性能</strong>:<br>
+IOPS(Inputs Outputs per Seconds)高，延遲低，適合用作公司的database server或數據中心</li>
+<li><strong>易於修改</strong>:<br>
+如果想改變block裡的一個小部分資料，直接改那個block就可以，如果是檔案系統或object system，需要整個檔案或object都改</li>
+<li><strong>擴充容易</strong>:<br>
+擴充非常簡單，一個LUN ID就可以接上系統了，適合用在SAN(儲存區域網路)裡</li>
 </ul>
-<h4 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h4><ul>
-<li><strong>不能同時讀寫</strong>：<br>不能多台機器同時讀寫同一塊硬碟，雖然可以透過軟體解決此問題但是會造成性能下降</li>
-<li><strong>Metadata</strong>:<br>Block storage沒有什麼Metadata，File system有檔案路徑、名字、大小等等快速定位資料，Block storage只有地址起始位置(LBA)、長度</li>
+<h4 id="缺點">缺點</h4>
+<ul>
+<li><strong>不能同時讀寫</strong>：<br>
+不能多台機器同時讀寫同一塊硬碟，雖然可以透過軟體解決此問題但是會造成性能下降</li>
+<li><strong>Metadata</strong>:<br>
+Block storage沒有什麼Metadata，File system有檔案路徑、名字、大小等等快速定位資料，Block storage只有地址起始位置(LBA)、長度</li>
 </ul>
 
       

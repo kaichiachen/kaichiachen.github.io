@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="《聖經》裡面有一個巴別塔的故事，大致是說，上帝為了阻止人類聯合起來，就讓人類說不同的語言。人類之間沒法溝通，達不成”協議”，巴別塔的計劃就失敗了。但是千年以後，有一種叫”程序猿”的物種，敲著一種這個群體通用的語言，連接著全世界所有的人，打造這網路世界的通天塔。如今的世界，正是因為網路，才連接在一起。">
+<meta name="description" content="《聖經》裡面有一個巴別塔的故事，大致是說，上帝為了阻止人類聯合起來，就讓人類說不同的語言。人類之間沒法溝通，達不成&quot;協議&quot;，巴別塔的計劃就失敗了。 但是千年以後，有一種叫&quot;程序猿&quot;的物種，敲著一種這個群體通用的語言，連接著全世界所有的人，打造這網路世界的通天塔。如今的世界，正是因為網路，才連接在一起。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[網路]TCP&#x2F;IP - 計算機網路是什麼?">
 <meta property="og:url" content="https://kaichiachen.github.io/2021/09/20/overview-network/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="《聖經》裡面有一個巴別塔的故事，大致是說，上帝為了阻止人類聯合起來，就讓人類說不同的語言。人類之間沒法溝通，達不成”協議”，巴別塔的計劃就失敗了。但是千年以後，有一種叫”程序猿”的物種，敲著一種這個群體通用的語言，連接著全世界所有的人，打造這網路世界的通天塔。如今的世界，正是因為網路，才連接在一起。">
+<meta property="og:description" content="《聖經》裡面有一個巴別塔的故事，大致是說，上帝為了阻止人類聯合起來，就讓人類說不同的語言。人類之間沒法溝通，達不成&quot;協議&quot;，巴別塔的計劃就失敗了。 但是千年以後，有一種叫&quot;程序猿&quot;的物種，敲著一種這個群體通用的語言，連接著全世界所有的人，打造這網路世界的通天塔。如今的世界，正是因為網路，才連接在一起。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/overview_internet.png">
 <meta property="og:image" content="https://kaichiachen.github.io/images/tcpiplayer.png">
@@ -415,7 +415,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  766
+                  770
                 </span>
               
 
@@ -440,15 +440,21 @@
       
 
       
-        <p>《聖經》裡面有一個巴別塔的故事，大致是說，上帝為了阻止人類聯合起來，就讓人類說不同的語言。人類之間沒法溝通，達不成”協議”，巴別塔的計劃就失敗了。<br>但是千年以後，有一種叫”程序猿”的物種，敲著一種這個群體通用的語言，連接著全世界所有的人，打造這網路世界的通天塔。如今的世界，正是因為網路，才連接在一起。</p>
+        <p>《聖經》裡面有一個巴別塔的故事，大致是說，上帝為了阻止人類聯合起來，就讓人類說不同的語言。人類之間沒法溝通，達不成&quot;協議&quot;，巴別塔的計劃就失敗了。<br>
+但是千年以後，有一種叫&quot;程序猿&quot;的物種，敲著一種這個群體通用的語言，連接著全世界所有的人，打造這網路世界的通天塔。如今的世界，正是因為網路，才連接在一起。</p>
 <span id="more"></span>
-
-<p><img src="/images/overview_internet.png"></p>
+<p><img src="/images/overview_internet.png" alt=""></p>
 <p>電腦之間的資料交換大部分都是透過網際網路，每台電腦上獨一無二的MAC地址就是電腦的唯一地址，傳輸過程中遵循公認的協議(TCP/IP stack)進行編解碼，並借由MAC和IP地址一層一層的送達指定的目的。具體MAC和IP地址的詳細內容何區別可以看<a href="/2021/09/23/ipbasic-network/">這一篇</a></p>
-<h4 id="為何我們常見的TCP-IP要分層呢？"><a href="#為何我們常見的TCP-IP要分層呢？" class="headerlink" title="為何我們常見的TCP/IP要分層呢？"></a>為何我們常見的TCP/IP要分層呢？</h4><p>因為任何複雜的程式或應用都要分，這是大型程式設計的要求。例如，複雜的電商還會分資料庫層、Cache層、Compose 層和Controller 層等等，每一層專注做本層的事情。</p>
+<h4 id="為何我們常見的tcp/ip要分層呢？">為何我們常見的TCP/IP要分層呢？</h4>
+<p>因為任何複雜的程式或應用都要分，這是大型程式設計的要求。例如，複雜的電商還會分資料庫層、Cache層、Compose 層和Controller 層等等，每一層專注做本層的事情。</p>
 <p>TCP/IP是一個公認的網路通訊協議，是OSI七層的簡化，五層分別為物理層、鏈結層、網路層、傳輸層和應用層，下面用簡短的話分別解釋這五層是做什麼的</p>
-<p><strong>物理層(Physical):</strong> 處理網路線、無線傳輸設備，例如光纖<br><strong>鏈接層(Link):</strong> 乙太網，由於資料經由網路線傳輸過程中難免會錯誤，這一層具有資料糾錯的功能，例如漢明碼<br><strong>網路層(Internet):</strong> 保證路由，如何把數據從MAC傳輸到另一個MAC<br><strong>傳輸層(Transport):</strong> TCP、UDP，其中TCP保證邏輯上end-to-end的可靠性<br><strong>應用層(Application):</strong> 用於與網路相關應用交互的地方，例如http, ssh等等</p>
-<p>那麼層與層之間有沒有明確的界線呢？雖然傳進來的封包都是bytes array，但是可以利用TCP/IP每一層固定的Header長度定義明確的界線，Header放在每一層數據包的最前面，如下圖所示<br><img src="/images/tcpiplayer.png"></p>
+<p><strong>物理層(Physical):</strong> 處理網路線、無線傳輸設備，例如光纖<br>
+<strong>鏈接層(Link):</strong> 乙太網，由於資料經由網路線傳輸過程中難免會錯誤，這一層具有資料糾錯的功能，例如漢明碼<br>
+<strong>網路層(Internet):</strong> 保證路由，如何把數據從MAC傳輸到另一個MAC<br>
+<strong>傳輸層(Transport):</strong> TCP、UDP，其中TCP保證邏輯上end-to-end的可靠性<br>
+<strong>應用層(Application):</strong> 用於與網路相關應用交互的地方，例如http, ssh等等</p>
+<p>那麼層與層之間有沒有明確的界線呢？雖然傳進來的封包都是bytes array，但是可以利用TCP/IP每一層固定的Header長度定義明確的界線，Header放在每一層數據包的最前面，如下圖所示<br>
+<img src="/images/tcpiplayer.png" alt=""></p>
 <p>所以網路封包的傳輸過程是從應用層開始，加header，一直加到下面傳輸層，然後路由器會根據header路由封包到目的地，到了目的地電腦再根據header進行往上逐層解析，再回到應用層</p>
 <p>例如第二層鏈接層，他的header固定就是長度14bytes，我們的作業系統在解析封包時，就會取一個前面14的固定長度進行解析，其中這個14個bytes，包含了三項數據 - 鏈接層的protocol、起始MAC address、目的地MAC address</p>
 <p>網路應用開發人員主要了解第三到第五層就好，我們常看到的ping、traceroute、http、ftp等等都是後三層的應用，之後也會偏重解析這三層並基於這三層建構應用。</p>

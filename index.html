@@ -431,8 +431,9 @@
 
       
         
-          <h1 id="ESXi-Host"><a href="#ESXi-Host" class="headerlink" title="ESXi Host"></a>ESXi Host</h1><h3 id="esxcli-vsan-cluster"><a href="#esxcli-vsan-cluster" class="headerlink" title="esxcli vsan cluster"></a>esxcli vsan cluster</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># esxcli vsan cluster</span></span><br><span class="line">Available Commands:</span><br><span class="line">  get                   Get information about the vSAN cluster that this host is joined to.</span><br><span class="line">  join                  Join the host to a vSAN cluster.</span><br><span class="line">  leave                 Leave the vSAN cluster the host is currently joined to.</span><br><span class="line">  list                  Get information about the vSAN clusters that this host is joined to.</span><br><span class="line">  new                   Create a vSAN cluster with current host joined. A random sub-cluster UUID will be generated.</span><br><span class="line">  restore               Restore the persisted vSAN cluster configuration.</span><br></pre></td></tr></table></figure>
-
+          <h1 id="esxi-host">ESXi Host</h1>
+<h3 id="esxcli-vsan cluster">esxcli vsan cluster</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># esxcli vsan cluster</span></span><br><span class="line">Available Commands:</span><br><span class="line">  get                   Get information about the vSAN cluster that this host is joined to.</span><br><span class="line">  join                  Join the host to a vSAN cluster.</span><br><span class="line">  leave                 Leave the vSAN cluster the host is currently joined to.</span><br><span class="line">  list                  Get information about the vSAN clusters that this host is joined to.</span><br><span class="line">  new                   Create a vSAN cluster with current host joined. A random sub-cluster UUID will be generated.</span><br><span class="line">  restore               Restore the persisted vSAN cluster configuration.</span><br></pre></td></tr></table></figure>
 <p>我們可以看到，除了可以獲取當前vSAN cluster的詳細訊息之外，也可以將Host加入或移除vSAN Cluster之外</p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -583,7 +584,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  563
+                  568
                 </span>
               
 
@@ -610,7 +611,8 @@
       
         
           <p>vSAN作為VMware一個重要的儲存產品，他深度融合了VMware的vSphere，並能透過vCenter一站式管理儲存資源池，我們可以透過vCenter建立vSAN Cluster、創建vSAN Datastore，更能夠在vCenter上直接監控vSAN Cluster的健康和I/O性能狀態，接下來讓我來介紹我們如何透過7.0U3的vCenter進行運維管理</p>
-<h2 id="vSAN-Skyline-Health"><a href="#vSAN-Skyline-Health" class="headerlink" title="vSAN Skyline Health"></a>vSAN Skyline Health</h2><p>vSphere提供了esxcli指令，讓user可以透過esxcli指令主動的查詢當前Esxi host的hardware、storage、network等等info，那麼有沒有方法可以被動的提示user當前vSAN cluster的健康狀態呢？</p>
+<h2 id="vsan-skyline health">vSAN Skyline Health</h2>
+<p>vSphere提供了esxcli指令，讓user可以透過esxcli指令主動的查詢當前Esxi host的hardware、storage、network等等info，那麼有沒有方法可以被動的提示user當前vSAN cluster的健康狀態呢？</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2023/11/26/vsan/cluster_monitor/" rel="contents">
@@ -760,7 +762,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  764
+                  771
                 </span>
               
 
@@ -789,7 +791,8 @@
           <p>Disk由於晶圓問題、firmware問題、driver問題等等會造成ㄧ定機率上的故障，若一塊硬碟，他每天的故障機率是1%，一座資料中心假如有一萬個disk，代表每天有一百塊硬碟損壞，當然，vSAN對於部分類型損壞會嘗試自動修復，這樣能夠大幅減少許多人力成本，畢竟大部分的問題重開機就能解決。</p>
 <p>LSOM是最底層與硬碟打交道的Component，他的DDH(Degraded Device Handling) Service可以幫忙監控硬碟狀態，當DDH偵測到Disk即將要故障或損壞事件，就把Disk標記為有問題的裝置，讓他不參與資料的I/O流程，更多細節，可以參考VMware KB: <a target="_blank" rel="noopener" href="https://kb.vmware.com/s/article/2148358">https://kb.vmware.com/s/article/2148358</a></p>
 <p>這裡列舉vSAN偵測到的硬碟狀態以及他的原因</p>
-<h3 id="PDL"><a href="#PDL" class="headerlink" title="PDL"></a>PDL</h3><p>Permanent Disk Loss(PDL)，是一種嚴重的錯誤，需要人工介入，一般情況下是Host與Disk的連結出了問題，沒法連上去，ESXi Host內部或是Disk的bug都有可能</p>
+<h3 id="pdl">PDL</h3>
+<p>Permanent Disk Loss(PDL)，是一種嚴重的錯誤，需要人工介入，一般情況下是Host與Disk的連結出了問題，沒法連上去，ESXi Host內部或是Disk的bug都有可能</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2023/11/18/vsan/physical_disk_states/" rel="contents">
@@ -939,7 +942,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  445
+                  447
                 </span>
               
 
@@ -1143,7 +1146,8 @@
 
       
         
-          <h2 id="重複資料刪除和壓縮"><a href="#重複資料刪除和壓縮" class="headerlink" title="重複資料刪除和壓縮"></a>重複資料刪除和壓縮</h2><p>在資聊儲存領域，除了採用RAID 5/6之外，也可以透過啟用「重複資料刪除和壓縮」來達到節省儲存資源的目的。在啟用了重複資料刪除和壓縮機制後，系統會針對每個資料區塊進行重複資料刪除作業，如果vSAN Datastore儲存資源已經存在「相同的資料區塊」，系統不會再存一次，為了判斷「相同的資料區塊」，系統會使用雜湊建立資料索引。</p>
+          <h2 id="重複資料刪除和壓縮">重複資料刪除和壓縮</h2>
+<p>在資聊儲存領域，除了採用RAID 5/6之外，也可以透過啟用「重複資料刪除和壓縮」來達到節省儲存資源的目的。在啟用了重複資料刪除和壓縮機制後，系統會針對每個資料區塊進行重複資料刪除作業，如果vSAN Datastore儲存資源已經存在「相同的資料區塊」，系統不會再存一次，為了判斷「相同的資料區塊」，系統會使用雜湊建立資料索引。</p>
 <p>在vSAN架構中，雜湊的部分使用了SHA-1雜湊演算法，為每段資料建立Hash value，一段大小為4KB</p>
 <p>壓縮的部分則是使用了LZ4壓縮演算法，在剛才的重複資料刪除的過程中，當系統發現有新資料準備寫入時，就會進行壓縮的動作，能將原本4KB的資料壓縮成2KB左右，然後才寫進去容量層中</p>
           <!--noindex-->
@@ -1324,8 +1328,12 @@
           <p>我們知道，vSAN是Object base的儲存系統，所以存在vSAN的虛擬機就是以Object作為格式存的</p>
 <p>當在vSAN Datastore進行VM虛擬機部署時，會產生五種不同類型的物件</p>
 <ul>
-<li>VM Home Namespace物件<ul>
-<li>當VM被創建出來就會產生的Object，專門存放所有VM的metadata
+<li>VM Home Namespace物件
+<ul>
+<li>當VM被創建出來就會產生的Object，專門存放所有VM的metadata</li>
+</ul>
+</li>
+</ul>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2023/10/18/vsan/vm_persist/" rel="contents">
@@ -1680,7 +1688,7 @@
       
         
           <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
 <p>vSAN LSOM(Local log-structured object manager)運作在ESXi node裡面，目的是讓Object和Component放在ESXi node裡面，當資料發生I/O時，負責管理cache disk和capacity disk的資料I/O</p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1858,7 +1866,7 @@
       
         
           <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
 <p>vSAN CLOM(Cluster-level object manager)負責根據Policy產生Object Configuration，把Object裡的Component放在Cluster下適當的ESXi Node裡面，DOM和CLOM之間溝通緊密無間且是雙向溝通的。</p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -2036,7 +2044,7 @@
       
         
           <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
 <p>vSAN DOM(Distributed Object Manager)顧名思義，就是負責管理Object如分何分散Component</p>
 <blockquote>
 <p>Component由LSOM管理，在下一篇會提到</p>

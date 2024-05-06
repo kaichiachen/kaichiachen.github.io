@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  838
+                  841
                 </span>
               
 
@@ -587,7 +587,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  2.8k
+                  2.9k
                 </span>
               
 
@@ -615,7 +615,7 @@
         
           <p>小羚和安迪説，我大概是明白資料中心的組成了，你能不能再多說說vSAN是怎麼儲存資料呢？他是如何能把我的重要檔案自動備份又能同時取用呢？</p>
 <p>安迪說，當然沒問題！儲存是一個很大的領域，我們只能先從最基本的基礎開始，我會先從三個資料儲存系統 - 區塊儲存系統、檔案儲存系統和物件儲存系統說起，這裡說的系統都是軟體層面上的邏輯，不會深入探討到硬碟。</p>
-<h2 id="Block-storage-區塊儲存系統"><a href="#Block-storage-區塊儲存系統" class="headerlink" title="Block storage(區塊儲存系統)"></a>Block storage(區塊儲存系統)</h2>
+<h2 id="block-storage(區塊儲存系統)">Block storage(區塊儲存系統)</h2>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2023/04/27/vsan/storage_overview/" rel="contents">
@@ -944,7 +944,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  682
+                  683
                 </span>
               
 
@@ -1155,7 +1155,7 @@
       
         
           <p>小羚一聽到資料中心，突然頭暈目眩，在他的腦海裡，資料中心就是在一個冰冷冷的屋子裡放滿了各種機器</p>
-<p><img src="/images/vsan/datacenter.png"></p>
+<p><img src="/images/vsan/datacenter.png" alt=""></p>
 <p>各種機器就是硬體設備，我們已知可以透過虛擬機的方式，把計算軟化，但是資料中心還有「儲存」需求，要怎麼把他也軟化呢？</p>
 <p>軟體定義資料中心(Software-Defined Data Center, SDDC) 顧名思義，就是利用軟體，把資料中心裡的計算、儲存、網路資源「抽象化」和「虛擬化」，當資源都被虛擬化後，IT管理團隊變得更加靈活了。IT人員可以針對使用者需求，提供更細的資源粒度，例如一台CPU 1G Hz，20GB容量的電腦，並且這個電腦還能隨時備份，不但提高了服務和應用的「可用性」及「彈性」，同時也降低了對運維的「複雜度」和「預算」，並簡化服務上線的工作流程和應用的推出時間，接下來的重點將會圍繞在「儲存資源」的部分，也就是VMware vSAN產品相關的技術結構。</p>
 <p>一般的常見解決方案大致分為兩類 - 在雲端的公有雲和在地端的私有雲</p>
@@ -1334,10 +1334,14 @@
 
       
         
-          <p>小羚是一位老師，有一天小羚費盡了功夫，寫好了本學期的教案，她想要備份在安全的地方。<br>小羚想著想著，要存哪好呢？存行動硬碟不太安全，萬一丟了怎麼辦？存自己的電腦，也沒安全感，萬一中毒了怎麼辦？<br>她的男友安迪跟他說，可以買三個行動硬碟，都分別存在裡面呀。<br>小羚回說，這樣子好麻煩，如果我想更新教案裡的某段內容，這樣還要一個個打開來更新。<br>安迪又說，可以存雲端呀！存雲端既不用擔心硬碟損壞，也不用擔心突然有靈感的時候沒辦法隨時修改。</p>
+          <p>小羚是一位老師，有一天小羚費盡了功夫，寫好了本學期的教案，她想要備份在安全的地方。<br>
+小羚想著想著，要存哪好呢？存行動硬碟不太安全，萬一丟了怎麼辦？存自己的電腦，也沒安全感，萬一中毒了怎麼辦？<br>
+她的男友安迪跟他說，可以買三個行動硬碟，都分別存在裡面呀。<br>
+小羚回說，這樣子好麻煩，如果我想更新教案裡的某段內容，這樣還要一個個打開來更新。<br>
+安迪又說，可以存雲端呀！存雲端既不用擔心硬碟損壞，也不用擔心突然有靈感的時候沒辦法隨時修改。</p>
 <p>小羚問安迪，有什麼常見的雲端儲存服務嗎？</p>
 <p>有的，儲存是一個很大的領域，服務的對象也千差萬別，安迪會用兩篇的篇幅介紹，首先會先介紹什麼是「雲」，再來介紹雲端儲存系統</p>
-<h3 id="那麼，什麼是「雲」呢？"><a href="#那麼，什麼是「雲」呢？" class="headerlink" title="那麼，什麼是「雲」呢？"></a>那麼，什麼是「雲」呢？</h3>
+<h3 id="那麼，什麼是「雲」呢？">那麼，什麼是「雲」呢？</h3>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2022/12/05/vsan/vsan_cloud_overview/" rel="contents">
@@ -1513,9 +1517,15 @@
 
       
         
-          <h3 id="刻意練習"><a href="#刻意練習" class="headerlink" title="刻意練習"></a>刻意練習</h3><p><img src="/images/proactive_practice.jpeg"><br>我們或許有聽過一萬小時定律: 任何人做一件事，只要經過一萬小時的錘煉，都能從普通人變為某一領域的頂級人才 - 格拉德威爾《異類》<br>1萬小時的錘煉是任何人從平凡變成超凡的必要條件，雖然是必要條件，但是也不是唯一條件，更不一定需要一萬小時，而是足夠多的練習<br>讀了這本書《刻意練習》，除了練習之外，我們更應該考慮外部環境跟內部誘因，並且兩者是相輔相成的，讓我更了解怎麼有效率的「學習」，下面是我讀完後的總結，我會從外部和內部視角提出實操性強的步驟:</p>
-<h3 id="開頭"><a href="#開頭" class="headerlink" title="開頭"></a>開頭</h3><ul>
-<li><strong>要成為一個領域的佼佼者，靠的不是天賦，而是刻意並且足夠多的練習</strong><br>  沒有一個人是靠天賦成為頂尖人才的，即便是莫札特也是如此，頂尖人才之所以能持續練主要習並不是因為興趣，而是持續練習</li>
+          <h3 id="刻意練習">刻意練習</h3>
+<p><img src="/images/proactive_practice.jpeg" alt=""><br>
+我們或許有聽過一萬小時定律: 任何人做一件事，只要經過一萬小時的錘煉，都能從普通人變為某一領域的頂級人才 - 格拉德威爾《異類》<br>
+1萬小時的錘煉是任何人從平凡變成超凡的必要條件，雖然是必要條件，但是也不是唯一條件，更不一定需要一萬小時，而是足夠多的練習<br>
+讀了這本書《刻意練習》，除了練習之外，我們更應該考慮外部環境跟內部誘因，並且兩者是相輔相成的，讓我更了解怎麼有效率的「學習」，下面是我讀完後的總結，我會從外部和內部視角提出實操性強的步驟:</p>
+<h3 id="開頭">開頭</h3>
+<ul>
+<li><strong>要成為一個領域的佼佼者，靠的不是天賦，而是刻意並且足夠多的練習</strong><br>
+沒有一個人是靠天賦成為頂尖人才的，即便是莫札特也是如此，頂尖人才之所以能持續練主要習並不是因為興趣，而是持續練習</li>
 <li><strong>建立目標</strong> - 你能「做」到什麼，而不是你能「學」到什麼</li>
 <li><strong>刻意練習就是</strong> - 做跳脫舒適圈的事、獲得反饋、改進並回到第一步</li>
 </ul>
@@ -1694,7 +1704,9 @@
 
       
         
-          <h3 id="人性的弱點"><a href="#人性的弱點" class="headerlink" title="人性的弱點"></a>人性的弱點</h3><p><img src="/images/influence_people.jpeg"><br>人性的弱點，這本書的英文原名是”How to Win Friends and Influence People”，如何贏得朋友並影響他人，和”人性的優點”同個作者 - 戴爾・卡內基，人性的優點書評我寫在<a href="/2021/11/11/stop_worrying_book">這裡</a>。</p>
+          <h3 id="人性的弱點">人性的弱點</h3>
+<p><img src="/images/influence_people.jpeg" alt=""><br>
+人性的弱點，這本書的英文原名是&quot;How to Win Friends and Influence People&quot;，如何贏得朋友並影響他人，和&quot;人性的優點&quot;同個作者 - 戴爾・卡內基，人性的優點書評我寫在<a href="/2021/11/11/stop_worrying_book">這裡</a>。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/11/30/influence_people_book/" rel="contents">
@@ -1870,7 +1882,9 @@
 
       
         
-          <h3 id="人性的優點"><a href="#人性的優點" class="headerlink" title="人性的優點"></a>人性的優點</h3><p><img src="/images/notworry.jpg"><br>人性的優點，這本書的英文原名是”How to stop worrying &amp; start living”，老實說，我也不知道為何中文會翻譯成”人性的優點”，不過總之，他是一本在講如何消除憂慮的書，和”人性的弱點”同個作者 - 戴爾・卡內基。</p>
+          <h3 id="人性的優點">人性的優點</h3>
+<p><img src="/images/notworry.jpg" alt=""><br>
+人性的優點，這本書的英文原名是&quot;How to stop worrying &amp; start living&quot;，老實說，我也不知道為何中文會翻譯成&quot;人性的優點&quot;，不過總之，他是一本在講如何消除憂慮的書，和&quot;人性的弱點&quot;同個作者 - 戴爾・卡內基。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/11/11/stop_worrying_book/" rel="contents">
@@ -2020,7 +2034,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  506
+                  507
                 </span>
               
 
@@ -2046,7 +2060,8 @@
 
       
         
-          <p><strong>網路的IP位址讓我們路由到LAN(區域網路)，而MAC位址讓我們找到了目標電腦</strong><br>MAC作用在第二層 - 資料連結層，而IP作用在第三層 - 網路層，關於MAC和IP位址的詳細解說請參考<a href="/2021/09/23/ipbasic-network">這一篇</a></p>
+          <p><strong>網路的IP位址讓我們路由到LAN(區域網路)，而MAC位址讓我們找到了目標電腦</strong><br>
+MAC作用在第二層 - 資料連結層，而IP作用在第三層 - 網路層，關於MAC和IP位址的詳細解說請參考<a href="/2021/09/23/ipbasic-network">這一篇</a></p>
 <p>那麼，讓我們從第二層 - 資料連結層 開始吧！</p>
           <!--noindex-->
           <div class="post-button text-center">

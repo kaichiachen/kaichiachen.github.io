@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="我們知道，vSAN是Object base的儲存系統，所以存在vSAN的虛擬機就是以Object作為格式存的 當在vSAN Datastore進行VM虛擬機部署時，會產生五種不同類型的物件  VM Home Namespace物件 當VM被創建出來就會產生的Object，專門存放所有VM的metadata">
+<meta name="description" content="我們知道，vSAN是Object base的儲存系統，所以存在vSAN的虛擬機就是以Object作為格式存的 當在vSAN Datastore進行VM虛擬機部署時，會產生五種不同類型的物件  VM Home Namespace物件  當VM被創建出來就會產生的Object，專門存放所有VM的metadata">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN] VMware虛擬機是怎麼存在vSAN的呢？">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/10/18/vsan/vm_persist/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="我們知道，vSAN是Object base的儲存系統，所以存在vSAN的虛擬機就是以Object作為格式存的 當在vSAN Datastore進行VM虛擬機部署時，會產生五種不同類型的物件  VM Home Namespace物件 當VM被創建出來就會產生的Object，專門存放所有VM的metadata">
+<meta property="og:description" content="我們知道，vSAN是Object base的儲存系統，所以存在vSAN的虛擬機就是以Object作為格式存的 當在vSAN Datastore進行VM虛擬機部署時，會產生五種不同類型的物件  VM Home Namespace物件  當VM被創建出來就會產生的Object，專門存放所有VM的metadata">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/virtual_obj.png">
 <meta property="article:published_time" content="2023-10-17T16:00:00.000Z">
@@ -443,23 +443,31 @@
         <p>我們知道，vSAN是Object base的儲存系統，所以存在vSAN的虛擬機就是以Object作為格式存的</p>
 <p>當在vSAN Datastore進行VM虛擬機部署時，會產生五種不同類型的物件</p>
 <ul>
-<li>VM Home Namespace物件<ul>
-<li>當VM被創建出來就會產生的Object，專門存放所有VM的metadata<span id="more"></span></li>
+<li>VM Home Namespace物件
+<ul>
+<li>當VM被創建出來就會產生的Object，專門存放所有VM的metadata</li>
 </ul>
 </li>
-<li>SWAP 物件<ul>
+</ul>
+<span id="more"></span>
+<ul>
+<li>SWAP 物件
+<ul>
 <li>當VM開機時，VM就會生成這個Object</li>
 </ul>
 </li>
-<li>VMDK虛擬硬碟物件<ul>
+<li>VMDK虛擬硬碟物件
+<ul>
 <li>當VM被創建出來就會產生的Object，類型是vdisk</li>
 </ul>
 </li>
-<li>Snapshot Delta VMDKs<ul>
+<li>Snapshot Delta VMDKs
+<ul>
 <li>當VM虛擬機建立快照時，VM就會生成這個Object</li>
 </ul>
 </li>
-<li>Memory Object<ul>
+<li>Memory Object
+<ul>
 <li>當VM虛擬機建立snapshot並包含記憶體狀態時，VM就會生成這個Object</li>
 </ul>
 </li>
@@ -467,9 +475,8 @@
 <p>上述五個Object都是DOM Object，然後五個DOM Object還會共用一個VM Object UUID祖先(不存在)</p>
 <p>LSOM Object是Component，可以透過cmmds指令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmmds-tool find -t DOM_OBJECT -f json</span><br></pre></td></tr></table></figure>
-
 <p>或是進去vSAN Cluster → Monitor → Virtual Objects查看（以vSAN 70U3為例）</p>
-<p><img src="/images/vsan/virtual_obj.png"></p>
+<p><img src="/images/vsan/virtual_obj.png" alt=""></p>
 <p>更多VM在vSAN怎麼部署和分配的資訊，請參考<a target="_blank" rel="noopener" href="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vsan-planning.doc/GUID-1D8956A2-3F46-49C8-9231-38F3A9D09A0F.html">Objects and Components</a></p>
 
       

@@ -431,7 +431,9 @@
 
       
         
-          <p>我們在寫網路相關的程式最底層就是與socket交互，socket是專用於網路通訊的system call。什麼是system call呢？<br>我們知道作業系統有分kernel和user space，從user space要進行I/O操作需要透過system call去呼叫kernel space，kernel space才有權限進行I/O的操作。<br>在Linux中，使用socket宣告一個object會回傳一個file descriptor。在Linux中，一切都是文件，連socket object也不例外，file descriptor在這裡的作用就是指向那個文件的descriptor。</p>
+          <p>我們在寫網路相關的程式最底層就是與socket交互，socket是專用於網路通訊的system call。什麼是system call呢？<br>
+我們知道作業系統有分kernel和user space，從user space要進行I/O操作需要透過system call去呼叫kernel space，kernel space才有權限進行I/O的操作。<br>
+在Linux中，使用socket宣告一個object會回傳一個file descriptor。在Linux中，一切都是文件，連socket object也不例外，file descriptor在這裡的作用就是指向那個文件的descriptor。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/10/25/socket_usage_network/" rel="contents">
@@ -607,7 +609,8 @@
 
       
         
-          <p>我們知道，Python應用在執行的時候，需要從記憶體規劃出一段空間，用於存放臨時產生的變數，計算完後再放進永久儲存介質，如果所需要存放的臨時變數過大，則會造成OOM(Out of Memory)記憶體錯誤，程式可能會被作業系統終止<br>對於伺服器應用來說，為了設計永遠不中斷的系統，記憶體管理會變得非常重要，不然容易引發記憶體洩漏(Memory Leak)</p>
+          <p>我們知道，Python應用在執行的時候，需要從記憶體規劃出一段空間，用於存放臨時產生的變數，計算完後再放進永久儲存介質，如果所需要存放的臨時變數過大，則會造成OOM(Out of Memory)記憶體錯誤，程式可能會被作業系統終止<br>
+對於伺服器應用來說，為了設計永遠不中斷的系統，記憶體管理會變得非常重要，不然容易引發記憶體洩漏(Memory Leak)</p>
 <p>什麼是記憶體洩漏呢？我們的應用一般都是執行過程中不停的對作業系統申請記憶體、釋放記憶體，這裡的洩漏不是指被攻擊，而是程式沒有釋放已不再使用的記憶體，造成記憶體的浪費</p>
 <p>那麼Python是怎麼處理的呢？需要工程師們有意識的申請變數記憶體，用完再手動清除嗎？答案是: NO，Python會幫你自動找出不再使用的變數，然後釋放歸還給作業系統</p>
           <!--noindex-->
@@ -785,7 +788,11 @@
 
       
         
-          <h3 id="金錢超思考-5大金錢迷思-x-25道創造財富的關鍵思考"><a href="#金錢超思考-5大金錢迷思-x-25道創造財富的關鍵思考" class="headerlink" title="金錢超思考 - 5大金錢迷思 x 25道創造財富的關鍵思考"></a>金錢超思考 - 5大金錢迷思 x 25道創造財富的關鍵思考</h3><p><img src="/images/think_money.jpg"><br><strong>金錢超思考</strong>這本書不是一本教你投資致富的書，而是<strong>「如何思考金錢？」</strong>，這一個問題的背後，作者娓娓道來背後蘊藏的智慧<br>從出社會開始，邁入職場後都在比誰賺的多，然而我們對於金錢的追求與渴望到底是為了什麼？這又衍伸出更多的問題：我到底該把錢花在哪些地方？如何正確看待金錢？擁有很多金錢的意義是什麼？即使財務自由之後又如何？<br>讀完這本書後，我覺得在我們有限的時間及精力裡，賺更多的錢不是唯一，我們需要懂的如何花錢、賺錢和存錢，三者缺一不可，下面我將用條列式的方式，把書中的精華做一個摘要</p>
+          <h3 id="金錢超思考-- 5大金錢迷思 x 25道創造財富的關鍵思考">金錢超思考 - 5大金錢迷思 x 25道創造財富的關鍵思考</h3>
+<p><img src="/images/think_money.jpg" alt=""><br>
+<strong>金錢超思考</strong>這本書不是一本教你投資致富的書，而是**「如何思考金錢？」**，這一個問題的背後，作者娓娓道來背後蘊藏的智慧<br>
+從出社會開始，邁入職場後都在比誰賺的多，然而我們對於金錢的追求與渴望到底是為了什麼？這又衍伸出更多的問題：我到底該把錢花在哪些地方？如何正確看待金錢？擁有很多金錢的意義是什麼？即使財務自由之後又如何？<br>
+讀完這本書後，我覺得在我們有限的時間及精力裡，賺更多的錢不是唯一，我們需要懂的如何花錢、賺錢和存錢，三者缺一不可，下面我將用條列式的方式，把書中的精華做一個摘要</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/10/15/think_money_book/" rel="contents">
@@ -935,7 +942,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  847
+                  851
                 </span>
               
 
@@ -961,7 +968,8 @@
 
       
         
-          <h3 id="GIL（Global-Interpreter-Lock"><a href="#GIL（Global-Interpreter-Lock" class="headerlink" title="GIL（Global Interpreter Lock)"></a>GIL（Global Interpreter Lock)</h3><p>Python的multi thread讓人不明所以，為何我的電腦明明有四個CPU，用multi thread性能卻沒有增長呢？我們先看一個例子</p>
+          <h3 id="gil（global-interpreter lock)">GIL（Global Interpreter Lock)</h3>
+<p>Python的multi thread讓人不明所以，為何我的電腦明明有四個CPU，用multi thread性能卻沒有增長呢？我們先看一個例子</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/10/10/gil-python/" rel="contents">
@@ -1111,7 +1119,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  883
+                  885
                 </span>
               
 
@@ -1293,7 +1301,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  920
+                  922
                 </span>
               
 
@@ -1319,7 +1327,8 @@
 
       
         
-          <p>無論是哪門程式語言，併發(Concurrent)和並行(Parallel)都是很常用且重要的知識點．例如爬蟲，被廣泛運用在工業界資料收集領域，其用的核心技術，就是併發並行程式<br>正確合理的使用併發並行，無疑會給我們的程式帶來巨大的性能提升，之前我們聊到Python Coroutine，今天我們來聊聊Python的Futures</p>
+          <p>無論是哪門程式語言，併發(Concurrent)和並行(Parallel)都是很常用且重要的知識點．例如爬蟲，被廣泛運用在工業界資料收集領域，其用的核心技術，就是併發並行程式<br>
+正確合理的使用併發並行，無疑會給我們的程式帶來巨大的性能提升，之前我們聊到Python Coroutine，今天我們來聊聊Python的Futures</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/10/05/futures-python/" rel="contents">
@@ -1495,11 +1504,17 @@
 
       
         
-          <h3 id="與成功有約：高效能人士的七個習慣"><a href="#與成功有約：高效能人士的七個習慣" class="headerlink" title="與成功有約：高效能人士的七個習慣"></a>與成功有約：高效能人士的七個習慣</h3><p><img src="/images/7habit.jpg"><br>讀了《高效能人士的七個習慣》，學到了不少．喜歡這一種條列式的框架，一點點的歸類不同的高效能人士的不同習慣．這本書我讀的是英文版，一般來說這種書不會像英文小說一樣使用艱深的詞彙，所以想說透過這個機會可以學到我沒有但高效能人士有的好習慣，同時還能提升英文閱讀力，下面是我讀完後的總結:</p>
+          <h3 id="與成功有約：高效能人士的七個習慣">與成功有約：高效能人士的七個習慣</h3>
+<p><img src="/images/7habit.jpg" alt=""><br>
+讀了《高效能人士的七個習慣》，學到了不少．喜歡這一種條列式的框架，一點點的歸類不同的高效能人士的不同習慣．這本書我讀的是英文版，一般來說這種書不會像英文小說一樣使用艱深的詞彙，所以想說透過這個機會可以學到我沒有但高效能人士有的好習慣，同時還能提升英文閱讀力，下面是我讀完後的總結:</p>
 <ol>
-<li>主動 Proactive<ul>
+<li>主動 Proactive
+<ul>
 <li>不受周遭环境影响，只受目前的價值做决策</li>
-<li>不要怪外部環境，多想想改變自己
+<li>不要怪外部環境，多想想改變自己</li>
+</ul>
+</li>
+</ol>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/10/03/7habits_book/" rel="contents">
@@ -1825,7 +1840,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  975
+                  979
                 </span>
               
 
@@ -1851,7 +1866,8 @@
 
       
         
-          <p>剛寫Python的時候，你可能對於Python的語法<code>for i in [2, 4, 6, 8, 10]</code>嘆為觀止，理解起來也非常直觀，比起C++或java的語法，簡潔了不少<br>可是你有想過，Python在處理for in的時候，發生了什麼嗎？什麼樣的object可以被放進for in loop呢？</p>
+          <p>剛寫Python的時候，你可能對於Python的語法<code>for i in [2, 4, 6, 8, 10]</code>嘆為觀止，理解起來也非常直觀，比起C++或java的語法，簡潔了不少<br>
+可是你有想過，Python在處理for in的時候，發生了什麼嗎？什麼樣的object可以被放進for in loop呢？</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/09/25/iterator-generator-python/" rel="contents">
@@ -2027,7 +2043,9 @@
 
       
         
-          <h3 id="每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼"><a href="#每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼" class="headerlink" title="每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼"></a>每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼</h3><p>警察要找你，他是怎麼透過你的身分證找到你的呢？<br>藉由身分證上的戶籍地址(IP)，找到了你的家，按下你家的門鈴後，大喊了身分證號碼(MAC)，你到了門口，警察就這樣找到你了</p>
+          <h3 id="每一個網卡都有一個ip和mac，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼">每一個網卡都有一個IP和MAC，是在網路世界的通訊地址，相當於現實中家家戶戶的門牌號碼</h3>
+<p>警察要找你，他是怎麼透過你的身分證找到你的呢？<br>
+藉由身分證上的戶籍地址(IP)，找到了你的家，按下你家的門鈴後，大喊了身分證號碼(MAC)，你到了門口，警察就這樣找到你了</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/09/23/ipbasic-network/" rel="contents">

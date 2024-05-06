@@ -414,7 +414,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  526
+                  527
                 </span>
               
 
@@ -442,15 +442,19 @@
         <p>前面說到了Fault Domain，我們可以把相同機櫃的host匡列成同個Group，這樣Object下的Component就會被分散在不同機櫃裡，那如果擔心地震、火災等等會讓整個Datacenter遭殃，不就造成永久的Data loss嗎？</p>
 <p>Stretched Cluster為一種異地備援機制，可以建立兩個以不同地區Datacenter的Fault Domain，不過由於跨地區，Witness必須是獨立於Cluster之外Host，可以為單個，也可以為多個。</p>
 <span id="more"></span>
-
 <p>由於是跨地區的Datacenter備份機制，規定了兩個Datacenter互相ping必須是5ms以內，且只能設定兩個Fault Domain - Preferred 和 Secondary Domain，由於只有兩個Domain，所以FTT只能設定為FTT=1，RAID只能設定RAID-1</p>
 <p>然後來說說對於Stretched cluster，資料是如何進行I/O的，Preferred Domain為主要進行I/O的對象，對於寫入，為了確保最終一制性，只有當資料成功寫入兩邊的SSD時，才算是寫入完畢。</p>
 <p>針對資料讀取的部分，vSAN Stretched cluster有支持Site Read Locality，會優先讀取離自己近的資料。</p>
 <p>而Witness作為一個節點或是一個Fault Domain，他的作用就是當Datacenter發生故障時，作為tiebreaker仲裁當VM的I/O過來時，要去哪個Datacenter存取，主要是在故障發生後保證整個系統的可用性。</p>
-<h2 id="故障種類"><a href="#故障種類" class="headerlink" title="故障種類"></a>故障種類</h2><h3 id="一個Datacenter-故障"><a href="#一個Datacenter-故障" class="headerlink" title="一個Datacenter 故障"></a>一個Datacenter 故障</h3><p>當一個Datacenter出現異常的時候，例如掉電，或是失去與Witness的聯繫，Witness就會把路由導向健康的Datacenter。</p>
-<h3 id="兩個Datacenter之間失去聯繫"><a href="#兩個Datacenter之間失去聯繫" class="headerlink" title="兩個Datacenter之間失去聯繫"></a>兩個Datacenter之間失去聯繫</h3><p>當兩個Datacenter出現了網路的問題，但是各自都能連上Witness，所以都覺得自己是健康的，這時需要Witness作為仲裁，投下那個關鍵的一票，指定誰是外部的存取對象。</p>
-<h3 id="Witness-node故障"><a href="#Witness-node故障" class="headerlink" title="Witness node故障"></a>Witness node故障</h3><p>如果只有Ｗitness node故障，Datacenter裡的VM還是可以照常運行，只是會在vCenter上的vSAN Health監控平台提醒恢復Witness node。</p>
-<h3 id="Witness-node和一個Datacenter故障"><a href="#Witness-node和一個Datacenter故障" class="headerlink" title="Witness node和一個Datacenter故障"></a>Witness node和一個Datacenter故障</h3><p>當這種情況發生時，只能人工介入了，在vCenter上的vSAN Health監控平台會對其進行報警。</p>
+<h2 id="故障種類">故障種類</h2>
+<h3 id="一個datacenter-故障">一個Datacenter 故障</h3>
+<p>當一個Datacenter出現異常的時候，例如掉電，或是失去與Witness的聯繫，Witness就會把路由導向健康的Datacenter。</p>
+<h3 id="兩個datacenter之間失去聯繫">兩個Datacenter之間失去聯繫</h3>
+<p>當兩個Datacenter出現了網路的問題，但是各自都能連上Witness，所以都覺得自己是健康的，這時需要Witness作為仲裁，投下那個關鍵的一票，指定誰是外部的存取對象。</p>
+<h3 id="witness-node故障">Witness node故障</h3>
+<p>如果只有Ｗitness node故障，Datacenter裡的VM還是可以照常運行，只是會在vCenter上的vSAN Health監控平台提醒恢復Witness node。</p>
+<h3 id="witness-node和一個datacenter故障">Witness node和一個Datacenter故障</h3>
+<p>當這種情況發生時，只能人工介入了，在vCenter上的vSAN Health監控平台會對其進行報警。</p>
 
       
     </div>

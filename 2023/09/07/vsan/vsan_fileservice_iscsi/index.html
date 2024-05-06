@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="我們知道vSAN主要是以Object的形式作為儲存單位，存的是VM Object，而Block和File兩個常用的儲存單位也經常被大企業或是資料中心所用到，vSAN當然也有暴露相關的接口，這裡來聊聊vSAN裡iSCSI存取block storage和Fileservice存取檔案的原理 iSCSI首先，SCSI是SAS&#x2F;SATA的SSD&#x2F;HDD用於與作業系統溝通的一種interface proto">
+<meta name="description" content="我們知道vSAN主要是以Object的形式作為儲存單位，存的是VM Object，而Block和File兩個常用的儲存單位也經常被大企業或是資料中心所用到，vSAN當然也有暴露相關的接口，這裡來聊聊vSAN裡iSCSI存取block storage和Fileservice存取檔案的原理 iSCSI 首先，SCSI是SAS&#x2F;SATA的SSD&#x2F;HDD用於與作業系統溝通的一種interface prot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN]FileService &amp; iSCSI">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/09/07/vsan/vsan_fileservice_iscsi/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="我們知道vSAN主要是以Object的形式作為儲存單位，存的是VM Object，而Block和File兩個常用的儲存單位也經常被大企業或是資料中心所用到，vSAN當然也有暴露相關的接口，這裡來聊聊vSAN裡iSCSI存取block storage和Fileservice存取檔案的原理 iSCSI首先，SCSI是SAS&#x2F;SATA的SSD&#x2F;HDD用於與作業系統溝通的一種interface proto">
+<meta property="og:description" content="我們知道vSAN主要是以Object的形式作為儲存單位，存的是VM Object，而Block和File兩個常用的儲存單位也經常被大企業或是資料中心所用到，vSAN當然也有暴露相關的接口，這裡來聊聊vSAN裡iSCSI存取block storage和Fileservice存取檔案的原理 iSCSI 首先，SCSI是SAS&#x2F;SATA的SSD&#x2F;HDD用於與作業系統溝通的一種interface prot">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/iscsi_edit_target.png">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/iscsi_add_target.png">
@@ -419,7 +419,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  512
+                  513
                 </span>
               
 
@@ -445,18 +445,19 @@
 
       
         <p>我們知道vSAN主要是以Object的形式作為儲存單位，存的是VM Object，而Block和File兩個常用的儲存單位也經常被大企業或是資料中心所用到，vSAN當然也有暴露相關的接口，這裡來聊聊vSAN裡iSCSI存取block storage和Fileservice存取檔案的原理</p>
-<h3 id="iSCSI"><a href="#iSCSI" class="headerlink" title="iSCSI"></a>iSCSI</h3><p>首先，SCSI是SAS/SATA的SSD/HDD用於與作業系統溝通的一種interface protocol，本來是需要透過實體接口才能進行存取，後來又制定了可以透過網路TCP/IP來傳送SCSI指令的技術，叫做iSCSI，使得連接距離可以達到無上限，連結的伺服器數量也是無限</p>
+<h3 id="iscsi">iSCSI</h3>
+<p>首先，SCSI是SAS/SATA的SSD/HDD用於與作業系統溝通的一種interface protocol，本來是需要透過實體接口才能進行存取，後來又制定了可以透過網路TCP/IP來傳送SCSI指令的技術，叫做iSCSI，使得連接距離可以達到無上限，連結的伺服器數量也是無限</p>
 <p>這也是為何vSAN有提供此接口的原因，vSAN本質上是一塊專用儲存網路，形成了一個儲存池，外部應用可以隨時取用、擴容等等，像是Thin provision，vSAN加上iSCSI技術，把儲存變成「可路由」的，像普通的網路通信一樣，使得遠在天邊的應用或主機可以直接存取vSAN上的儲存池。</p>
-<p><img src="/images/vsan/iscsi_edit_target.png"></p>
+<p><img src="/images/vsan/iscsi_edit_target.png" alt=""></p>
 <span id="more"></span>
-
 <p>在vSAN中，開啟iSCSI服務後，會產生一個home object for iSCSI去存一些相關的metadata</p>
-<p><img src="/images/vsan/iscsi_add_target.png"></p>
+<p><img src="/images/vsan/iscsi_add_target.png" alt=""></p>
 <p>iSCSI服務啟動後，我們可以到vSAN Cluster→Configuration→iSCSI Target→add新增一個iSCSI Target，我們可以把iSCSI target當成一個vSAN的endpoint</p>
-<p><img src="/images/vsan/iscsi_add_lun_to_target.png"></p>
+<p><img src="/images/vsan/iscsi_add_lun_to_target.png" alt=""></p>
 <p>最後，我們可以根據iSCSI target分配LUN的ID，LUN的單位就是一個磁碟了，這種感覺就像是在一個磁碟組下面創建一個磁碟</p>
-<h3 id="Fileservice"><a href="#Fileservice" class="headerlink" title="Fileservice"></a>Fileservice</h3><p>我們也能基於vSAN Datastore提供NFS的服務，這是vSAN7的新功能，vSAN上的File service是一個分散式的檔案系統(VDFS)，主要的目的是提供VM間的檔案共用，當然也可以透過像NAS那樣在自己的電腦上掛載一個NFS</p>
-<p><img src="/images/vsan/file_service_structure.png"></p>
+<h3 id="fileservice">Fileservice</h3>
+<p>我們也能基於vSAN Datastore提供NFS的服務，這是vSAN7的新功能，vSAN上的File service是一個分散式的檔案系統(VDFS)，主要的目的是提供VM間的檔案共用，當然也可以透過像NAS那樣在自己的電腦上掛載一個NFS</p>
+<p><img src="/images/vsan/file_service_structure.png" alt=""></p>
 <p>從上圖可以看到vSAN FileService是共用vSAN儲存的，當然，ESXi node上必須啟用一台File service node VM，把Object轉換成File格式，也就是上圖的綠色Applicance VM，最後整合再一起，給Clients或VM透過SMB/NFS共享檔案池</p>
 
       

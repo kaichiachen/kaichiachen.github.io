@@ -413,7 +413,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  445
+                  447
                 </span>
               
 
@@ -442,10 +442,11 @@
 <p>vSAN的加密機制採用的是KMS(Key Manager Server)解決方案，使用者需要從外部例如Google或Amazon取得KMS加密金鑰</p>
 <p>KMS採用的是KEK(Key Encryption Key)和DEK(Data Encryption Key)機制，DEK先將硬碟資料進行資料加密，然後KEK負責加密DEK，DEK透過KMIP(Key Management Interoperability Protocol)傳送加密後的資料到vSAN節點主機中，這樣只有當管理人員拿到KEK，才可以解密所有資料。Hybrid和All Flash都支援此機制</p>
 <span id="more"></span>
-
-<h3 id="Data-at-rest-encryption"><a href="#Data-at-rest-encryption" class="headerlink" title="Data-at-rest encryption"></a>Data-at-rest encryption</h3><p>當啟用了Data-at-rest encryption，vSAN會把所有在vSAN Datastore裡的資料全數加密，如果硬碟被偷了也不怕，只有管理者有權限解密資料</p>
+<h3 id="data-at-rest-encryption">Data-at-rest encryption</h3>
+<p>當啟用了Data-at-rest encryption，vSAN會把所有在vSAN Datastore裡的資料全數加密，如果硬碟被偷了也不怕，只有管理者有權限解密資料</p>
 <p>KEK不會存在vCenter，而是在KMS裡，DEK有多個，每個disk一個，存在各個host裡，每次需要加解密，需要從host透過vCenter拿到KEK進行加解密</p>
-<h3 id="Data-in-transit-encryption"><a href="#Data-in-transit-encryption" class="headerlink" title="Data-in-transit encryption"></a>Data-in-transit encryption</h3><p>Data-in-transit顧名思義，就是在資料傳輸中加密而已，他不再需要KMS，而是透過對稱加密AES 256 bits encryption，他能防止中間人攻擊</p>
+<h3 id="data-in-transit-encryption">Data-in-transit encryption</h3>
+<p>Data-in-transit顧名思義，就是在資料傳輸中加密而已，他不再需要KMS，而是透過對稱加密AES 256 bits encryption，他能防止中間人攻擊</p>
 <p>Data-in-transit和Data-at-rest是獨立的，管理人員可以個別啟用他或關閉它</p>
 
       
