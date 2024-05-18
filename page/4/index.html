@@ -146,7 +146,7 @@
 
 
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  1k
+                  1.1k
                 </span>
               
 
@@ -431,7 +431,8 @@
 
       
         
-          <p>我們在寫網路相關的程式最底層就是與socket交互，socket是專用於網路通訊的system call。什麼是system call呢？<br>我們知道作業系統有分kernel和user space，從user space要進行I/O操作需要透過system call去呼叫kernel space，kernel space才有權限進行I/O的操作。<br>在Linux中，使用socket宣告一個object會回傳一個file descriptor。在Linux中，一切都是文件，連socket object也不例外，file descriptor在這裡的作用就是指向那個文件的descriptor。</p>
+          <p>我們在寫網路相關的程式時，最底層就是與 socket 交互。socket 是專用於網路通訊的 system call。什麼是 system call 呢？我們知道作業系統有分 kernel 和 user space，從 user space 要進行 I/O 操作需要透過 system call 去呼叫 kernel space，因為只有 kernel space 才有權限進行 I/O 的操作。</p>
+<p>在 Linux 中，使用 socket 宣告一個 object 會回傳一個 file descriptor。在 Linux 中，一切都是文件，連 socket object 也不例外，file descriptor 在這裡的作用就是指向那個文件的 descriptor。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/10/25/socket_usage_network/" rel="contents">
@@ -581,7 +582,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  1.4k
+                  1.2k
                 </span>
               
 
@@ -607,9 +608,10 @@
 
       
         
-          <p>我們知道，Python應用在執行的時候，需要從記憶體規劃出一段空間，用於存放臨時產生的變數，計算完後再放進永久儲存介質，如果所需要存放的臨時變數過大，則會造成OOM(Out of Memory)記憶體錯誤，程式可能會被作業系統終止<br>對於伺服器應用來說，為了設計永遠不中斷的系統，記憶體管理會變得非常重要，不然容易引發記憶體洩漏(Memory Leak)</p>
-<p>什麼是記憶體洩漏呢？我們的應用一般都是執行過程中不停的對作業系統申請記憶體、釋放記憶體，這裡的洩漏不是指被攻擊，而是程式沒有釋放已不再使用的記憶體，造成記憶體的浪費</p>
-<p>那麼Python是怎麼處理的呢？需要工程師們有意識的申請變數記憶體，用完再手動清除嗎？答案是: NO，Python會幫你自動找出不再使用的變數，然後釋放歸還給作業系統</p>
+          <p>我們知道，Python 應用在執行時，需要從記憶體中劃出一段空間來存放臨時變數，計算完後再將結果存放到永久儲存介質。如果臨時變數所需的空間過大，會導致 OOM (Out of Memory) 記憶體錯誤，程式可能會被作業系統終止。</p>
+<p>對於伺服器應用來說，為了設計永遠不中斷的系統，記憶體管理變得非常重要，否則容易引發記憶體洩漏 (Memory Leak)。</p>
+<h3 id="什麼是記憶體洩漏？"><a href="#什麼是記憶體洩漏？" class="headerlink" title="什麼是記憶體洩漏？"></a>什麼是記憶體洩漏？</h3><p>我們的應用程式在執行過程中會不斷向作業系統申請記憶體並釋放記憶體。記憶體洩漏指的是程式沒有釋放已不再使用的記憶體，導致記憶體的浪費，而非被攻擊。</p>
+<h3 id="Python-的記憶體管理"><a href="#Python-的記憶體管理" class="headerlink" title="Python 的記憶體管理"></a>Python 的記憶體管理</h3><p>那麼 Python 是怎麼處理的呢？需要工程師們手動申請變數記憶體並清除嗎？答案是：不需要，Python 會自動找出不再使用的變數並釋放記憶體。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/10/20/garbage-collection-python/" rel="contents">
@@ -935,7 +937,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  847
+                  876
                 </span>
               
 
@@ -961,7 +963,7 @@
 
       
         
-          <h3 id="GIL（Global-Interpreter-Lock"><a href="#GIL（Global-Interpreter-Lock" class="headerlink" title="GIL（Global Interpreter Lock)"></a>GIL（Global Interpreter Lock)</h3><p>Python的multi thread讓人不明所以，為何我的電腦明明有四個CPU，用multi thread性能卻沒有增長呢？我們先看一個例子</p>
+          <h3 id="GIL（Global-Interpreter-Lock"><a href="#GIL（Global-Interpreter-Lock" class="headerlink" title="GIL（Global Interpreter Lock)"></a>GIL（Global Interpreter Lock)</h3><p>Python 的 multi thread 讓人不明所以，為什麼我的電腦明明有四個 CPU，用 multi thread 性能卻沒有增長呢？我們先看一個例子</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/10/10/gil-python/" rel="contents">
@@ -1111,7 +1113,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  883
+                  913
                 </span>
               
 
@@ -1137,13 +1139,13 @@
 
       
         
-          <p>之前我們講過了Python的Coroutine，提到了我們用的是asyncio library，不同於Coroutine那一篇，我們這一篇注重於原理的理解</p>
-<p>我們知道，multi threading能夠使得效率及CPU使用率大大提高，那為什麼我們需要Asyncio(Coroutine)呢？</p>
+          <p>之前我們講過了 Python 的 Coroutine，提到了我們用的是 asyncio library。不同於 Coroutine 那一篇，這一篇我們注重於原理的理解。</p>
+<p>我們知道，multi-threading 能夠使得效率及 CPU 使用率大大提高，那為什麼我們還需要 Asyncio (Coroutine) 呢？</p>
 <ul>
-<li>因為在multi threading下，程式碼容易被作業系統打斷，因此可能會出現race condition</li>
-<li>以及，context switch會造成性能損耗，如果I/O過多，不停的context switch，會損失很多性能</li>
+<li>因為在 multi-threading 下，程式碼容易被作業系統打斷，因此可能會出現 race condition。</li>
+<li>另外，context switch 會造成性能損耗。如果 I/O 過多，不停的 context switch 會損失很多性能。</li>
 </ul>
-<p>於是乎有了Asyncio</p>
+<p>於是就有了 Asyncio。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/10/08/eventloop-python/" rel="contents">
@@ -1293,7 +1295,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  920
+                  846
                 </span>
               
 
@@ -1319,7 +1321,8 @@
 
       
         
-          <p>無論是哪門程式語言，併發(Concurrent)和並行(Parallel)都是很常用且重要的知識點．例如爬蟲，被廣泛運用在工業界資料收集領域，其用的核心技術，就是併發並行程式<br>正確合理的使用併發並行，無疑會給我們的程式帶來巨大的性能提升，之前我們聊到Python Coroutine，今天我們來聊聊Python的Futures</p>
+          <p>無論是哪門程式語言，併發(Concurrent)和並行(Parallel)都是很常用且重要的知識點。舉個例子，像是爬蟲技術被廣泛運用在工業界的資料收集領域，其中的核心技術就是併發並行程式設計。</p>
+<p>正確合理地使用併發和並行，無疑會讓我們的程式性能大幅提升。之前我們聊到過Python Coroutine，今天我們來聊聊Python的Futures。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/10/05/futures-python/" rel="contents">
@@ -1469,7 +1472,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  681
+                  667
                 </span>
               
 
@@ -1495,11 +1498,8 @@
 
       
         
-          <h3 id="與成功有約：高效能人士的七個習慣"><a href="#與成功有約：高效能人士的七個習慣" class="headerlink" title="與成功有約：高效能人士的七個習慣"></a>與成功有約：高效能人士的七個習慣</h3><p><img src="/images/7habit.jpg"><br>讀了《高效能人士的七個習慣》，學到了不少．喜歡這一種條列式的框架，一點點的歸類不同的高效能人士的不同習慣．這本書我讀的是英文版，一般來說這種書不會像英文小說一樣使用艱深的詞彙，所以想說透過這個機會可以學到我沒有但高效能人士有的好習慣，同時還能提升英文閱讀力，下面是我讀完後的總結:</p>
-<ol>
-<li>主動 Proactive<ul>
-<li>不受周遭环境影响，只受目前的價值做决策</li>
-<li>不要怪外部環境，多想想改變自己
+          <h3 id="與成功有約：高效能人士的七個習慣"><a href="#與成功有約：高效能人士的七個習慣" class="headerlink" title="與成功有約：高效能人士的七個習慣"></a>與成功有約：高效能人士的七個習慣</h3><p><img src="/images/7habit.jpg"></p>
+<p>閱讀《高效能人士的七個習慣》讓我獲益匪淺。這本書架構清晰，條列式地列出了不同高效能人士的習慣。我閱讀的是英文版，這類書通常不會用太艱深的詞彙，因此不僅可以學習高效能人士的好習慣，還能提升英文閱讀能力。以下是我讀完後的總結：</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/10/03/7habits_book/" rel="contents">
@@ -1675,7 +1675,7 @@
 
       
         
-          <p>Coroutine(協程)和我們常聽到的multithread, multiprocess一樣，是一种併發(councurrent)的一種方式，注意的是，併發和併行的不同在於，併發是快速的context switch讓user覺得程式同時執行，而併行是指不同CPU同時執行</p>
+          <p>Coroutine（協程）和我們常聽到的 multithread（多執行緒）、multiprocess（多進程）一樣，都是一種併發（concurrent）方式。需要注意的是，併發和併行（parallel）不同，併發是快速的上下文切換，讓使用者感覺程式同時在執行，而併行是指不同 CPU 同時執行多個任務。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/09/29/coroutine-python/" rel="contents">
@@ -1825,7 +1825,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  975
+                  981
                 </span>
               
 
@@ -1851,7 +1851,7 @@
 
       
         
-          <p>剛寫Python的時候，你可能對於Python的語法<code>for i in [2, 4, 6, 8, 10]</code>嘆為觀止，理解起來也非常直觀，比起C++或java的語法，簡潔了不少<br>可是你有想過，Python在處理for in的時候，發生了什麼嗎？什麼樣的object可以被放進for in loop呢？</p>
+          <p>剛開始寫Python的時候，你可能對於Python的語法<code>for i in [2, 4, 6, 8, 10]</code>感到驚艷，這種簡潔的語法相比C++或Java來說直觀了許多。然而，你有沒有想過Python在處理<code>for in</code>的時候，背後到底發生了什麼？什麼樣的object可以被放進<code>for in</code> loop呢？</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2021/09/25/iterator-generator-python/" rel="contents">
@@ -2001,7 +2001,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  1.3k
+                  1.2k
                 </span>
               
 

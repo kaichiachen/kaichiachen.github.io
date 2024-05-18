@@ -81,22 +81,20 @@
 
 
 
-<meta name="description" content="我們知道，vSAN是Object base的儲存系統，所以存在vSAN的虛擬機就是以Object作為格式存的 當在vSAN Datastore進行VM虛擬機部署時，會產生五種不同類型的物件  VM Home Namespace物件 當VM被創建出來就會產生的Object，專門存放所有VM的metadata">
+<meta name="description" content="簡介VMware vSAN是一種分散式存儲技術，將多個ESXi主機的存儲資源組合成一個共享的數據存儲區域。這篇文章將詳細解釋虛擬機如何在vSAN中存儲，以及不同類型的物件是如何運作的。 vSAN與虛擬機vSAN是一個Object-based的存儲系統，這意味著數據是以物件的形式存儲的。當在vSAN Datastore部署虛擬機時，系統會生成五種類型的物件來管理和存儲虛擬機的數據。 五種類型的物件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN] VMware虛擬機是怎麼存在vSAN的呢？">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/10/18/vsan/vm_persist/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="我們知道，vSAN是Object base的儲存系統，所以存在vSAN的虛擬機就是以Object作為格式存的 當在vSAN Datastore進行VM虛擬機部署時，會產生五種不同類型的物件  VM Home Namespace物件 當VM被創建出來就會產生的Object，專門存放所有VM的metadata">
+<meta property="og:description" content="簡介VMware vSAN是一種分散式存儲技術，將多個ESXi主機的存儲資源組合成一個共享的數據存儲區域。這篇文章將詳細解釋虛擬機如何在vSAN中存儲，以及不同類型的物件是如何運作的。 vSAN與虛擬機vSAN是一個Object-based的存儲系統，這意味著數據是以物件的形式存儲的。當在vSAN Datastore部署虛擬機時，系統會生成五種類型的物件來管理和存儲虛擬機的數據。 五種類型的物件">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://kaichiachen.github.io/images/vsan/virtual_obj.png">
 <meta property="article:published_time" content="2023-10-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-12-04T06:37:13.412Z">
+<meta property="article:modified_time" content="2024-05-17T13:25:01.078Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="vmware">
 <meta property="article:tag" content="vsan">
 <meta property="article:tag" content="VM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kaichiachen.github.io/images/vsan/virtual_obj.png">
 
 
 
@@ -154,7 +152,7 @@
 
 
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
@@ -415,7 +413,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  242
+                  487
                 </span>
               
 
@@ -440,37 +438,48 @@
       
 
       
-        <p>我們知道，vSAN是Object base的儲存系統，所以存在vSAN的虛擬機就是以Object作為格式存的</p>
-<p>當在vSAN Datastore進行VM虛擬機部署時，會產生五種不同類型的物件</p>
+        <h3 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h3><p>VMware vSAN是一種分散式存儲技術，將多個ESXi主機的存儲資源組合成一個共享的數據存儲區域。這篇文章將詳細解釋虛擬機如何在vSAN中存儲，以及不同類型的物件是如何運作的。</p>
+<h3 id="vSAN與虛擬機"><a href="#vSAN與虛擬機" class="headerlink" title="vSAN與虛擬機"></a>vSAN與虛擬機</h3><p>vSAN是一個Object-based的存儲系統，這意味著數據是以物件的形式存儲的。當在vSAN Datastore部署虛擬機時，系統會生成五種類型的物件來管理和存儲虛擬機的數據。</p>
+<h3 id="五種類型的物件"><a href="#五種類型的物件" class="headerlink" title="五種類型的物件"></a>五種類型的物件</h3><ol>
+<li><p><strong>VM Home Namespace物件</strong></p>
 <ul>
-<li>VM Home Namespace物件<ul>
-<li>當VM被創建出來就會產生的Object，專門存放所有VM的metadata<span id="more"></span></li>
+<li>這個物件在VM被創建時生成，用於存放所有VM的元數據，如配置文件、日志和其他必要的控制信息。</li>
 </ul>
 </li>
-<li>SWAP 物件<ul>
-<li>當VM開機時，VM就會生成這個Object</li>
+<li><p><strong>SWAP物件</strong></p>
+<ul>
+<li>當VM啟動時生成的物件，用於存放內存交換（swap）文件，確保系統在內存不足時有足夠的虛擬內存。</li>
 </ul>
 </li>
-<li>VMDK虛擬硬碟物件<ul>
-<li>當VM被創建出來就會產生的Object，類型是vdisk</li>
+<li><p><strong>VMDK虛擬硬碟物件</strong></p>
+<ul>
+<li>這個物件在VM被創建時生成，類型是vdisk，主要用於存放VM的虛擬磁碟數據。</li>
 </ul>
 </li>
-<li>Snapshot Delta VMDKs<ul>
-<li>當VM虛擬機建立快照時，VM就會生成這個Object</li>
+<li><p><strong>Snapshot Delta VMDKs</strong></p>
+<ul>
+<li>當VM建立Snapshot時生成的物件，存放Snapshot的數據變更部分，使得系統可以還原到Snapshot時的狀態。</li>
 </ul>
 </li>
-<li>Memory Object<ul>
-<li>當VM虛擬機建立snapshot並包含記憶體狀態時，VM就會生成這個Object</li>
+<li><p><strong>Memory Object</strong></p>
+<ul>
+<li>當VM建立包含記憶體狀態的Snapshot時生成的物件，用於存放當前內存的內容，確保Snapshot能夠完全恢復當前狀態。</li>
 </ul>
 </li>
-</ul>
-<p>上述五個Object都是DOM Object，然後五個DOM Object還會共用一個VM Object UUID祖先(不存在)</p>
-<p>LSOM Object是Component，可以透過cmmds指令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmmds-tool find -t DOM_OBJECT -f json</span><br></pre></td></tr></table></figure>
+</ol>
+<p>這些物件都是DOM物件，並共用一個不存在的VM Object UUID祖先。</p>
+<h3 id="查看vSAN中的虛擬物件"><a href="#查看vSAN中的虛擬物件" class="headerlink" title="查看vSAN中的虛擬物件"></a>查看vSAN中的虛擬物件</h3><p>LSOM Object是Component，可以透過以下指令查看：</p>
+<pre><code class="bash">cmmds-tool find -t DOM_OBJECT -f json
 
-<p>或是進去vSAN Cluster → Monitor → Virtual Objects查看（以vSAN 70U3為例）</p>
-<p><img src="/images/vsan/virtual_obj.png"></p>
-<p>更多VM在vSAN怎麼部署和分配的資訊，請參考<a target="_blank" rel="noopener" href="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vsan-planning.doc/GUID-1D8956A2-3F46-49C8-9231-38F3A9D09A0F.html">Objects and Components</a></p>
+另外，你也可以進入vSAN Cluster的監控頁面查看虛擬物件（以vSAN 7.0U3為例）:
+1. 進入vSAN Cluster
+2. 選擇 “Monitor”
+3. 點擊 “Virtual Objects”
+
+![](/images/vsan/virtual_obj.png)
+
+更多VM在vSAN怎麼部署和分配的資訊，請參考[Objects and Components](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vsan-planning.doc/GUID-1D8956A2-3F46-49C8-9231-38F3A9D09A0F.html)
+</code></pre>
 
       
     </div>

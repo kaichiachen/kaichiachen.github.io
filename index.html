@@ -146,7 +146,7 @@
 
 
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
@@ -431,7 +431,7 @@
 
       
         
-          <h1 id="ESXi-Host"><a href="#ESXi-Host" class="headerlink" title="ESXi Host"></a>ESXi Host</h1><h3 id="esxcli-vsan-cluster"><a href="#esxcli-vsan-cluster" class="headerlink" title="esxcli vsan cluster"></a>esxcli vsan cluster</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># esxcli vsan cluster</span></span><br><span class="line">Available Commands:</span><br><span class="line">  get                   Get information about the vSAN cluster that this host is joined to.</span><br><span class="line">  join                  Join the host to a vSAN cluster.</span><br><span class="line">  leave                 Leave the vSAN cluster the host is currently joined to.</span><br><span class="line">  list                  Get information about the vSAN clusters that this host is joined to.</span><br><span class="line">  new                   Create a vSAN cluster with current host joined. A random sub-cluster UUID will be generated.</span><br><span class="line">  restore               Restore the persisted vSAN cluster configuration.</span><br></pre></td></tr></table></figure>
+          <h1 id="ESXi-Host"><a href="#ESXi-Host" class="headerlink" title="ESXi Host"></a>ESXi Host</h1><h3 id="esxcli-vsan-cluster"><a href="#esxcli-vsan-cluster" class="headerlink" title="esxcli vsan cluster"></a>esxcli vsan cluster</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># esxcli vsan cluster</span></span><br><span class="line">Available Commands:</span><br><span class="line">  get                   Get information about the vSAN cluster that this host is joined to.</span><br><span class="line">  <span class="built_in">join</span>                  Join the host to a vSAN cluster.</span><br><span class="line">  leave                 Leave the vSAN cluster the host is currently joined to.</span><br><span class="line">  list                  Get information about the vSAN clusters that this host is joined to.</span><br><span class="line">  new                   Create a vSAN cluster with current host joined. A random sub-cluster UUID will be generated.</span><br><span class="line">  restore               Restore the persisted vSAN cluster configuration.</span><br></pre></td></tr></table></figure>
 
 <p>我們可以看到，除了可以獲取當前vSAN cluster的詳細訊息之外，也可以將Host加入或移除vSAN Cluster之外</p>
           <!--noindex-->
@@ -1295,7 +1295,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  242
+                  487
                 </span>
               
 
@@ -1321,18 +1321,51 @@
 
       
         
-          <p>我們知道，vSAN是Object base的儲存系統，所以存在vSAN的虛擬機就是以Object作為格式存的</p>
-<p>當在vSAN Datastore進行VM虛擬機部署時，會產生五種不同類型的物件</p>
+          
+            <h3 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h3><p>VMware vSAN是一種分散式存儲技術，將多個ESXi主機的存儲資源組合成一個共享的數據存儲區域。這篇文章將詳細解釋虛擬機如何在vSAN中存儲，以及不同類型的物件是如何運作的。</p>
+<h3 id="vSAN與虛擬機"><a href="#vSAN與虛擬機" class="headerlink" title="vSAN與虛擬機"></a>vSAN與虛擬機</h3><p>vSAN是一個Object-based的存儲系統，這意味著數據是以物件的形式存儲的。當在vSAN Datastore部署虛擬機時，系統會生成五種類型的物件來管理和存儲虛擬機的數據。</p>
+<h3 id="五種類型的物件"><a href="#五種類型的物件" class="headerlink" title="五種類型的物件"></a>五種類型的物件</h3><ol>
+<li><p><strong>VM Home Namespace物件</strong></p>
 <ul>
-<li>VM Home Namespace物件<ul>
-<li>當VM被創建出來就會產生的Object，專門存放所有VM的metadata
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="2023/10/18/vsan/vm_persist/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<li>這個物件在VM被創建時生成，用於存放所有VM的元數據，如配置文件、日志和其他必要的控制信息。</li>
+</ul>
+</li>
+<li><p><strong>SWAP物件</strong></p>
+<ul>
+<li>當VM啟動時生成的物件，用於存放內存交換（swap）文件，確保系統在內存不足時有足夠的虛擬內存。</li>
+</ul>
+</li>
+<li><p><strong>VMDK虛擬硬碟物件</strong></p>
+<ul>
+<li>這個物件在VM被創建時生成，類型是vdisk，主要用於存放VM的虛擬磁碟數據。</li>
+</ul>
+</li>
+<li><p><strong>Snapshot Delta VMDKs</strong></p>
+<ul>
+<li>當VM建立Snapshot時生成的物件，存放Snapshot的數據變更部分，使得系統可以還原到Snapshot時的狀態。</li>
+</ul>
+</li>
+<li><p><strong>Memory Object</strong></p>
+<ul>
+<li>當VM建立包含記憶體狀態的Snapshot時生成的物件，用於存放當前內存的內容，確保Snapshot能夠完全恢復當前狀態。</li>
+</ul>
+</li>
+</ol>
+<p>這些物件都是DOM物件，並共用一個不存在的VM Object UUID祖先。</p>
+<h3 id="查看vSAN中的虛擬物件"><a href="#查看vSAN中的虛擬物件" class="headerlink" title="查看vSAN中的虛擬物件"></a>查看vSAN中的虛擬物件</h3><p>LSOM Object是Component，可以透過以下指令查看：</p>
+<pre><code class="bash">cmmds-tool find -t DOM_OBJECT -f json
+
+另外，你也可以進入vSAN Cluster的監控頁面查看虛擬物件（以vSAN 7.0U3為例）:
+1. 進入vSAN Cluster
+2. 選擇 “Monitor”
+3. 點擊 “Virtual Objects”
+
+![](/images/vsan/virtual_obj.png)
+
+更多VM在vSAN怎麼部署和分配的資訊，請參考[Objects and Components](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vsan-planning.doc/GUID-1D8956A2-3F46-49C8-9231-38F3A9D09A0F.html)
+</code></pre>
+
+          
         
       
     </div>
@@ -1831,7 +1864,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  316
+                  584
                 </span>
               
 
@@ -1857,9 +1890,8 @@
 
       
         
-          <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
+          <h1 id="vSAN的四大Component-CMMDS、DOM、CLOM、LSOM"><a href="#vSAN的四大Component-CMMDS、DOM、CLOM、LSOM" class="headerlink" title="vSAN的四大Component - CMMDS、DOM、CLOM、LSOM"></a>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM</h1><p>這四個組件從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職。本篇將介紹的是vSAN CLOM。</p>
 <p><img src="/images/vsan/vsan_ioworkflow.png"></p>
-<p>vSAN CLOM(Cluster-level object manager)負責根據Policy產生Object Configuration，把Object裡的Component放在Cluster下適當的ESXi Node裡面，DOM和CLOM之間溝通緊密無間且是雙向溝通的。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2023/09/30/vsan/ioworkflow_clom/" rel="contents">
