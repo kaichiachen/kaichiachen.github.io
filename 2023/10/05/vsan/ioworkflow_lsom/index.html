@@ -81,16 +81,16 @@
 
 
 
-<meta name="description" content="vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS  vSAN LSOM(Local log-structured object manager)運作在ESXi node裡面，目的是讓Object和Component放在">
+<meta name="description" content="vSAN 的四大 Component - CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，彼此各司其職。以下圖為例，本篇將介紹 vSAN CMMDS。  vSAN LSOM（Local log-structured object manager）運作在 ESXi node 裡面，負責將 Object 和 Component 放在 E">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN] LSOM (Local log-structured object manager)">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/10/05/vsan/ioworkflow_lsom/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS  vSAN LSOM(Local log-structured object manager)運作在ESXi node裡面，目的是讓Object和Component放在">
+<meta property="og:description" content="vSAN 的四大 Component - CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，彼此各司其職。以下圖為例，本篇將介紹 vSAN CMMDS。  vSAN LSOM（Local log-structured object manager）運作在 ESXi node 裡面，負責將 Object 和 Component 放在 E">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/vsan_ioworkflow.png">
 <meta property="article:published_time" content="2023-10-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-12-04T06:37:57.063Z">
+<meta property="article:modified_time" content="2024-05-18T04:22:55.428Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="vmware">
 <meta property="article:tag" content="vsan">
@@ -415,7 +415,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  439
+                  443
                 </span>
               
 
@@ -440,27 +440,29 @@
       
 
       
-        <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
+        <p>vSAN 的四大 Component - CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，彼此各司其職。以下圖為例，本篇將介紹 vSAN CMMDS。</p>
 <p><img src="/images/vsan/vsan_ioworkflow.png"></p>
-<p>vSAN LSOM(Local log-structured object manager)運作在ESXi node裡面，目的是讓Object和Component放在ESXi node裡面，當資料發生I/O時，負責管理cache disk和capacity disk的資料I/O</p>
+<p>vSAN LSOM（Local log-structured object manager）運作在 ESXi node 裡面，負責將 Object 和 Component 放在 ESXi node 裡面，並在資料發生 I/O 時，管理 cache disk 和 capacity disk 的資料 I/O。</p>
 <span id="more"></span>
 
-<p>由於LSOM負責硬碟層的I/O，他同時也要負責監控硬碟的健康狀態</p>
-<p>LSOM使用Log的方式從硬碟讀取Component並回傳，目前支持SSD和HDD的硬碟。LSOM處理和硬碟最底層的I/O交互，他藉由Log的方式記錄寫的順序，例如在RAID-1的情況下，對Object寫代表要對兩個不同的ESXi Node的Component寫，如果在Cluster fail掉之前，只有Node A記錄到了寫，那麼就會用Log的方式回溯，Node A會把Write log複製一份給Node B，達成最終一致性。</p>
-<p>DOM是被實現在ESXi的Kernel層，會接收來自DOM的Components的增刪改查，LSOM會負責給予CMMDS所有disk的Metadata</p>
-<p>LSOM有如下Components</p>
+<p>由於 LSOM 負責硬碟層的 I/O，它同時也負責監控硬碟的健康狀態。LSOM 使用 Log 的方式從硬碟讀取 Component 並回傳，支援 SSD 和 HDD 的硬碟。LSOM 處理和硬碟最底層的 I/O 交互，通過 Log 記錄寫的順序。例如在 RAID-1 的情況下，對 Object 寫入代表要對兩個不同的 ESXi Node 的 Component 寫入。如果在 Cluster 發生故障前，只有 Node A 記錄到了寫入，那麼就會用 Log 回溯，Node A 會把 Write log 複製給 Node B，達成最終一致性。</p>
+<p>DOM 是實現在 ESXi 的 Kernel 層，負責接收來自 DOM 的 Components 的增刪改查，LSOM 會給予 CMMDS 所有 disk 的 Metadata。</p>
+<p>LSOM 具有以下 Components：</p>
 <ul>
-<li>LSOM Logical Log(LLOG)  為VMFS與SSD互動的橋樑，提供若干API</li>
-<li>Read Cache(RC)  負責cache的Policy</li>
-<li>LSOM Physical Log(PLOG)  為cache tier和capacity tier之間的橋樑</li>
-<li>SSD Log  管理SSD的space和Read cache，並提供LLOG、PLOG和RC所需要的log infrastructure</li>
+<li><p><strong>LSOM Logical Log (LLOG)</strong><br>作為 VMFS 與 SSD 互動的橋樑，提供多種 API。</p>
+</li>
+<li><p><strong>Read Cache (RC)</strong><br>負責 cache 的 Policy。</p>
+</li>
+<li><p><strong>LSOM Physical Log (PLOG)</strong><br>作為 cache tier 和 capacity tier 之間的橋樑。</p>
+</li>
+<li><p><strong>SSD Log</strong><br>管理 SSD 的空間和 Read cache，並提供 LLOG、PLOG 和 RC 所需的 log infrastructure。</p>
+</li>
 </ul>
-<p>最後總結，LSOM是在ESXi kernel層實現的，LSOM具有如下特性</p>
-<ul>
-<li>Object下的Component存在LSOM層，保證Component持久化在實體Disk</li>
-<li>接收來自DOM Owner的I/O，寫入完成則會通知DOM</li>
-<li>處理在SSD上的write buffer、read cache，以及把Data寫進去Capacity tier</li>
-<li>所以LSOM只負責處理I/O，分散式儲存的其他事物都是由其他組件處理的</li>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
+<li><strong>Component 持久化</strong>：Object 下的 Component 存在 LSOM 層，確保 Component 持久化在實體 Disk。</li>
+<li><strong>I/O 處理</strong>：接收來自 DOM Owner 的 I/O，完成寫入後通知 DOM。</li>
+<li><strong>資源管理</strong>：處理 SSD 上的 write buffer、read cache，並將資料寫入 capacity tier。</li>
+<li><strong>專責 I/O</strong>：LSOM 只負責處理 I/O，分散式儲存的其他事務由其他組件處理。</li>
 </ul>
 
       
@@ -693,19 +695,7 @@
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   
-    <span class="site-uv">
-      <i class="fa fa-user">&nbsp;在線人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      
-    </span>
-  
 
-  
-    <span class="site-pv">
-      <i class="fa fa-eye">&nbsp;進站人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      
-    </span>
   
 </div>
 

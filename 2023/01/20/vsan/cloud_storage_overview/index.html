@@ -81,16 +81,16 @@
 
 
 
-<meta name="description" content="小羚一聽到資料中心，突然頭暈目眩，在他的腦海裡，資料中心就是在一個冰冷冷的屋子裡放滿了各種機器  各種機器就是硬體設備，我們已知可以透過虛擬機的方式，把計算軟化，但是資料中心還有「儲存」需求，要怎麼把他也軟化呢？ 軟體定義資料中心(Software-Defined Data Center, SDDC) 顧名思義，就是利用軟體，把資料中心裡的計算、儲存、網路資源「抽象化」和「虛擬化」，當資源都被虛擬">
+<meta name="description" content="小羚一聽到資料中心，突然頭暈目眩，因為在他的腦海裡，資料中心就是一個冰冷的屋子裡放滿了各種機器。  這些機器就是硬體設備，我們已經可以透過虛擬機的方式，把計算部分軟體化，但是資料中心還有「儲存」需求，要怎麼把它也軟體化呢？ 軟體定義資料中心（Software-Defined Data Center, SDDC）顧名思義，就是利用軟體，把資料中心裡的計算、儲存、網路資源「抽象化」和「虛擬化」。當資源">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN]雲端? 雲端就是資料中心嗎？">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/01/20/vsan/cloud_storage_overview/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="小羚一聽到資料中心，突然頭暈目眩，在他的腦海裡，資料中心就是在一個冰冷冷的屋子裡放滿了各種機器  各種機器就是硬體設備，我們已知可以透過虛擬機的方式，把計算軟化，但是資料中心還有「儲存」需求，要怎麼把他也軟化呢？ 軟體定義資料中心(Software-Defined Data Center, SDDC) 顧名思義，就是利用軟體，把資料中心裡的計算、儲存、網路資源「抽象化」和「虛擬化」，當資源都被虛擬">
+<meta property="og:description" content="小羚一聽到資料中心，突然頭暈目眩，因為在他的腦海裡，資料中心就是一個冰冷的屋子裡放滿了各種機器。  這些機器就是硬體設備，我們已經可以透過虛擬機的方式，把計算部分軟體化，但是資料中心還有「儲存」需求，要怎麼把它也軟體化呢？ 軟體定義資料中心（Software-Defined Data Center, SDDC）顧名思義，就是利用軟體，把資料中心裡的計算、儲存、網路資源「抽象化」和「虛擬化」。當資源">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/datacenter.png">
 <meta property="article:published_time" content="2023-01-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-12-04T06:37:49.728Z">
+<meta property="article:modified_time" content="2024-05-18T04:04:26.350Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="vmware">
 <meta property="article:tag" content="vsan">
@@ -415,7 +415,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  801
+                  893
                 </span>
               
 
@@ -440,20 +440,28 @@
       
 
       
-        <p>小羚一聽到資料中心，突然頭暈目眩，在他的腦海裡，資料中心就是在一個冰冷冷的屋子裡放滿了各種機器</p>
+        <p>小羚一聽到資料中心，突然頭暈目眩，因為在他的腦海裡，資料中心就是一個冰冷的屋子裡放滿了各種機器。</p>
 <p><img src="/images/vsan/datacenter.png"></p>
-<p>各種機器就是硬體設備，我們已知可以透過虛擬機的方式，把計算軟化，但是資料中心還有「儲存」需求，要怎麼把他也軟化呢？</p>
-<p>軟體定義資料中心(Software-Defined Data Center, SDDC) 顧名思義，就是利用軟體，把資料中心裡的計算、儲存、網路資源「抽象化」和「虛擬化」，當資源都被虛擬化後，IT管理團隊變得更加靈活了。IT人員可以針對使用者需求，提供更細的資源粒度，例如一台CPU 1G Hz，20GB容量的電腦，並且這個電腦還能隨時備份，不但提高了服務和應用的「可用性」及「彈性」，同時也降低了對運維的「複雜度」和「預算」，並簡化服務上線的工作流程和應用的推出時間，接下來的重點將會圍繞在「儲存資源」的部分，也就是VMware vSAN產品相關的技術結構。</p>
-<p>一般的常見解決方案大致分為兩類 - 在雲端的公有雲和在地端的私有雲</p>
+<p>這些機器就是硬體設備，我們已經可以透過虛擬機的方式，把計算部分軟體化，但是資料中心還有「儲存」需求，要怎麼把它也軟體化呢？</p>
+<p>軟體定義資料中心（Software-Defined Data Center, SDDC）顧名思義，就是利用軟體，把資料中心裡的計算、儲存、網路資源「抽象化」和「虛擬化」。當資源都被虛擬化後，IT管理團隊變得更加靈活了。IT人員可以根據使用者需求，提供更細緻的資源，例如一台CPU 1GHz，20GB容量的電腦，並且這個電腦還能隨時備份。不但提高了服務和應用的「可用性」及「彈性」，同時也降低了對運維的「複雜度」和「預算」，並簡化服務上線的工作流程和應用的推出時間。接下來的重點將會圍繞在「儲存資源」的部分，也就是VMware vSAN產品相關的技術結構。</p>
+<p>一般的常見解決方案大致分為兩類 - 公有雲和私有雲。</p>
 <span id="more"></span>
 
-<h3 id="公有雲"><a href="#公有雲" class="headerlink" title="公有雲"></a>公有雲</h3><p>常見的如Amazon、Azure、Google Cloud，阿里雲等等，公有雲的好處是資料中心的「硬體設備」可以透過專門的公有雲提供商維護，這樣使用者，也就是工程師們可以專心的開發軟體或應用，不用管資料中心遇到水災、斷電或是地震等自然災害。</p>
-<p>更重要的是，對於新創公司來說，服務的使用量震盪是劇烈的，若事先買了硬體設備，可能會造成大量的浪費，公有雲的按需使用能滿足小型創業公司的需求。</p>
-<h3 id="私有雲"><a href="#私有雲" class="headerlink" title="私有雲"></a>私有雲</h3><p>常見的如VMware vSAN、Nutanix ADSF、HPE StoreVirtual VSA等等，私有雲的好處是資料幾乎100%安全且存取的速度快，不過硬體的選配、維護等等需要抽出部分公司裡的人力去維護。一般來說，是銀行、政府等等對資料安全性比較敏感的單位才會使用私有雲服務</p>
-<p>其中又能細分「融合式解決方案」和「純軟體式解決方案」</p>
-<h3 id="融合式解決方案"><a href="#融合式解決方案" class="headerlink" title="融合式解決方案"></a>融合式解決方案</h3><p>買硬體設備的同時，軟體也裝上去了，例如Dell VxRail、HPE SimpliVity，這樣省去了更多安裝和硬體選配的麻煩，直接購買，直接使用。</p>
-<h3 id="純軟體式解決方案"><a href="#純軟體式解決方案" class="headerlink" title="純軟體式解決方案"></a>純軟體式解決方案</h3><p>此方案對於硬體的配置更有彈性，只要符合「硬體相容性清單」，就能在自己的硬體設備搭建軟體定義儲存的伺服器</p>
-<h3 id="混合雲"><a href="#混合雲" class="headerlink" title="混合雲"></a>混合雲</h3><p>混合雲的意思就是一部分的應用在公有雲，一部份在私有雲，但是操控的介面是同一個。例如VMware有和各大公有雲合作 - Amazon, Google, Microsoft, 阿里巴巴。在他們的硬體上安裝VMware的產品，這樣使用者就能在地端和雲端上自由遷移虛擬機和儲存空間。</p>
+<h3 id="公有雲"><a href="#公有雲" class="headerlink" title="公有雲"></a>公有雲</h3><p>常見的如Amazon、Azure、Google Cloud，阿里雲等等，公有雲的好處是資料中心的「硬體設備」可以透過專門的公有雲提供商維護，這樣使用者，也就是工程師們可以專心的開發軟體或應用，不用擔心資料中心遇到水災、斷電或地震等自然災害。</p>
+<p>更重要的是，對於新創公司來說，服務的使用量波動大，若事先買了硬體設備，可能會造成大量的浪費。公有雲的按需使用能滿足小型創業公司的需求。</p>
+<h3 id="私有雲"><a href="#私有雲" class="headerlink" title="私有雲"></a>私有雲</h3><p>常見的如VMware vSAN、Nutanix ADSF、HPE StoreVirtual VSA等等，私有雲的好處是資料幾乎100%安全且存取速度快。不過硬體的選配和維護需要公司內部的人力去處理。一般來說，是銀行、政府等對資料安全性較敏感的單位才會使用私有雲服務。</p>
+<p>其中又能細分「融合式解決方案」和「純軟體式解決方案」。</p>
+<h3 id="融合式解決方案"><a href="#融合式解決方案" class="headerlink" title="融合式解決方案"></a>融合式解決方案</h3><p>購買硬體設備的同時，軟體也已經安裝好，例如Dell VxRail、HPE SimpliVity，這樣省去了安裝和硬體選配的麻煩，直接購買，直接使用。</p>
+<h3 id="純軟體式解決方案"><a href="#純軟體式解決方案" class="headerlink" title="純軟體式解決方案"></a>純軟體式解決方案</h3><p>此方案對於硬體的配置更有彈性，只要符合「硬體相容性清單」，就能在自己的硬體設備上搭建軟體定義儲存的伺服器。</p>
+<h3 id="混合雲"><a href="#混合雲" class="headerlink" title="混合雲"></a>混合雲</h3><p>混合雲的意思就是一部分的應用在公有雲，一部分在私有雲，但是操作介面是同一個。例如VMware與各大公有雲合作 - Amazon, Google, Microsoft, 阿里巴巴。在他們的硬體上安裝VMware的產品，這樣使用者就能在地端和雲端上自由遷移虛擬機和儲存空間。</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
+<li>SDDC可以使IT管理更靈活，減少運維複雜度和預算。</li>
+<li>公有雲適合新創公司，提供彈性資源使用。</li>
+<li>私有雲適合對資料安全性要求高的單位。</li>
+<li>融合式解決方案方便安裝和使用。</li>
+<li>純軟體式解決方案提供硬體配置彈性。</li>
+<li>混合雲結合公有雲和私有雲的優點，提供一致的操作介面。</li>
+</ul>
 
       
     </div>
@@ -685,19 +693,7 @@
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   
-    <span class="site-uv">
-      <i class="fa fa-user">&nbsp;在線人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      
-    </span>
-  
 
-  
-    <span class="site-pv">
-      <i class="fa fa-eye">&nbsp;進站人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      
-    </span>
   
 </div>
 

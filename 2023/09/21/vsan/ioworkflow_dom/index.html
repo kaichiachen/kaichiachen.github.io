@@ -81,16 +81,16 @@
 
 
 
-<meta name="description" content="vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS  vSAN DOM(Distributed Object Manager)顧名思義，就是負責管理Object如分何分散Component  Component由LSOM">
+<meta name="description" content="vSAN 的四大組件：CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，各司其職。下圖展示了它們的大致交互邏輯，本文將介紹 vSAN 的 CMMDS。  vSAN DOM（Distributed Object Manager）顧名思義，就是負責管理 Object 以及分散 Component。  Component 是由 LSOM 管">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN] DOM (Distributed Object Manager)">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/09/21/vsan/ioworkflow_dom/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS  vSAN DOM(Distributed Object Manager)顧名思義，就是負責管理Object如分何分散Component  Component由LSOM">
+<meta property="og:description" content="vSAN 的四大組件：CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，各司其職。下圖展示了它們的大致交互邏輯，本文將介紹 vSAN 的 CMMDS。  vSAN DOM（Distributed Object Manager）顧名思義，就是負責管理 Object 以及分散 Component。  Component 是由 LSOM 管">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/vsan_ioworkflow.png">
 <meta property="article:published_time" content="2023-09-20T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-12-04T06:38:47.187Z">
+<meta property="article:modified_time" content="2024-05-18T04:22:01.292Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="vmware">
 <meta property="article:tag" content="vsan">
@@ -415,7 +415,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  442
+                  457
                 </span>
               
 
@@ -440,26 +440,26 @@
       
 
       
-        <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
+        <p>vSAN 的四大組件：CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，各司其職。下圖展示了它們的大致交互邏輯，本文將介紹 vSAN 的 CMMDS。</p>
 <p><img src="/images/vsan/vsan_ioworkflow.png"></p>
-<p>vSAN DOM(Distributed Object Manager)顧名思義，就是負責管理Object如分何分散Component</p>
+<p>vSAN DOM（Distributed Object Manager）顧名思義，就是負責管理 Object 以及分散 Component。</p>
 <blockquote>
-<p>Component由LSOM管理，在下一篇會提到</p>
+<p>Component 是由 LSOM 管理，會在下一篇提到。</p>
 </blockquote>
 <span id="more"></span>
 
-<p>舉例來説，最常見的RAID-1 Policy會把一個Object完整的複製一份，加上原本的變成兩個Components，把這兩個Components分散在不同主機或是不同Fault Domain上面，再加一個Witness ，Witness的作用是當Cluster發生故障，例如一個node網路發生問題時，去協調I/O request要去access哪個component</p>
-<p>除了RAID-1，還有比較複雜的有RAID-5/6，也是藉由DOM去協調要去哪個Node存取Component資料</p>
-<p>每個DOM Object有兩個角色 - DOM Client 和 DOM Owner，每個ESXi Node都有這三個角色，每個Object有一個他專屬的DOM Owner，DOM Client則是每個Object下的Component存在的node都有一個</p>
-<p>最後總結，DOM是在ESXi kernel層實現的，DOM具有如下特性</p>
+<p>舉例來說，最常見的 RAID-1 Policy 會將一個 Object 完整地複製一份，加上原本的，變成兩個 Components，並將這兩個 Components 分散在不同主機或不同 Fault Domain 上。再加上一個 Witness，當 Cluster 發生故障，例如一個 Node 網路出現問題時，Witness 會協調 I/O 請求應該訪問哪個 Component。</p>
+<p>除了 RAID-1，還有更複雜的 RAID-5/6，也是通過 DOM 去協調應該到哪個 Node 存取 Component 資料。</p>
+<p>每個 DOM Object 有兩個角色：DOM Client 和 DOM Owner。每個 ESXi Node 都有這兩個角色，每個 Object 會有一個專屬的 DOM Owner，而 DOM Client 則存在於每個 Object 所在的 Node 上。</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>DOM 是在 ESXi kernel 層實現的，具有以下特性：</p>
 <ul>
-<li>vSAN的Object概念存在DOM層，一般都說vSAN的Object為DOM Object</li>
-<li>DOM Object根據RAID Policy產生Component並保證Component的data是一致的</li>
-<li>Component的位置由CLOM管理，Component裡的內容由LSOM管理</li>
-<li>Object裡的Witness一般只有在Cluster發生異常時，才有作用，他會作為tiebreaker決斷要取用哪個component</li>
-<li>負責接收CLOM和其他節點的DOM指令，然後根據指令與LSOM進行交互</li>
-<li>每個vSAN ESXi node只有一個DOM Client，所有外部的I/O都與這個DOM Client對接，然後傳遞I/O給相應的DOM Owner</li>
-<li>每個Object都有一個DOM Owner，負責決定app發過來的I/O是否可以被執行</li>
+<li>vSAN 的 Object 概念存在於 DOM 層，一般稱為 DOM Object。</li>
+<li>DOM Object 根據 RAID Policy 產生 Component 並保證 Component 的數據一致性。</li>
+<li>Component 的位置由 CLOM 管理，Component 內的內容由 LSOM 管理。</li>
+<li>Object 中的 Witness 只有在 Cluster 發生異常時才有作用，作為決定要訪問哪個 Component 的仲裁者。</li>
+<li>負責接收 CLOM 和其他節點的 DOM 指令，並根據指令與 LSOM 交互。</li>
+<li>每個 vSAN ESXi Node 只有一個 DOM Client，所有外部 I/O 都與這個 DOM Client 對接，然後傳遞 I/O 給相應的 DOM Owner。</li>
+<li>每個 Object 都有一個 DOM Owner，負責決定應用程序傳來的 I/O 是否可以被執行。</li>
 </ul>
 
       
@@ -692,19 +692,7 @@
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   
-    <span class="site-uv">
-      <i class="fa fa-user">&nbsp;在線人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      
-    </span>
-  
 
-  
-    <span class="site-pv">
-      <i class="fa fa-eye">&nbsp;進站人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      
-    </span>
   
 </div>
 

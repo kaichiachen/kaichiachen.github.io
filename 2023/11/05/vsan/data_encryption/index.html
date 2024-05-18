@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="vSAN作為軟體定義儲存，他的加密機制也與硬體無關，無需額外的加密裝置，硬碟也無需額外的加密插件，vSAN加密機制採用的是XTS-AES 256加密標準，可以同時保護快取層和容量層的資料。執得注意的是，當資料進入快取層時，系統會對資料進行加密，而當資料要轉存進去容量層時，會先把準備要寫入容量層的資料解密，然後執行重複資料刪除和壓縮的動作，再加密資料，然後寫進去容量層 vSAN的加密機制採用的是KM">
+<meta name="description" content="vSAN 作為軟體定義儲存，它的加密機制也與硬體無關，無需額外的加密裝置，硬碟也無需額外的加密插件。vSAN 加密機制採用的是 XTS-AES 256 加密標準，可以同時保護快取層和容量層的資料。值得注意的是，當資料進入快取層時，系統會對資料進行加密，而當資料要轉存進去容量層時，會先把準備要寫入容量層的資料解密，然後執行重複資料刪除和壓縮的動作，再加密資料，最後寫進容量層。 vSAN 的加密機制採">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN] vSAN 資料加密保護">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/11/05/vsan/data_encryption/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="vSAN作為軟體定義儲存，他的加密機制也與硬體無關，無需額外的加密裝置，硬碟也無需額外的加密插件，vSAN加密機制採用的是XTS-AES 256加密標準，可以同時保護快取層和容量層的資料。執得注意的是，當資料進入快取層時，系統會對資料進行加密，而當資料要轉存進去容量層時，會先把準備要寫入容量層的資料解密，然後執行重複資料刪除和壓縮的動作，再加密資料，然後寫進去容量層 vSAN的加密機制採用的是KM">
+<meta property="og:description" content="vSAN 作為軟體定義儲存，它的加密機制也與硬體無關，無需額外的加密裝置，硬碟也無需額外的加密插件。vSAN 加密機制採用的是 XTS-AES 256 加密標準，可以同時保護快取層和容量層的資料。值得注意的是，當資料進入快取層時，系統會對資料進行加密，而當資料要轉存進去容量層時，會先把準備要寫入容量層的資料解密，然後執行重複資料刪除和壓縮的動作，再加密資料，最後寫進容量層。 vSAN 的加密機制採">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2023-11-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-12-04T06:36:46.999Z">
+<meta property="article:modified_time" content="2024-05-18T04:16:39.457Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="vmware">
 <meta property="article:tag" content="vsan">
@@ -413,7 +413,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  445
+                  524
                 </span>
               
 
@@ -438,15 +438,21 @@
       
 
       
-        <p>vSAN作為軟體定義儲存，他的加密機制也與硬體無關，無需額外的加密裝置，硬碟也無需額外的加密插件，vSAN加密機制採用的是XTS-AES 256加密標準，可以同時保護快取層和容量層的資料。執得注意的是，當資料進入快取層時，系統會對資料進行加密，而當資料要轉存進去容量層時，會先把準備要寫入容量層的資料解密，然後執行重複資料刪除和壓縮的動作，再加密資料，然後寫進去容量層</p>
-<p>vSAN的加密機制採用的是KMS(Key Manager Server)解決方案，使用者需要從外部例如Google或Amazon取得KMS加密金鑰</p>
-<p>KMS採用的是KEK(Key Encryption Key)和DEK(Data Encryption Key)機制，DEK先將硬碟資料進行資料加密，然後KEK負責加密DEK，DEK透過KMIP(Key Management Interoperability Protocol)傳送加密後的資料到vSAN節點主機中，這樣只有當管理人員拿到KEK，才可以解密所有資料。Hybrid和All Flash都支援此機制</p>
+        <p>vSAN 作為軟體定義儲存，它的加密機制也與硬體無關，無需額外的加密裝置，硬碟也無需額外的加密插件。vSAN 加密機制採用的是 XTS-AES 256 加密標準，可以同時保護快取層和容量層的資料。值得注意的是，當資料進入快取層時，系統會對資料進行加密，而當資料要轉存進去容量層時，會先把準備要寫入容量層的資料解密，然後執行重複資料刪除和壓縮的動作，再加密資料，最後寫進容量層。</p>
+<p>vSAN 的加密機制採用的是 KMS (Key Manager Server) 解決方案，使用者需要從外部例如 Google 或 Amazon 取得 KMS 加密金鑰。</p>
+<p>KMS 採用的是 KEK (Key Encryption Key) 和 DEK (Data Encryption Key) 機制。DEK 先將硬碟資料進行加密，然後 KEK 負責加密 DEK。DEK 透過 KMIP (Key Management Interoperability Protocol) 傳送加密後的資料到 vSAN 節點主機中，這樣只有當管理人員拿到 KEK，才可以解密所有資料。Hybrid 和 All Flash 都支援此機制。</p>
 <span id="more"></span>
 
-<h3 id="Data-at-rest-encryption"><a href="#Data-at-rest-encryption" class="headerlink" title="Data-at-rest encryption"></a>Data-at-rest encryption</h3><p>當啟用了Data-at-rest encryption，vSAN會把所有在vSAN Datastore裡的資料全數加密，如果硬碟被偷了也不怕，只有管理者有權限解密資料</p>
-<p>KEK不會存在vCenter，而是在KMS裡，DEK有多個，每個disk一個，存在各個host裡，每次需要加解密，需要從host透過vCenter拿到KEK進行加解密</p>
-<h3 id="Data-in-transit-encryption"><a href="#Data-in-transit-encryption" class="headerlink" title="Data-in-transit encryption"></a>Data-in-transit encryption</h3><p>Data-in-transit顧名思義，就是在資料傳輸中加密而已，他不再需要KMS，而是透過對稱加密AES 256 bits encryption，他能防止中間人攻擊</p>
-<p>Data-in-transit和Data-at-rest是獨立的，管理人員可以個別啟用他或關閉它</p>
+<h3 id="Data-at-rest-encryption"><a href="#Data-at-rest-encryption" class="headerlink" title="Data-at-rest encryption"></a>Data-at-rest encryption</h3><p>當啟用了 Data-at-rest encryption，vSAN 會把所有在 vSAN Datastore 裡的資料全數加密。即使硬碟被偷了也不怕，只有管理者有權限解密資料。</p>
+<p>KEK 不會存在 vCenter，而是在 KMS 裡。DEK 有多個，每個 disk 一個，存在各個 host 裡。每次需要加解密，需從 host 透過 vCenter 拿到 KEK 進行加解密。</p>
+<h3 id="Data-in-transit-encryption"><a href="#Data-in-transit-encryption" class="headerlink" title="Data-in-transit encryption"></a>Data-in-transit encryption</h3><p>Data-in-transit 顧名思義，就是在資料傳輸中加密而已。它不需要 KMS，而是透過對稱加密 AES 256 bits encryption，能防止中間人攻擊。</p>
+<p>Data-in-transit 和 Data-at-rest 是獨立的，管理人員可以個別啟用或關閉它們。</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
+<li>vSAN 採用 XTS-AES 256 加密標準，保護快取層和容量層資料。</li>
+<li>KMS 提供 KEK 和 DEK 機制，確保資料加密安全。</li>
+<li>Data-at-rest encryption 保障靜態資料安全。</li>
+<li>Data-in-transit encryption 保障傳輸中資料安全，防止中間人攻擊。</li>
+</ul>
 
       
     </div>
@@ -678,19 +684,7 @@
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   
-    <span class="site-uv">
-      <i class="fa fa-user">&nbsp;在線人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      
-    </span>
-  
 
-  
-    <span class="site-pv">
-      <i class="fa fa-eye">&nbsp;進站人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      
-    </span>
   
 </div>
 

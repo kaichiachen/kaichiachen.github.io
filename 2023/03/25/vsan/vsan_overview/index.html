@@ -81,16 +81,16 @@
 
 
 
-<meta name="description" content="VMware擁有自己一套的軟體定義資料中心SDDC解決方案，以vSphere作為中心的Hypervisor提供虛擬儲存和網路服務，其中儲存的部分有以下幾種  Local - VMFS NAS - NFS iSCSI VMware Virtual Volume(VVOL) - virtualize SAN and NAS vSAN  vSAN全名是Virtual SAN，顧名思義，他不是類似NAS這">
+<meta name="description" content="VMware擁有自己一套的軟體定義資料中心（SDDC）解決方案，以vSphere作為核心的Hypervisor，提供虛擬儲存和網路服務，其中儲存的部分包含以下幾種：  Local - VMFS NAS - NFS iSCSI VMware Virtual Volume (VVOL) - 將SAN和NAS虛擬化 vSAN  vSAN全名是Virtual SAN，顧名思義，它不是像NAS這樣的遠端檔案">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN]vSAN簡介-VMware產品中的儲存利器">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/03/25/vsan/vsan_overview/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="VMware擁有自己一套的軟體定義資料中心SDDC解決方案，以vSphere作為中心的Hypervisor提供虛擬儲存和網路服務，其中儲存的部分有以下幾種  Local - VMFS NAS - NFS iSCSI VMware Virtual Volume(VVOL) - virtualize SAN and NAS vSAN  vSAN全名是Virtual SAN，顧名思義，他不是類似NAS這">
+<meta property="og:description" content="VMware擁有自己一套的軟體定義資料中心（SDDC）解決方案，以vSphere作為核心的Hypervisor，提供虛擬儲存和網路服務，其中儲存的部分包含以下幾種：  Local - VMFS NAS - NFS iSCSI VMware Virtual Volume (VVOL) - 將SAN和NAS虛擬化 vSAN  vSAN全名是Virtual SAN，顧名思義，它不是像NAS這樣的遠端檔案">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/vsan_overall_structure.png">
 <meta property="article:published_time" content="2023-03-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-12-04T06:35:41.339Z">
+<meta property="article:modified_time" content="2024-05-18T05:15:19.108Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="vmware">
 <meta property="article:tag" content="vsan">
@@ -414,7 +414,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  682
+                  773
                 </span>
               
 
@@ -439,24 +439,31 @@
       
 
       
-        <p>VMware擁有自己一套的軟體定義資料中心SDDC解決方案，以vSphere作為中心的Hypervisor提供虛擬儲存和網路服務，其中儲存的部分有以下幾種</p>
+        <p>VMware擁有自己一套的軟體定義資料中心（SDDC）解決方案，以vSphere作為核心的Hypervisor，提供虛擬儲存和網路服務，其中儲存的部分包含以下幾種：</p>
 <ul>
 <li>Local - VMFS</li>
 <li>NAS - NFS</li>
 <li>iSCSI</li>
-<li>VMware Virtual Volume(VVOL) - virtualize SAN and NAS</li>
+<li>VMware Virtual Volume (VVOL) - 將SAN和NAS虛擬化</li>
 <li>vSAN</li>
 </ul>
-<p>vSAN全名是Virtual SAN，顧名思義，他不是類似NAS這種的遠端檔案系統，這裡我們先介紹SAN是什麼</p>
+<p>vSAN全名是Virtual SAN，顧名思義，它不是像NAS這樣的遠端檔案系統。這裡我們先介紹SAN是什麼。</p>
 <span id="more"></span>
 
-<h3 id="SAN"><a href="#SAN" class="headerlink" title="SAN"></a>SAN</h3><p>一般來說，我們會把主機上的資料存在主機上的硬碟裡，可能主機A只用了20%的容量，主機B用了50%的容量，主機A和主機B都浪費了很多儲存空間，而現在突然有一個主機C，想要用200%的容量，卻捉襟見肘，這該怎麼辦呢？</p>
-<p>於是乎有了SAN這類的儲存架構，SAN在遠端建立了一個儲存池，讓各個主機共享，儲存池裡面各個主機透過網路或是光纖連接，是專門用作儲存的網絡區域。SAN和前面的NAS最大的差別是SAN的檔案系統是保留在主機端的，而NAS的檔案系統是在遠端的，所以兩者在網路上的傳遞的協議會不同。</p>
-<h3 id="vSAN"><a href="#vSAN" class="headerlink" title="vSAN"></a>vSAN</h3><p>vSAN會把所有主機上的硬碟整合成一個儲存池，如下所示</p>
+<h3 id="SAN"><a href="#SAN" class="headerlink" title="SAN"></a>SAN</h3><p>一般來說，我們會把主機上的資料存在主機上的硬碟裡，可能主機A只用了20%的容量，主機B用了50%的容量，這樣主機A和主機B都浪費了很多儲存空間。如果突然有一個主機C需要200%的容量，該怎麼辦呢？</p>
+<p>於是就有了SAN這類的儲存架構。SAN在遠端建立了一個儲存池，讓各個主機共享。儲存池裡面的各個主機透過網路或是光纖連接，是專門用作儲存的網絡區域。SAN和NAS最大的差別在於SAN的檔案系統是保留在主機端，而NAS的檔案系統是在遠端，所以兩者在網路上的傳遞協議會不同。</p>
+<h3 id="vSAN"><a href="#vSAN" class="headerlink" title="vSAN"></a>vSAN</h3><p>vSAN會把所有主機上的硬碟整合成一個儲存池，如下所示：</p>
 <p><img src="/images/vsan/vsan_overall_structure.png"></p>
-<p>我們可以看到，每個vSAN Host，也就是物理機，裡面有若干塊硬碟，只要主機被加入vSAN Cluster，他裡面的硬碟資源就會貢獻給vSAN，所以在vSAN上的主機要存取資料，可能是來自主機本身的，也有可能是其他主機的。</p>
-<p>由於vSAN是軟體定義儲存系統，我們能想到的儲存備份、冗余、延伸集群等等的都可以透過vSAN軟體實現而不需要動到硬體，甚至RAID卡也不用。其關鍵技術就是Storage Policy，透過對主機上的虛擬機設定Storage Policy，我們可以指定該虛擬機要做幾份備份，可以容忍多少台主機故障等等的，此外，由於他是軟體定義儲存，對於主機的擴充非常方便，只要在vCenter(主機叢集的控制面板)「新增主機」，即可為這個叢集增加儲存容量。</p>
-<p>vSAN是採用物件(Object)作為儲存系統，物件儲存系統簡單來說就是沒有資料夾的檔案系統，所以查詢非常快且容易共享及備份，vSAN作為服務vSphere上虛擬機的儲存系統，上面的虛擬機就是一個個物件。除此之外，由於深度和vSphere整合，vSAN同時也支持vSphere HA(High Availability)、vSphere DRS(Distributed Resource Scheduler)和vSphere vMotion(虛擬機不掉電遷移)</p>
+<p>我們可以看到，每個vSAN Host（也就是物理機）裡面有若干塊硬碟，只要主機被加入vSAN Cluster，裡面的硬碟資源就會貢獻給vSAN。所以在vSAN上的主機要存取資料，可能是來自主機本身的，也有可能是其他主機的。</p>
+<p>由於vSAN是軟體定義儲存系統，我們能想到的儲存備份、冗余、延伸集群等等都可以透過vSAN軟體實現，而不需要動到硬體，甚至RAID卡也不用。其關鍵技術就是Storage Policy。透過對主機上的虛擬機設定Storage Policy，我們可以指定該虛擬機要做幾份備份，可以容忍多少台主機故障等。此外，由於它是軟體定義儲存，對於主機的擴充非常方便，只要在vCenter（主機叢集的控制面板）「新增主機」，即可為這個叢集增加儲存容量。</p>
+<p>vSAN是採用物件（Object）作為儲存系統。物件儲存系統簡單來說就是沒有資料夾的檔案系統，所以查詢非常快且容易共享及備份。vSAN作為服務vSphere上虛擬機的儲存系統，上面的虛擬機就是一個個物件。除此之外，由於深度和vSphere整合，vSAN同時也支持vSphere HA（High Availability）、vSphere DRS（Distributed Resource Scheduler）和vSphere vMotion（虛擬機不掉電遷移）。</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
+<li><strong>VMware的vSAN是一種軟體定義的儲存解決方案，整合所有主機的硬碟資源。</strong></li>
+<li><strong>SAN是一種在遠端建立儲存池，讓主機共享的儲存架構。</strong></li>
+<li><strong>vSAN透過Storage Policy實現儲存備份、冗余等功能，擴充方便。</strong></li>
+<li><strong>vSAN採用物件儲存系統，查詢快速，易於共享及備份。</strong></li>
+<li><strong>vSAN與vSphere深度整合，支持多種vSphere功能。</strong></li>
+</ul>
 
       
     </div>
@@ -686,19 +693,7 @@
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   
-    <span class="site-uv">
-      <i class="fa fa-user">&nbsp;在線人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      
-    </span>
-  
 
-  
-    <span class="site-pv">
-      <i class="fa fa-eye">&nbsp;進站人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      
-    </span>
   
 </div>
 

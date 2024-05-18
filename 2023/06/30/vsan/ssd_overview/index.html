@@ -81,16 +81,16 @@
 
 
 
-<meta name="description" content="科技日新月異，第一款商用SSD固態硬碟於1991年問世，當時大小只有20MB，然而由於價格太貴，一直到2007年，才開始產生主流需求，在SSD大行其道之前，主要是HDD的天下，到了2022年，SSD單位容量的成本越來越低，所有有興趣想涉略存儲領域的人都必須了解SSD。 SSD和HDD這兩者最大的差別就是「介質」的不同，HDD使用「磁」的正負極紀錄0和1的資料，SSD使用的是「電子」正負極代表0和1">
+<meta name="description" content="科技日新月異，第一款商用SSD固態硬碟於1991年問世，當時大小只有20MB，然而由於價格太貴，一直到2007年，才開始產生主流需求。在SSD大行其道之前，主要是HDD的天下。到了2022年，SSD單位容量的成本越來越低，所有有興趣想涉略存儲領域的人都必須了解SSD。 SSD和HDD最大的差別就是「介質」的不同。HDD使用「磁」的正負極記錄0和1的資料，而SSD使用的是「電子」正負極代表0和1，這">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN]電子儲存介質 - SSD的介紹">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/06/30/vsan/ssd_overview/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="科技日新月異，第一款商用SSD固態硬碟於1991年問世，當時大小只有20MB，然而由於價格太貴，一直到2007年，才開始產生主流需求，在SSD大行其道之前，主要是HDD的天下，到了2022年，SSD單位容量的成本越來越低，所有有興趣想涉略存儲領域的人都必須了解SSD。 SSD和HDD這兩者最大的差別就是「介質」的不同，HDD使用「磁」的正負極紀錄0和1的資料，SSD使用的是「電子」正負極代表0和1">
+<meta property="og:description" content="科技日新月異，第一款商用SSD固態硬碟於1991年問世，當時大小只有20MB，然而由於價格太貴，一直到2007年，才開始產生主流需求。在SSD大行其道之前，主要是HDD的天下。到了2022年，SSD單位容量的成本越來越低，所有有興趣想涉略存儲領域的人都必須了解SSD。 SSD和HDD最大的差別就是「介質」的不同。HDD使用「磁」的正負極記錄0和1的資料，而SSD使用的是「電子」正負極代表0和1，這">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/ssd_structure.png">
 <meta property="article:published_time" content="2023-06-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-05T09:03:01.482Z">
+<meta property="article:modified_time" content="2024-05-18T05:04:39.565Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="ssd">
 <meta property="article:tag" content="disk">
@@ -414,7 +414,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  943
+                  1k
                 </span>
               
 
@@ -439,8 +439,8 @@
       
 
       
-        <p>科技日新月異，第一款商用SSD固態硬碟於1991年問世，當時大小只有20MB，然而由於價格太貴，一直到2007年，才開始產生主流需求，在SSD大行其道之前，主要是HDD的天下，到了2022年，SSD單位容量的成本越來越低，所有有興趣想涉略存儲領域的人都必須了解SSD。</p>
-<p>SSD和HDD這兩者最大的差別就是「介質」的不同，HDD使用「磁」的正負極紀錄0和1的資料，SSD使用的是「電子」正負極代表0和1，這間接影響了尋址的速度，HDD需要一個磁碟頭在磁盤上逐一掃描，而SSD利用電子，能快速的定位目標地址，這也說明了為何SSD相較於HDD有這麼大的I/O速度上的差異</p>
+        <p>科技日新月異，第一款商用SSD固態硬碟於1991年問世，當時大小只有20MB，然而由於價格太貴，一直到2007年，才開始產生主流需求。在SSD大行其道之前，主要是HDD的天下。到了2022年，SSD單位容量的成本越來越低，所有有興趣想涉略存儲領域的人都必須了解SSD。</p>
+<p>SSD和HDD最大的差別就是「介質」的不同。HDD使用「磁」的正負極記錄0和1的資料，而SSD使用的是「電子」正負極代表0和1，這間接影響了尋址的速度。HDD需要一個磁碟頭在磁盤上逐一掃描，而SSD利用電子，能快速定位目標地址，這也說明了為何SSD相較於HDD有這麼大的I/O速度差異。</p>
 <span id="more"></span>
 
 <table>
@@ -448,7 +448,7 @@
 <tr>
 <th>比較項目</th>
 <th>SATA HDD</th>
-<th>SATA SDD</th>
+<th>SATA SSD</th>
 <th>差別</th>
 </tr>
 </thead>
@@ -507,29 +507,35 @@
 <td></td>
 </tr>
 </tbody></table>
-<p>如今HDD已經非常成熟，然而SSD還有巨大的進步空間，製程的進步使得晶片密集度越來越高，相同尺寸能容納的容量更多，另外SSD裡面有controller，也就是FTL(Flash Translation Layer)，軟體的迭代升級也能加速的SSD的I/O速度。</p>
-<p>SSD用的半導體元件是NAND Flash，他是一種非易失性儲存技術，即斷電之後資料還會保存，NAND Flash在SSD的排列最小單元為多個bits，根據有幾個bits目前主流有1個~4個，分別為SLC、MLC、TLC和QLC，每次對資料進行I/O，只能對最小單元的所有bits同時操作，這也造就了SLC的I/O速度最快，但是單位容量最貴，QLC的速度最慢，但是單位容量最便宜。</p>
-<p>SSD有個致命的缺點，就是NAND Flash有一定的讀寫數量限制，對同一塊NAND Flash有過多的頻繁寫入，會影響SSD的使用壽命，所以在SSD裏面，假如500GB好了，會預留一小塊空間，作為SSD的firmware，當有I/O過來時，依靠演算法負責「均勻」的對每一塊NAND Flash做寫入和擦除。</p>
-<p>有了上述基本知識後，簡單介紹一下電腦上的一次I/O是如何與SSD固態硬碟交互的，如下圖所示</p>
+<p>如今HDD已經非常成熟，但SSD還有巨大的進步空間。製程的進步使得晶片密度越來越高，相同尺寸能容納更多容量。另外，SSD裡面有controller，也就是FTL (Flash Translation Layer)，軟體的迭代升級也能加速SSD的I/O速度。</p>
+<p>SSD使用的半導體元件是NAND Flash，是一種非易失性儲存技術，即使斷電資料也會保存。NAND Flash在SSD的排列最小單元為多個bits，根據有幾個bits目前主流有1個至4個，分別為SLC、MLC、TLC和QLC。每次對資料進行I/O，只能對最小單元的所有bits同時操作，這也造就了SLC的I/O速度最快但單位容量最貴，而QLC的速度最慢但單位容量最便宜。</p>
+<p>SSD有個致命的缺點，就是NAND Flash有一定的讀寫數量限制。對同一塊NAND Flash有過多頻繁寫入，會影響SSD的使用壽命。因此在SSD內，假如500GB好了，會預留一小塊空間作為SSD的firmware，當有I/O過來時，依靠演算法負責「均勻」地對每一塊NAND Flash進行寫入和擦除。</p>
+<p>有了上述基本知識後，簡單介紹一下電腦上的一次I/O是如何與SSD固態硬碟交互的，如下圖所示：</p>
 <p><img src="/images/vsan/ssd_structure.png"></p>
 <ol>
-<li>使用者使用鍵盤滑鼠在電腦對資料做讀取/寫入</li>
-<li>電腦的作業系統上的檔案系統針對使用者的操作翻譯成與硬碟交互的Block storage I/O指令</li>
-<li>藉由Interface協議，將I/O指令傳遞給SSD的Controller<ol>
-<li>目前SSD有三個Interface協議，分別為SAS，SATA和PCIe，SAS和SATA比較舊，無法發揮NAND的極速，目前PCIe搭配NVMe的SSD越來越主流，能發揮NAND的</li>
-<li>PCIe是接口，NVMe是傳輸協議</li>
-<li>SATA是接口也是傳輸協議，SATA一般是家用，目前可以到6GB/s</li>
-<li>SAS是接口，用的是SCSI傳輸協議，SAS一般是企業用</li>
+<li>使用者使用鍵盤滑鼠在電腦上對資料進行讀取/寫入。</li>
+<li>電腦的作業系統上的檔案系統會將使用者的操作翻譯成與硬碟交互的Block storage I/O指令。</li>
+<li>藉由Interface協議，將I/O指令傳遞給SSD的Controller。<ol>
+<li>目前SSD有三種Interface協議，分別為SAS，SATA和PCIe。SAS和SATA比較舊，無法發揮NAND的極速。目前PCIe搭配NVMe的SSD越來越主流，能發揮NAND的性能。</li>
+<li>PCIe是接口，NVMe是傳輸協議。</li>
+<li>SATA是接口也是傳輸協議，SATA一般是家用，目前可以達到6GB/s。</li>
+<li>SAS是接口，用的是SCSI傳輸協議，SAS一般是企業用。</li>
 </ol>
 </li>
-<li>SSD Controller(FTL)根據要寫入的I/O，判斷寫入到或讀取哪個Block<ol>
-<li>SSD Controller對NAND Flash的操作有讀取、寫入和擦除，注意，如果要對該NAND Flash上的資料做「更新」，必須要擦除後才能寫入</li>
-<li>影響NAND Flash的壽命就是擦除次數</li>
-<li>Controller做的事就是讓擦除的次數盡量的少，讓擦除盡量平均分配在每一塊NAND Flash</li>
+<li>SSD Controller (FTL)根據要寫入的I/O，判斷寫入或讀取哪個Block。<ol>
+<li>SSD Controller對NAND Flash的操作有讀取、寫入和擦除。注意，如果要對該NAND Flash上的資料進行「更新」，必須要先擦除後才能寫入。</li>
+<li>影響NAND Flash壽命的就是擦除次數。</li>
+<li>Controller的工作就是讓擦除次數盡量減少，並均勻分配在每一塊NAND Flash上。</li>
 </ol>
 </li>
-<li>透過Interface協議，將資料一路返回到電腦作業系統</li>
+<li>透過Interface協議，將資料一路返回到電腦作業系統。</li>
 </ol>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
+<li>SSD與HDD最大的差別在於介質的不同，導致了速度上的巨大差異。</li>
+<li>SSD的成本逐年下降，逐漸成為主流存儲設備。</li>
+<li>SSD的NAND Flash技術雖然有讀寫次數限制，但透過Controller的優化，能有效延長壽命。</li>
+<li>PCIe搭配NVMe的SSD成為主流，能最大限度發揮NAND Flash的性能。</li>
+</ul>
 
       
     </div>
@@ -759,19 +765,7 @@
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   
-    <span class="site-uv">
-      <i class="fa fa-user">&nbsp;在線人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      
-    </span>
-  
 
-  
-    <span class="site-pv">
-      <i class="fa fa-eye">&nbsp;進站人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      
-    </span>
   
 </div>
 

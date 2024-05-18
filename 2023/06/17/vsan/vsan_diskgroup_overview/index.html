@@ -81,16 +81,16 @@
 
 
 
-<meta name="description" content="VMware於2014發表了vSAN，在當時HDD仍然是主流，SSD雖然速度快但是成本高昂，為了能達到速度快並且節省成本的目的，vSAN cluster採用的是雙層儲存架構，如下圖所示">
+<meta name="description" content="VMware於2014年發表了vSAN，在當時HDD仍然是主流，SSD雖然速度快但是成本高昂。為了達到速度快並且節省成本的目的，vSAN cluster採用了雙層儲存架構，如下圖所示：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN]vSAN的硬碟如何擺放達到讀寫最佳化？">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/06/17/vsan/vsan_diskgroup_overview/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="VMware於2014發表了vSAN，在當時HDD仍然是主流，SSD雖然速度快但是成本高昂，為了能達到速度快並且節省成本的目的，vSAN cluster採用的是雙層儲存架構，如下圖所示">
+<meta property="og:description" content="VMware於2014年發表了vSAN，在當時HDD仍然是主流，SSD雖然速度快但是成本高昂。為了達到速度快並且節省成本的目的，vSAN cluster採用了雙層儲存架構，如下圖所示：">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/diskgroup_twolayer.png">
 <meta property="article:published_time" content="2023-06-16T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-12-04T06:36:39.137Z">
+<meta property="article:modified_time" content="2024-05-18T05:12:53.394Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="vmware">
 <meta property="article:tag" content="vsan">
@@ -415,7 +415,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  510
+                  533
                 </span>
               
 
@@ -440,15 +440,35 @@
       
 
       
-        <p>VMware於2014發表了vSAN，在當時HDD仍然是主流，SSD雖然速度快但是成本高昂，為了能達到速度快並且節省成本的目的，vSAN cluster採用的是雙層儲存架構，如下圖所示</p>
+        <p>VMware於2014年發表了vSAN，在當時HDD仍然是主流，SSD雖然速度快但是成本高昂。為了達到速度快並且節省成本的目的，vSAN cluster採用了雙層儲存架構，如下圖所示：</p>
 <span id="more"></span>
 <p><img src="/images/vsan/diskgroup_twolayer.png"></p>
-<p>磁碟群組的入口是SSD，SSD只存放HDD的Cache資料，其中70%的容量用作Read Cache，30%的容量用作Write Cache，一個磁碟群組最多可以放7個HDD device，每個Host最多支持5個磁碟群組，所以一個Host最多可以有49個容量磁盤。</p>
-<p>當然，我們也可以在維持相同的雙層儲存架構下，把所有HDD替換成SSD，也就是All Flash，全閃存模式。啟用了全閃存模式後，vSAN Cluster可以支援更多功能例如Compression、dedup、RAID-5/6等等功能。</p>
-<p>這種兩層的架構缺點是如果唯一入口SSD掛了，就會使得他後面的HDD容量層都不能使用。另外，剛剛提到的Hybrid和All Flash模式，這兩個模式下cache層會有不同的cache演算法，角色也不完全相同。</p>
-<p>當採用Hybrid模式時，快取演算法將著重於「暫時資料」，外部的I/O會先寫入SSD，就馬上回傳I/O成功，之後再透過Async非同步的方式把資料寫入容量層中，快取層同時擔任了「讀取快取」和「寫入緩衝」的角色。</p>
-<p>當採用All flash時，快取演算法將著重於「熱資料」要放在快取層中，快取層全部都是負責寫入緩衝，讀取快取則是放在容量層，因為全部都是SSD讀取可以非常快。</p>
-<p>寫入緩衝的意思是他不會直接寫進去容量層，而是會在快取層停留一段時間，其目的是維持vSAN物件的可用性，當vSAN對一個物件寫入資料時，一般來說當FTT&gt;1，就會對至少一個host寫入，當寫入兩個host的SSD時，才會把真正的寫入容量層內。</p>
+<p>磁碟群組的入口是SSD，SSD只存放HDD的Cache資料，其中70%的容量用作Read Cache，30%的容量用作Write Cache。每個磁碟群組最多可以放7個HDD device，每個Host最多支持5個磁碟群組，所以一個Host最多可以有49個容量磁碟。</p>
+<p>當然，我們也可以在維持相同的雙層儲存架構下，把所有HDD替換成SSD，也就是All Flash，全閃存模式。啟用了全閃存模式後，vSAN Cluster可以支援更多功能，例如Compression、deduplication、RAID-5/6等等功能。</p>
+<p>這種雙層架構的缺點是如果唯一入口SSD掛了，後面的HDD容量層都不能使用。另外，Hybrid和All Flash模式下的cache演算法和角色也不完全相同。</p>
+<ul>
+<li><p><strong>Hybrid模式</strong>：</p>
+<ul>
+<li>快取演算法著重於「暫時資料」</li>
+<li>外部的I/O會先寫入SSD，然後立即回傳I/O成功，再透過非同步方式把資料寫入容量層</li>
+<li>快取層同時擔任「讀取快取」和「寫入緩衝」的角色</li>
+</ul>
+</li>
+<li><p><strong>All Flash模式</strong>：</p>
+<ul>
+<li>快取演算法著重於「熱資料」</li>
+<li>快取層全部負責寫入緩衝，讀取快取則放在容量層</li>
+<li>由於全部都是SSD，讀取速度非常快</li>
+</ul>
+</li>
+</ul>
+<p>寫入緩衝的意思是資料不會直接寫進容量層，而是會在快取層停留一段時間，這樣做的目的是維持vSAN物件的可用性。當vSAN對一個物件寫入資料時，通常會在FTT&gt;1的情況下，對至少兩個host寫入，當寫入兩個host的SSD時，才會真正寫入容量層。</p>
+<h3 id="總結："><a href="#總結：" class="headerlink" title="總結："></a>總結：</h3><ul>
+<li>vSAN採用雙層儲存架構，以SSD作為Cache層，HDD作為容量層</li>
+<li>支援Hybrid和All Flash模式，兩種模式下cache演算法不同</li>
+<li>SSD掛了會影響HDD容量層的使用</li>
+<li>All Flash模式下支援更多進階功能</li>
+</ul>
 
       
     </div>
@@ -680,19 +700,7 @@
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   
-    <span class="site-uv">
-      <i class="fa fa-user">&nbsp;在線人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      
-    </span>
-  
 
-  
-    <span class="site-pv">
-      <i class="fa fa-eye">&nbsp;進站人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      
-    </span>
   
 </div>
 

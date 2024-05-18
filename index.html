@@ -583,7 +583,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  563
+                  620
                 </span>
               
 
@@ -609,8 +609,8 @@
 
       
         
-          <p>vSAN作為VMware一個重要的儲存產品，他深度融合了VMware的vSphere，並能透過vCenter一站式管理儲存資源池，我們可以透過vCenter建立vSAN Cluster、創建vSAN Datastore，更能夠在vCenter上直接監控vSAN Cluster的健康和I/O性能狀態，接下來讓我來介紹我們如何透過7.0U3的vCenter進行運維管理</p>
-<h2 id="vSAN-Skyline-Health"><a href="#vSAN-Skyline-Health" class="headerlink" title="vSAN Skyline Health"></a>vSAN Skyline Health</h2><p>vSphere提供了esxcli指令，讓user可以透過esxcli指令主動的查詢當前Esxi host的hardware、storage、network等等info，那麼有沒有方法可以被動的提示user當前vSAN cluster的健康狀態呢？</p>
+          <p>vSAN作為VMware一個重要的儲存產品，它深度融合了VMware的vSphere，並能透過vCenter一站式管理儲存資源池。我們可以透過vCenter建立vSAN Cluster、創建vSAN Datastore，更能夠在vCenter上直接監控vSAN Cluster的健康和I/O性能狀態。接下來，讓我來介紹如何透過7.0U3的vCenter進行運維管理。</p>
+<h2 id="vSAN-Skyline-Health"><a href="#vSAN-Skyline-Health" class="headerlink" title="vSAN Skyline Health"></a>vSAN Skyline Health</h2><p>vSphere提供了esxcli指令，讓用戶可以透過esxcli指令主動查詢當前ESXi host的硬體、儲存、網路等資訊。那麼，有沒有方法可以被動提示用戶當前vSAN cluster的健康狀態呢？</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2023/11/26/vsan/cluster_monitor/" rel="contents">
@@ -760,7 +760,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  764
+                  856
                 </span>
               
 
@@ -786,10 +786,10 @@
 
       
         
-          <p>Disk由於晶圓問題、firmware問題、driver問題等等會造成ㄧ定機率上的故障，若一塊硬碟，他每天的故障機率是1%，一座資料中心假如有一萬個disk，代表每天有一百塊硬碟損壞，當然，vSAN對於部分類型損壞會嘗試自動修復，這樣能夠大幅減少許多人力成本，畢竟大部分的問題重開機就能解決。</p>
-<p>LSOM是最底層與硬碟打交道的Component，他的DDH(Degraded Device Handling) Service可以幫忙監控硬碟狀態，當DDH偵測到Disk即將要故障或損壞事件，就把Disk標記為有問題的裝置，讓他不參與資料的I/O流程，更多細節，可以參考VMware KB: <a target="_blank" rel="noopener" href="https://kb.vmware.com/s/article/2148358">https://kb.vmware.com/s/article/2148358</a></p>
-<p>這裡列舉vSAN偵測到的硬碟狀態以及他的原因</p>
-<h3 id="PDL"><a href="#PDL" class="headerlink" title="PDL"></a>PDL</h3><p>Permanent Disk Loss(PDL)，是一種嚴重的錯誤，需要人工介入，一般情況下是Host與Disk的連結出了問題，沒法連上去，ESXi Host內部或是Disk的bug都有可能</p>
+          <p>Disk 由於晶圓問題、firmware 問題、driver 問題等等會造成一定機率上的故障。假如一塊硬碟每天的故障機率是 1%，那麼一座有一萬個 disk 的資料中心，每天可能會有 100 塊硬碟損壞。當然，vSAN 對於部分類型的損壞會嘗試自動修復，這樣能大幅減少人力成本，畢竟大部分問題重開機就能解決。</p>
+<p>LSOM 是最底層與硬碟打交道的元件，它的 DDH（Degraded Device Handling）服務可以監控硬碟狀態。當 DDH 偵測到 Disk 即將故障或損壞時，會將 Disk 標記為有問題的裝置，讓它不再參與資料的 I/O 流程。更多細節可以參考 VMware KB：<a target="_blank" rel="noopener" href="https://kb.vmware.com/s/article/2148358">https://kb.vmware.com/s/article/2148358</a></p>
+<p>這裡列舉 vSAN 偵測到的硬碟狀態及其原因：</p>
+<h3 id="PDL"><a href="#PDL" class="headerlink" title="PDL"></a>PDL</h3><p>Permanent Disk Loss (PDL) 是一種嚴重的錯誤，需要人工介入。一般情況下是 Host 與 Disk 的連結出了問題，無法連接。可能是 ESXi Host 內部或 Disk 的 bug 導致的。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2023/11/18/vsan/physical_disk_states/" rel="contents">
@@ -939,7 +939,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  445
+                  524
                 </span>
               
 
@@ -965,9 +965,9 @@
 
       
         
-          <p>vSAN作為軟體定義儲存，他的加密機制也與硬體無關，無需額外的加密裝置，硬碟也無需額外的加密插件，vSAN加密機制採用的是XTS-AES 256加密標準，可以同時保護快取層和容量層的資料。執得注意的是，當資料進入快取層時，系統會對資料進行加密，而當資料要轉存進去容量層時，會先把準備要寫入容量層的資料解密，然後執行重複資料刪除和壓縮的動作，再加密資料，然後寫進去容量層</p>
-<p>vSAN的加密機制採用的是KMS(Key Manager Server)解決方案，使用者需要從外部例如Google或Amazon取得KMS加密金鑰</p>
-<p>KMS採用的是KEK(Key Encryption Key)和DEK(Data Encryption Key)機制，DEK先將硬碟資料進行資料加密，然後KEK負責加密DEK，DEK透過KMIP(Key Management Interoperability Protocol)傳送加密後的資料到vSAN節點主機中，這樣只有當管理人員拿到KEK，才可以解密所有資料。Hybrid和All Flash都支援此機制</p>
+          <p>vSAN 作為軟體定義儲存，它的加密機制也與硬體無關，無需額外的加密裝置，硬碟也無需額外的加密插件。vSAN 加密機制採用的是 XTS-AES 256 加密標準，可以同時保護快取層和容量層的資料。值得注意的是，當資料進入快取層時，系統會對資料進行加密，而當資料要轉存進去容量層時，會先把準備要寫入容量層的資料解密，然後執行重複資料刪除和壓縮的動作，再加密資料，最後寫進容量層。</p>
+<p>vSAN 的加密機制採用的是 KMS (Key Manager Server) 解決方案，使用者需要從外部例如 Google 或 Amazon 取得 KMS 加密金鑰。</p>
+<p>KMS 採用的是 KEK (Key Encryption Key) 和 DEK (Data Encryption Key) 機制。DEK 先將硬碟資料進行加密，然後 KEK 負責加密 DEK。DEK 透過 KMIP (Key Management Interoperability Protocol) 傳送加密後的資料到 vSAN 節點主機中，這樣只有當管理人員拿到 KEK，才可以解密所有資料。Hybrid 和 All Flash 都支援此機制。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2023/11/05/vsan/data_encryption/" rel="contents">
@@ -1117,7 +1117,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  565
+                  678
                 </span>
               
 
@@ -1143,9 +1143,9 @@
 
       
         
-          <h2 id="重複資料刪除和壓縮"><a href="#重複資料刪除和壓縮" class="headerlink" title="重複資料刪除和壓縮"></a>重複資料刪除和壓縮</h2><p>在資聊儲存領域，除了採用RAID 5/6之外，也可以透過啟用「重複資料刪除和壓縮」來達到節省儲存資源的目的。在啟用了重複資料刪除和壓縮機制後，系統會針對每個資料區塊進行重複資料刪除作業，如果vSAN Datastore儲存資源已經存在「相同的資料區塊」，系統不會再存一次，為了判斷「相同的資料區塊」，系統會使用雜湊建立資料索引。</p>
-<p>在vSAN架構中，雜湊的部分使用了SHA-1雜湊演算法，為每段資料建立Hash value，一段大小為4KB</p>
-<p>壓縮的部分則是使用了LZ4壓縮演算法，在剛才的重複資料刪除的過程中，當系統發現有新資料準備寫入時，就會進行壓縮的動作，能將原本4KB的資料壓縮成2KB左右，然後才寫進去容量層中</p>
+          <h2 id="重複資料刪除和壓縮"><a href="#重複資料刪除和壓縮" class="headerlink" title="重複資料刪除和壓縮"></a>重複資料刪除和壓縮</h2><p>在資料儲存領域，除了使用RAID 5/6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複存儲。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。</p>
+<p>在vSAN架構中，雜湊使用了SHA-1演算法來為每段資料建立Hash value，每段大小為4KB。</p>
+<p>壓縮則是使用LZ4演算法。在重複資料刪除的過程中，當系統發現有新資料要寫入時，會進行壓縮，將原本4KB的資料壓縮成大約2KB，然後再寫入容量層。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2023/10/25/vsan/data_compress/" rel="contents">
@@ -1295,7 +1295,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  487
+                  570
                 </span>
               
 
@@ -1321,51 +1321,16 @@
 
       
         
-          
-            <h3 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h3><p>VMware vSAN是一種分散式存儲技術，將多個ESXi主機的存儲資源組合成一個共享的數據存儲區域。這篇文章將詳細解釋虛擬機如何在vSAN中存儲，以及不同類型的物件是如何運作的。</p>
-<h3 id="vSAN與虛擬機"><a href="#vSAN與虛擬機" class="headerlink" title="vSAN與虛擬機"></a>vSAN與虛擬機</h3><p>vSAN是一個Object-based的存儲系統，這意味著數據是以物件的形式存儲的。當在vSAN Datastore部署虛擬機時，系統會生成五種類型的物件來管理和存儲虛擬機的數據。</p>
-<h3 id="五種類型的物件"><a href="#五種類型的物件" class="headerlink" title="五種類型的物件"></a>五種類型的物件</h3><ol>
-<li><p><strong>VM Home Namespace物件</strong></p>
-<ul>
-<li>這個物件在VM被創建時生成，用於存放所有VM的元數據，如配置文件、日志和其他必要的控制信息。</li>
-</ul>
-</li>
-<li><p><strong>SWAP物件</strong></p>
-<ul>
-<li>當VM啟動時生成的物件，用於存放內存交換（swap）文件，確保系統在內存不足時有足夠的虛擬內存。</li>
-</ul>
-</li>
-<li><p><strong>VMDK虛擬硬碟物件</strong></p>
-<ul>
-<li>這個物件在VM被創建時生成，類型是vdisk，主要用於存放VM的虛擬磁碟數據。</li>
-</ul>
-</li>
-<li><p><strong>Snapshot Delta VMDKs</strong></p>
-<ul>
-<li>當VM建立Snapshot時生成的物件，存放Snapshot的數據變更部分，使得系統可以還原到Snapshot時的狀態。</li>
-</ul>
-</li>
-<li><p><strong>Memory Object</strong></p>
-<ul>
-<li>當VM建立包含記憶體狀態的Snapshot時生成的物件，用於存放當前內存的內容，確保Snapshot能夠完全恢復當前狀態。</li>
-</ul>
-</li>
-</ol>
-<p>這些物件都是DOM物件，並共用一個不存在的VM Object UUID祖先。</p>
-<h3 id="查看vSAN中的虛擬物件"><a href="#查看vSAN中的虛擬物件" class="headerlink" title="查看vSAN中的虛擬物件"></a>查看vSAN中的虛擬物件</h3><p>LSOM Object是Component，可以透過以下指令查看：</p>
-<pre><code class="bash">cmmds-tool find -t DOM_OBJECT -f json
-
-另外，你也可以進入vSAN Cluster的監控頁面查看虛擬物件（以vSAN 7.0U3為例）:
-1. 進入vSAN Cluster
-2. 選擇 “Monitor”
-3. 點擊 “Virtual Objects”
-
-![](/images/vsan/virtual_obj.png)
-
-更多VM在vSAN怎麼部署和分配的資訊，請參考[Objects and Components](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vsan-planning.doc/GUID-1D8956A2-3F46-49C8-9231-38F3A9D09A0F.html)
-</code></pre>
-
-          
+          <h3 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h3><p>VMware vSAN 是一種分散式儲存技術，它將多個 ESXi 主機的儲存資源組合成一個共享的資料儲存區域。這篇文章會詳細解釋虛擬機在 vSAN 中是如何儲存數據，以及不同類型的物件如何運作。</p>
+<h3 id="vSAN-與虛擬機"><a href="#vSAN-與虛擬機" class="headerlink" title="vSAN 與虛擬機"></a>vSAN 與虛擬機</h3><p>vSAN 是一個 Object-based 的儲存系統，這意味著數據是以物件的形式儲存的。當在 vSAN Datastore 部署虛擬機時，系統會生成五種類型的物件來管理和儲存虛擬機的數據。</p>
+<h3 id="五種類型的物件"><a href="#五種類型的物件" class="headerlink" title="五種類型的物件"></a>五種類型的物件</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="2023/10/18/vsan/vm_persist/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1508,7 +1473,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  858
+                  994
                 </span>
               
 
@@ -1534,9 +1499,9 @@
 
       
         
-          <p>接下來我們會根據前面所學的知識，梳理一下端到端 vSAN的讀取和寫入的I/O流程，我們將以儲存Policy RAID-1, Stripe=2, FTT=1來討論。Strip對讀取的影響較大，FTT對寫入的影響較大，Stripe=2代表一個Component會被分半寫入同個host的兩個disk，FTT=1代表一個Object會被分成兩個components寫入兩個host</p>
-<p>這裡快速地複習一下，vSAN採用的是雙層架構，第一層硬碟是快取層，一般來說會使用SSD硬碟作為快取，裡面有70%的容量作為寫入緩衝，30%的容量是讀取快取。</p>
-<p>什麼是寫入緩衝呢？以上述RAID-1, FTT=1的模式來說，每當寫入一個I/O，會寫入兩個DataGroup，vSAN定義的一個完整的寫入I/O是Data寫進去兩個DataGroup裡的SSD就算完成I/O了，所以寫入緩衝只是暫時放在SSD，準備要寫進去容量層的Data。</p>
+          <p>接下來我們會根據前面所學的知識，梳理一下端到端 vSAN 的讀取和寫入的 I/O 流程。我們將以儲存 Policy RAID-1, Stripe=2, FTT=1 來討論。Strip 對讀取的影響較大，FTT 對寫入的影響較大。Stripe=2 代表一個 Component 會被分半寫入同個 Host 的兩個 Disk，FTT=1 代表一個 Object 會被分成兩個 Components 寫入兩個 Host。</p>
+<p>這裡快速地複習一下，vSAN 採用的是雙層架構。第一層硬碟是快取層，一般來說會使用 SSD 硬碟作為快取，裡面有 70% 的容量作為寫入緩衝，30% 的容量是讀取快取。</p>
+<p>什麼是寫入緩衝呢？以上述 RAID-1, FTT=1 的模式來說，每當寫入一個 I/O，會寫入兩個 DataGroup。vSAN 定義的一個完整的寫入 I/O 是 Data 寫進去兩個 DataGroup 裡的 SSD 就算完成 I/O 了，所以寫入緩衝只是暫時放在 SSD，準備要寫進去容量層的 Data。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2023/10/12/vsan/ioworkflow_overview/" rel="contents">
@@ -1686,7 +1651,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  439
+                  443
                 </span>
               
 
@@ -1712,9 +1677,9 @@
 
       
         
-          <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
+          <p>vSAN 的四大 Component - CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，彼此各司其職。以下圖為例，本篇將介紹 vSAN CMMDS。</p>
 <p><img src="/images/vsan/vsan_ioworkflow.png"></p>
-<p>vSAN LSOM(Local log-structured object manager)運作在ESXi node裡面，目的是讓Object和Component放在ESXi node裡面，當資料發生I/O時，負責管理cache disk和capacity disk的資料I/O</p>
+<p>vSAN LSOM（Local log-structured object manager）運作在 ESXi node 裡面，負責將 Object 和 Component 放在 ESXi node 裡面，並在資料發生 I/O 時，管理 cache disk 和 capacity disk 的資料 I/O。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2023/10/05/vsan/ioworkflow_lsom/" rel="contents">
@@ -2041,7 +2006,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  442
+                  457
                 </span>
               
 
@@ -2067,11 +2032,11 @@
 
       
         
-          <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS</p>
+          <p>vSAN 的四大組件：CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，各司其職。下圖展示了它們的大致交互邏輯，本文將介紹 vSAN 的 CMMDS。</p>
 <p><img src="/images/vsan/vsan_ioworkflow.png"></p>
-<p>vSAN DOM(Distributed Object Manager)顧名思義，就是負責管理Object如分何分散Component</p>
+<p>vSAN DOM（Distributed Object Manager）顧名思義，就是負責管理 Object 以及分散 Component。</p>
 <blockquote>
-<p>Component由LSOM管理，在下一篇會提到</p>
+<p>Component 是由 LSOM 管理，會在下一篇提到。</p>
 </blockquote>
           <!--noindex-->
           <div class="post-button text-center">
@@ -2270,19 +2235,7 @@
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   
-    <span class="site-uv">
-      <i class="fa fa-user">&nbsp;在線人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      
-    </span>
-  
 
-  
-    <span class="site-pv">
-      <i class="fa fa-eye">&nbsp;進站人數:</i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      
-    </span>
   
 </div>
 
