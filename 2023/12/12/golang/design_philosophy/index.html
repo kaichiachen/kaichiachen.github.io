@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="Go語言，又稱Golang，是由Google開發的一種現代編程語言。它在2007年誕生，由Robert Griesemer、Rob Pike和Ken Thompson設計。Go語言的設計哲學非常獨特，使它在眾多編程語言中脫穎而出。這篇文章，我們來聊聊Go語言的設計哲學，看看這門語言是如何讓編程變得更加簡單、高效和愉快的。">
+<meta name="description" content="Go語言，又稱Golang，是由Google開發的一種現代程式語言。它在2007年誕生，由Robert Griesemer、Rob Pike和Ken Thompson設計。Go語言的設計哲學非常獨特，使它在眾多程式語言中脫穎而出。這篇文章，我們來聊聊Go語言的設計哲學，看看這門語言是如何讓寫程式變得更加簡單、高效和愉快的。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Go] Go語言的設計哲學">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/12/12/golang/design_philosophy/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="Go語言，又稱Golang，是由Google開發的一種現代編程語言。它在2007年誕生，由Robert Griesemer、Rob Pike和Ken Thompson設計。Go語言的設計哲學非常獨特，使它在眾多編程語言中脫穎而出。這篇文章，我們來聊聊Go語言的設計哲學，看看這門語言是如何讓編程變得更加簡單、高效和愉快的。">
+<meta property="og:description" content="Go語言，又稱Golang，是由Google開發的一種現代程式語言。它在2007年誕生，由Robert Griesemer、Rob Pike和Ken Thompson設計。Go語言的設計哲學非常獨特，使它在眾多程式語言中脫穎而出。這篇文章，我們來聊聊Go語言的設計哲學，看看這門語言是如何讓寫程式變得更加簡單、高效和愉快的。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/golang/philosophy.jpg">
 <meta property="og:image" content="https://kaichiachen.github.io/images/golang/overview.jpg">
 <meta property="article:published_time" content="2023-12-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-20T03:14:43.831Z">
+<meta property="article:modified_time" content="2024-05-20T03:20:31.336Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="golang">
 <meta property="article:tag" content="Go">
@@ -440,9 +440,9 @@
       
 
       
-        <p>Go語言，又稱Golang，是由Google開發的一種現代編程語言。它在2007年誕生，由Robert Griesemer、Rob Pike和Ken Thompson設計。Go語言的設計哲學非常獨特，使它在眾多編程語言中脫穎而出。這篇文章，我們來聊聊Go語言的設計哲學，看看這門語言是如何讓編程變得更加簡單、高效和愉快的。<span id="more"></span></p>
-<p>所謂編程語言的設計哲學，就是指決定這門語言演化進程的高級原則和依據。好比Python的設計哲學是<strong>簡單就是美</strong>，使開發者能專注於解決問題本身，而不是被語法所困擾。而Java的設計哲學強調穩定性、可擴展性和跨平台性，Java的座右銘是「Write Once, Run Anywhere」。</p>
-<p><strong>設計哲學之於編程語言，就好比一個人的價值觀之於這個人的行為</strong><br>因為如果你不認同一個人的價值觀，那你其實很難與之持續交往下去，即所謂道不同不相為謀。類似的，如果你不認同一門程式語言的設計哲學，那麼很有可能你在後續的語言學習中，就會遇到上面提到的這些問題，而且可能會讓你失去繼續學習的精神動力。</p>
+        <p>Go語言，又稱Golang，是由Google開發的一種現代程式語言。它在2007年誕生，由Robert Griesemer、Rob Pike和Ken Thompson設計。Go語言的設計哲學非常獨特，使它在眾多程式語言中脫穎而出。這篇文章，我們來聊聊Go語言的設計哲學，看看這門語言是如何讓寫程式變得更加簡單、高效和愉快的。<span id="more"></span></p>
+<p>所謂程式語言的設計哲學，就是指決定這門語言演化進程的高級原則和依據。好比Python的設計哲學是<strong>簡單就是美</strong>，使開發者能專注於解決問題本身，而不是被語法所困擾。而Java的設計哲學強調穩定性、可擴展性和跨平台性，Java的座右銘是「Write Once, Run Anywhere」。</p>
+<p><strong>設計哲學之於程式語言，就好比一個人的價值觀之於這個人的行為</strong><br>因為如果你不認同一個人的價值觀，那你其實很難與之持續交往下去，即所謂道不同不相為謀。類似的，如果你不認同一門程式語言的設計哲學，那麼很有可能你在後續的語言學習中，就會遇到上面提到的這些問題，而且可能會讓你失去繼續學習的精神動力。</p>
 <p>我認為Go語言的設計哲學可以總結為以下五點：簡單、顯式、組合、併發和工程導向。<br><img src="/images/golang/philosophy.jpg"></p>
 <h3 id="簡單"><a href="#簡單" class="headerlink" title="簡單"></a>簡單</h3><p>簡單意味著語言本身保持最小的語法和特性集，避免過於複雜的結構和特性，使程式碼更易於閱讀和理解。例如，Go 不支持繼承、多型等傳統 OOP（物件導向程式設計）的特性，而是依賴於更簡單的結構體和接口。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span> &#123;</span><br><span class="line">    Name <span class="type">string</span></span><br><span class="line">    Age  <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    p := Person&#123;Name: <span class="string">&quot;John&quot;</span>, Age: <span class="number">30</span>&#125;</span><br><span class="line">    fmt.Println(p)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
