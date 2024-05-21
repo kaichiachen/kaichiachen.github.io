@@ -42,7 +42,7 @@
 
   
   
-  <link href="../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="../../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -50,29 +50,27 @@
 
 
 
-<link href="../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="../../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="../../images/apple-touch-icon-next.png?v=5.1.4">
+<link href="../../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../../images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../../images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="../../images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../../images/favicon-16x16-next.png?v=5.1.4">
 
 
+  <link rel="mask-icon" href="../../../../../images/logo.svg?v=5.1.4" color="#222">
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
 
 
+  <meta name="keywords" content="golang,Go," />
 
 
 
@@ -81,14 +79,23 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="安迪熊">
-<meta property="og:url" content="https://kaichiachen.github.io/tags/TCP-IP/index.html">
+
+
+<meta name="description" content="我們編寫的 Go 程式一般都是簡單程式，一般由一個或幾個 Go 原始碼檔案組成，而且所有原始碼檔案都在同一個目錄中。但是生產環境中運行的程式可不會這麼簡單，通常它們都有著複雜的專案結構佈局。弄清楚一個實用 Go 專案的專案佈局標準是 Go 開發者走向編寫複雜 Go 程式的第一步，也是必經的一步。 但 Go 官方到目前為止也沒有給出一個關於 Go 專案佈局標準的正式定義。那在這樣的情況下，Go 社群">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Go] 一個Go的程式專案是怎麼樣的">
+<meta property="og:url" content="https://kaichiachen.github.io/2023/12/19/golang/project_structure/index.html">
 <meta property="og:site_name" content="安迪熊">
+<meta property="og:description" content="我們編寫的 Go 程式一般都是簡單程式，一般由一個或幾個 Go 原始碼檔案組成，而且所有原始碼檔案都在同一個目錄中。但是生產環境中運行的程式可不會這麼簡單，通常它們都有著複雜的專案結構佈局。弄清楚一個實用 Go 專案的專案佈局標準是 Go 開發者走向編寫複雜 Go 程式的第一步，也是必經的一步。 但 Go 官方到目前為止也沒有給出一個關於 Go 專案佈局標準的正式定義。那在這樣的情況下，Go 社群">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://kaichiachen.github.io/images/golang/overview.jpg">
+<meta property="article:published_time" content="2023-12-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-05-21T13:43:45.015Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="鍇嘉">
+<meta property="article:tag" content="golang">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kaichiachen.github.io/images/golang/overview.jpg">
 
 
 
@@ -118,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/tags/TCP-IP/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2023/12/19/golang/project_structure/"/>
 
 
 
 
 
-  <title>標籤: TCP/IP | 安迪熊</title>
+  <title>[Go] 一個Go的程式專案是怎麼樣的 | 安迪熊</title>
   
 
 
@@ -155,7 +162,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -294,54 +301,236 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>TCP/IP<small>標籤</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="../../2021/09/20/overview-network/" itemprop="url">
-              
-                <span itemprop="name">[網路]TCP/IP - 計算機網路是什麼?</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">[Go] 一個Go的程式專案是怎麼樣的</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-09-20T00:00:00+08:00"
-              content="2021-09-20" >
-          09-20
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2023-12-19T00:00:00+08:00">
+                2023-12-19
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../../categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2023/12/19/golang/project_structure/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye">&nbsp;閱讀次數:</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  1.3k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我們編寫的 Go 程式一般都是簡單程式，一般由一個或幾個 Go 原始碼檔案組成，而且所有原始碼檔案都在同一個目錄中。但是生產環境中運行的程式可不會這麼簡單，通常它們都有著複雜的專案結構佈局。弄清楚一個實用 Go 專案的專案佈局標準是 Go 開發者走向編寫複雜 Go 程式的第一步，也是必經的一步。</p>
+<p>但 Go 官方到目前為止也沒有給出一個關於 Go 專案佈局標準的正式定義。那在這樣的情況下，Go 社群是否有我們可以遵循的參考佈局，或者標準呢？有的。在這一篇文章裡，我就來告訴你 Go 社群廣泛採用的 Go 專案佈局是什麼樣子的。</p>
+<span id="more"></span>
+
+<p>一個 Go 專案通常分為可執行程式專案和第三方module/lib，現在我們就來分析一下這兩類 Go 專案的典型結構佈局分別是怎樣的。首先我們先來看 Go 可執行程式專案的典型結構佈局。可執行程式專案是以建構可執行程式為目的的專案，Go 社群針對這類 Go 專案所形成的典型結構佈局是這樣的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; tree -F goProject</span></span><br><span class="line">goProject</span><br><span class="line">├── cmd/</span><br><span class="line">│   ├── app1/</span><br><span class="line">│   │   └── main.go</span><br><span class="line">│   └── app2/</span><br><span class="line">│       └── main.go</span><br><span class="line">├── go.mod</span><br><span class="line">├── go.sum</span><br><span class="line">├── internal/</span><br><span class="line">│   ├── pkga/</span><br><span class="line">│   │   └── pkg_a.go</span><br><span class="line">│   └── pkgb/</span><br><span class="line">│       └── pkg_b.go</span><br><span class="line">├── pkg1/</span><br><span class="line">│   └── pkg1.go</span><br><span class="line">└── pkg2/</span><br><span class="line">    └── pkg2.go</span><br></pre></td></tr></table></figure>
+
+<p>現在跟你解釋一下這裡面的幾個重點。</p>
+<p>我們從上往下按順序來，先來看 cmd 目錄。cmd 目錄就是存放專案要編譯構建的可執行檔案對應的帶有<code>func main()</code>.go檔案。如果你的專案中有多個可執行檔案需要構建，每個可執行檔案的 main 套件單獨放在一個子目錄中，比如圖中的 app1、app2，cmd 目錄下的各 app 的 main 套件將整個專案的依賴連接在一起。</p>
+<p>而且通常來說，main 應該很簡潔。我們在 main 裡的實作會做一些command參數解析、資源初始化、Logger初始化、資料庫連接初始化等工作，之後就程式就會進去其他package去執行更高級的邏輯控制。另外，也有一些 Go 專案將 cmd 這個名字改為 app 或其他名字，但它的功能其實並沒有變。</p>
+<p>接著我們來看 pkgN 目錄，這是一個存放專案自身要使用、同樣也是可執行檔案對應 main 所要依賴的Library，同時這些目錄下的Library還可以被外部Project引用。</p>
+<p>然後是 go.mod 和 go.sum，它們是管理 Go 語言第三方Library所使用的配置檔。建議所有新專案都基於 Go Module 來進行Library管理，因為這是目前 Go 官方推薦的標準構建模式。</p>
+<p><strong>好了到這裡，我們已經了解了 Go 可執行程式專案的典型佈局，現在我們再來看看 Go Library的典型結構佈局是怎樣的。</strong><br>Go Library僅對外暴露 Go 套件，這類專案的典型佈局形式是這樣的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; tree -F libLayout </span></span><br><span class="line">libLayout</span><br><span class="line">├── go.mod</span><br><span class="line">├── internal/</span><br><span class="line">│   ├── pkga/</span><br><span class="line">│   │   └── pkg_a.go</span><br><span class="line">│   └── pkgb/</span><br><span class="line">│       └── pkg_b.go</span><br><span class="line">├── pkg1/</span><br><span class="line">│   └── pkg1.go</span><br><span class="line">└── pkg2/</span><br><span class="line">    └── pkg2.go</span><br></pre></td></tr></table></figure>
+<p>我們看到，Library類型專案相比於 Go 可執行程式專案的佈局要簡單一些。因為這類Project不需要構建可執行程式，所以去除了 cmd 目錄。</p>
+<p>Go Library的初衷是為了對外部（開源或組織內部公開）暴露 API，對於僅限Project內部使用而不想暴露到外部的套件，可以放在Project頂層的 internal 目錄下面。當然 internal 也可以有多個並存在於Project結構中的任一目錄層級中，關鍵是專案結構設計人員要明確各級 internal 套件的應用層次和範圍。</p>
+<p>對於有一個且僅有一個套件的 Go Library來說，我們也可以將上面的佈局做進一步簡化，簡化的佈局如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; tree -L 1 -F singleLibLayout</span></span><br><span class="line">singleLibLayout</span><br><span class="line">├── feature1.go</span><br><span class="line">├── feature2.go</span><br><span class="line">├── go.mod</span><br><span class="line">└── internal/</span><br></pre></td></tr></table></figure>
+<p>簡化後，我們將這唯一套件的所有原始碼檔案放置在Project的頂層目錄下（比如上面的 feature1.go 和 feature2.go），其他佈局元素位置和功用不變。</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>首先，對於以生產可執行程式為目的的 Go Project，它的典型Project結構分為五部分：</p>
+<ul>
+<li>放在Project頂層的 Go Module 相關檔案，包括 go.mod 和 go.sum</li>
+<li>cmd 目錄：存放Project要編譯構建的可執行檔案所對應的 main 套件的源檔</li>
+<li>Project套件目錄：每個Project下的非 main 套件都“平鋪”在Project的根目錄下，每個目錄對應一個 Go 套件</li>
+<li>internal 目錄：存放僅Project內部引用的 Go 套件，這些套件無法被Project外引用</li>
+</ul>
+<p>第二，對於以生產可復用Library為目的的 Go Project，它的典型結構則要簡單許多，我們可以直接理解為在 Go 可執行程式專案的基礎上去掉 cmd 目錄。</p>
+<div style="text-align: center;">
+  <a href="../../../../../categories/Go/">Go語言進階學習系列</a>
+  <img src="/images/golang/overview.jpg" alt="" />
+</div>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../../tags/golang/" rel="tag"># golang</a>
+          
+            <a href="../../../../../tags/Go/" rel="tag"># Go</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../../12/golang/design_philosophy/" rel="next" title="[Go] Go語言的設計哲學">
+                <i class="fa fa-chevron-left"></i> [Go] Go語言的設計哲學
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -349,6 +538,20 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -375,7 +578,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="../../images/avatar.jpg"
+                src="../../../../../images/avatar.jpg"
                 alt="" />
             
               <p class="site-author-name" itemprop="name"></p>
@@ -387,7 +590,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="../../archives">
+                <a href="../../../../../archives">
               
                   <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">文章</span>
@@ -399,7 +602,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="../../categories/index.html">
+                <a href="../../../../../categories/index.html">
                   <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
@@ -410,7 +613,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="../index.html">
+                <a href="../../../../../tags/index.html">
                   <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
@@ -549,60 +752,64 @@
 
   
   
-    <script type="text/javascript" src="../../lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="../../../../../lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="../../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="../../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="../../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 
   
 
 
-  <script type="text/javascript" src="../../js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../../js/src/utils.js?v=5.1.4"></script>
 
-  <script type="text/javascript" src="../../js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="../../js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="../../js/src/schemes/pisces.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../../js/src/motion.js?v=5.1.4"></script>
 
 
 
   
+  
+
+
+  <script type="text/javascript" src="../../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
 
-  <script type="text/javascript" src="../../js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../../js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -615,6 +822,18 @@
       <script id="dsq-count-scr" src="https://kaichiablog.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://kaichiachen.github.io/2023/12/19/golang/project_structure/';
+          this.page.identifier = '2023/12/19/golang/project_structure/';
+          this.page.title = '[Go] 一個Go的程式專案是怎麼樣的';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kaichiablog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   
