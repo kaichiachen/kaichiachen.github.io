@@ -309,6 +309,185 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/07/16/vsan/ssd_nvme_overview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="../../2023/07/16/vsan/ssd_nvme_overview/" itemprop="url">[vSAN]儲存最速的Protocol - NVMe</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2023-07-16T00:00:00+08:00">
+                2023-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="../../2023/07/16/vsan/ssd_nvme_overview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2023/07/16/vsan/ssd_nvme_overview/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  691
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Disk 由於晶圓問題、 firmware 問題、 driver 問題等等會造成一定機率上的故障。如果一塊硬碟每天的故障機率是 1%，那麼一座資料中心假如有一萬個 disk，代表每天有一百塊硬碟損壞。當然， vSAN 對於部分類型損壞會嘗試自動修復，這樣能夠大幅減少許多人力成本，畢竟大部分的問題重開機就能解決。</p>
+<p>LSOM 是最底層與硬碟打交道的 component。他的 DDH (Degraded Device Handling) service 可以幫忙監控硬碟狀態，當 DDH 偵測到 disk 即將要故障或損壞事件時，就會把 disk 標記為有問題的裝置，讓它不再參與資料的 I/O 流程。更多細節可以參考 VMware KB：<a target="_blank" rel="noopener" href="https://kb.vmware.com/s/article/2148358">https://kb.vmware.com/s/article/2148358</a></p>
+<p>NVMe 是一種主機與 SSD 之間溝通的協議。前面說到 PCIe 有三層， NVMe 屬於第四層，是協議中的最高層，如下圖所示。</p>
+<p><img src="/images/vsan/nvme_structure.png" alt=""></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="../../2023/07/16/vsan/ssd_nvme_overview/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/07/09/vsan/ssd_pcie_overview/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -433,8 +612,9 @@
         
           <p>PCIe 是 SSD 一項重要和主流的接口技術，所以我們有必要對 PCIe 有深入的了解。</p>
 <p>PCIe 從第一代到最近 2022 年第六代的規格問世，速度越來越快。相比於 SAS/SATA，PCIe 資料傳輸的「高速公路」更多，最多可以有 32 個 Lane，而 SAS/SATA 只能有一個 Lane。所以我們可以說，PCIe 的速度就是 Lane 的數量 x 單條 Lane 的速度。</p>
-<h3 id="PCIe-拓樸結構"><a href="#PCIe-拓樸結構" class="headerlink" title="PCIe 拓樸結構"></a>PCIe 拓樸結構</h3><p>PCIe 採用的是樹形拓樸結構，如下圖所示：</p>
-<p><img src="/images/vsan/pci_topology.png"></p>
+<h3 id="pcie-拓樸結構">PCIe 拓樸結構</h3>
+<p>PCIe 採用的是樹形拓樸結構，如下圖所示：</p>
+<p><img src="/images/vsan/pci_topology.png" alt=""></p>
 <p>Root Complex 是樹的根，服務於 CPU。Root Complex 能存取 PCIe 設備，也能存取記憶體。</p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -965,11 +1145,12 @@
       
         
           <p>前面分別講了資料儲存的最小單元、硬碟陣列怎麼做備份以及提高可用性，接下來安迪想講的是儲存系統架構 - DAS、NAS和SAN</p>
-<h3 id="DAS"><a href="#DAS" class="headerlink" title="DAS"></a>DAS</h3><blockquote>
+<h3 id="das">DAS</h3>
+<blockquote>
 <p>DAS(Direct Attach Storage) - 本地的檔案系統</p>
 </blockquote>
 <p>DAS可以理解為就是本地的磁碟陣列，透過USB，你的個人電腦或伺服器就可以連結到這個磁碟陣列，根據RAID卡，進行相應的備份，當然，他的缺點就是需要有一條實體USB線，且擴充容量等比較麻煩。</p>
-<h3 id="NAS"><a href="#NAS" class="headerlink" title="NAS"></a>NAS</h3>
+<h3 id="nas">NAS</h3>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2023/06/04/vsan/storage_protocol_overview/" rel="contents">
@@ -1119,7 +1300,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  919
+                  922
                 </span>
               
 
@@ -1301,7 +1482,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  2.8k
+                  2.9k
                 </span>
               
 
@@ -1329,7 +1510,7 @@
         
           <p>小羚和安迪説，我大概是明白資料中心的組成了，你能不能再多說說vSAN是怎麼儲存資料呢？他是如何能把我的重要檔案自動備份又能同時取用呢？</p>
 <p>安迪說，當然沒問題！儲存是一個很大的領域，我們只能先從最基本的基礎開始，我會先從三個資料儲存系統 - 區塊儲存系統、檔案儲存系統和物件儲存系統說起，這裡說的系統都是軟體層面上的邏輯，不會深入探討到硬碟。</p>
-<h2 id="Block-storage-區塊儲存系統"><a href="#Block-storage-區塊儲存系統" class="headerlink" title="Block storage(區塊儲存系統)"></a>Block storage(區塊儲存系統)</h2>
+<h2 id="block-storage(區塊儲存系統)">Block storage(區塊儲存系統)</h2>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2023/04/27/vsan/storage_overview/" rel="contents">
@@ -1658,7 +1839,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  773
+                  774
                 </span>
               
 
@@ -1869,7 +2050,7 @@
       
         
           <p>小羚一聽到資料中心，突然頭暈目眩，因為在他的腦海裡，資料中心就是一個冰冷的屋子裡放滿了各種機器。</p>
-<p><img src="/images/vsan/datacenter.png"></p>
+<p><img src="/images/vsan/datacenter.png" alt=""></p>
 <p>這些機器就是硬體設備，我們已經可以透過虛擬機的方式，把計算部分軟體化，但是資料中心還有「儲存」需求，要怎麼把它也軟體化呢？</p>
 <p>軟體定義資料中心（Software-Defined Data Center, SDDC）顧名思義，就是利用軟體，把資料中心裡的計算、儲存、網路資源「抽象化」和「虛擬化」。當資源都被虛擬化後，IT管理團隊變得更加靈活了。IT人員可以根據使用者需求，提供更細緻的資源，例如一台CPU 1GHz，20GB容量的電腦，並且這個電腦還能隨時備份。不但提高了服務和應用的「可用性」及「彈性」，同時也降低了對運維的「複雜度」和「預算」，並簡化服務上線的工作流程和應用的推出時間。接下來的重點將會圍繞在「儲存資源」的部分，也就是VMware vSAN產品相關的技術結構。</p>
 <p>一般的常見解決方案大致分為兩類 - 公有雲和私有雲。</p>
@@ -1913,190 +2094,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2022/12/05/vsan/vsan_cloud_overview/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="../../images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="../../2022/12/05/vsan/vsan_cloud_overview/" itemprop="url">[vSAN]雲端，什麼是雲端？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2022-12-05T00:00:00+08:00">
-                2022-12-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="../../categories/vSAN/" itemprop="url" rel="index">
-                    <span itemprop="name">vSAN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="../../2022/12/05/vsan/vsan_cloud_overview/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2022/12/05/vsan/vsan_cloud_overview/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  1.1k
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>小羚是一位老師，有一天小羚費盡了功夫，寫好了本學期的教案，她想要備份在安全的地方。小羚想著想著，要存哪好呢？存行動硬碟不太安全，萬一丟了怎麼辦？存自己的電腦，也沒安全感，萬一中毒了怎麼辦？她的男友安迪跟她說，可以買三個行動硬碟，都分別存在裡面呀。小羚回說，這樣子好麻煩，如果我想更新教案裡的某段內容，這樣還要一個個打開來更新。安迪又說，可以存雲端呀！存雲端既不用擔心硬碟損壞，也不用擔心突然有靈感的時候沒辦法隨時修改。</p>
-<p>小羚問安迪，有什麼常見的雲端儲存服務嗎？</p>
-<p>有的，儲存是一個很大的領域，服務的對象也千差萬別，安迪會用兩篇的篇幅介紹，首先會先介紹什麼是「雲」，再來介紹雲端儲存系統。</p>
-<h3 id="那麼，什麼是「雲」呢？"><a href="#那麼，什麼是「雲」呢？" class="headerlink" title="那麼，什麼是「雲」呢？"></a>那麼，什麼是「雲」呢？</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="../../2022/12/05/vsan/vsan_cloud_overview/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="../2/">&lt;</a><a class="page-number" href="../../">1</a><a class="page-number" href="../2/">2</a><span class="page-number current">3</span><a class="page-number" href="../4/">4</a><a class="page-number" href="../5/">5</a><a class="extend next" rel="next" href="../4/">&gt;</a>
+    <a class="extend prev" rel="prev" href="../2/">&lt;</a><a class="page-number" href="../../">1</a><a class="page-number" href="../2/">2</a><span class="page-number current">3</span><a class="page-number" href="../4/">4</a><span class="space">&hellip;</span><a class="page-number" href="../6/">6</a><a class="extend next" rel="next" href="../4/">&gt;</a>
   </nav>
 
 
@@ -2146,7 +2148,7 @@
               
                 <a href="../../archives">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

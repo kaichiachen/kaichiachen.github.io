@@ -441,8 +441,8 @@
         <p>小羚是一位老師，有一天小羚費盡了功夫，寫好了本學期的教案，她想要備份在安全的地方。小羚想著想著，要存哪好呢？存行動硬碟不太安全，萬一丟了怎麼辦？存自己的電腦，也沒安全感，萬一中毒了怎麼辦？她的男友安迪跟她說，可以買三個行動硬碟，都分別存在裡面呀。小羚回說，這樣子好麻煩，如果我想更新教案裡的某段內容，這樣還要一個個打開來更新。安迪又說，可以存雲端呀！存雲端既不用擔心硬碟損壞，也不用擔心突然有靈感的時候沒辦法隨時修改。</p>
 <p>小羚問安迪，有什麼常見的雲端儲存服務嗎？</p>
 <p>有的，儲存是一個很大的領域，服務的對象也千差萬別，安迪會用兩篇的篇幅介紹，首先會先介紹什麼是「雲」，再來介紹雲端儲存系統。</p>
-<h3 id="那麼，什麼是「雲」呢？"><a href="#那麼，什麼是「雲」呢？" class="headerlink" title="那麼，什麼是「雲」呢？"></a>那麼，什麼是「雲」呢？</h3><span id="more"></span>
-
+<h3 id="那麼，什麼是「雲」呢？">那麼，什麼是「雲」呢？</h3>
+<span id="more"></span>
 <p>「雲」就是一個大池子，這個池子裡面裝著豐沛的電腦「計算」資源和「儲存」資源，然後透過「網路」的方式，拿到遠端池子裡幫我們運算好或儲存的結果。</p>
 <p>假如我們只想做個簡單的計算，不需要買一台電腦另外算，只需要短暫的租用一下CPU即可。假如我們只想暫時性存個文件，不需要額外買行動硬碟浪費空間，只需要短暫的租用一下硬碟即可。</p>
 <p>雲主要可以分為以下三種服務：</p>
@@ -452,13 +452,17 @@
 <li>IaaS</li>
 </ol>
 <p>雲端儲存給使用者使用的「介面」可以區分為以上三個，下面依依來介紹。</p>
-<h3 id="SaaS"><a href="#SaaS" class="headerlink" title="SaaS"></a>SaaS</h3><p>SaaS（Software as a Service）是雲端中最外層的服務，直接讓使用者能使用的服務，讓使用者能打開瀏覽器透過UI操作，例如Dropbox、Google Doc等等。所以，這也是小羚適合使用的服務。雖然找到了最適合的服務，但是秉持著刨根問底的精神，小羚還是很好奇我在雲端上存的檔案是怎麼儲存和備份的呢？那讓我們接著繼續看下去。</p>
-<h3 id="PaaS"><a href="#PaaS" class="headerlink" title="PaaS"></a>PaaS</h3><p>PaaS（Platform as a Service），通常SaaS下面這一層就是PaaS，它的目的是給最外層的服務提供一個平台，讓網路應用可以部署在上面，例如Amazon S3等等。使用者一般為工程師，工程師把寫好的服務部署在上面，他不需要管分散式架構、備份等問題，其中，最有名的當數Amazon S3了，這裡容我簡單介紹一下。</p>
+<h3 id="saas">SaaS</h3>
+<p>SaaS（Software as a Service）是雲端中最外層的服務，直接讓使用者能使用的服務，讓使用者能打開瀏覽器透過UI操作，例如Dropbox、Google Doc等等。所以，這也是小羚適合使用的服務。雖然找到了最適合的服務，但是秉持著刨根問底的精神，小羚還是很好奇我在雲端上存的檔案是怎麼儲存和備份的呢？那讓我們接著繼續看下去。</p>
+<h3 id="paas">PaaS</h3>
+<p>PaaS（Platform as a Service），通常SaaS下面這一層就是PaaS，它的目的是給最外層的服務提供一個平台，讓網路應用可以部署在上面，例如Amazon S3等等。使用者一般為工程師，工程師把寫好的服務部署在上面，他不需要管分散式架構、備份等問題，其中，最有名的當數Amazon S3了，這裡容我簡單介紹一下。</p>
 <p><strong>Amazon S3</strong></p>
 <p>Amazon S3（Simple Storage Service）是亞馬遜公司提供的一個Object Storage儲存服務，可以透過Restful API、SOAP等方式，把你的檔案儲存在網路伺服器上。目前每個月收費3元台幣/GB，與iCloud比似乎還是有點貴，iCloud月付30元就有50GB了。</p>
 <p>Amazon S3有個關鍵的概念，叫做「Bucket」，Bucket有點像是你的名稱唯一個人資料夾，裡面只能存放檔案，不能再新建資料夾，存取檔案只能透過你的資料夾裡面的檔案名字去讀取或是更新。我們通常說的Object儲存系統，就是把檔案存在一個沒有資料夾的大平面。</p>
-<h3 id="IaaS"><a href="#IaaS" class="headerlink" title="IaaS"></a>IaaS</h3><p>IaaS（Infrastructure as a Service），PaaS下面那一層就是IaaS。我們知道，一台電腦或伺服器，它是由「計算/CPU」和「儲存/Disk」構成，缺一不可。IaaS的目的是讓工程師可以直接使用這些硬體設備，透過虛擬化的方式，切割成獨立的計算資源，透過iSCSI等方式，切割獨立的儲存資源，例如vSphere、vSAN等等，而這也是資料中心提供的Service方式。下一篇，我們將會介紹vSAN的核心思想以及要解決的問題——軟體定義資料中心。</p>
-<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
+<h3 id="iaas">IaaS</h3>
+<p>IaaS（Infrastructure as a Service），PaaS下面那一層就是IaaS。我們知道，一台電腦或伺服器，它是由「計算/CPU」和「儲存/Disk」構成，缺一不可。IaaS的目的是讓工程師可以直接使用這些硬體設備，透過虛擬化的方式，切割成獨立的計算資源，透過iSCSI等方式，切割獨立的儲存資源，例如vSphere、vSAN等等，而這也是資料中心提供的Service方式。下一篇，我們將會介紹vSAN的核心思想以及要解決的問題——軟體定義資料中心。</p>
+<h3 id="總結">總結</h3>
+<ul>
 <li><strong>雲端儲存</strong> 提供靈活、安全的備份方案。</li>
 <li><strong>SaaS</strong> 讓一般使用者能輕鬆使用雲端服務，例如Google Doc。</li>
 <li><strong>PaaS</strong> 提供平台讓工程師部署應用程式，例如Amazon EKS。</li>
@@ -592,7 +596,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

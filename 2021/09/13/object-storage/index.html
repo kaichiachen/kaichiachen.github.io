@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="Object Storage(物件儲存)Object Storage - 雲端系統上最流行的儲存方式 Object storage和File storage一樣，是基於Block storage的，但有幾個關鍵的不同點。File storage就像是一棵樹，從根開始有多層資料夾（樹枝）和檔案（葉子），是典型的層次結構。而Object storage則是扁平化的結構，所有檔案都存在單一資料夾中，沒有">
+<meta name="description" content="Object Storage(物件儲存) Object Storage - 雲端系統上最流行的儲存方式 Object storage和File storage一樣，是基於Block storage的，但有幾個關鍵的不同點。File storage就像是一棵樹，從根開始有多層資料夾（樹枝）和檔案（葉子），是典型的層次結構。而Object storage則是扁平化的結構，所有檔案都存在單一資料夾中，沒">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[儲存]資料儲存的基礎知識 - Object storage">
 <meta property="og:url" content="https://kaichiachen.github.io/2021/09/13/object-storage/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="Object Storage(物件儲存)Object Storage - 雲端系統上最流行的儲存方式 Object storage和File storage一樣，是基於Block storage的，但有幾個關鍵的不同點。File storage就像是一棵樹，從根開始有多層資料夾（樹枝）和檔案（葉子），是典型的層次結構。而Object storage則是扁平化的結構，所有檔案都存在單一資料夾中，沒有">
+<meta property="og:description" content="Object Storage(物件儲存) Object Storage - 雲端系統上最流行的儲存方式 Object storage和File storage一樣，是基於Block storage的，但有幾個關鍵的不同點。File storage就像是一棵樹，從根開始有多層資料夾（樹枝）和檔案（葉子），是典型的層次結構。而Object storage則是扁平化的結構，所有檔案都存在單一資料夾中，沒">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-09-12T16:00:00.000Z">
 <meta property="article:modified_time" content="2024-05-17T16:58:45.974Z">
@@ -413,7 +413,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  763
+                  765
                 </span>
               
 
@@ -438,26 +438,40 @@
       
 
       
-        <h3 id="Object-Storage-物件儲存"><a href="#Object-Storage-物件儲存" class="headerlink" title="Object Storage(物件儲存)"></a>Object Storage(物件儲存)</h3><p><strong>Object Storage - 雲端系統上最流行的儲存方式</strong></p>
+        <h3 id="object-storage(物件儲存)">Object Storage(物件儲存)</h3>
+<p><strong>Object Storage - 雲端系統上最流行的儲存方式</strong></p>
 <p>Object storage和File storage一樣，是基於Block storage的，但有幾個關鍵的不同點。File storage就像是一棵樹，從根開始有多層資料夾（樹枝）和檔案（葉子），是典型的層次結構。而Object storage則是扁平化的結構，所有檔案都存在單一資料夾中，沒有子資料夾，這使得資料索引和訪問變得更加直接和快速。</p>
 <span id="more"></span>
-
-<h3 id="Metadata-的彈性設計"><a href="#Metadata-的彈性設計" class="headerlink" title="Metadata 的彈性設計"></a>Metadata 的彈性設計</h3><p>Object storage 的 metadata 不是固定的 inode 結構，而是可以自定義的。這種彈性設計讓使用者可以根據需求設計適合自己應用的 metadata，提升檢索效率。</p>
-<h3 id="大數據與非結構化資料的完美搭配"><a href="#大數據與非結構化資料的完美搭配" class="headerlink" title="大數據與非結構化資料的完美搭配"></a>大數據與非結構化資料的完美搭配</h3><p>Object storage 特別適合存放靜態且不常變動的大數據，例如影片、音樂等。它提供大量、安全且低成本的儲存服務，特別適合長期保存。</p>
-<h3 id="HTTP-API-的簡單操作"><a href="#HTTP-API-的簡單操作" class="headerlink" title="HTTP API 的簡單操作"></a>HTTP API 的簡單操作</h3><p>從高層次來看，Object storage 是透過 HTTP API 進行資料的增刪改查，這比 File system API 和 Block storage 的 SCSI 更加簡單易用。不同語言都可以輕鬆使用這些 API 來操作 Object storage，這使得它適合各種應用情境。</p>
-<h3 id="天生適合分散式儲存"><a href="#天生適合分散式儲存" class="headerlink" title="天生適合分散式儲存"></a>天生適合分散式儲存</h3><p>由於其扁平化架構，Object storage 非常適合用於分散式儲存。資料可以輕易地分散到多台機器上，並且可以快速擴展。增加新的機器就像擴大這個”資料夾”的空間，不僅提升儲存容量，也提高了資料的可靠性。例如，一個 object 可以被複製多份，這樣即使一台機器發生故障，資料仍然安全。</p>
-<h3 id="可靠性與成本效益"><a href="#可靠性與成本效益" class="headerlink" title="可靠性與成本效益"></a>可靠性與成本效益</h3><p>雖然直接複製物件簡單易行，但大多數雲端服務提供商會使用更高效的方式來節省空間，例如 RAID5，這種方式只需使用 150% 的空間就能達到相同的可靠性。</p>
-<h3 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h3><ul>
-<li><strong>方便擴增</strong>:<br>由於Object storage是扁平化架構，只需增加機器就能增加儲存空間，無需額外修改架構。</li>
-<li><strong>成本低</strong>:<br>公有雲上的Object storage非常便宜，例如Amazon S3。</li>
-<li><strong>API 簡單</strong>:<br>使用HTTP進行增刪改查，支持跨國使用。例如你在台灣可以使用位於美國的Amazon S3儲存服務。</li>
+<h3 id="metadata-的彈性設計">Metadata 的彈性設計</h3>
+<p>Object storage 的 metadata 不是固定的 inode 結構，而是可以自定義的。這種彈性設計讓使用者可以根據需求設計適合自己應用的 metadata，提升檢索效率。</p>
+<h3 id="大數據與非結構化資料的完美搭配">大數據與非結構化資料的完美搭配</h3>
+<p>Object storage 特別適合存放靜態且不常變動的大數據，例如影片、音樂等。它提供大量、安全且低成本的儲存服務，特別適合長期保存。</p>
+<h3 id="http-api 的簡單操作">HTTP API 的簡單操作</h3>
+<p>從高層次來看，Object storage 是透過 HTTP API 進行資料的增刪改查，這比 File system API 和 Block storage 的 SCSI 更加簡單易用。不同語言都可以輕鬆使用這些 API 來操作 Object storage，這使得它適合各種應用情境。</p>
+<h3 id="天生適合分散式儲存">天生適合分散式儲存</h3>
+<p>由於其扁平化架構，Object storage 非常適合用於分散式儲存。資料可以輕易地分散到多台機器上，並且可以快速擴展。增加新的機器就像擴大這個&quot;資料夾&quot;的空間，不僅提升儲存容量，也提高了資料的可靠性。例如，一個 object 可以被複製多份，這樣即使一台機器發生故障，資料仍然安全。</p>
+<h3 id="可靠性與成本效益">可靠性與成本效益</h3>
+<p>雖然直接複製物件簡單易行，但大多數雲端服務提供商會使用更高效的方式來節省空間，例如 RAID5，這種方式只需使用 150% 的空間就能達到相同的可靠性。</p>
+<h3 id="優點">優點</h3>
+<ul>
+<li><strong>方便擴增</strong>:<br>
+由於Object storage是扁平化架構，只需增加機器就能增加儲存空間，無需額外修改架構。</li>
+<li><strong>成本低</strong>:<br>
+公有雲上的Object storage非常便宜，例如Amazon S3。</li>
+<li><strong>API 簡單</strong>:<br>
+使用HTTP進行增刪改查，支持跨國使用。例如你在台灣可以使用位於美國的Amazon S3儲存服務。</li>
 </ul>
-<h3 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h3><ul>
-<li><strong>不能修改</strong>:<br>一個Object不能部分修改，必須整個替換。而File system則可以直接在末尾增加資料。</li>
-<li><strong>無法與database整合</strong>:<br>傳統的database是結構化數據，例如SQL, MySQL，而Object storage主要存放非結構化數據，且讀寫速度較慢。</li>
-<li><strong>無法與一般作業系統整合</strong>:<br>一般的作業系統都是基於File system，下載一個Object就像下載一個檔案，需要整體下載。</li>
+<h3 id="缺點">缺點</h3>
+<ul>
+<li><strong>不能修改</strong>:<br>
+一個Object不能部分修改，必須整個替換。而File system則可以直接在末尾增加資料。</li>
+<li><strong>無法與database整合</strong>:<br>
+傳統的database是結構化數據，例如SQL, MySQL，而Object storage主要存放非結構化數據，且讀寫速度較慢。</li>
+<li><strong>無法與一般作業系統整合</strong>:<br>
+一般的作業系統都是基於File system，下載一個Object就像下載一個檔案，需要整體下載。</li>
 </ul>
-<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
+<h3 id="總結">總結</h3>
+<ul>
 <li>扁平化結構便於擴展</li>
 <li>彈性的 metadata 設計</li>
 <li>適合存放靜態大數據</li>
@@ -592,7 +606,7 @@
               
                 <a href="../../../../archives">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

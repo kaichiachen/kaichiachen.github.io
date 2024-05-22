@@ -442,16 +442,21 @@
         <p>前面說到了 Fault Domain，我們可以把相同機櫃的 host 匡列成同個 Group，這樣 Object 下的 Component 就會被分散在不同機櫃裡。但如果擔心地震、火災等自然災害會讓整個 Datacenter 遭殃，不就會造成永久的 Data loss 嗎？</p>
 <p>Stretched Cluster 是一種異地備援機制，可以建立兩個位於不同地區的 Datacenter 作為 Fault Domain。不過由於跨地區，Witness 必須是獨立於 Cluster 之外的 Host，可以是單個，也可以是多個。</p>
 <span id="more"></span>
-
 <p>由於是跨地區的 Datacenter 備份機制，規定了兩個 Datacenter 之間的互相 ping 時間必須在 5ms 以內，而且只能設定兩個 Fault Domain：Preferred 和 Secondary Domain。由於只有兩個 Domain，所以 FTT 只能設定為 FTT=1，RAID 只能設定為 RAID-1。</p>
 <p>接下來說說在 Stretched Cluster 中，資料是如何進行 I/O 的。Preferred Domain 為主要進行 I/O 的對象，對於寫入，為了確保資料的一致性，只有當資料成功寫入兩邊的 SSD 時，才算是寫入完畢。</p>
 <p>針對資料讀取的部分，vSAN Stretched Cluster 支援 Site Read Locality，會優先讀取離自己最近的資料。</p>
 <p>而 Witness 作為一個節點或一個 Fault Domain，它的作用是在 Datacenter 發生故障時，作為 tiebreaker 仲裁，決定當 VM 的 I/O 過來時，要去哪個 Datacenter 存取，主要是在故障發生後保證整個系統的可用性。</p>
-<h2 id="故障種類"><a href="#故障種類" class="headerlink" title="故障種類"></a>故障種類</h2><h4 id="一個-Datacenter-故障"><a href="#一個-Datacenter-故障" class="headerlink" title="一個 Datacenter 故障"></a>一個 Datacenter 故障</h4><p>當一個 Datacenter 出現異常時，例如掉電或失去與 Witness 的聯繫，Witness 會把路由導向健康的 Datacenter。</p>
-<h4 id="兩個-Datacenter-之間失去聯繫"><a href="#兩個-Datacenter-之間失去聯繫" class="headerlink" title="兩個 Datacenter 之間失去聯繫"></a>兩個 Datacenter 之間失去聯繫</h4><p>當兩個 Datacenter 出現網路問題，但各自都能連上 Witness，所以都覺得自己是健康的。這時需要 Witness 作為仲裁，投下關鍵的一票，指定誰是外部的存取對象。</p>
-<h4 id="Witness-node-故障"><a href="#Witness-node-故障" class="headerlink" title="Witness node 故障"></a>Witness node 故障</h4><p>如果只有 Witness node 故障，Datacenter 裡的 VM 還是可以照常運行，只是會在 vCenter 上的 vSAN Health 監控平台提醒恢復 Witness node。</p>
-<h4 id="Witness-node-和一個-Datacenter-故障"><a href="#Witness-node-和一個-Datacenter-故障" class="headerlink" title="Witness node 和一個 Datacenter 故障"></a>Witness node 和一個 Datacenter 故障</h4><p>當這種情況發生時，只能人工介入，在 vCenter 上的 vSAN Health 監控平台會對其進行報警。</p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><ul>
+<h2 id="故障種類">故障種類</h2>
+<h4 id="一個-datacenter 故障">一個 Datacenter 故障</h4>
+<p>當一個 Datacenter 出現異常時，例如掉電或失去與 Witness 的聯繫，Witness 會把路由導向健康的 Datacenter。</p>
+<h4 id="兩個-datacenter 之間失去聯繫">兩個 Datacenter 之間失去聯繫</h4>
+<p>當兩個 Datacenter 出現網路問題，但各自都能連上 Witness，所以都覺得自己是健康的。這時需要 Witness 作為仲裁，投下關鍵的一票，指定誰是外部的存取對象。</p>
+<h4 id="witness-node 故障">Witness node 故障</h4>
+<p>如果只有 Witness node 故障，Datacenter 裡的 VM 還是可以照常運行，只是會在 vCenter 上的 vSAN Health 監控平台提醒恢復 Witness node。</p>
+<h4 id="witness-node 和一個 datacenter 故障">Witness node 和一個 Datacenter 故障</h4>
+<p>當這種情況發生時，只能人工介入，在 vCenter 上的 vSAN Health 監控平台會對其進行報警。</p>
+<h2 id="總結">總結</h2>
+<ul>
 <li>Fault Domain 可以將相同機櫃的 host 歸類為同一個 Group，確保資料分散。</li>
 <li>Stretched Cluster 提供異地備援機制，Witness 作為獨立於 Cluster 的 Host。</li>
 <li>資料 I/O 主要由 Preferred Domain 處理，確保資料一致性。</li>
@@ -588,7 +593,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
