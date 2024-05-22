@@ -90,7 +90,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/golang/overview.jpg">
 <meta property="article:published_time" content="2023-12-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-21T13:43:45.015Z">
+<meta property="article:modified_time" content="2024-05-21T13:45:41.930Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="golang">
 <meta property="article:tag" content="Go">
@@ -446,7 +446,7 @@
 <p>一個 Go 專案通常分為可執行程式專案和第三方module/lib，現在我們就來分析一下這兩類 Go 專案的典型結構佈局分別是怎樣的。首先我們先來看 Go 可執行程式專案的典型結構佈局。可執行程式專案是以建構可執行程式為目的的專案，Go 社群針對這類 Go 專案所形成的典型結構佈局是這樣的：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; tree -F goProject</span></span><br><span class="line">goProject</span><br><span class="line">├── cmd/</span><br><span class="line">│   ├── app1/</span><br><span class="line">│   │   └── main.go</span><br><span class="line">│   └── app2/</span><br><span class="line">│       └── main.go</span><br><span class="line">├── go.mod</span><br><span class="line">├── go.sum</span><br><span class="line">├── internal/</span><br><span class="line">│   ├── pkga/</span><br><span class="line">│   │   └── pkg_a.go</span><br><span class="line">│   └── pkgb/</span><br><span class="line">│       └── pkg_b.go</span><br><span class="line">├── pkg1/</span><br><span class="line">│   └── pkg1.go</span><br><span class="line">└── pkg2/</span><br><span class="line">    └── pkg2.go</span><br></pre></td></tr></table></figure>
 
-<p>現在跟你解釋一下這裡面的幾個重點。</p>
+<p>我來解釋一下這裡面的幾個重點。</p>
 <p>我們從上往下按順序來，先來看 cmd 目錄。cmd 目錄就是存放專案要編譯構建的可執行檔案對應的帶有<code>func main()</code>.go檔案。如果你的專案中有多個可執行檔案需要構建，每個可執行檔案的 main 套件單獨放在一個子目錄中，比如圖中的 app1、app2，cmd 目錄下的各 app 的 main 套件將整個專案的依賴連接在一起。</p>
 <p>而且通常來說，main 應該很簡潔。我們在 main 裡的實作會做一些command參數解析、資源初始化、Logger初始化、資料庫連接初始化等工作，之後就程式就會進去其他package去執行更高級的邏輯控制。另外，也有一些 Go 專案將 cmd 這個名字改為 app 或其他名字，但它的功能其實並沒有變。</p>
 <p>接著我們來看 pkgN 目錄，這是一個存放專案自身要使用、同樣也是可執行檔案對應 main 所要依賴的Library，同時這些目錄下的Library還可以被外部Project引用。</p>
@@ -511,6 +511,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="../../../27/golang/go_runtime_cycle/" rel="prev" title="[Go] 搞清楚Go語言的生命週期">
+                [Go] 搞清楚Go語言的生命週期 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -592,7 +596,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
