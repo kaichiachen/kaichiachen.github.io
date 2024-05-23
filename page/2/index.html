@@ -309,6 +309,184 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/11/05/vsan/data_encryption/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="../../2023/11/05/vsan/data_encryption/" itemprop="url">[vSAN] vSAN 資料加密保護</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2023-11-05T00:00:00+08:00">
+                2023-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="../../2023/11/05/vsan/data_encryption/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2023/11/05/vsan/data_encryption/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  524
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>vSAN 作為軟體定義儲存，它的加密機制也與硬體無關，無需額外的加密裝置，硬碟也無需額外的加密插件。vSAN 加密機制採用的是 XTS-AES 256 加密標準，可以同時保護快取層和容量層的資料。值得注意的是，當資料進入快取層時，系統會對資料進行加密，而當資料要轉存進去容量層時，會先把準備要寫入容量層的資料解密，然後執行重複資料刪除和壓縮的動作，再加密資料，最後寫進容量層。</p>
+<p>vSAN 的加密機制採用的是 KMS (Key Manager Server) 解決方案，使用者需要從外部例如 Google 或 Amazon 取得 KMS 加密金鑰。</p>
+<p>KMS 採用的是 KEK (Key Encryption Key) 和 DEK (Data Encryption Key) 機制。DEK 先將硬碟資料進行加密，然後 KEK 負責加密 DEK。DEK 透過 KMIP (Key Management Interoperability Protocol) 傳送加密後的資料到 vSAN 節點主機中，這樣只有當管理人員拿到 KEK，才可以解密所有資料。Hybrid 和 All Flash 都支援此機制。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="../../2023/11/05/vsan/data_encryption/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/10/25/vsan/data_compress/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1900,183 +2078,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/08/13/vsan/vsan_policy_layout/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="../../images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="../../2023/08/13/vsan/vsan_policy_layout/" itemprop="url">[vSAN]vSAN的是怎麼做分散式儲存的</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2023-08-13T00:00:00+08:00">
-                2023-08-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="../../categories/vSAN/" itemprop="url" rel="index">
-                    <span itemprop="name">vSAN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="../../2023/08/13/vsan/vsan_policy_layout/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2023/08/13/vsan/vsan_policy_layout/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  720
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>我們知道，vSAN是一個以Policy為基礎的分散式儲存系統。vSAN會根據Object設定的Policy，把Object下的Component妥善地分散在不同Host上。</p>
-<p>Policy指的就是RAID 0/1/5/6，目前常見的有這四種。RAID 5/6由於需要進行erasure coding和XOR操作，會耗費一些計算資源和I/O，所以只有在使用all flash架構時才能設定。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="../../2023/08/13/vsan/vsan_policy_layout/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2131,7 +2132,7 @@
               
                 <a href="../../archives">
               
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">53</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
