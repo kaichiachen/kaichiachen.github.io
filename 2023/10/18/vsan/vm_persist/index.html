@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="簡介 VMware vSAN 是一種分散式儲存技術，它將多個 ESXi 主機的儲存資源組合成一個共享的資料儲存區域。這篇文章會詳細解釋虛擬機在 vSAN 中是如何儲存數據，以及不同類型的物件如何運作。 vSAN 與虛擬機 vSAN 是一個 Object-based 的儲存系統，這意味著數據是以物件的形式儲存的。當在 vSAN Datastore 部署虛擬機時，系統會生成五種類型的物件來管理和儲存虛">
+<meta name="description" content="簡介VMware vSAN 是一種分散式儲存技術，它將多個 ESXi 主機的儲存資源組合成一個共享的資料儲存區域。這篇文章會詳細解釋虛擬機在 vSAN 中是如何儲存數據，以及不同類型的物件如何運作。 vSAN 與虛擬機vSAN 是一個 Object-based 的儲存系統，這意味著數據是以物件的形式儲存的。當在 vSAN Datastore 部署虛擬機時，系統會生成五種類型的物件來管理和儲存虛擬機">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN] VMware虛擬機是怎麼存在vSAN的呢？">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/10/18/vsan/vm_persist/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="簡介 VMware vSAN 是一種分散式儲存技術，它將多個 ESXi 主機的儲存資源組合成一個共享的資料儲存區域。這篇文章會詳細解釋虛擬機在 vSAN 中是如何儲存數據，以及不同類型的物件如何運作。 vSAN 與虛擬機 vSAN 是一個 Object-based 的儲存系統，這意味著數據是以物件的形式儲存的。當在 vSAN Datastore 部署虛擬機時，系統會生成五種類型的物件來管理和儲存虛">
+<meta property="og:description" content="簡介VMware vSAN 是一種分散式儲存技術，它將多個 ESXi 主機的儲存資源組合成一個共享的資料儲存區域。這篇文章會詳細解釋虛擬機在 vSAN 中是如何儲存數據，以及不同類型的物件如何運作。 vSAN 與虛擬機vSAN 是一個 Object-based 的儲存系統，這意味著數據是以物件的形式儲存的。當在 vSAN Datastore 部署虛擬機時，系統會生成五種類型的物件來管理和儲存虛擬機">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/virtual_obj.png">
 <meta property="article:published_time" content="2023-10-17T16:00:00.000Z">
@@ -440,58 +440,49 @@
       
 
       
-        <h3 id="簡介">簡介</h3>
-<p>VMware vSAN 是一種分散式儲存技術，它將多個 ESXi 主機的儲存資源組合成一個共享的資料儲存區域。這篇文章會詳細解釋虛擬機在 vSAN 中是如何儲存數據，以及不同類型的物件如何運作。</p>
-<h3 id="vsan-與虛擬機">vSAN 與虛擬機</h3>
-<p>vSAN 是一個 Object-based 的儲存系統，這意味著數據是以物件的形式儲存的。當在 vSAN Datastore 部署虛擬機時，系統會生成五種類型的物件來管理和儲存虛擬機的數據。</p>
-<h3 id="五種類型的物件">五種類型的物件</h3>
-<span id="more"></span>
+        <h3 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h3><p>VMware vSAN 是一種分散式儲存技術，它將多個 ESXi 主機的儲存資源組合成一個共享的資料儲存區域。這篇文章會詳細解釋虛擬機在 vSAN 中是如何儲存數據，以及不同類型的物件如何運作。</p>
+<h3 id="vSAN-與虛擬機"><a href="#vSAN-與虛擬機" class="headerlink" title="vSAN 與虛擬機"></a>vSAN 與虛擬機</h3><p>vSAN 是一個 Object-based 的儲存系統，這意味著數據是以物件的形式儲存的。當在 vSAN Datastore 部署虛擬機時，系統會生成五種類型的物件來管理和儲存虛擬機的數據。</p>
+<h3 id="五種類型的物件"><a href="#五種類型的物件" class="headerlink" title="五種類型的物件"></a>五種類型的物件</h3><span id="more"></span>
 <ol>
-<li>
-<p><strong>VM Home Namespace 物件</strong></p>
+<li><p><strong>VM Home Namespace 物件</strong></p>
 <ul>
 <li>這個物件在 VM 被創建時生成，用於儲存所有 VM 的元數據，如配置文件、日志和其他必要的控制信息。</li>
 </ul>
 </li>
-<li>
-<p><strong>SWAP 物件</strong></p>
+<li><p><strong>SWAP 物件</strong></p>
 <ul>
 <li>當 VM 啟動時生成的物件，用於儲存內存交換（swap）文件，確保系統在內存不足時有足夠的虛擬內存。</li>
 </ul>
 </li>
-<li>
-<p><strong>VMDK 虛擬硬碟物件</strong></p>
+<li><p><strong>VMDK 虛擬硬碟物件</strong></p>
 <ul>
 <li>這個物件在 VM 被創建時生成，類型是 vdisk，主要用於儲存 VM 的虛擬磁碟數據。</li>
 </ul>
 </li>
-<li>
-<p><strong>Snapshot Delta VMDKs</strong></p>
+<li><p><strong>Snapshot Delta VMDKs</strong></p>
 <ul>
 <li>當 VM 建立 Snapshot 時生成的物件，儲存 Snapshot 的數據變更部分，使得系統可以還原到 Snapshot 時的狀態。</li>
 </ul>
 </li>
-<li>
-<p><strong>Memory Object</strong></p>
+<li><p><strong>Memory Object</strong></p>
 <ul>
 <li>當 VM 建立包含記憶體狀態的 Snapshot 時生成的物件，用於儲存當前內存的內容，確保 Snapshot 能夠完全恢復當前狀態。</li>
 </ul>
 </li>
 </ol>
 <p>這些物件都是 DOM 物件，並共用一個不存在的 VM Object UUID 祖先。</p>
-<h3 id="查看-vsan 中的虛擬物件">查看 vSAN 中的虛擬物件</h3>
-<p>LSOM Object 是 Component，可以透過以下指令查看：</p>
+<h3 id="查看-vSAN-中的虛擬物件"><a href="#查看-vSAN-中的虛擬物件" class="headerlink" title="查看 vSAN 中的虛擬物件"></a>查看 vSAN 中的虛擬物件</h3><p>LSOM Object 是 Component，可以透過以下指令查看：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmmds-tool find -t DOM_OBJECT -f json</span><br></pre></td></tr></table></figure>
+
 <p>另外，你也可以進入 vSAN Cluster 的監控頁面查看虛擬物件（以 vSAN 7.0U3 為例）：</p>
 <ol>
 <li>進入 vSAN Cluster</li>
 <li>選擇 “Monitor”</li>
 <li>點擊 “Virtual Objects”</li>
 </ol>
-<p><img src="/images/vsan/virtual_obj.png" alt=""></p>
+<p><img src="/images/vsan/virtual_obj.png"></p>
 <p>更多 VM 在 vSAN 怎麼部署和分配的資訊，請參考 <a target="_blank" rel="noopener" href="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vsan-planning.doc/GUID-1D8956A2-3F46-49C8-9231-38F3A9D09A0F.html">Objects and Components</a></p>
-<h3 id="總結">總結</h3>
-<ul>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
 <li><strong>VMware vSAN</strong> 是分散式儲存技術，將多個 ESXi 主機的儲存資源組合成一個共享的資料儲存區域。</li>
 <li><strong>Object-based</strong> 儲存系統，數據以物件形式儲存。</li>
 <li><strong>五種類型的物件</strong> 包括 VM Home Namespace 物件、SWAP 物件、VMDK 虛擬硬碟物件、Snapshot Delta VMDKs 和 Memory Object。</li>
@@ -625,7 +616,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

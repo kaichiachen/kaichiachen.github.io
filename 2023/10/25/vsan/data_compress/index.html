@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="重複資料刪除和壓縮 在資料儲存領域，除了使用RAID 5&#x2F;6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複存儲。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。 在vSAN架構中，雜湊使用了SHA-1演算法來為每段資料建立Hash value，每段大小為4KB。 壓">
+<meta name="description" content="重複資料刪除和壓縮在資料儲存領域，除了使用RAID 5&#x2F;6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複存儲。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。 在vSAN架構中，雜湊使用了SHA-1演算法來為每段資料建立Hash value，每段大小為4KB。 壓縮">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN] vSAN的重複資料刪除、壓縮和資料校驗">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/10/25/vsan/data_compress/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="重複資料刪除和壓縮 在資料儲存領域，除了使用RAID 5&#x2F;6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複存儲。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。 在vSAN架構中，雜湊使用了SHA-1演算法來為每段資料建立Hash value，每段大小為4KB。 壓">
+<meta property="og:description" content="重複資料刪除和壓縮在資料儲存領域，除了使用RAID 5&#x2F;6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複存儲。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。 在vSAN架構中，雜湊使用了SHA-1演算法來為每段資料建立Hash value，每段大小為4KB。 壓縮">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/Performance_Overview.png">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/Performance_VM.png">
@@ -415,7 +415,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  679
+                  678
                 </span>
               
 
@@ -440,37 +440,32 @@
       
 
       
-        <h2 id="重複資料刪除和壓縮">重複資料刪除和壓縮</h2>
-<p>在資料儲存領域，除了使用RAID 5/6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複存儲。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。</p>
+        <h2 id="重複資料刪除和壓縮"><a href="#重複資料刪除和壓縮" class="headerlink" title="重複資料刪除和壓縮"></a>重複資料刪除和壓縮</h2><p>在資料儲存領域，除了使用RAID 5/6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複存儲。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。</p>
 <p>在vSAN架構中，雜湊使用了SHA-1演算法來為每段資料建立Hash value，每段大小為4KB。</p>
 <p>壓縮則是使用LZ4演算法。在重複資料刪除的過程中，當系統發現有新資料要寫入時，會進行壓縮，將原本4KB的資料壓縮成大約2KB，然後再寫入容量層。</p>
 <span id="more"></span>
+
 <p>另外，只有All flash架構才支援重複資料刪除和壓縮功能。</p>
-<h3 id="總結：">總結：</h3>
-<ul>
+<h3 id="總結："><a href="#總結：" class="headerlink" title="總結："></a>總結：</h3><ul>
 <li>重複資料刪除：使用SHA-1演算法，4KB為單位</li>
 <li>壓縮：使用LZ4演算法，將4KB壓縮至約2KB</li>
 <li>All flash架構才支援這些功能</li>
 </ul>
-<h2 id="資料校驗">資料校驗</h2>
-<p>在網路上下載大檔案或機密文件時，網站會提供一個下載連結和md5 Hash來驗證資料來源。這是為了避免中間人攻擊，在下載的文件中植入惡意程式。</p>
+<h2 id="資料校驗"><a href="#資料校驗" class="headerlink" title="資料校驗"></a>資料校驗</h2><p>在網路上下載大檔案或機密文件時，網站會提供一個下載連結和md5 Hash來驗證資料來源。這是為了避免中間人攻擊，在下載的文件中植入惡意程式。</p>
 <p>vSAN也有類似的功能，預設情況下就會啟用，Hybrid和All flash架構都支援。vSAN使用CRC-32C校驗機制來最佳化性能。如果ESX host上的CPU支援Intel c2c32c指令集，運作會更快。</p>
 <p>除了校驗，在傳輸過程中也有檢查碼機制，針對每4KB資料區塊建立一個5字節的總和檢查碼，並與資料分開存放。當vSAN Cluster檢查到I/O路徑有錯誤或資料不一致時，會自動修復。</p>
 <p>預設情況下，vSAN每年會自動對所有資料進行檢查碼檢查，若發現錯誤，會立即修正。</p>
 <p>我們可以查看各個Object裡的Component/Witness被分配到哪個ESXi host的實體硬碟，並檢查Component是否健康。</p>
-<h3 id="總結：-1">總結：</h3>
-<ul>
+<h3 id="總結：-1"><a href="#總結：-1" class="headerlink" title="總結："></a>總結：</h3><ul>
 <li>CRC-32C校驗機制：提高性能</li>
 <li>傳輸過程檢查碼：每4KB資料區塊建立5字節檢查碼</li>
 <li>自動檢查和修復：每年進行檢查，發現錯誤立即修正</li>
 </ul>
-<h2 id="performance">Performance</h2>
-<p>不同於前面提到的Skyline Health和Object View，Performance Service主要是收集歷史Cluster/VM的Performance資訊並展示給用戶。我們可以透過Performance View來查看Cluster近一個小時的IOPS、Throughput、Latency和Congestions資訊。</p>
-<p><img src="/images/vsan/Performance_Overview.png" alt=""></p>
+<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>不同於前面提到的Skyline Health和Object View，Performance Service主要是收集歷史Cluster/VM的Performance資訊並展示給用戶。我們可以透過Performance View來查看Cluster近一個小時的IOPS、Throughput、Latency和Congestions資訊。</p>
+<p><img src="/images/vsan/Performance_Overview.png"></p>
 <p>我們也可以細化到單一VM，來觀察虛擬機的Performance使用情況。</p>
-<p><img src="/images/vsan/Performance_VM.png" alt=""></p>
-<h3 id="總結：-2">總結：</h3>
-<ul>
+<p><img src="/images/vsan/Performance_VM.png"></p>
+<h3 id="總結：-2"><a href="#總結：-2" class="headerlink" title="總結："></a>總結：</h3><ul>
 <li>Performance View：查看Cluster和VM的歷史性能資訊，包括：IOPS、Throughput、Latency、Congestions</li>
 </ul>
 
@@ -599,7 +594,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

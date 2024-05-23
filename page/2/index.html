@@ -309,6 +309,184 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/10/25/vsan/data_compress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="../../2023/10/25/vsan/data_compress/" itemprop="url">[vSAN] vSAN的重複資料刪除、壓縮和資料校驗</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2023-10-25T00:00:00+08:00">
+                2023-10-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="../../2023/10/25/vsan/data_compress/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2023/10/25/vsan/data_compress/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  678
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="重複資料刪除和壓縮"><a href="#重複資料刪除和壓縮" class="headerlink" title="重複資料刪除和壓縮"></a>重複資料刪除和壓縮</h2><p>在資料儲存領域，除了使用RAID 5/6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複存儲。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。</p>
+<p>在vSAN架構中，雜湊使用了SHA-1演算法來為每段資料建立Hash value，每段大小為4KB。</p>
+<p>壓縮則是使用LZ4演算法。在重複資料刪除的過程中，當系統發現有新資料要寫入時，會進行壓縮，將原本4KB的資料壓縮成大約2KB，然後再寫入容量層。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="../../2023/10/25/vsan/data_compress/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/10/18/vsan/vm_persist/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -431,11 +609,9 @@
 
       
         
-          <h3 id="簡介">簡介</h3>
-<p>VMware vSAN 是一種分散式儲存技術，它將多個 ESXi 主機的儲存資源組合成一個共享的資料儲存區域。這篇文章會詳細解釋虛擬機在 vSAN 中是如何儲存數據，以及不同類型的物件如何運作。</p>
-<h3 id="vsan-與虛擬機">vSAN 與虛擬機</h3>
-<p>vSAN 是一個 Object-based 的儲存系統，這意味著數據是以物件的形式儲存的。當在 vSAN Datastore 部署虛擬機時，系統會生成五種類型的物件來管理和儲存虛擬機的數據。</p>
-<h3 id="五種類型的物件">五種類型的物件</h3>
+          <h3 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h3><p>VMware vSAN 是一種分散式儲存技術，它將多個 ESXi 主機的儲存資源組合成一個共享的資料儲存區域。這篇文章會詳細解釋虛擬機在 vSAN 中是如何儲存數據，以及不同類型的物件如何運作。</p>
+<h3 id="vSAN-與虛擬機"><a href="#vSAN-與虛擬機" class="headerlink" title="vSAN 與虛擬機"></a>vSAN 與虛擬機</h3><p>vSAN 是一個 Object-based 的儲存系統，這意味著數據是以物件的形式儲存的。當在 vSAN Datastore 部署虛擬機時，系統會生成五種類型的物件來管理和儲存虛擬機的數據。</p>
+<h3 id="五種類型的物件"><a href="#五種類型的物件" class="headerlink" title="五種類型的物件"></a>五種類型的物件</h3>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2023/10/18/vsan/vm_persist/" rel="contents">
@@ -790,7 +966,7 @@
       
         
           <p>vSAN 的四大 Component - CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，彼此各司其職。以下圖為例，本篇將介紹 vSAN CMMDS。</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
 <p>vSAN LSOM（Local log-structured object manager）運作在 ESXi node 裡面，負責將 Object 和 Component 放在 ESXi node 裡面，並在資料發生 I/O 時，管理 cache disk 和 capacity disk 的資料 I/O。</p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -941,7 +1117,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  590
+                  584
                 </span>
               
 
@@ -967,9 +1143,8 @@
 
       
         
-          <h1 id="vsan的四大component-- cmmds、dom、clom、lsom">vSAN的四大Component - CMMDS、DOM、CLOM、LSOM</h1>
-<p>這四個組件從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職。本篇將介紹的是vSAN CLOM。</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
+          <h1 id="vSAN的四大Component-CMMDS、DOM、CLOM、LSOM"><a href="#vSAN的四大Component-CMMDS、DOM、CLOM、LSOM" class="headerlink" title="vSAN的四大Component - CMMDS、DOM、CLOM、LSOM"></a>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM</h1><p>這四個組件從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職。本篇將介紹的是vSAN CLOM。</p>
+<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2023/09/30/vsan/ioworkflow_clom/" rel="contents">
@@ -1146,7 +1321,7 @@
       
         
           <p>vSAN 的四大組件：CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，各司其職。下圖展示了它們的大致交互邏輯，本文將介紹 vSAN 的 CMMDS。</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
 <p>vSAN DOM（Distributed Object Manager）顧名思義，就是負責管理 Object 以及分散 Component。</p>
 <blockquote>
 <p>Component 是由 LSOM 管理，會在下一篇提到。</p>
@@ -1327,7 +1502,7 @@
       
         
           <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS。</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
 <p>vSAN CMMDS（Cluster Monitoring, Membership, and Directory Service）主要運作在ESXi的kernel層。負責在vSAN Cluster和vSAN Node之間，進行探索、維護等監控任務，並管理Cluster裡的各項資源，例如網路、儲存空間、Component數量等。這些Cluster metadata會以key-value形式存在directory中。</p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1478,7 +1653,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  579
+                  578
                 </span>
               
 
@@ -1505,10 +1680,9 @@
       
         
           <p>我們知道vSAN主要是以Object的形式作為儲存單位，存的是VM Object，而Block和File兩個常用的儲存單位也經常被大企業或資料中心所用到。vSAN當然也有暴露相關的接口，這裡來聊聊vSAN裡iSCSI存取block storage和Fileservice存取檔案的原理。</p>
-<h3 id="iscsi">iSCSI</h3>
-<p>首先，SCSI是SAS/SATA的SSD/HDD用於與作業系統溝通的一種interface protocol，本來是需要透過實體接口才能進行存取。後來又制定了可以透過網路TCP/IP來傳送SCSI指令的技術，叫做iSCSI，使得連接距離可以達到無上限，連結的伺服器數量也是無限。</p>
+<h3 id="iSCSI"><a href="#iSCSI" class="headerlink" title="iSCSI"></a>iSCSI</h3><p>首先，SCSI是SAS/SATA的SSD/HDD用於與作業系統溝通的一種interface protocol，本來是需要透過實體接口才能進行存取。後來又制定了可以透過網路TCP/IP來傳送SCSI指令的技術，叫做iSCSI，使得連接距離可以達到無上限，連結的伺服器數量也是無限。</p>
 <p>這也是為何vSAN提供此接口的原因。vSAN本質上是一塊專用儲存網路，形成了一個儲存池，外部應用可以隨時取用、擴容等等。像是Thin provision，vSAN加上iSCSI技術，把儲存變成「可路由」的，像普通的網路通信一樣，使得遠在天邊的應用或主機可以直接存取vSAN上的儲存池。</p>
-<p><img src="/images/vsan/iscsi_edit_target.png" alt=""></p>
+<p><img src="/images/vsan/iscsi_edit_target.png"></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2023/09/07/vsan/vsan_fileservice_iscsi/" rel="contents">
@@ -1835,7 +2009,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  722
+                  720
                 </span>
               
 
@@ -1866,183 +2040,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2023/08/13/vsan/vsan_policy_layout/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/07/29/vsan/vsan_distributed_object/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="../../images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="../../2023/07/29/vsan/vsan_distributed_object/" itemprop="url">[vSAN]vSAN的儲存基本單位 - Object</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2023-07-29T00:00:00+08:00">
-                2023-07-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="../../categories/vSAN/" itemprop="url" rel="index">
-                    <span itemprop="name">vSAN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="../../2023/07/29/vsan/vsan_distributed_object/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2023/07/29/vsan/vsan_distributed_object/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  718
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>再讓我們把主題切回vSAN。現在我們有了儲存系統 - Object Storage的基本知識後，我們可以更深入的探討vSAN是怎麼存Object的。</p>
-<p>vSAN是一種軟體定義儲存的產品，它的儲存單位是Object。Object是什麼呢？回到Day 06，Object可以理解為一個巨大的資料夾，每個檔案就是一個Object，所以搜索Object資料不用一個個資料夾找。今天我們更深入的來理解所謂的「軟體定義」以及Object/Component在vSAN裡面代表著什麼。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="../../2023/07/29/vsan/vsan_distributed_object/" rel="contents">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -2134,7 +2131,7 @@
               
                 <a href="../../archives">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

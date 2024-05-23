@@ -42,7 +42,7 @@
 
   
   
-  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="../../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -50,29 +50,27 @@
 
 
 
-<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="../../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.4">
+<link href="../../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../../images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../../images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../../images/favicon-16x16-next.png?v=5.1.4">
 
 
+  <link rel="mask-icon" href="../../../../../images/logo.svg?v=5.1.4" color="#222">
 
 
 
-  <meta name="keywords" content="閱讀,人性的優點," />
 
 
+  <meta name="keywords" content="golang,Go," />
 
 
 
@@ -81,21 +79,23 @@
 
 
 
-<meta name="description" content="人性的優點人性的優點，這本書的英文原名是”How to stop worrying &amp; start living”，老實說，我也不知道為何中文會翻譯成”人性的優點”，不過總之，他是一本在講如何消除憂慮的書，和”人性的弱點”同個作者 - 戴爾・卡內基。">
+
+
+<meta name="description" content="Go 語言的繼承與組合Go 語言沒有像 C++&#x2F;Java 等語言可以透過 extend 關鍵字來繼承某個 class。因此，Go class的所有方法都是自己顯式實現的。讓我們舉個例子，自定義class T 有兩個methods M1 和 M2，如果 T 是一個獨立的自定義class，那我們在聲明class T 的 Go 包原始碼文件中一定可以找到其所有method的實現程式碼，比如： 12fun">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[閱讀]人性的優點">
-<meta property="og:url" content="https://kaichiachen.github.io/2021/11/11/stop_worrying_book/index.html">
+<meta property="og:title" content="[Go] Method: 怎麼用變數模擬繼承">
+<meta property="og:url" content="https://kaichiachen.github.io/2024/01/23/golang/go_inherit/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="人性的優點人性的優點，這本書的英文原名是”How to stop worrying &amp; start living”，老實說，我也不知道為何中文會翻譯成”人性的優點”，不過總之，他是一本在講如何消除憂慮的書，和”人性的弱點”同個作者 - 戴爾・卡內基。">
+<meta property="og:description" content="Go 語言的繼承與組合Go 語言沒有像 C++&#x2F;Java 等語言可以透過 extend 關鍵字來繼承某個 class。因此，Go class的所有方法都是自己顯式實現的。讓我們舉個例子，自定義class T 有兩個methods M1 和 M2，如果 T 是一個獨立的自定義class，那我們在聲明class T 的 Go 包原始碼文件中一定可以找到其所有method的實現程式碼，比如： 12fun">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://kaichiachen.github.io/images/notworry.jpg">
-<meta property="article:published_time" content="2021-11-10T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-14T06:34:04.000Z">
+<meta property="og:image" content="https://kaichiachen.github.io/images/golang/overview.jpg">
+<meta property="article:published_time" content="2024-01-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-05-23T05:39:55.342Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="閱讀">
-<meta property="article:tag" content="人性的優點">
+<meta property="article:tag" content="golang">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kaichiachen.github.io/images/notworry.jpg">
+<meta name="twitter:image" content="https://kaichiachen.github.io/images/golang/overview.jpg">
 
 
 
@@ -125,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/2021/11/11/stop_worrying_book/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2024/01/23/golang/go_inherit/"/>
 
 
 
 
 
-  <title>[閱讀]人性的優點 | 安迪熊</title>
+  <title>[Go] Method: 怎麼用變數模擬繼承 | 安迪熊</title>
   
 
 
@@ -320,7 +320,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="../../../../images/avatar.jpg">
+      <meta itemprop="image" content="../../../../../images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -332,7 +332,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[閱讀]人性的優點</h1>
+          <h1 class="post-title" itemprop="name headline">[Go] Method: 怎麼用變數模擬繼承</h1>
         
 
         <div class="post-meta">
@@ -344,8 +344,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-11-11T00:00:00+08:00">
-                2021-11-11
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2024-01-23T00:00:00+08:00">
+                2024-01-23
               </time>
             
 
@@ -367,8 +367,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="../../../../categories/%E9%96%B1%E8%AE%80/" itemprop="url" rel="index">
-                    <span itemprop="name">閱讀</span>
+                  <a href="../../../../../categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
                   </a>
                 </span>
 
@@ -387,7 +387,7 @@
                 </span>
                 <a href="#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2021/11/11/stop_worrying_book/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2024/01/23/golang/go_inherit/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -414,7 +414,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  1.3k
+                  1.8k
                 </span>
               
 
@@ -439,153 +439,55 @@
       
 
       
-        <h3 id="人性的優點"><a href="#人性的優點" class="headerlink" title="人性的優點"></a>人性的優點</h3><p><img src="/images/notworry.jpg"><br>人性的優點，這本書的英文原名是”How to stop worrying &amp; start living”，老實說，我也不知道為何中文會翻譯成”人性的優點”，不過總之，他是一本在講如何消除憂慮的書，和”人性的弱點”同個作者 - 戴爾・卡內基。</p>
+        <h3 id="Go-語言的繼承與組合"><a href="#Go-語言的繼承與組合" class="headerlink" title="Go 語言的繼承與組合"></a>Go 語言的繼承與組合</h3><p>Go 語言沒有像 C++/Java 等語言可以透過 <code>extend</code> 關鍵字來繼承某個 class。因此，Go class的所有方法都是自己顯式實現的。讓我們舉個例子，自定義class <code>T</code> 有兩個methods <code>M1</code> 和 <code>M2</code>，如果 <code>T</code> 是一個獨立的自定義class，那我們在聲明class <code>T</code> 的 Go 包原始碼文件中一定可以找到其所有method的實現程式碼，比如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(T)</span></span> M1() &#123;...&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(T)</span></span> M2() &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Go 語言中，如果我們真的想模擬繼承的效果，可以透過 Go 語言設計思想的“組合”來實現。具體的 Go 語言設計思想可以參考我的這篇文章 - <a href="../../../../../2023/12/12/golang/design_philosophy/">Go語言的設計哲學</a></p>
 <span id="more"></span>
 
-<p>生活的快樂與否，完全是由思想造成的。憂慮會使人一文不值，挫折是整個事情的一部分 - 是你要爬到最高峰所必須經過的有益的訓練，不要讓憂慮阻礙你的步伐，要善於利用思想的力量，發現人生的美好，通過改變心情自救，事情會在你快樂中變得簡單。對於消除憂慮，本書有五大步驟，從憂慮的本質，然後進而剖析他，消除他，最後是維持快樂與幸福的一些準則。<br>當然，我也是個平凡人，一定會有經常面對憂慮的時候，本書的一大優點是他的架構非常的有邏輯及有條理，做筆記也非常的方便，我把各個章節也用一行行條理的方式羅列出來，方便內化進去自己的原則</p>
-<h4 id="憂慮的真相"><a href="#憂慮的真相" class="headerlink" title="憂慮的真相"></a>憂慮的真相</h4><ol>
-<li>讓自己生活在獨立的隔艙裡<ol>
-<li>愚蠢的人才會為昨天流淚，為明天擔憂</li>
-<li>把全部的心智投入在今天的工作中去</li>
-</ol>
-</li>
-<li>消除憂慮的萬能公式<ol>
-<li>想到最壞的可能性 - 除死無大事</li>
-<li>然後去接受最壞的可能性</li>
-</ol>
-</li>
-<li>過多的憂慮會危及生命<ol>
-<li>要對自己充滿信心</li>
-<li>欣賞美妙的音樂</li>
-<li>樂觀態度看待生活</li>
-</ol>
-</li>
-</ol>
-<h4 id="剖析憂慮的方法"><a href="#剖析憂慮的方法" class="headerlink" title="剖析憂慮的方法"></a>剖析憂慮的方法</h4><ol>
-<li>怎麼分析憂慮並從中把他解脫出來<ol>
-<li>查清憂慮真相-困惑是導致憂慮的主要原因，列出正反兩方因素，能夠找出事實的真相</li>
-<li>列出該怎麼做的Plan A B C D…選一個可以接受的，然後不要猶豫地實施決定</li>
-</ol>
-</li>
-<li>怎麼消除工作中的煩惱<ol>
-<li>回答四個問題<ol>
-<li>問題出在哪裡</li>
-<li>為什麼會有這樣的問題出現</li>
-<li>該怎麼解決這個問題</li>
-<li>能否提出解決問題的建議</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h4 id="如何消除憂慮"><a href="#如何消除憂慮" class="headerlink" title="如何消除憂慮"></a>如何消除憂慮</h4><ol>
-<li>把你的憂慮從心中驅逐出去<ol>
-<li>做事，讓自己忙得沒空憂慮</li>
-</ol>
-</li>
-<li>不因瑣事而煩惱<ol>
-<li>把看法和重點轉移一下，不要當完美主義者</li>
-</ol>
-</li>
-<li>戰勝憂慮的幾個法則<ol>
-<li>不要過度擔心，算好機率，發現他們都是小機率事件</li>
-</ol>
-</li>
-<li>勇敢面對事實<ol>
-<li>不愉快的事情發生了，他們已經如此了</li>
-<li>心甘情願地接受事實，是戰勝之後困難的第一步</li>
-<li>勇於面對那些不可避免的事實</li>
-</ol>
-</li>
-<li>讓憂慮到此為止<ol>
-<li>設定一個底線，和股票投資一樣</li>
-<li>問自己兩個問題<ol>
-<li>我遇到的問題和我有多大的關係？我需要這麼擔憂嗎？</li>
-<li>我如何設定底線？然後把他忘掉</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>不要試著去鋸已經碎掉的木屑<ol>
-<li>我們可以努力改變180秒前發生事情帶來的後果，但我們沒有辦法改變當時的狀況</li>
-</ol>
-</li>
-</ol>
-<h4 id="讓自己平安快樂的七種方式"><a href="#讓自己平安快樂的七種方式" class="headerlink" title="讓自己平安快樂的七種方式"></a>讓自己平安快樂的七種方式</h4><ol>
-<li>憧憬生活的美好<ol>
-<li>改變對事物的看法，往好的方面想</li>
-<li>只要下定決心就能快樂</li>
-</ol>
-</li>
-<li>不要報復你的敵人<ol>
-<li>報復會損害健康，憤怒不能控制好，會導致高血壓和心臟病</li>
-</ol>
-</li>
-<li>給予，但不求回報</li>
-<li>細數幸福的事</li>
-<li>保持自我本色<ol>
-<li>一個人打算擁有別人的全部優點，那簡直是荒謬</li>
-</ol>
-</li>
-<li>把不利因素轉為有利因素</li>
-<li>忘掉自己，關心他人<ol>
-<li>最無私的人最會享受生活</li>
-<li>多做善事</li>
-<li>多對別人感興趣，多向他人表示關心</li>
-</ol>
-</li>
-</ol>
-<h4 id="如何直面批評帶來的煩惱"><a href="#如何直面批評帶來的煩惱" class="headerlink" title="如何直面批評帶來的煩惱"></a>如何直面批評帶來的煩惱</h4><ol>
-<li>批評他人是一種自我膨脹的表現<ol>
-<li>對你刻薄的斥責往往能從另一面表現出人們對你的重視</li>
-</ol>
-</li>
-<li>不要讓批評之箭射中你<ol>
-<li>普通人根本不會想到我們</li>
-<li>只不理會不公正的批評</li>
-</ol>
-</li>
-<li>自省，再自省<ol>
-<li>在工作和生活中的缺點積極說”不”</li>
-</ol>
-</li>
-<li>怎麼消除疲勞<ol>
-<li>休息是消除疲勞的首要途徑</li>
-<li>休息放空真的很重要！！！</li>
-</ol>
-</li>
-<li>是什麼讓你疲勞<ol>
-<li>腦力工作者不會因為用腦而疲倦</li>
-<li>用腦的疲倦是因為精神和情緒因素引起的</li>
-</ol>
-</li>
-<li>讓疲憊永遠消失<ol>
-<li>找知心朋友傾訴，是治療煩惱最有效的方法</li>
-<li>讀一些愉悅的文字</li>
-<li>不要過分計較別人的過失</li>
-</ol>
-</li>
-<li>四個良好的工作習慣<ol>
-<li>生活環境井然有序</li>
-<li>處理事情要有重點</li>
-<li>當機立斷，趕快行動</li>
-<li>學會領導、權力下放和監督</li>
-</ol>
-</li>
-<li>怎麼消除煩悶心裡<ol>
-<li>心理上的厭煩比工作中的勞累更容易感到疲倦</li>
-<li>要對工作有熱情</li>
-</ol>
-</li>
-<li>不再為失眠而憂慮<ol>
-<li>安全感是安穩睡覺的第一關鍵</li>
-<li>讓自己身體疲憊</li>
-<li>失眠的時候可以起來做點事</li>
-<li>失眠不會導致死亡，導致死亡的是緊張情緒和精神壓力</li>
-<li>經常鍛鍊身體，使心情放鬆</li>
-</ol>
-</li>
-</ol>
+<p>這種“繼承”是通過 Go 語言的類型嵌入（Type Embedding）來實現的。因此，這篇文章將帶你了解這種語法，看看我們如何通過這種語法來實現對嵌入類型的方法的“繼承”，同時也搞清楚這種方式對新定義的類型的方法集合的影響。首先，我們來學習一下什麼是類型嵌入。</p>
+<h3 id="類型嵌入"><a href="#類型嵌入" class="headerlink" title="類型嵌入"></a>類型嵌入</h3><p>類型嵌入指的是在一個類型的定義中嵌入了其他類型。Go 語言支持兩種類型嵌入，分別是 <code>interface</code> 類型的類型嵌入和 <code>struct</code> 類型的類型嵌入。</p>
+<h4 id="interface-類型的類型嵌入"><a href="#interface-類型的類型嵌入" class="headerlink" title="interface 類型的類型嵌入"></a>interface 類型的類型嵌入</h4><p>interface類型聲明了由一個方法集合代表的interface，比如下面interface類型 <code>E</code>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> E <span class="keyword">interface</span> &#123;</span><br><span class="line">    M1()</span><br><span class="line">    M2()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我們再定義另外一個interface類型 <code>I</code>，它的方法集合中包含了三個方法 <code>M1</code>、<code>M2</code> 和 <code>M3</code>，如下所示：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> I <span class="keyword">interface</span> &#123;</span><br><span class="line">    M1()</span><br><span class="line">    M2()</span><br><span class="line">    M3()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我們看到interface類型 <code>I</code> 方法集合中的 <code>M1</code> 和 <code>M2</code>，與接口類型 <code>E</code> 的方法集合中的方法完全相同。在這種情況下，我們可以用interface類型 <code>E</code> 替代上面interface類型 <code>I</code> 定義中的 <code>M1</code> 和 <code>M2</code>，如下所示：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> I <span class="keyword">interface</span> &#123;</span><br><span class="line">    E</span><br><span class="line">    M3()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這種在一個interface類型（<code>I</code>）定義中嵌入另外一個interface類型（<code>E</code>）的方式，就是我們說的interface類型的<strong>類型嵌入</strong>。</p>
+<h4 id="struct-類型的類型嵌入"><a href="#struct-類型的類型嵌入" class="headerlink" title="struct 類型的類型嵌入"></a>struct 類型的類型嵌入</h4><p><code>struct</code> 類型的類型嵌入就要更複雜一些了，以下是 Go struct類型的“完全體”：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> T1 <span class="type">int</span></span><br><span class="line"><span class="keyword">type</span> t2 <span class="keyword">struct</span>&#123;</span><br><span class="line">    n <span class="type">int</span></span><br><span class="line">    m <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> I <span class="keyword">interface</span> &#123;</span><br><span class="line">    M1()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> S1 <span class="keyword">struct</span> &#123;</span><br><span class="line">    T1</span><br><span class="line">    *t2</span><br><span class="line">    I            </span><br><span class="line">    a <span class="type">int</span></span><br><span class="line">    b <span class="type">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我們看到，struct <code>S1</code> 定義中有三個“非常規形式”的attribute，分別是 <code>T1</code>、<code>t2</code> 和 <code>I</code>。這三個struct裡的attribute究竟代表的是什麼呢？是名字還是類型呢？</p>
+<p>這裡我直接告訴你答案：它們既代表attribute的名字，也代表attribute的類型。我們分別以這三個attribute為例，說明一下它們的具體含義：</p>
+<ul>
+<li><code>T1</code> 表示attribute名為 <code>T1</code>，它的類型為自定義類型 <code>T1</code>；</li>
+<li><code>t2</code> 表示attribute名為 <code>t2</code>，它的類型為自定義struct類型 <code>t2</code> 的pointer類型；</li>
+<li><code>I</code> 表示attribute名為 <code>I</code>，它的類型為interface類型 <code>I</code>。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> MyInt <span class="type">int</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n *MyInt)</span></span> Add(m <span class="type">int</span>) &#123;</span><br><span class="line">    *n = *n + MyInt(m)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> t <span class="keyword">struct</span> &#123;</span><br><span class="line">    a <span class="type">int</span></span><br><span class="line">    b <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> S <span class="keyword">struct</span> &#123;</span><br><span class="line">    *MyInt</span><br><span class="line">    t</span><br><span class="line">    io.Reader</span><br><span class="line">    s <span class="type">string</span></span><br><span class="line">    n <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    m := MyInt(<span class="number">17</span>)</span><br><span class="line">    r := strings.NewReader(<span class="string">&quot;hello, go&quot;</span>)</span><br><span class="line">    s := S&#123;</span><br><span class="line">        MyInt: &amp;m,</span><br><span class="line">        t: t&#123;</span><br><span class="line">            a: <span class="number">1</span>,</span><br><span class="line">            b: <span class="number">2</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        Reader: r,</span><br><span class="line">        s:      <span class="string">&quot;demo&quot;</span>,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> sl = <span class="built_in">make</span>([]<span class="type">byte</span>, <span class="built_in">len</span>(<span class="string">&quot;hello, go&quot;</span>))</span><br><span class="line">    s.Read(sl)              <span class="comment">// 等同於 s.Reader.Read(sl)</span></span><br><span class="line">    fmt.Println(<span class="type">string</span>(sl)) <span class="comment">// 輸出：hello, go</span></span><br><span class="line">    s.Add(<span class="number">5</span>) </span><br><span class="line">    fmt.Println(*(s.MyInt)) <span class="comment">// 輸出：22</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到這段程式碼，你可能會問：類型 <code>S</code> 沒有定義 <code>Read</code> 方法和 <code>Add</code> 方法啊，這樣寫不會導致 Go 編譯器報錯嗎？如果你有這個疑問，可以暫停一下，先用你手上的 Go 編譯器編譯運行一下這段程式碼看看。</p>
+<p>是不是很驚喜？這段程序不但沒有引發編譯器報錯，還可以正常運行並輸出正確的結果！</p>
+<p>這段程式碼似乎在告訴我們：<code>Read</code> 方法和 <code>Add</code> 方法就是類型 <code>S</code> 方法集合中的方法。其實，這兩個方法來自於struct類型 <code>S</code> 的兩個嵌入attribute <code>Reader</code> 和 <code>MyInt</code>。struct類型 <code>S</code> “繼承”了 <code>Reader</code> attribute的方法 <code>Read</code> 的實現，也“繼承”了 <code>*MyInt</code> 的 <code>Add</code> 方法的實現。注意，我這裡的“繼承”用了引號，說明這並不是真正的繼承，而是 Go 語言的一種“障眼法”。</p>
+<p>這種“障眼法”的工作機制是這樣的：當我們通過struct類型 <code>S</code> 的變量 <code>s</code> 呼叫 <code>Read</code> 方法時，Go 發現struct類型 <code>S</code> 自身並沒有定義 <code>Read</code> 方法，於是 Go 會查看 <code>S</code> 的嵌入attribute對應的類型是否定義了 <code>Read</code> 方法。這時，<code>Reader</code> attribute就被找了出來，之後 <code>s.Read</code> 的呼叫就被轉換為 <code>s.Reader.Read</code> 的呼叫。</p>
+<p>這樣一來，嵌入attribute <code>Reader</code> 的 <code>Read</code> 方法就被提升為 <code>S</code> 的方法，放入了類型 <code>S</code> 的方法集合。同理，<code>*MyInt</code> 的 <code>Add</code> 方法也被提升為 <code>S</code> 的方法而放入 <code>S</code> 的方法集合。從外部來看，這種嵌入attribute的方法的提升就給了我們一種struct類型 <code>S</code> “繼承”了 <code>io.Reader</code> 類型 <code>Read</code> 方法的實現，以及 <code>*MyInt</code> 類型 <code>Add</code> 方法的實現的錯覺。嵌入attribute的使用的確可以幫我們在 Go 中實現方法的“繼承”。</p>
+<h3 id="多重繼承"><a href="#多重繼承" class="headerlink" title="多重繼承"></a>多重繼承</h3><p>不過有一種情況需要注意，那就是當struct嵌入的多個接口類型的方法集合存在交集時，你要小心編譯器可能會出現的錯誤提示。</p>
+<p>Go 1.14 版本解決了嵌入接口類型的方法集合有交集的情況，僅限於interface類型中嵌入interface類型。這裡我們討論的是在struct類型中嵌入方法集合有交集的interface類型。</p>
+<p>如果struct自身實現了該方法，Go 就會優先使用struct自己實現的方法。如果沒有實現，那麼 Go 就會查找struct中的嵌入attribute的方法集合中是否包含這個方法。如果多個嵌入attribute的方法集合中都包含這個方法，那麼我們就說方法集合存在交集。這時，Go 編譯器就會因無法確定究竟使用哪個方法而報錯，所以 Go 會在編譯階段就限制多重繼承的問題。</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
+<li>Go 語言沒有傳統意義上的繼承，所有方法都必須顯式實現。</li>
+<li>可以通過類型嵌入（Type Embedding）來模擬繼承的效果，將嵌入類型的方法提升為新類型的方法。</li>
+<li><code>interface</code> 和 <code>struct</code> 都支持類型嵌入。</li>
+<li>使用嵌入attribute到class的方法提升機制，可以實現方法的“繼承”，但需注意多重繼承的衝突問題。</li>
+</ul>
+<p>這些技巧和知識將幫助你在 Go 語言中有效地使用組合和嵌入，編寫出更靈活且可維護的程式碼。</p>
+<div style="text-align: center;">
+  <a href="../../../../../categories/Go/">Go語言進階學習系列</a>
+  <img src="/images/golang/overview.jpg" alt="" />
+</div>
 
       
     </div>
@@ -603,9 +505,9 @@
       
         <div class="post-tags">
           
-            <a href="../../../../tags/%E9%96%B1%E8%AE%80/" rel="tag"># 閱讀</a>
+            <a href="../../../../../tags/golang/" rel="tag"># golang</a>
           
-            <a href="../../../../tags/%E4%BA%BA%E6%80%A7%E7%9A%84%E5%84%AA%E9%BB%9E/" rel="tag"># 人性的優點</a>
+            <a href="../../../../../tags/Go/" rel="tag"># Go</a>
           
         </div>
       
@@ -618,8 +520,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="../../../10/29/eth_and_ip_network/" rel="next" title="[網路]解析第二層及第三層的網路封包結構">
-                <i class="fa fa-chevron-left"></i> [網路]解析第二層及第三層的網路封包結構
+              <a href="../../../17/golang/method_receiver/" rel="next" title="[Go] Method: Method與如何選擇Receiver類型">
+                <i class="fa fa-chevron-left"></i> [Go] Method: Method與如何選擇Receiver類型
               </a>
             
           </div>
@@ -627,10 +529,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="../../30/influence_people_book/" rel="prev" title="[閱讀]人性的弱點">
-                [閱讀]人性的弱點 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -698,7 +596,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="../../../../images/avatar.jpg"
+                src="../../../../../images/avatar.jpg"
                 alt="" />
             
               <p class="site-author-name" itemprop="name"></p>
@@ -710,7 +608,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="../../../../archives">
+                <a href="../../../../../archives">
               
                   <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">文章</span>
@@ -722,7 +620,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="../../../../categories/index.html">
+                <a href="../../../../../categories/index.html">
                   <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
@@ -733,7 +631,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="../../../../tags/index.html">
+                <a href="../../../../../tags/index.html">
                   <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
@@ -872,64 +770,64 @@
 
   
   
-    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="../../../../../lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="../../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="../../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="../../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
-
-
-  
-
-
-  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="../../../../js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.4"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../../js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../../js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="../../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../../js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -945,9 +843,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://kaichiachen.github.io/2021/11/11/stop_worrying_book/';
-          this.page.identifier = '2021/11/11/stop_worrying_book/';
-          this.page.title = '[閱讀]人性的優點';
+          this.page.url = 'https://kaichiachen.github.io/2024/01/23/golang/go_inherit/';
+          this.page.identifier = '2024/01/23/golang/go_inherit/';
+          this.page.title = '[Go] Method: 怎麼用變數模擬繼承';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://kaichiablog.disqus.com/embed.js';

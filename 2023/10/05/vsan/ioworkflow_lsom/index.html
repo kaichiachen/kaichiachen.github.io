@@ -441,32 +441,24 @@
 
       
         <p>vSAN 的四大 Component - CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，彼此各司其職。以下圖為例，本篇將介紹 vSAN CMMDS。</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
 <p>vSAN LSOM（Local log-structured object manager）運作在 ESXi node 裡面，負責將 Object 和 Component 放在 ESXi node 裡面，並在資料發生 I/O 時，管理 cache disk 和 capacity disk 的資料 I/O。</p>
 <span id="more"></span>
+
 <p>由於 LSOM 負責硬碟層的 I/O，它同時也負責監控硬碟的健康狀態。LSOM 使用 Log 的方式從硬碟讀取 Component 並回傳，支援 SSD 和 HDD 的硬碟。LSOM 處理和硬碟最底層的 I/O 交互，通過 Log 記錄寫的順序。例如在 RAID-1 的情況下，對 Object 寫入代表要對兩個不同的 ESXi Node 的 Component 寫入。如果在 Cluster 發生故障前，只有 Node A 記錄到了寫入，那麼就會用 Log 回溯，Node A 會把 Write log 複製給 Node B，達成最終一致性。</p>
 <p>DOM 是實現在 ESXi 的 Kernel 層，負責接收來自 DOM 的 Components 的增刪改查，LSOM 會給予 CMMDS 所有 disk 的 Metadata。</p>
 <p>LSOM 具有以下 Components：</p>
 <ul>
-<li>
-<p><strong>LSOM Logical Log (LLOG)</strong><br>
-作為 VMFS 與 SSD 互動的橋樑，提供多種 API。</p>
+<li><p><strong>LSOM Logical Log (LLOG)</strong><br>作為 VMFS 與 SSD 互動的橋樑，提供多種 API。</p>
 </li>
-<li>
-<p><strong>Read Cache (RC)</strong><br>
-負責 cache 的 Policy。</p>
+<li><p><strong>Read Cache (RC)</strong><br>負責 cache 的 Policy。</p>
 </li>
-<li>
-<p><strong>LSOM Physical Log (PLOG)</strong><br>
-作為 cache tier 和 capacity tier 之間的橋樑。</p>
+<li><p><strong>LSOM Physical Log (PLOG)</strong><br>作為 cache tier 和 capacity tier 之間的橋樑。</p>
 </li>
-<li>
-<p><strong>SSD Log</strong><br>
-管理 SSD 的空間和 Read cache，並提供 LLOG、PLOG 和 RC 所需的 log infrastructure。</p>
+<li><p><strong>SSD Log</strong><br>管理 SSD 的空間和 Read cache，並提供 LLOG、PLOG 和 RC 所需的 log infrastructure。</p>
 </li>
 </ul>
-<h3 id="總結">總結</h3>
-<ul>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
 <li><strong>Component 持久化</strong>：Object 下的 Component 存在 LSOM 層，確保 Component 持久化在實體 Disk。</li>
 <li><strong>I/O 處理</strong>：接收來自 DOM Owner 的 I/O，完成寫入後通知 DOM。</li>
 <li><strong>資源管理</strong>：處理 SSD 上的 write buffer、read cache，並將資料寫入 capacity tier。</li>
@@ -600,7 +592,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

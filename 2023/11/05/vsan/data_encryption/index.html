@@ -413,7 +413,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  525
+                  524
                 </span>
               
 
@@ -442,14 +442,12 @@
 <p>vSAN 的加密機制採用的是 KMS (Key Manager Server) 解決方案，使用者需要從外部例如 Google 或 Amazon 取得 KMS 加密金鑰。</p>
 <p>KMS 採用的是 KEK (Key Encryption Key) 和 DEK (Data Encryption Key) 機制。DEK 先將硬碟資料進行加密，然後 KEK 負責加密 DEK。DEK 透過 KMIP (Key Management Interoperability Protocol) 傳送加密後的資料到 vSAN 節點主機中，這樣只有當管理人員拿到 KEK，才可以解密所有資料。Hybrid 和 All Flash 都支援此機制。</p>
 <span id="more"></span>
-<h3 id="data-at-rest-encryption">Data-at-rest encryption</h3>
-<p>當啟用了 Data-at-rest encryption，vSAN 會把所有在 vSAN Datastore 裡的資料全數加密。即使硬碟被偷了也不怕，只有管理者有權限解密資料。</p>
+
+<h3 id="Data-at-rest-encryption"><a href="#Data-at-rest-encryption" class="headerlink" title="Data-at-rest encryption"></a>Data-at-rest encryption</h3><p>當啟用了 Data-at-rest encryption，vSAN 會把所有在 vSAN Datastore 裡的資料全數加密。即使硬碟被偷了也不怕，只有管理者有權限解密資料。</p>
 <p>KEK 不會存在 vCenter，而是在 KMS 裡。DEK 有多個，每個 disk 一個，存在各個 host 裡。每次需要加解密，需從 host 透過 vCenter 拿到 KEK 進行加解密。</p>
-<h3 id="data-in-transit-encryption">Data-in-transit encryption</h3>
-<p>Data-in-transit 顧名思義，就是在資料傳輸中加密而已。它不需要 KMS，而是透過對稱加密 AES 256 bits encryption，能防止中間人攻擊。</p>
+<h3 id="Data-in-transit-encryption"><a href="#Data-in-transit-encryption" class="headerlink" title="Data-in-transit encryption"></a>Data-in-transit encryption</h3><p>Data-in-transit 顧名思義，就是在資料傳輸中加密而已。它不需要 KMS，而是透過對稱加密 AES 256 bits encryption，能防止中間人攻擊。</p>
 <p>Data-in-transit 和 Data-at-rest 是獨立的，管理人員可以個別啟用或關閉它們。</p>
-<h3 id="總結">總結</h3>
-<ul>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
 <li>vSAN 採用 XTS-AES 256 加密標準，保護快取層和容量層資料。</li>
 <li>KMS 提供 KEK 和 DEK 機制，確保資料加密安全。</li>
 <li>Data-at-rest encryption 保障靜態資料安全。</li>
@@ -583,7 +581,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

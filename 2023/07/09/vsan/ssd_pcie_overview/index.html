@@ -442,15 +442,14 @@
       
         <p>PCIe 是 SSD 一項重要和主流的接口技術，所以我們有必要對 PCIe 有深入的了解。</p>
 <p>PCIe 從第一代到最近 2022 年第六代的規格問世，速度越來越快。相比於 SAS/SATA，PCIe 資料傳輸的「高速公路」更多，最多可以有 32 個 Lane，而 SAS/SATA 只能有一個 Lane。所以我們可以說，PCIe 的速度就是 Lane 的數量 x 單條 Lane 的速度。</p>
-<h3 id="pcie-拓樸結構">PCIe 拓樸結構</h3>
-<p>PCIe 採用的是樹形拓樸結構，如下圖所示：</p>
-<p><img src="/images/vsan/pci_topology.png" alt=""></p>
+<h3 id="PCIe-拓樸結構"><a href="#PCIe-拓樸結構" class="headerlink" title="PCIe 拓樸結構"></a>PCIe 拓樸結構</h3><p>PCIe 採用的是樹形拓樸結構，如下圖所示：</p>
+<p><img src="/images/vsan/pci_topology.png"></p>
 <p>Root Complex 是樹的根，服務於 CPU。Root Complex 能存取 PCIe 設備，也能存取記憶體。</p>
 <span id="more"></span>
+
 <p>所以具體來說，Root Complex 的 spec 是什麼呢？其內部結構很複雜，PCIe Spec 並沒有規定 Root Complex 應該具備什麼功能或不應該具備什麼功能。我們可以把 Root Complex 想像成一台筆記型電腦，外部的 PCIe 設備就像 USB 插槽。如果插槽不夠用，我們需要擴充更多設備，就需要一個 Switch，這就像是一個 USB Hub。</p>
-<h3 id="pcie-分層結構">PCIe 分層結構</h3>
-<p>PCIe 作為一個資料通訊接口，某種意義上與跨主機的網路接口類似，都需要分層處理各種複雜的問題。網路有 TCP/IP 五層協議，而 PCIe 則定義了三層：Physical Layer、Data Link Layer 和 Transaction Layer，如下圖所示：</p>
-<p><img src="/images/vsan/pci_layer.png" alt=""></p>
+<h3 id="PCIe-分層結構"><a href="#PCIe-分層結構" class="headerlink" title="PCIe 分層結構"></a>PCIe 分層結構</h3><p>PCIe 作為一個資料通訊接口，某種意義上與跨主機的網路接口類似，都需要分層處理各種複雜的問題。網路有 TCP/IP 五層協議，而 PCIe 則定義了三層：Physical Layer、Data Link Layer 和 Transaction Layer，如下圖所示：</p>
+<p><img src="/images/vsan/pci_layer.png"></p>
 <p>和網路通信一樣，PCIe 也是以 Packet 的形式傳輸，每一層都有固定的格式。</p>
 <p><strong>Physical Layer</strong></p>
 <p>負責處理 Packet 的物理傳輸，包含如何分配到各個 Lane 傳輸以及匯總。</p>
@@ -458,8 +457,7 @@
 <p>主要負責 Data 的檢錯和糾錯，以及電源管理等功能。</p>
 <p><strong>Transaction Layer</strong></p>
 <p>主要負責創建 Packet、流量控制、QOS 和事務排序等工作。</p>
-<h3 id="總結">總結</h3>
-<ul>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
 <li>PCIe 是 SSD 的主流接口技術，速度隨著代數提升而增加。</li>
 <li>PCIe 採用樹形拓樸結構，Root Complex 是其核心。</li>
 <li>PCIe 分為三層結構，分別處理物理傳輸、資料連結和事務處理。</li>
@@ -590,7 +588,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
