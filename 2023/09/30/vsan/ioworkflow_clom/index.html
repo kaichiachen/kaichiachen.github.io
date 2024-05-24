@@ -90,7 +90,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/vsan_ioworkflow.png">
 <meta property="article:published_time" content="2023-09-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-06T15:59:05.506Z">
+<meta property="article:modified_time" content="2024-05-24T04:43:31.163Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="vmware">
 <meta property="article:tag" content="vsan">
@@ -447,10 +447,10 @@
 <h2 id="vSAN-CLOM-Cluster-level-object-manager"><a href="#vSAN-CLOM-Cluster-level-object-manager" class="headerlink" title="vSAN CLOM(Cluster-level object manager)"></a>vSAN CLOM(Cluster-level object manager)</h2><p>vSAN CLOM負責根據Policy產生Object Configuration，並將Object裡的Component放在Cluster下適當的ESXi Node裡面。DOM和CLOM之間的溝通緊密無間，且是雙向的。</p>
 <h3 id="vSAN-CLOM的主要特性"><a href="#vSAN-CLOM的主要特性" class="headerlink" title="vSAN CLOM的主要特性"></a>vSAN CLOM的主要特性</h3><p>vSAN CLOM具有以下主要特性：</p>
 <ul>
-<li><strong>物件放置</strong>：CLOM負責根據定義的存儲策略進行物件的初始放置。它決定物件的組件應該位於vSAN集群中的哪個ESXi主機上。</li>
-<li><strong>策略執行</strong>：CLOM確保數據物件的分佈遵從用戶定義的存儲策略。這些策略可以包括關於數據冗餘、條帶化和緩存的規則。</li>
+<li><strong>物件放置</strong>：CLOM負責根據定義的儲存策略進行物件的初始放置。它決定物件的組件應該位於vSAN集群中的哪個ESXi主機上。</li>
+<li><strong>策略執行</strong>：CLOM確保數據物件的分佈遵從用戶定義的儲存策略。這些策略可以包括關於數據冗餘、條帶化和緩存的規則。</li>
 <li><strong>負載平衡</strong>：CLOM監控vSAN集群的容量和性能，並在必要時重新分佈數據物件以保持平衡。這可能涉及將物件的組件移動到vSAN集群內的其他ESXi主機。</li>
-<li><strong>重新配置</strong>：如果存儲策略發生變化，或者如果從vSAN集群中添加或移除主機，CLOM將重新配置數據物件的分佈以適應新的條件。</li>
+<li><strong>重新配置</strong>：如果儲存策略發生變化，或者如果從vSAN集群中添加或移除主機，CLOM將重新配置數據物件的分佈以適應新的條件。</li>
 <li><strong>錯誤處理</strong>：如果出現任何錯誤或故障，CLOM會與分佈式物件管理器（DOM）進行通信，以處理情況並確保數據的可用性和完整性。</li>
 </ul>
 <h3 id="DOM和CLOM的溝通"><a href="#DOM和CLOM的溝通" class="headerlink" title="DOM和CLOM的溝通"></a>DOM和CLOM的溝通</h3><p>DOM負責傳送帶有Policy info的請求給CLOM，而CLOM則負責回傳結果或是Error message給DOM。兩者之間透過一個專用的vmkernel protocal進行溝通。</p>
@@ -590,7 +590,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

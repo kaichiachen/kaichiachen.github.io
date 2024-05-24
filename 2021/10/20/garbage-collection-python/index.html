@@ -89,7 +89,7 @@
 <meta property="og:description" content="我們知道，Python 應用在執行時，需要從記憶體中劃出一段空間來存放臨時變數，計算完後再將結果存放到永久儲存介質。如果臨時變數所需的空間過大，會導致 OOM (Out of Memory) 記憶體錯誤，程式可能會被作業系統終止。 對於伺服器應用來說，為了設計永遠不中斷的系統，記憶體管理變得非常重要，否則容易引發記憶體洩漏 (Memory Leak)。 什麼是記憶體洩漏？我們的應用程式在執行過程中">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-10-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-17T16:45:54.271Z">
+<meta property="article:modified_time" content="2024-05-24T04:42:01.643Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -442,7 +442,7 @@
 <h3 id="Python-的記憶體管理"><a href="#Python-的記憶體管理" class="headerlink" title="Python 的記憶體管理"></a>Python 的記憶體管理</h3><p>那麼 Python 是怎麼處理的呢？需要工程師們手動申請變數記憶體並清除嗎？答案是：不需要，Python 會自動找出不再使用的變數並釋放記憶體。</p>
 <span id="more"></span>
 
-<h3 id="Reference-Count（引用計數）"><a href="#Reference-Count（引用計數）" class="headerlink" title="Reference Count（引用計數）"></a>Reference Count（引用計數）</h3><p>在 Python 中，一切皆為物件，每個物件都有多個指針指向它。那麼如何知道這個物件不會再被使用呢？Python 使用引用計數（Reference Count），當引用計數為 0 時，代表這個物件不可達，不會再被使用了，這時需要被回收。</p>
+<h3 id="Reference-Count（引用計數）"><a href="#Reference-Count（引用計數）" class="headerlink" title="Reference Count（引用計數）"></a>Reference Count（引用計數）</h3><p>在 Python 中，一切皆為物件，每個物件都有多個pointer指向它。那麼如何知道這個物件不會再被使用呢？Python 使用引用計數（Reference Count），當引用計數為 0 時，代表這個物件不可達，不會再被使用了，這時需要被回收。</p>
 <h4 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> psutil</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show_memory_info</span>(<span class="params">hint</span>):</span><br><span class="line">    pid = os.getpid()</span><br><span class="line">    p = psutil.Process(pid)</span><br><span class="line">    info = p.memory_full_info()</span><br><span class="line">    memory = info.uss / <span class="number">1024.</span> / <span class="number">1024</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;&#123;&#125; memory used: &#123;&#125; MB&#x27;</span>.<span class="built_in">format</span>(hint, memory))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    show_memory_info(<span class="string">&#x27;initial&#x27;</span>)</span><br><span class="line">    a = [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000000</span>)]</span><br><span class="line">    show_memory_info(<span class="string">&#x27;after a created&#x27;</span>)</span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line">show_memory_info(<span class="string">&#x27;finished&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Output</span></span><br><span class="line"><span class="comment"># initial memory used: 7.30859375 MB</span></span><br><span class="line"><span class="comment"># after a created memory used: 404.09765625 MB</span></span><br><span class="line"><span class="comment"># finished memory used: 11.61328125 MB</span></span><br></pre></td></tr></table></figure>
 
 <p><code>show_memory_info</code> 使用了 <code>psutil</code> library 來取得 process 所消耗的記憶體。程式剛開始執行時，佔用了約 7MB 的記憶體；當我們宣告了一個長度為一千萬的 list 之後，記憶體飆升至 404MB。然而在 main 函數結束後，變數 a 不再使用，所以引用計數變為 0，記憶體被回收，最後記憶體消耗降至 11MB。</p>
@@ -592,7 +592,7 @@
               
                 <a href="../../../../archives">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

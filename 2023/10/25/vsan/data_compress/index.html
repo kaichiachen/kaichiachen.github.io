@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="重複資料刪除和壓縮在資料儲存領域，除了使用RAID 5&#x2F;6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複存儲。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。 在vSAN架構中，雜湊使用了SHA-1演算法來為每段資料建立Hash value，每段大小為4KB。 壓縮">
+<meta name="description" content="重複資料刪除和壓縮在資料儲存領域，除了使用RAID 5&#x2F;6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複儲存。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。 在vSAN架構中，雜湊使用了SHA-1演算法來為每段資料建立Hash value，每段大小為4KB。 壓縮">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN] vSAN的重複資料刪除、壓縮和資料校驗">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/10/25/vsan/data_compress/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="重複資料刪除和壓縮在資料儲存領域，除了使用RAID 5&#x2F;6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複存儲。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。 在vSAN架構中，雜湊使用了SHA-1演算法來為每段資料建立Hash value，每段大小為4KB。 壓縮">
+<meta property="og:description" content="重複資料刪除和壓縮在資料儲存領域，除了使用RAID 5&#x2F;6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複儲存。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。 在vSAN架構中，雜湊使用了SHA-1演算法來為每段資料建立Hash value，每段大小為4KB。 壓縮">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/Performance_Overview.png">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/Performance_VM.png">
 <meta property="article:published_time" content="2023-10-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-18T04:15:41.780Z">
+<meta property="article:modified_time" content="2024-05-24T04:43:11.559Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="vmware">
 <meta property="article:tag" content="vsan">
@@ -440,7 +440,7 @@
       
 
       
-        <h2 id="重複資料刪除和壓縮"><a href="#重複資料刪除和壓縮" class="headerlink" title="重複資料刪除和壓縮"></a>重複資料刪除和壓縮</h2><p>在資料儲存領域，除了使用RAID 5/6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複存儲。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。</p>
+        <h2 id="重複資料刪除和壓縮"><a href="#重複資料刪除和壓縮" class="headerlink" title="重複資料刪除和壓縮"></a>重複資料刪除和壓縮</h2><p>在資料儲存領域，除了使用RAID 5/6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複儲存。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。</p>
 <p>在vSAN架構中，雜湊使用了SHA-1演算法來為每段資料建立Hash value，每段大小為4KB。</p>
 <p>壓縮則是使用LZ4演算法。在重複資料刪除的過程中，當系統發現有新資料要寫入時，會進行壓縮，將原本4KB的資料壓縮成大約2KB，然後再寫入容量層。</p>
 <span id="more"></span>
@@ -594,7 +594,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
