@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2024/02/23/golang/go_goroutine/">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2024/02/29/golang/go_goroutine/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -328,7 +328,186 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="2024/02/23/golang/go_goroutine/" itemprop="url">[Go] Go中最強的的魔法: 併發程式執行</a></h1>
+                <a class="post-title-link" href="2024/02/29/golang/go_goroutine/" itemprop="url">[Go] goroutine是怎麼工作的？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2024-02-29T00:00:00+08:00">
+                2024-02-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="2024/02/29/golang/go_goroutine/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2024/02/29/golang/go_goroutine/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  1.4k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在這篇<a href="../../../../../2024/02/23/golang/go_concurrent/">Go中最強的魔法: 併發程式執行</a>的文章中，我們探討了併發的基本概念以及Go語言中實現併發的機制—Goroutine。這些內容對於剛接觸Go的Gopher來說，可以說是入門級的學習資料。</p>
+<p>但是，你可能會好奇，既然Go不是採用傳統的基於執行緒的併發模型，那Go的運行時是如何管理和調度(Schedule)眾多Goroutine的呢？實際上，這些是Go語言核心開發團隊的關注點，普通開發者通常不需要深入了解。不過深入理解Goroutine的調度原理對於寫出高效能的Go程式碼是非常有幫助的。</p>
+<p>接下來，讓我們一起簡要探索一下Goroutine調度器的工作原理。</p>
+<h3 id="goroutine調度器">Goroutine調度器</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="2024/02/29/golang/go_goroutine/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2024/02/23/golang/go_concurrent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="2024/02/23/golang/go_concurrent/" itemprop="url">[Go] Go中最強的的魔法: 併發程式執行</a></h1>
         
 
         <div class="post-meta">
@@ -381,9 +560,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="2024/02/23/golang/go_goroutine/#comments" itemprop="discussionUrl">
+                <a href="2024/02/23/golang/go_concurrent/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2024/02/23/golang/go_goroutine/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2024/02/23/golang/go_concurrent/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -436,7 +615,7 @@
 <p>本篇文章將首先介紹 goroutine 的基礎知識及其使用注意事項，讓讀者對 Go 的併發特性有一個初步的認識，之後將進一步深入探討。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="2024/02/23/golang/go_goroutine/" rel="contents">
+            <a class="btn" href="2024/02/23/golang/go_concurrent/" rel="contents">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -789,7 +968,8 @@
         
           <p>Interface 是 Go 這門靜態語言中具有「動靜兼備」特性的語法元素。它既展示了 Go 的強大表達能力，也經常讓初學者感到迷惑。為了釐清這些迷惑，本文將深入探討 Go 在 runtime 時是如何處理 Interface 的類型表現。</p>
 <p>在我們揭開 Interface 的神秘面紗之前，先來理解其「動靜兼備」的特性究竟是什麼。</p>
-<h3 id="接口的靜態與動態特性"><a href="#接口的靜態與動態特性" class="headerlink" title="接口的靜態與動態特性"></a>接口的靜態與動態特性</h3><p>接口的靜態特性主要是指接口類型變數有其靜態類型，例如在 <code>var err error</code> 中，<code>err</code> 的靜態類型為 <code>error</code>。有了這樣的靜態類型，編譯器在編譯階段對所有接口類型變數的賦值進行類型檢查，確保賦值操作的右值實現了該接口的所有方法，否則會報錯：</p>
+<h3 id="接口的靜態與動態特性">接口的靜態與動態特性</h3>
+<p>接口的靜態特性主要是指接口類型變數有其靜態類型，例如在 <code>var err error</code> 中，<code>err</code> 的靜態類型為 <code>error</code>。有了這樣的靜態類型，編譯器在編譯階段對所有接口類型變數的賦值進行類型檢查，確保賦值操作的右值實現了該接口的所有方法，否則會報錯：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> err <span class="type">error</span> = <span class="number">1</span> <span class="comment">// cannot use 1 (type int) as type error in assignment: int does not implement error (missing Error method)</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
@@ -968,7 +1148,6 @@
         
           <p>在 Go 語言中，<code>interface</code> 是一組方法的集合，透過 <code>type</code> 和 <code>interface</code> 關鍵字來定義。這些方法的集合唯一確定了這個 <code>interface</code> 類型所表示的契約。讓我們來看看一個典型的 <code>interface</code> 類型 <code>MyInterface</code> 的定義：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> MyInterface <span class="keyword">interface</span> &#123;</span><br><span class="line">    M1(<span class="type">int</span>) <span class="type">error</span></span><br><span class="line">    M2(io.Writer, ...<span class="type">string</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>從這個定義中，我們可以看到，<code>interface</code> 類型 <code>MyInterface</code> 包含了兩個方法：<code>M1</code> 和 <code>M2</code>。Go 語言要求 <code>interface</code> 類型聲明中的方法必須是具名的，並且方法名字在這個 <code>interface</code> 類型的方法集合中必須唯一。從 Go 1.14 版本開始，Go 允許嵌入的不同 <code>interface</code> 類型的方法集合存在交集，但前提是交集中的方法不僅名字一樣，連方法簽名（參數列表和返回值列表）也必須一致，否則 Go 編譯器會報錯。</p>
 <p>例如，以下示例中 <code>Interface3</code> 嵌入了 <code>Interface1</code> 和 <code>Interface2</code>，但它們之間的 <code>M1</code> 方法簽名不同，導致編譯出錯：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Interface1 <span class="keyword">interface</span> &#123;</span><br><span class="line">    M1()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> Interface2 <span class="keyword">interface</span> &#123;</span><br><span class="line">    M1(<span class="type">string</span>) </span><br><span class="line">    M2()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Interface3 <span class="keyword">interface</span> &#123;</span><br><span class="line">    Interface1</span><br><span class="line">    Interface2 <span class="comment">// 編譯器報錯：duplicate method M1</span></span><br><span class="line">    M3()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1147,9 +1326,9 @@
 
       
         
-          <h3 id="Go-語言的繼承與組合"><a href="#Go-語言的繼承與組合" class="headerlink" title="Go 語言的繼承與組合"></a>Go 語言的繼承與組合</h3><p>Go 語言沒有像 C++/Java 等語言可以透過 <code>extend</code> 關鍵字來繼承某個 class。因此，Go class的所有方法都是自己顯式實現的。讓我們舉個例子，自定義class <code>T</code> 有兩個methods <code>M1</code> 和 <code>M2</code>，如果 <code>T</code> 是一個獨立的自定義class，那我們在聲明class <code>T</code> 的 Go 包原始碼文件中一定可以找到其所有method的實現程式碼，比如：</p>
+          <h3 id="go-語言的繼承與組合">Go 語言的繼承與組合</h3>
+<p>Go 語言沒有像 C++/Java 等語言可以透過 <code>extend</code> 關鍵字來繼承某個 class。因此，Go class的所有方法都是自己顯式實現的。讓我們舉個例子，自定義class <code>T</code> 有兩個methods <code>M1</code> 和 <code>M2</code>，如果 <code>T</code> 是一個獨立的自定義class，那我們在聲明class <code>T</code> 的 Go 包原始碼文件中一定可以找到其所有method的實現程式碼，比如：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(T)</span></span> M1() &#123;...&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(T)</span></span> M2() &#123;...&#125;</span><br></pre></td></tr></table></figure>
-
 <p>在 Go 語言中，如果我們真的想模擬繼承的效果，可以透過 Go 語言設計思想的“組合”來實現。具體的 Go 語言設計思想可以參考我的這篇文章 - <a href="../../../../../2023/12/12/golang/design_philosophy/">Go語言的設計哲學</a></p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1329,7 +1508,6 @@
           <p>和多數程式語言一樣，在 Go 語言中，我們需要考慮如何設計方法。由於在 Go 語言中，方法本質上就是函數，所以我們之前講解的關於函數設計的內容同樣適用於方法，例如錯誤處理設計、針對異常的處理策略、使用 <code>defer</code> 提升簡潔性，等等。</p>
 <p>Receiver（Receiver）也是設計方法時需要考量的一點。Receiver定義了一個Method所屬的類型，有點類似於其他語言中的 class 或 object 的概念，如下所示：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t T)</span></span> M1() &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *T)</span></span> M2() &#123;&#125;</span><br></pre></td></tr></table></figure>
-
 <p>上面範例中的 <code>t</code> 就是Receiver，而 <code>M1</code> 和 <code>M2</code> 是Receiver定義的Method。<code>M1</code> 方法代表Receiver類型為 <code>T</code> 的Method，而 <code>M2</code> 方法則代表Receiver類型為 <code>*T</code> 的Method。下面我們來看看不同的Receiver類型對 <code>M1</code> 和 <code>M2</code> 的影響。</p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1507,7 +1685,8 @@
       
         
           <p>在 Go 語言中，defer 關鍵字是一個強大而且實用的工具，能讓你更優雅地處理資源釋放和一些在函數結束前必須執行的清理工作。本文將通過生動的比喻和簡單的示例，幫助你理解 defer 的使用方法及其重要性。</p>
-<h3 id="defer-是什麼？"><a href="#defer-是什麼？" class="headerlink" title="defer 是什麼？"></a>defer 是什麼？</h3><p>簡單來說，defer 是用來延遲執行一段程式碼，直到所在的函數即將返回時才執行。就像你在餐廳吃飯，最後才會付錢一樣，defer 讓你在程式的適當位置安排程式碼，但等到適當的時候才執行。</p>
+<h3 id="defer-是什麼？">defer 是什麼？</h3>
+<p>簡單來說，defer 是用來延遲執行一段程式碼，直到所在的函數即將返回時才執行。就像你在餐廳吃飯，最後才會付錢一樣，defer 讓你在程式的適當位置安排程式碼，但等到適當的時候才執行。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="2024/01/06/golang/defer/" rel="contents">
@@ -1904,182 +2083,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2023/12/12/golang/design_philosophy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="2023/12/12/golang/design_philosophy/" itemprop="url">[Go] Go語言的設計哲學</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2023-12-12T00:00:00+08:00">
-                2023-12-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="categories/Go/" itemprop="url" rel="index">
-                    <span itemprop="name">Go</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="2023/12/12/golang/design_philosophy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2023/12/12/golang/design_philosophy/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  1.1k
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Go語言，又稱Golang，是由Google開發的一種現代程式語言。它在2007年誕生，由Robert Griesemer、Rob Pike和Ken Thompson設計。Go語言的設計哲學非常獨特，使它在眾多程式語言中脫穎而出。這篇文章，我們來聊聊Go語言的設計哲學，看看這門語言是如何讓寫程式變得更加簡單、高效和愉快的。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="2023/12/12/golang/design_philosophy/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2134,7 +2137,7 @@
               
                 <a href="archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

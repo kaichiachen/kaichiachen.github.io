@@ -444,16 +444,17 @@
         <p>Disk 由於晶圓問題、 firmware 問題、 driver 問題等等會造成一定機率上的故障。如果一塊硬碟每天的故障機率是 1%，那麼一座資料中心假如有一萬個 disk，代表每天有一百塊硬碟損壞。當然， vSAN 對於部分類型損壞會嘗試自動修復，這樣能夠大幅減少許多人力成本，畢竟大部分的問題重開機就能解決。</p>
 <p>LSOM 是最底層與硬碟打交道的 component。他的 DDH (Degraded Device Handling) service 可以幫忙監控硬碟狀態，當 DDH 偵測到 disk 即將要故障或損壞事件時，就會把 disk 標記為有問題的裝置，讓它不再參與資料的 I/O 流程。更多細節可以參考 VMware KB：<a target="_blank" rel="noopener" href="https://kb.vmware.com/s/article/2148358">https://kb.vmware.com/s/article/2148358</a></p>
 <p>NVMe 是一種主機與 SSD 之間溝通的協議。前面說到 PCIe 有三層， NVMe 屬於第四層，是協議中的最高層，如下圖所示。</p>
-<p><img src="/images/vsan/nvme_structure.png"></p>
+<p><img src="/images/vsan/nvme_structure.png" alt=""></p>
 <span id="more"></span>
-
 <p>NVMe 作為應用層協議，理論上可以配所有物理接口協議。但是 NVMe 起初的設計是根據 PCIe，因此後面都是基於 NVMe+PCIe 進行探討。</p>
 <p>NVMe 協議是為 SSD 所生，就像古代的軍師，運籌帷幄，決勝千里，將設計好的計謀交給手下大將執行，也就是 PCIe。 NVMe+PCIe 這兩個天作之合無疑在 SSD 領域中是最強的組合。</p>
-<h3 id="NVMe-over-Fabrics"><a href="#NVMe-over-Fabrics" class="headerlink" title="NVMe over Fabrics"></a>NVMe over Fabrics</h3><p>在傳統的儲存伺服器中，我們利用 iSCSI 透過網路連結遠端的硬碟，形成一個儲存池，如下圖所示。</p>
-<p><img src="/images/vsan/storage_overall_structure.png"></p>
+<h3 id="nvme-over fabrics">NVMe over Fabrics</h3>
+<p>在傳統的儲存伺服器中，我們利用 iSCSI 透過網路連結遠端的硬碟，形成一個儲存池，如下圖所示。</p>
+<p><img src="/images/vsan/storage_overall_structure.png" alt=""></p>
 <p>這樣做的好處是非常節省成本，只需要使用 Ethernet 和成熟的 iSCSI 協議即可。然而，這樣的方式會帶來一個問題： NVMe+PCIe 的速度非常快， throughput 可以達到 10us，而 iSCSI 的極限則是 100us。這就像是把一台法拉利跑車放在台北市上班時段的建國高架橋上，縱使引擎再快，也發揮不出來。</p>
 <p>NVMe over Fabrics 就是為了解決這個問題。它指定了 Transaction Layer 的協議，例如 RDMA 和 PCIe Fabrics 的技術，不過需要專用的硬體網路設備。在眾多的 Transaction Layer 協議中，值得介紹的是 RDMA。 RDMA 是遠端 DMA，它透過網路將資料直接傳入主機的儲存區，不需要 CPU 一個個編碼和解析協議，進而降低了 CPU 的工作量。</p>
-<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
+<h3 id="總結">總結</h3>
+<ul>
 <li>Disk 故障可能由多種原因造成， vSAN 會自動修復部分損壞。</li>
 <li>LSOM 的 DDH 服務能監控硬碟狀態，避免故障 disk 參與 I/O 流程。</li>
 <li>NVMe 作為 SSD 專屬協議，與 PCIe 搭配是最強組合。</li>
@@ -587,7 +588,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

@@ -413,7 +413,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  856
+                  859
                 </span>
               
 
@@ -441,14 +441,19 @@
         <p>Disk 由於晶圓問題、firmware 問題、driver 問題等等會造成一定機率上的故障。假如一塊硬碟每天的故障機率是 1%，那麼一座有一萬個 disk 的資料中心，每天可能會有 100 塊硬碟損壞。當然，vSAN 對於部分類型的損壞會嘗試自動修復，這樣能大幅減少人力成本，畢竟大部分問題重開機就能解決。</p>
 <p>LSOM 是最底層與硬碟打交道的元件，它的 DDH（Degraded Device Handling）服務可以監控硬碟狀態。當 DDH 偵測到 Disk 即將故障或損壞時，會將 Disk 標記為有問題的裝置，讓它不再參與資料的 I/O 流程。更多細節可以參考 VMware KB：<a target="_blank" rel="noopener" href="https://kb.vmware.com/s/article/2148358">https://kb.vmware.com/s/article/2148358</a></p>
 <p>這裡列舉 vSAN 偵測到的硬碟狀態及其原因：</p>
-<h3 id="PDL"><a href="#PDL" class="headerlink" title="PDL"></a>PDL</h3><p>Permanent Disk Loss (PDL) 是一種嚴重的錯誤，需要人工介入。一般情況下是 Host 與 Disk 的連結出了問題，無法連接。可能是 ESXi Host 內部或 Disk 的 bug 導致的。</p>
+<h3 id="pdl">PDL</h3>
+<p>Permanent Disk Loss (PDL) 是一種嚴重的錯誤，需要人工介入。一般情況下是 Host 與 Disk 的連結出了問題，無法連接。可能是 ESXi Host 內部或 Disk 的 bug 導致的。</p>
 <span id="more"></span>
-
-<h3 id="Transient-Error"><a href="#Transient-Error" class="headerlink" title="Transient Error"></a>Transient Error</h3><p>這種錯誤可以藉由多次 I/O 重試修復。一般是由於 ESXi Host 內部或 SCSI 的 bug，例如 I/O 工作負載突然激增。</p>
-<h3 id="Stuck-I-O"><a href="#Stuck-I-O" class="headerlink" title="Stuck I/O"></a>Stuck I/O</h3><p>Stuck I/O 發生在 ESXi Host 外面，一般由 firmware 或 hardware 的 bug 導致 I/O 無法完成。在 vSAN 7.0 Update 3 以前，Stuck I/O 會使整個 Host 關機。一個 disk 的 I/O 無反應會影響整個 Cluster 處理 I/O 的進程，自動重啟後 I/O 仍會繼續 Stuck。因此，最好手動移除 Disk 再重啟。vSAN 7.0 Update 3 之後，監控平台會提示使用者某個 Disk 發生 Stuck I/O，需要手動重啟 Host。</p>
-<h3 id="URE"><a href="#URE" class="headerlink" title="URE"></a>URE</h3><p>Unrecovered Read Error (URE) 是 LSOM 遇到 metadata 讀取錯誤時發生的問題。這是由於 Disk 介質的錯誤，能夠自動修復。當 Disk 發生 URE 並且 DDH 開啟時，vSAN 會透過將資料撤出並重建 disk 來處理此錯誤。</p>
-<h3 id="High-Latency"><a href="#High-Latency" class="headerlink" title="High Latency"></a>High Latency</h3><p>當 LSOM 偵測到過多的 High Latency I/O 時會觸發此狀態。</p>
-<h3 id="Congestion"><a href="#Congestion" class="headerlink" title="Congestion"></a>Congestion</h3><p>當 LSOM 偵測到以下 Congestion 時，會通知 DOM 降低 I/O 流量直到 Congestion 解除：</p>
+<h3 id="transient-error">Transient Error</h3>
+<p>這種錯誤可以藉由多次 I/O 重試修復。一般是由於 ESXi Host 內部或 SCSI 的 bug，例如 I/O 工作負載突然激增。</p>
+<h3 id="stuck-i/o">Stuck I/O</h3>
+<p>Stuck I/O 發生在 ESXi Host 外面，一般由 firmware 或 hardware 的 bug 導致 I/O 無法完成。在 vSAN 7.0 Update 3 以前，Stuck I/O 會使整個 Host 關機。一個 disk 的 I/O 無反應會影響整個 Cluster 處理 I/O 的進程，自動重啟後 I/O 仍會繼續 Stuck。因此，最好手動移除 Disk 再重啟。vSAN 7.0 Update 3 之後，監控平台會提示使用者某個 Disk 發生 Stuck I/O，需要手動重啟 Host。</p>
+<h3 id="ure">URE</h3>
+<p>Unrecovered Read Error (URE) 是 LSOM 遇到 metadata 讀取錯誤時發生的問題。這是由於 Disk 介質的錯誤，能夠自動修復。當 Disk 發生 URE 並且 DDH 開啟時，vSAN 會透過將資料撤出並重建 disk 來處理此錯誤。</p>
+<h3 id="high-latency">High Latency</h3>
+<p>當 LSOM 偵測到過多的 High Latency I/O 時會觸發此狀態。</p>
+<h3 id="congestion">Congestion</h3>
+<p>當 LSOM 偵測到以下 Congestion 時，會通知 DOM 降低 I/O 流量直到 Congestion 解除：</p>
 <ol>
 <li>Log Congestion</li>
 <li>SSD Congestion</li>
@@ -457,13 +462,18 @@
 <li>IOPS Congestion</li>
 </ol>
 <p>最後，當 DDH 偵測到 Disk 的錯誤後，需將 Disk 上的 Object Component 即時撤離，此時需進行 Evacuation 操作。</p>
-<h3 id="Evacuate"><a href="#Evacuate" class="headerlink" title="Evacuate"></a>Evacuate</h3><p>由於 Disk 發生錯誤，需要將 Disk 上的 Component 撤出到其他 Disk，以確保 Object 能符合使用者設定的 Policy。當然，也可能發生 Evacuate 錯誤，此時需要人工介入。關於 Evacuation 的結果，有以下三種：</p>
+<h3 id="evacuate">Evacuate</h3>
+<p>由於 Disk 發生錯誤，需要將 Disk 上的 Component 撤出到其他 Disk，以確保 Object 能符合使用者設定的 Policy。當然，也可能發生 Evacuate 錯誤，此時需要人工介入。關於 Evacuation 的結果，有以下三種：</p>
 <ol>
-<li><strong>Data evacuation completed</strong><br> 成功撤離。</li>
-<li><strong>Data evacuation failed due to insufficient resources</strong><br> 由於 Cluster 容量不足導致撤離失敗，需人工介入。</li>
-<li><strong>Data evacuation failed due to inaccessible objects</strong><br> 當 ESXi host 重啟或發生網路問題，容易觸發 inaccessible object。需人工介入修復基礎設施問題或刪除該 object。</li>
+<li><strong>Data evacuation completed</strong><br>
+成功撤離。</li>
+<li><strong>Data evacuation failed due to insufficient resources</strong><br>
+由於 Cluster 容量不足導致撤離失敗，需人工介入。</li>
+<li><strong>Data evacuation failed due to inaccessible objects</strong><br>
+當 ESXi host 重啟或發生網路問題，容易觸發 inaccessible object。需人工介入修復基礎設施問題或刪除該 object。</li>
 </ol>
-<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
+<h3 id="總結">總結</h3>
+<ul>
 <li><strong>PDL</strong>: 嚴重錯誤需人工介入並手動移除Disk，相關人員需手動確保資料可用性</li>
 <li><strong>Transient Error</strong>: 暫時的error，可通過 I/O 重試修復</li>
 <li><strong>Stuck I/O</strong>: Disk I/O發生卡住事件，需要手動重啟 Host</li>
@@ -600,7 +610,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

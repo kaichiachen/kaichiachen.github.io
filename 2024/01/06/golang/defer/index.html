@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="在 Go 語言中，defer 關鍵字是一個強大而且實用的工具，能讓你更優雅地處理資源釋放和一些在函數結束前必須執行的清理工作。本文將通過生動的比喻和簡單的示例，幫助你理解 defer 的使用方法及其重要性。 defer 是什麼？簡單來說，defer 是用來延遲執行一段程式碼，直到所在的函數即將返回時才執行。就像你在餐廳吃飯，最後才會付錢一樣，defer 讓你在程式的適當位置安排程式碼，但等到適當的">
+<meta name="description" content="在 Go 語言中，defer 關鍵字是一個強大而且實用的工具，能讓你更優雅地處理資源釋放和一些在函數結束前必須執行的清理工作。本文將通過生動的比喻和簡單的示例，幫助你理解 defer 的使用方法及其重要性。 defer 是什麼？ 簡單來說，defer 是用來延遲執行一段程式碼，直到所在的函數即將返回時才執行。就像你在餐廳吃飯，最後才會付錢一樣，defer 讓你在程式的適當位置安排程式碼，但等到適當">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Go] Defer的妙用 - 跟蹤函數調用鏈">
 <meta property="og:url" content="https://kaichiachen.github.io/2024/01/06/golang/defer/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="在 Go 語言中，defer 關鍵字是一個強大而且實用的工具，能讓你更優雅地處理資源釋放和一些在函數結束前必須執行的清理工作。本文將通過生動的比喻和簡單的示例，幫助你理解 defer 的使用方法及其重要性。 defer 是什麼？簡單來說，defer 是用來延遲執行一段程式碼，直到所在的函數即將返回時才執行。就像你在餐廳吃飯，最後才會付錢一樣，defer 讓你在程式的適當位置安排程式碼，但等到適當的">
+<meta property="og:description" content="在 Go 語言中，defer 關鍵字是一個強大而且實用的工具，能讓你更優雅地處理資源釋放和一些在函數結束前必須執行的清理工作。本文將通過生動的比喻和簡單的示例，幫助你理解 defer 的使用方法及其重要性。 defer 是什麼？ 簡單來說，defer 是用來延遲執行一段程式碼，直到所在的函數即將返回時才執行。就像你在餐廳吃飯，最後才會付錢一樣，defer 讓你在程式的適當位置安排程式碼，但等到適當">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/golang/overview.jpg">
 <meta property="article:published_time" content="2024-01-05T16:00:00.000Z">
@@ -440,35 +440,38 @@
 
       
         <p>在 Go 語言中，defer 關鍵字是一個強大而且實用的工具，能讓你更優雅地處理資源釋放和一些在函數結束前必須執行的清理工作。本文將通過生動的比喻和簡單的示例，幫助你理解 defer 的使用方法及其重要性。</p>
-<h3 id="defer-是什麼？"><a href="#defer-是什麼？" class="headerlink" title="defer 是什麼？"></a>defer 是什麼？</h3><p>簡單來說，defer 是用來延遲執行一段程式碼，直到所在的函數即將返回時才執行。就像你在餐廳吃飯，最後才會付錢一樣，defer 讓你在程式的適當位置安排程式碼，但等到適當的時候才執行。</p>
+<h3 id="defer-是什麼？">defer 是什麼？</h3>
+<p>簡單來說，defer 是用來延遲執行一段程式碼，直到所在的函數即將返回時才執行。就像你在餐廳吃飯，最後才會付錢一樣，defer 讓你在程式的適當位置安排程式碼，但等到適當的時候才執行。</p>
 <span id="more"></span>
-
-<h3 id="基本語法"><a href="#基本語法" class="headerlink" title="基本語法"></a>基本語法</h3><p>使用 defer 非常簡單，只需在你要延遲執行的函數或表達式前面加上 defer 關鍵字即可：</p>
+<h3 id="基本語法">基本語法</h3>
+<p>使用 defer 非常簡單，只需在你要延遲執行的函數或表達式前面加上 defer 關鍵字即可：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;Start&quot;</span>)</span><br><span class="line">    <span class="keyword">defer</span> fmt.Println(<span class="string">&quot;End&quot;</span>)</span><br><span class="line">    fmt.Println(<span class="string">&quot;Doing something...&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>輸出結果將是：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Start</span><br><span class="line">Doing something...</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-
 <p>可以看到，defer 語句會在 main 函數即將返回前執行，無論函數中間發生了什麼。</p>
-<h3 id="典型使用場景"><a href="#典型使用場景" class="headerlink" title="典型使用場景"></a>典型使用場景</h3><p>defer 最常見的使用場景是資源釋放，例如文件操作、網絡連接、資料庫連接等。以下是一個簡單的文件操作示例：</p>
+<h3 id="典型使用場景">典型使用場景</h3>
+<p>defer 最常見的使用場景是資源釋放，例如文件操作、網絡連接、資料庫連接等。以下是一個簡單的文件操作示例：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;os&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    file, err := os.Open(<span class="string">&quot;example.txt&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;Error opening file:&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> file.Close() <span class="comment">// 延遲關閉文件</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 假設這裡有一些讀取文件的操作</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;Reading file...&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>在這個例子中，file.Close() 被延遲執行，確保無論 main 函數如何返回，文件都會被正確關閉，避免資源洩漏。</p>
-<h3 id="延遲執行的捕捉"><a href="#延遲執行的捕捉" class="headerlink" title="延遲執行的捕捉"></a>延遲執行的捕捉</h3><p>你可以用 defer 來捕捉並處理異常，確保在異常情況下也能執行必要的清理工作：</p>
+<h3 id="延遲執行的捕捉">延遲執行的捕捉</h3>
+<p>你可以用 defer 來捕捉並處理異常，確保在異常情況下也能執行必要的清理工作：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> r := <span class="built_in">recover</span>(); r != <span class="literal">nil</span> &#123;</span><br><span class="line">            fmt.Println(<span class="string">&quot;Recovered from panic:&quot;</span>, r)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    fmt.Println(<span class="string">&quot;Starting&quot;</span>)</span><br><span class="line">    <span class="built_in">panic</span>(<span class="string">&quot;Something went wrong&quot;</span>)</span><br><span class="line">    fmt.Println(<span class="string">&quot;This will not be printed&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>在這個例子中，recover 函數會捕捉到 panic，並且 defer 語句保證了即使發生異常，也能執行清理工作。</p>
-<h3 id="多個-defer-語句"><a href="#多個-defer-語句" class="headerlink" title="多個 defer 語句"></a>多個 defer 語句</h3><p>如果你在一個函數中使用多個 defer 語句，它們會按照後進先出的順序執行（LIFO）。這就像你堆疊盤子，最後放上的盤子會最先被拿走。</p>
+<h3 id="多個-defer 語句">多個 defer 語句</h3>
+<p>如果你在一個函數中使用多個 defer 語句，它們會按照後進先出的順序執行（LIFO）。這就像你堆疊盤子，最後放上的盤子會最先被拿走。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">defer</span> fmt.Println(<span class="string">&quot;First&quot;</span>)</span><br><span class="line">    <span class="keyword">defer</span> fmt.Println(<span class="string">&quot;Second&quot;</span>)</span><br><span class="line">    <span class="keyword">defer</span> fmt.Println(<span class="string">&quot;Third&quot;</span>)</span><br><span class="line">    fmt.Println(<span class="string">&quot;Doing something...&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>輸出結果將是：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Doing something...</span><br><span class="line">Third</span><br><span class="line">Second</span><br><span class="line">First</span><br></pre></td></tr></table></figure>
-
-<h3 id="高效使用-defer"><a href="#高效使用-defer" class="headerlink" title="高效使用 defer"></a>高效使用 defer</h3><p>雖然 defer 是一個非常有用的工具，但它並非免費的。每次調用 defer 都會有一些額外的開銷，尤其是在高頻率調用的場景中。例如，在一個非常深的遞迴函數中頻繁使用 defer 可能會帶來性能問題。可以考慮在這種情況下使用顯式的資源管理方式來代替 defer。<br>以下是defer 的最佳實踐</p>
+<h3 id="高效使用-defer">高效使用 defer</h3>
+<p>雖然 defer 是一個非常有用的工具，但它並非免費的。每次調用 defer 都會有一些額外的開銷，尤其是在高頻率調用的場景中。例如，在一個非常深的遞迴函數中頻繁使用 defer 可能會帶來性能問題。可以考慮在這種情況下使用顯式的資源管理方式來代替 defer。<br>
+以下是defer 的最佳實踐</p>
 <ul>
 <li>資源管理：defer 非常適合用來管理資源的釋放，如文件、網路socket連接等。</li>
 <li>錯誤處理：在需要進行清理操作的錯誤處理中使用 defer 確保資源被正確釋放。</li>
 <li>讀取程式碼順序：在程式碼靠近資源分配的地方使用 defer，提高程式碼的可讀性和可維護性。</li>
 </ul>
-<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>defer 是 Go 語言中一個簡單但強大的工具，可以讓你的程式更加優雅和可靠。無論是資源釋放、捕捉異常還是簡單的清理工作，defer 都能幫助你寫出更加整潔和易於維護的程式碼。</p>
+<h3 id="總結">總結</h3>
+<p>defer 是 Go 語言中一個簡單但強大的工具，可以讓你的程式更加優雅和可靠。無論是資源釋放、捕捉異常還是簡單的清理工作，defer 都能幫助你寫出更加整潔和易於維護的程式碼。</p>
 <p>記得，像處理餐廳賬單一樣，把 defer 放在適當的位置，等到最後才執行，就能讓你的程式運行更加順暢！</p>
 <div style="text-align: center;">
   <a href="../../../../../categories/Go/">Go語言進階學習系列</a>
@@ -600,7 +603,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

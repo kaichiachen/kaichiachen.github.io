@@ -309,6 +309,182 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/12/12/golang/design_philosophy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="../../2023/12/12/golang/design_philosophy/" itemprop="url">[Go] Go語言的設計哲學</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2023-12-12T00:00:00+08:00">
+                2023-12-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="../../2023/12/12/golang/design_philosophy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2023/12/12/golang/design_philosophy/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  1.1k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Go語言，又稱Golang，是由Google開發的一種現代程式語言。它在2007年誕生，由Robert Griesemer、Rob Pike和Ken Thompson設計。Go語言的設計哲學非常獨特，使它在眾多程式語言中脫穎而出。這篇文章，我們來聊聊Go語言的設計哲學，看看這門語言是如何讓寫程式變得更加簡單、高效和愉快的。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="../../2023/12/12/golang/design_philosophy/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/12/03/vsan/esxcli_list/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -431,8 +607,9 @@
 
       
         
-          <h1 id="ESXi-Host"><a href="#ESXi-Host" class="headerlink" title="ESXi Host"></a>ESXi Host</h1><h3 id="esxcli-vsan-cluster"><a href="#esxcli-vsan-cluster" class="headerlink" title="esxcli vsan cluster"></a>esxcli vsan cluster</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># esxcli vsan cluster</span></span><br><span class="line">Available Commands:</span><br><span class="line">  get                   Get information about the vSAN cluster that this host is joined to.</span><br><span class="line">  <span class="built_in">join</span>                  Join the host to a vSAN cluster.</span><br><span class="line">  leave                 Leave the vSAN cluster the host is currently joined to.</span><br><span class="line">  list                  Get information about the vSAN clusters that this host is joined to.</span><br><span class="line">  new                   Create a vSAN cluster with current host joined. A random sub-cluster UUID will be generated.</span><br><span class="line">  restore               Restore the persisted vSAN cluster configuration.</span><br></pre></td></tr></table></figure>
-
+          <h1 id="esxi-host">ESXi Host</h1>
+<h3 id="esxcli-vsan cluster">esxcli vsan cluster</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># esxcli vsan cluster</span></span><br><span class="line">Available Commands:</span><br><span class="line">  get                   Get information about the vSAN cluster that this host is joined to.</span><br><span class="line">  <span class="built_in">join</span>                  Join the host to a vSAN cluster.</span><br><span class="line">  leave                 Leave the vSAN cluster the host is currently joined to.</span><br><span class="line">  list                  Get information about the vSAN clusters that this host is joined to.</span><br><span class="line">  new                   Create a vSAN cluster with current host joined. A random sub-cluster UUID will be generated.</span><br><span class="line">  restore               Restore the persisted vSAN cluster configuration.</span><br></pre></td></tr></table></figure>
 <p>我們可以看到，除了可以獲取當前vSAN cluster的詳細訊息之外，也可以將Host加入或移除vSAN Cluster之外</p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -583,7 +760,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  620
+                  625
                 </span>
               
 
@@ -610,7 +787,8 @@
       
         
           <p>vSAN作為VMware一個重要的儲存產品，它深度融合了VMware的vSphere，並能透過vCenter一站式管理儲存資源池。我們可以透過vCenter建立vSAN Cluster、創建vSAN Datastore，更能夠在vCenter上直接監控vSAN Cluster的健康和I/O性能狀態。接下來，讓我來介紹如何透過7.0U3的vCenter進行運維管理。</p>
-<h2 id="vSAN-Skyline-Health"><a href="#vSAN-Skyline-Health" class="headerlink" title="vSAN Skyline Health"></a>vSAN Skyline Health</h2><p>vSphere提供了esxcli指令，讓用戶可以透過esxcli指令主動查詢當前ESXi host的硬體、儲存、網路等資訊。那麼，有沒有方法可以被動提示用戶當前vSAN cluster的健康狀態呢？</p>
+<h2 id="vsan-skyline health">vSAN Skyline Health</h2>
+<p>vSphere提供了esxcli指令，讓用戶可以透過esxcli指令主動查詢當前ESXi host的硬體、儲存、網路等資訊。那麼，有沒有方法可以被動提示用戶當前vSAN cluster的健康狀態呢？</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2023/11/26/vsan/cluster_monitor/" rel="contents">
@@ -760,7 +938,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  856
+                  859
                 </span>
               
 
@@ -789,7 +967,8 @@
           <p>Disk 由於晶圓問題、firmware 問題、driver 問題等等會造成一定機率上的故障。假如一塊硬碟每天的故障機率是 1%，那麼一座有一萬個 disk 的資料中心，每天可能會有 100 塊硬碟損壞。當然，vSAN 對於部分類型的損壞會嘗試自動修復，這樣能大幅減少人力成本，畢竟大部分問題重開機就能解決。</p>
 <p>LSOM 是最底層與硬碟打交道的元件，它的 DDH（Degraded Device Handling）服務可以監控硬碟狀態。當 DDH 偵測到 Disk 即將故障或損壞時，會將 Disk 標記為有問題的裝置，讓它不再參與資料的 I/O 流程。更多細節可以參考 VMware KB：<a target="_blank" rel="noopener" href="https://kb.vmware.com/s/article/2148358">https://kb.vmware.com/s/article/2148358</a></p>
 <p>這裡列舉 vSAN 偵測到的硬碟狀態及其原因：</p>
-<h3 id="PDL"><a href="#PDL" class="headerlink" title="PDL"></a>PDL</h3><p>Permanent Disk Loss (PDL) 是一種嚴重的錯誤，需要人工介入。一般情況下是 Host 與 Disk 的連結出了問題，無法連接。可能是 ESXi Host 內部或 Disk 的 bug 導致的。</p>
+<h3 id="pdl">PDL</h3>
+<p>Permanent Disk Loss (PDL) 是一種嚴重的錯誤，需要人工介入。一般情況下是 Host 與 Disk 的連結出了問題，無法連接。可能是 ESXi Host 內部或 Disk 的 bug 導致的。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2023/11/18/vsan/physical_disk_states/" rel="contents">
@@ -939,7 +1118,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  524
+                  525
                 </span>
               
 
@@ -1117,7 +1296,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  678
+                  679
                 </span>
               
 
@@ -1143,7 +1322,8 @@
 
       
         
-          <h2 id="重複資料刪除和壓縮"><a href="#重複資料刪除和壓縮" class="headerlink" title="重複資料刪除和壓縮"></a>重複資料刪除和壓縮</h2><p>在資料儲存領域，除了使用RAID 5/6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複儲存。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。</p>
+          <h2 id="重複資料刪除和壓縮">重複資料刪除和壓縮</h2>
+<p>在資料儲存領域，除了使用RAID 5/6之外，還可以啟用「重複資料刪除和壓縮」來節省儲存資源。這個功能會針對每個資料區塊進行重複資料刪除，如果vSAN Datastore中已經有相同的資料區塊，系統就不會重複儲存。為了判斷資料區塊是否相同，系統會使用雜湊算法來建立資料索引。</p>
 <p>在vSAN架構中，雜湊使用了SHA-1演算法來為每段資料建立Hash value，每段大小為4KB。</p>
 <p>壓縮則是使用LZ4演算法。在重複資料刪除的過程中，當系統發現有新資料要寫入時，會進行壓縮，將原本4KB的資料壓縮成大約2KB，然後再寫入容量層。</p>
           <!--noindex-->
@@ -1321,9 +1501,11 @@
 
       
         
-          <h3 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h3><p>VMware vSAN 是一種分散式儲存技術，它將多個 ESXi 主機的儲存資源組合成一個共享的資料儲存區域。這篇文章會詳細解釋虛擬機在 vSAN 中是如何儲存數據，以及不同類型的物件如何運作。</p>
-<h3 id="vSAN-與虛擬機"><a href="#vSAN-與虛擬機" class="headerlink" title="vSAN 與虛擬機"></a>vSAN 與虛擬機</h3><p>vSAN 是一個 Object-based 的儲存系統，這意味著數據是以物件的形式儲存的。當在 vSAN Datastore 部署虛擬機時，系統會生成五種類型的物件來管理和儲存虛擬機的數據。</p>
-<h3 id="五種類型的物件"><a href="#五種類型的物件" class="headerlink" title="五種類型的物件"></a>五種類型的物件</h3>
+          <h3 id="簡介">簡介</h3>
+<p>VMware vSAN 是一種分散式儲存技術，它將多個 ESXi 主機的儲存資源組合成一個共享的資料儲存區域。這篇文章會詳細解釋虛擬機在 vSAN 中是如何儲存數據，以及不同類型的物件如何運作。</p>
+<h3 id="vsan-與虛擬機">vSAN 與虛擬機</h3>
+<p>vSAN 是一個 Object-based 的儲存系統，這意味著數據是以物件的形式儲存的。當在 vSAN Datastore 部署虛擬機時，系統會生成五種類型的物件來管理和儲存虛擬機的數據。</p>
+<h3 id="五種類型的物件">五種類型的物件</h3>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2023/10/18/vsan/vm_persist/" rel="contents">
@@ -1678,7 +1860,7 @@
       
         
           <p>vSAN 的四大 Component - CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，彼此各司其職。以下圖為例，本篇將介紹 vSAN CMMDS。</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
 <p>vSAN LSOM（Local log-structured object manager）運作在 ESXi node 裡面，負責將 Object 和 Component 放在 ESXi node 裡面，並在資料發生 I/O 時，管理 cache disk 和 capacity disk 的資料 I/O。</p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1829,7 +2011,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  584
+                  590
                 </span>
               
 
@@ -1855,192 +2037,12 @@
 
       
         
-          <h1 id="vSAN的四大Component-CMMDS、DOM、CLOM、LSOM"><a href="#vSAN的四大Component-CMMDS、DOM、CLOM、LSOM" class="headerlink" title="vSAN的四大Component - CMMDS、DOM、CLOM、LSOM"></a>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM</h1><p>這四個組件從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職。本篇將介紹的是vSAN CLOM。</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
+          <h1 id="vsan的四大component-- cmmds、dom、clom、lsom">vSAN的四大Component - CMMDS、DOM、CLOM、LSOM</h1>
+<p>這四個組件從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職。本篇將介紹的是vSAN CLOM。</p>
+<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="../../2023/09/30/vsan/ioworkflow_clom/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/09/21/vsan/ioworkflow_dom/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="../../images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="../../2023/09/21/vsan/ioworkflow_dom/" itemprop="url">[vSAN] DOM (Distributed Object Manager)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2023-09-21T00:00:00+08:00">
-                2023-09-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="../../categories/vSAN/" itemprop="url" rel="index">
-                    <span itemprop="name">vSAN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="../../2023/09/21/vsan/ioworkflow_dom/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2023/09/21/vsan/ioworkflow_dom/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  457
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>vSAN 的四大組件：CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，各司其職。下圖展示了它們的大致交互邏輯，本文將介紹 vSAN 的 CMMDS。</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
-<p>vSAN DOM（Distributed Object Manager）顧名思義，就是負責管理 Object 以及分散 Component。</p>
-<blockquote>
-<p>Component 是由 LSOM 管理，會在下一篇提到。</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="../../2023/09/21/vsan/ioworkflow_dom/" rel="contents">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -2132,7 +2134,7 @@
               
                 <a href="../../archives">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
