@@ -442,21 +442,19 @@
       
         <p>VMware於2014年發表了vSAN，在當時HDD仍然是主流，SSD雖然速度快但是成本高昂。為了達到速度快並且節省成本的目的，vSAN cluster採用了雙層儲存架構，如下圖所示：</p>
 <span id="more"></span>
-<p><img src="/images/vsan/diskgroup_twolayer.png" alt=""></p>
+<p><img src="/images/vsan/diskgroup_twolayer.png"></p>
 <p>磁碟群組的入口是SSD，SSD只存放HDD的Cache資料，其中70%的容量用作Read Cache，30%的容量用作Write Cache。每個磁碟群組最多可以放7個HDD device，每個Host最多支持5個磁碟群組，所以一個Host最多可以有49個容量磁碟。</p>
 <p>當然，我們也可以在維持相同的雙層儲存架構下，把所有HDD替換成SSD，也就是All Flash，全閃存模式。啟用了全閃存模式後，vSAN Cluster可以支援更多功能，例如Compression、deduplication、RAID-5/6等等功能。</p>
 <p>這種雙層架構的缺點是如果唯一入口SSD掛了，後面的HDD容量層都不能使用。另外，Hybrid和All Flash模式下的cache演算法和角色也不完全相同。</p>
 <ul>
-<li>
-<p><strong>Hybrid模式</strong>：</p>
+<li><p><strong>Hybrid模式</strong>：</p>
 <ul>
 <li>快取演算法著重於「暫時資料」</li>
 <li>外部的I/O會先寫入SSD，然後立即回傳I/O成功，再透過非同步方式把資料寫入容量層</li>
 <li>快取層同時擔任「讀取快取」和「寫入緩衝」的角色</li>
 </ul>
 </li>
-<li>
-<p><strong>All Flash模式</strong>：</p>
+<li><p><strong>All Flash模式</strong>：</p>
 <ul>
 <li>快取演算法著重於「熱資料」</li>
 <li>快取層全部負責寫入緩衝，讀取快取則放在容量層</li>
@@ -465,8 +463,7 @@
 </li>
 </ul>
 <p>寫入緩衝的意思是資料不會直接寫進容量層，而是會在快取層停留一段時間，這樣做的目的是維持vSAN物件的可用性。當vSAN對一個物件寫入資料時，通常會在FTT&gt;1的情況下，對至少兩個host寫入，當寫入兩個host的SSD時，才會真正寫入容量層。</p>
-<h3 id="總結：">總結：</h3>
-<ul>
+<h3 id="總結："><a href="#總結：" class="headerlink" title="總結："></a>總結：</h3><ul>
 <li>vSAN採用雙層儲存架構，以SSD作為Cache層，HDD作為容量層</li>
 <li>支援Hybrid和All Flash模式，兩種模式下cache演算法不同</li>
 <li>SSD掛了會影響HDD容量層的使用</li>
@@ -600,7 +597,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">58</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

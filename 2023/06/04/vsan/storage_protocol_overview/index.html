@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="前面分別講了資料儲存的最小單元、硬碟陣列怎麼做備份以及提高可用性，接下來安迪想講的是儲存系統架構 - DAS、NAS和SAN DAS  DAS(Direct Attach Storage) - 本地的檔案系統  DAS可以理解為就是本地的磁碟陣列，透過USB，你的個人電腦或伺服器就可以連結到這個磁碟陣列，根據RAID卡，進行相應的備份，當然，他的缺點就是需要有一條實體USB線，且擴充容量等比較麻煩">
+<meta name="description" content="前面分別講了資料儲存的最小單元、硬碟陣列怎麼做備份以及提高可用性，接下來安迪想講的是儲存系統架構 - DAS、NAS和SAN DAS DAS(Direct Attach Storage) - 本地的檔案系統  DAS可以理解為就是本地的磁碟陣列，透過USB，你的個人電腦或伺服器就可以連結到這個磁碟陣列，根據RAID卡，進行相應的備份，當然，他的缺點就是需要有一條實體USB線，且擴充容量等比較麻煩。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[vSAN]資料的存取形式? DAS、NAS和SAN">
 <meta property="og:url" content="https://kaichiachen.github.io/2023/06/04/vsan/storage_protocol_overview/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="前面分別講了資料儲存的最小單元、硬碟陣列怎麼做備份以及提高可用性，接下來安迪想講的是儲存系統架構 - DAS、NAS和SAN DAS  DAS(Direct Attach Storage) - 本地的檔案系統  DAS可以理解為就是本地的磁碟陣列，透過USB，你的個人電腦或伺服器就可以連結到這個磁碟陣列，根據RAID卡，進行相應的備份，當然，他的缺點就是需要有一條實體USB線，且擴充容量等比較麻煩">
+<meta property="og:description" content="前面分別講了資料儲存的最小單元、硬碟陣列怎麼做備份以及提高可用性，接下來安迪想講的是儲存系統架構 - DAS、NAS和SAN DAS DAS(Direct Attach Storage) - 本地的檔案系統  DAS可以理解為就是本地的磁碟陣列，透過USB，你的個人電腦或伺服器就可以連結到這個磁碟陣列，根據RAID卡，進行相應的備份，當然，他的缺點就是需要有一條實體USB線，且擴充容量等比較麻煩。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/nas_overview.png">
 <meta property="og:image" content="https://kaichiachen.github.io/images/vsan/san_overview.png">
@@ -443,20 +443,19 @@
 
       
         <p>前面分別講了資料儲存的最小單元、硬碟陣列怎麼做備份以及提高可用性，接下來安迪想講的是儲存系統架構 - DAS、NAS和SAN</p>
-<h3 id="das">DAS</h3>
-<blockquote>
+<h3 id="DAS"><a href="#DAS" class="headerlink" title="DAS"></a>DAS</h3><blockquote>
 <p>DAS(Direct Attach Storage) - 本地的檔案系統</p>
 </blockquote>
 <p>DAS可以理解為就是本地的磁碟陣列，透過USB，你的個人電腦或伺服器就可以連結到這個磁碟陣列，根據RAID卡，進行相應的備份，當然，他的缺點就是需要有一條實體USB線，且擴充容量等比較麻煩。</p>
-<h3 id="nas">NAS</h3>
-<span id="more"></span>
+<h3 id="NAS"><a href="#NAS" class="headerlink" title="NAS"></a>NAS</h3><span id="more"></span>
+
 <blockquote>
 <p>NAS - 網路上的檔案系統</p>
 </blockquote>
 <p>接下來會分享兩個常用的雲端基礎架構NAS和SAN的原理和不同之處，NAS和SAN都是利用網路來連接的，簡單來說NAS適合在家裡使用或小範圍同個網段下使用，而SAN適合大範圍甚至外網使用。</p>
 <p>從NAS說起，NAS的原理就是之前提到的File storage，只是我們一般在使用Windows的時候，硬碟都在電腦裡的，不透過網路就可以直連，NAS就是一個把硬碟抽離出來，放在網路上，透過網路存取硬碟的技術架構。</p>
 <p>下圖是NAS的架構</p>
-<p><img src="/images/vsan/nas_overview.png" alt=""></p>
+<p><img src="/images/vsan/nas_overview.png"></p>
 <p>我們可以看到，是什麼東西在網路上傳遞呢？是檔案系統的指令，我們雖然只需要告訴檔案系統路徑+檔案名稱即可，但是檔案open需要讀吧，所以傳遞了open指令、read指令等，這些都需要網路傳輸，相比於SAN(下一篇會講)把這些都做在主機上，記憶體的傳輸效率一定比網路高。</p>
 <p>用人話說就是 - 程式跟自己的電腦說，幫我把/mnt/nas.txt傳到電腦的記憶體，這些話都透過TCP/IP傳輸，然後NAS上的檔案系統根據這個檔案找到佔用了哪個扇區，從本身的server的硬碟找檔案。</p>
 <p><strong>優點</strong></p>
@@ -472,14 +471,13 @@
 <li>不支持遠距離 - 由於上述原因，如果遠距離傳輸會更慢，另外，文件系統on the fly傳輸本身就不安全。</li>
 <li>不可靠 - 文件系統難以做到多機器保護。</li>
 </ol>
-<h3 id="san">SAN</h3>
-<blockquote>
+<h3 id="SAN"><a href="#SAN" class="headerlink" title="SAN"></a>SAN</h3><blockquote>
 <p>SAN - 網路上的硬碟</p>
 </blockquote>
 <p>安迪的工作就是開發公司的SAN產品，所以安迪對他比較了解。</p>
 <p>SAN就是空出一個網路區域，讓硬碟機櫃互相連接，網絡專給I/O使用的一塊區域網絡，外部的伺服器或個人電腦可以透過網路的方式連進去存取資料。</p>
 <p>下圖是SAN的架構</p>
-<p><img src="/images/vsan/san_overview.png" alt=""></p>
+<p><img src="/images/vsan/san_overview.png"></p>
 <p>從上圖可以看出，有別於NAS，SAN就是個block storage，接受block storage的指令，回傳資料，檔案系統的指令和演算法是在前端主機完成的。</p>
 <p>用白話文說就是 - 程式跟自己的電腦說，幫我把/mnt/san.txt傳到電腦的記憶體，檔案系統會計算這個檔案的LBA地址和長度，然後把這個資訊傳給SAN。</p>
 <p>我們可以看到SAN有別於NAS，他在網路傳遞的是I/O指令，透過iSCSI或是NVMe包裝，所以速度較NAS快。</p>
@@ -496,8 +494,7 @@
 <li>不好管理 - 前端要裝專門的SAN管理系統才能使用。</li>
 <li>協議單一 - 只有SCSI協議。</li>
 </ol>
-<h3 id="總結">總結</h3>
-<ul>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
 <li>DAS：本地磁碟陣列，連接簡單但擴充困難。</li>
 <li>NAS：網路上的檔案系統，成本低但速度慢。</li>
 <li>SAN：網路上的硬碟，速度快但成本高。</li>
@@ -632,7 +629,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">58</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
