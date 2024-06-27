@@ -309,6 +309,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2024/04/02/s3-fifo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="2024/04/02/s3-fifo/" itemprop="url">[Cache] LRU已經落伍了，S3-FIFO更適合在大快取系統</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2024-04-02T00:00:00+08:00">
+                2024-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="categories/vsan/" itemprop="url" rel="index">
+                    <span itemprop="name">vsan</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="2024/04/02/s3-fifo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2024/04/02/s3-fifo/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  3k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="什麼是-Cache？"><a href="#什麼是-Cache？" class="headerlink" title="什麼是 Cache？"></a>什麼是 Cache？</h3><p>在我們的電腦系統中，Cache（快取）扮演著至關重要的角色。快取是一種高效能的臨時儲存區域，用於儲存經常被訪問的資料，以加速資料讀取和寫入的速度。想像一下冰箱裡的食物，快取就像是你放在冰箱門邊的零食，方便隨時取用，而不是藏在冰箱深處的冷凍食品。</p>
+<h3 id="一個好的-Cache-應該具備哪些特性？"><a href="#一個好的-Cache-應該具備哪些特性？" class="headerlink" title="一個好的 Cache 應該具備哪些特性？"></a>一個好的 Cache 應該具備哪些特性？</h3><ol>
+<li><strong>高命中率</strong>: 快取的主要目的是提高資料訪問速度，所以高命中率是衡量一個好快取的關鍵指標。這就像你想從冰箱裡拿出一瓶飲料，理想情況下，它應該總是放在你容易找到的位置。</li>
+<li><strong>低延遲</strong>: 快取應該能夠快速響應資料請求，減少讀寫延遲。這就像你想要吃東西時，食物應該馬上能夠取到，而不是還需要解凍和加熱。</li>
+<li><strong>高效資源利用</strong>: 快取應該能夠高效地利用有限的儲存資源，儘可能儲存更多的有用資料。這就像冰箱空間有限，你應該放進去的是經常吃的食物，而不是占空間卻不常吃的。</li>
+</ol>
+<p>當然，快取的速度很快，相對應的缺點就是「貴」！</p>
+<h3 id="傳統的-LRU-策略"><a href="#傳統的-LRU-策略" class="headerlink" title="傳統的 LRU 策略"></a>傳統的 LRU 策略</h3><p>在快取策略中，LRU（Least Recently Used）是一種經典的演算法。LRU 的基本策略是當快取空間不足時，淘汰最久未被使用的資料。這就像在冰箱裡，定期清理那些已經很久沒吃過的食物，確保新的食物有地方放。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="2024/04/02/s3-fifo/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2024/03/20/golang/go_happ_path/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1905,183 +2088,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2024/01/06/golang/defer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="2024/01/06/golang/defer/" itemprop="url">[Go] Defer的妙用 - 跟蹤函數調用鏈</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2024-01-06T00:00:00+08:00">
-                2024-01-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="categories/Go/" itemprop="url" rel="index">
-                    <span itemprop="name">Go</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="2024/01/06/golang/defer/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2024/01/06/golang/defer/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  971
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在 Go 語言中，defer 關鍵字是一個強大而且實用的工具，能讓你更優雅地處理資源釋放和一些在函數結束前必須執行的清理工作。本文將通過生動的比喻和簡單的示例，幫助你理解 defer 的使用方法及其重要性。</p>
-<h3 id="defer-是什麼？"><a href="#defer-是什麼？" class="headerlink" title="defer 是什麼？"></a>defer 是什麼？</h3><p>簡單來說，defer 是用來延遲執行一段程式碼，直到所在的函數即將返回時才執行。就像你在餐廳吃飯，最後才會付錢一樣，defer 讓你在程式的適當位置安排程式碼，但等到適當的時候才執行。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="2024/01/06/golang/defer/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2136,7 +2142,7 @@
               
                 <a href="archives">
               
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2147,7 +2153,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -2158,7 +2164,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="tags/index.html">
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

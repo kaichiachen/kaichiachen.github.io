@@ -309,6 +309,184 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/10/12/vsan/ioworkflow_overview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="../../2023/10/12/vsan/ioworkflow_overview/" itemprop="url">[vSAN] vSAN的I/O流程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2023-10-12T00:00:00+08:00">
+                2023-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="../../2023/10/12/vsan/ioworkflow_overview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2023/10/12/vsan/ioworkflow_overview/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  994
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>接下來我們會根據前面所學的知識，梳理一下端到端 vSAN 的讀取和寫入的 I/O 流程。我們將以儲存 Policy RAID-1, Stripe=2, FTT=1 來討論。Strip 對讀取的影響較大，FTT 對寫入的影響較大。Stripe=2 代表一個 Component 會被分半寫入同個 Host 的兩個 Disk，FTT=1 代表一個 Object 會被分成兩個 Components 寫入兩個 Host。</p>
+<p>這裡快速地複習一下，vSAN 採用的是雙層架構。第一層硬碟是快取層，一般來說會使用 SSD 硬碟作為快取，裡面有 70% 的容量作為寫入緩衝，30% 的容量是讀取快取。</p>
+<p>什麼是寫入緩衝呢？以上述 RAID-1, FTT=1 的模式來說，每當寫入一個 I/O，會寫入兩個 DataGroup。vSAN 定義的一個完整的寫入 I/O 是 Data 寫進去兩個 DataGroup 裡的 SSD 就算完成 I/O 了，所以寫入緩衝只是暫時放在 SSD，準備要寫進去容量層的 Data。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="../../2023/10/12/vsan/ioworkflow_overview/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/10/05/vsan/ioworkflow_lsom/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1899,186 +2077,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io../../2023/07/09/vsan/ssd_pcie_overview/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="../../images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="../../2023/07/09/vsan/ssd_pcie_overview/" itemprop="url">[vSAN]SSD PCIe接口</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2023-07-09T00:00:00+08:00">
-                2023-07-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="../../categories/vSAN/" itemprop="url" rel="index">
-                    <span itemprop="name">vSAN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="../../2023/07/09/vsan/ssd_pcie_overview/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2023/07/09/vsan/ssd_pcie_overview/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  504
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>PCIe 是 SSD 一項重要和主流的接口技術，所以我們有必要對 PCIe 有深入的了解。</p>
-<p>PCIe 從第一代到最近 2022 年第六代的規格問世，速度越來越快。相比於 SAS/SATA，PCIe 資料傳輸的「高速公路」更多，最多可以有 32 個 Lane，而 SAS/SATA 只能有一個 Lane。所以我們可以說，PCIe 的速度就是 Lane 的數量 x 單條 Lane 的速度。</p>
-<h3 id="PCIe-拓樸結構"><a href="#PCIe-拓樸結構" class="headerlink" title="PCIe 拓樸結構"></a>PCIe 拓樸結構</h3><p>PCIe 採用的是樹形拓樸結構，如下圖所示：</p>
-<p><img src="/images/vsan/pci_topology.png"></p>
-<p>Root Complex 是樹的根，服務於 CPU。Root Complex 能存取 PCIe 設備，也能存取記憶體。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="../../2023/07/09/vsan/ssd_pcie_overview/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2133,7 +2131,7 @@
               
                 <a href="../../archives">
               
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2144,7 +2142,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="../../categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -2155,7 +2153,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="../../tags/index.html">
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
