@@ -42,7 +42,7 @@
 
   
   
-  <link href="../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="../../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -50,29 +50,27 @@
 
 
 
-<link href="../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="../../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="../../images/apple-touch-icon-next.png?v=5.1.4">
+<link href="../../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../../images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../../images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="../../images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../../images/favicon-16x16-next.png?v=5.1.4">
 
 
+  <link rel="mask-icon" href="../../../../../images/logo.svg?v=5.1.4" color="#222">
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
 
 
+  <meta name="keywords" content="golang,Go," />
 
 
 
@@ -81,14 +79,23 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="安迪熊">
-<meta property="og:url" content="https://kaichiachen.github.io/archives/2024/index.html">
+
+
+<meta name="description" content="在使用 Go 語言開發應用程式時，環境變數扮演著關鍵的角色。它們幫助我們配置編譯器、執行環境、調試資訊等多個方面。理解這些變數的作用，可以讓我們更好地掌控 Go 開發環境，寫出更高效、更具跨平台性的程式。今天，我們就來聊聊一些重要的 Go 環境變數，比如 GOOS 和 GOARCH，以及它們在實際開發中的應用。 為什麼要了解環境變數？首先，環境變數是一種簡單而強大的配置方式，讓我們能夠根據需要調整">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Go] 更多環境變數: GOOS, GOARCH等等">
+<meta property="og:url" content="https://kaichiachen.github.io/2024/04/30/golang/go_env_var/index.html">
 <meta property="og:site_name" content="安迪熊">
+<meta property="og:description" content="在使用 Go 語言開發應用程式時，環境變數扮演著關鍵的角色。它們幫助我們配置編譯器、執行環境、調試資訊等多個方面。理解這些變數的作用，可以讓我們更好地掌控 Go 開發環境，寫出更高效、更具跨平台性的程式。今天，我們就來聊聊一些重要的 Go 環境變數，比如 GOOS 和 GOARCH，以及它們在實際開發中的應用。 為什麼要了解環境變數？首先，環境變數是一種簡單而強大的配置方式，讓我們能夠根據需要調整">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://kaichiachen.github.io/images/golang/overview.jpg">
+<meta property="article:published_time" content="2024-04-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-04T16:50:14.354Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="鍇嘉">
+<meta property="article:tag" content="golang">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kaichiachen.github.io/images/golang/overview.jpg">
 
 
 
@@ -118,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/archives/2024/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2024/04/30/golang/go_env_var/"/>
 
 
 
 
 
-  <title>歸檔 | 安迪熊</title>
+  <title>[Go] 更多環境變數: GOOS, GOARCH等等 | 安迪熊</title>
   
 
 
@@ -155,7 +162,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -294,410 +301,273 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
-         
+          <h1 class="post-title" itemprop="name headline">[Go] 更多環境變數: GOOS, GOARCH等等</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2024-04-30T00:00:00+08:00">
+                2024-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        好! 目前共計 63 篇文章。 繼續努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../../categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2024">2024</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2024/04/30/golang/go_env_var/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2024/04/30/golang/go_env_var/" itemprop="url">
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye">&nbsp;閱讀次數:</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">[Go] 更多環境變數: GOOS, GOARCH等等</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  1k
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2024-04-30T00:00:00+08:00"
-              content="2024-04-30" >
-          04-30
-        </time>
-      </div>
+              
 
-    </header>
-  </article>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2024/04/23/golang/go_unit_test/" itemprop="url">
-              
-                <span itemprop="name">[Go] 單元測試: 提高程式碼的質量</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2024-04-23T00:00:00+08:00"
-              content="2024-04-23" >
-          04-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <p>在使用 Go 語言開發應用程式時，環境變數扮演著關鍵的角色。它們幫助我們配置編譯器、執行環境、調試資訊等多個方面。理解這些變數的作用，可以讓我們更好地掌控 Go 開發環境，寫出更高效、更具跨平台性的程式。今天，我們就來聊聊一些重要的 Go 環境變數，比如 <code>GOOS</code> 和 <code>GOARCH</code>，以及它們在實際開發中的應用。</p>
+<h2 id="為什麼要了解環境變數？"><a href="#為什麼要了解環境變數？" class="headerlink" title="為什麼要了解環境變數？"></a>為什麼要了解環境變數？</h2><p>首先，環境變數是一種簡單而強大的配置方式，讓我們能夠根據需要調整開發環境。例如，當你需要在 Windows 上開發，但希望你的程式碼最終執行在 Linux 伺服器上時，環境變數可以幫助你在開發過程中模擬不同的作業系統環境。</p>
+<h2 id="常見的-Go-環境變數"><a href="#常見的-Go-環境變數" class="headerlink" title="常見的 Go 環境變數"></a>常見的 Go 環境變數</h2><h3 id="1-GOOS"><a href="#1-GOOS" class="headerlink" title="1. GOOS"></a>1. <code>GOOS</code></h3><ul>
+<li><strong>定義：</strong> <code>GOOS</code> 是用來指定目標作業系統的環境變數。</li>
+<li><strong>可選值：</strong> 常見值有 <code>linux</code>、<code>windows</code>、<code>darwin</code>（對應 macOS）等等。</li>
+<li><strong>用途：</strong> 當我們需要交叉編譯時，設定 <code>GOOS</code> 可以讓 Go 編譯器為指定的作業系統生成可執行檔案。</li>
+</ul>
+<span id="more"></span>
 
-        
-        
+<h4 id="範例："><a href="#範例：" class="headerlink" title="範例："></a>範例：</h4><p>假設我們在 macOS 上開發，但需要生成一個可以在 Linux 上執行的程式。我們可以這樣做：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GOOS=linux go build -o myapp-linux</span><br></pre></td></tr></table></figure>
 
-        
+<p>這樣就會生成一個名為 <code>myapp-linux</code> 的可執行檔案，它可以直接在 Linux 系統上執行。</p>
+<h3 id="2-GOARCH"><a href="#2-GOARCH" class="headerlink" title="2. GOARCH"></a>2. <code>GOARCH</code></h3><ul>
+<li><strong>定義：</strong> <code>GOARCH</code> 用來指定目標系統的架構。</li>
+<li><strong>可選值：</strong> 常見值有 <code>amd64</code>、<code>386</code>、<code>arm</code>、<code>arm64</code> 等。</li>
+<li><strong>用途：</strong> 這個變數特別有用於需要支持不同處理器架構的應用程式開發中。</li>
+</ul>
+<h4 id="範例：-1"><a href="#範例：-1" class="headerlink" title="範例："></a>範例：</h4><p>如果我們想要為 Raspberry Pi 編譯 Go 應用程式，我們可以這樣做：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GOOS=linux GOARCH=arm go build -o myapp-arm</span><br></pre></td></tr></table></figure>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<p>這將生成一個適用於 ARM 架構的可執行檔案，可以在 Raspberry Pi 上執行。</p>
+<h3 id="3-GOPATH"><a href="#3-GOPATH" class="headerlink" title="3. GOPATH"></a>3. <code>GOPATH</code></h3><ul>
+<li><strong>定義：</strong> <code>GOPATH</code> 是 Go 工作區的路徑，包含三個子目錄：<code>src</code>、<code>pkg</code>、和 <code>bin</code>。</li>
+<li><strong>用途：</strong> <code>GOPATH</code> 用於管理第三方套件和工具。如果你的專案不在 <code>GOPATH</code> 目錄下，那麼你就需要設定這個變數以包含你的專案路徑。</li>
+</ul>
+<h4 id="範例：-2"><a href="#範例：-2" class="headerlink" title="範例："></a>範例：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GOPATH=<span class="variable">$HOME</span>/go</span><br></pre></td></tr></table></figure>
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2024/04/14/golang/go_modules/" itemprop="url">
-              
-                <span itemprop="name">[Go] 模組管理: Go Moduels的管理</span>
-              
-            </a>
-        
-      </h2>
+<p>設定好 <code>GOPATH</code> 後，你的 Go 專案應該放在 <code>$HOME/go/src</code> 目錄中。</p>
+<h3 id="4-GOROOT"><a href="#4-GOROOT" class="headerlink" title="4. GOROOT"></a>4. <code>GOROOT</code></h3><ul>
+<li><strong>定義：</strong> <code>GOROOT</code> 是 Go 編譯器和工具鏈的安裝目錄。</li>
+<li><strong>用途：</strong> 在大多數情況下，<code>GOROOT</code> 是不需要手動設定的，因為 Go 會自動偵測安裝位置。但在某些情況下（例如多個 Go 版本並存時），你可能需要手動設定。</li>
+</ul>
+<h4 id="範例：-3"><a href="#範例：-3" class="headerlink" title="範例："></a>範例：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GOROOT=/usr/local/go</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2024-04-14T00:00:00+08:00"
-              content="2024-04-14" >
-          04-14
-        </time>
-      </div>
+<h3 id="5-GOMOD"><a href="#5-GOMOD" class="headerlink" title="5. GOMOD"></a>5. <code>GOMOD</code></h3><ul>
+<li><strong>定義：</strong> <code>GOMOD</code> 代表當前專案的 <code>go.mod</code> 文件的路徑。</li>
+<li><strong>用途：</strong> 當你想確認當前的工作目錄是否在一個 Go 模組中時，這個變數非常有用。</li>
+</ul>
+<h4 id="範例：-4"><a href="#範例：-4" class="headerlink" title="範例："></a>範例：</h4><p>在終端中執行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go <span class="built_in">env</span> GOMOD</span><br></pre></td></tr></table></figure>
 
-    </header>
-  </article>
-
-
+<p>會返回當前模組的 <code>go.mod</code> 文件路徑。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><ol>
+<li>   跨平台與跨架構編譯：</li>
+</ol>
+<ul>
+<li>使用 GOOS 和 GOARCH 環境變數，可以為不同作業系統（如 Linux、Windows）和硬體架構（如 amd64、arm）進行交叉編譯，生成適用於不同平台的可執行檔案。</li>
+<li>範例指令：GOOS=linux GOARCH=arm go build -o myapp-arm 可生成適用於 Linux 和 ARM 架構的應用程式。</li>
+</ul>
+<ol start="2">
+<li>   工作空間與模組管理：</li>
+</ol>
+<ul>
+<li>GOPATH 定義了 Go 工作空間的路徑，用於管理專案和第三方套件。在Module下，GOMOD 用於標識當前專案的模組文件 go.mod，便於模組化管理。</li>
+<li>設定範例：export GOPATH=$HOME/go 會將工作區設定在 $HOME/go 下。</li>
+</ul>
+<ol start="3">
+<li>   編譯器與工具鏈配置：</li>
+</ol>
+<ul>
+<li>GOROOT 指定了 Go 編譯器和工具鏈的安裝目錄，通常不需手動設定，但在多版本並存時可能需要手動指定。</li>
+<li>設定範例：export GOROOT=/usr/local/go 用於手動設定 Go 工具鏈的路徑。</li>
+</ul>
+<div style="text-align: center;">
+  <a href="../../../../../categories/Go/">Go語言進階學習系列</a>
+  <img src="/images/golang/overview.jpg" alt="" />
+</div>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2024/04/02/s3-fifo/" itemprop="url">
-              
-                <span itemprop="name">[Cache] LRU已經落伍了，S3-FIFO更適合在大快取系統</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2024-04-02T00:00:00+08:00"
-              content="2024-04-02" >
-          04-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2024/03/20/golang/go_happ_path/" itemprop="url">
-              
-                <span itemprop="name">[Go] 更低級別的Go的變數同步技巧 - sync</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2024-03-20T00:00:00+08:00"
-              content="2024-03-20" >
-          03-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2024/03/08/golang/go_channel/" itemprop="url">
-              
-                <span itemprop="name">[Go] channel中蘊含的大智慧</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2024-03-08T00:00:00+08:00"
-              content="2024-03-08" >
-          03-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2024/02/29/golang/go_goroutine/" itemprop="url">
-              
-                <span itemprop="name">[Go] goroutine是怎麼工作的？</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2024-02-29T00:00:00+08:00"
-              content="2024-02-29" >
-          02-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2024/02/23/golang/go_concurrent/" itemprop="url">
-              
-                <span itemprop="name">[Go] Go中最強的的魔法: 併發程式執行</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2024-02-23T00:00:00+08:00"
-              content="2024-02-23" >
-          02-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2024/02/16/golang/interface_usage/" itemprop="url">
-              
-                <span itemprop="name">[Go] Interface的使用技巧</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2024-02-16T00:00:00+08:00"
-              content="2024-02-16" >
-          02-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2024/02/08/golang/interface_nil/" itemprop="url">
-              
-                <span itemprop="name">[Go] Interface: 為什麼nil接口不等於nil?</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2024-02-08T00:00:00+08:00"
-              content="2024-02-08" >
-          02-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../../tags/golang/" rel="tag"># golang</a>
+          
+            <a href="../../../../../tags/Go/" rel="tag"># Go</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../../23/golang/go_unit_test/" rel="next" title="[Go] 單元測試: 提高程式碼的質量">
+                <i class="fa fa-chevron-left"></i> [Go] 單元測試: 提高程式碼的質量
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="page/2/">2</a><a class="extend next" rel="next" href="page/2/">&gt;</a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -705,6 +575,20 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -731,7 +615,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="../../images/avatar.jpg"
+                src="../../../../../images/avatar.jpg"
                 alt="" />
             
               <p class="site-author-name" itemprop="name"></p>
@@ -743,7 +627,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="..">
+                <a href="../../../../../archives">
               
                   <span class="site-state-item-count">63</span>
                   <span class="site-state-item-name">文章</span>
@@ -755,7 +639,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="../../categories/index.html">
+                <a href="../../../../../categories/index.html">
                   <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
@@ -766,7 +650,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="../../tags/index.html">
+                <a href="../../../../../tags/index.html">
                   <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
@@ -905,60 +789,64 @@
 
   
   
-    <script type="text/javascript" src="../../lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="../../../../../lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="../../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="../../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="../../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 
   
 
 
-  <script type="text/javascript" src="../../js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../../js/src/utils.js?v=5.1.4"></script>
 
-  <script type="text/javascript" src="../../js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="../../js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="../../js/src/schemes/pisces.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../../js/src/motion.js?v=5.1.4"></script>
 
 
 
   
+  
+
+
+  <script type="text/javascript" src="../../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
 
-  <script type="text/javascript" src="../../js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../../js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -971,6 +859,18 @@
       <script id="dsq-count-scr" src="https://kaichiablog.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://kaichiachen.github.io/2024/04/30/golang/go_env_var/';
+          this.page.identifier = '2024/04/30/golang/go_env_var/';
+          this.page.title = '[Go] 更多環境變數: GOOS, GOARCH等等';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kaichiablog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   

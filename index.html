@@ -309,6 +309,188 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2024/04/30/golang/go_env_var/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="2024/04/30/golang/go_env_var/" itemprop="url">[Go] 更多環境變數: GOOS, GOARCH等等</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2024-04-30T00:00:00+08:00">
+                2024-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="2024/04/30/golang/go_env_var/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2024/04/30/golang/go_env_var/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  1k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在使用 Go 語言開發應用程式時，環境變數扮演著關鍵的角色。它們幫助我們配置編譯器、執行環境、調試資訊等多個方面。理解這些變數的作用，可以讓我們更好地掌控 Go 開發環境，寫出更高效、更具跨平台性的程式。今天，我們就來聊聊一些重要的 Go 環境變數，比如 <code>GOOS</code> 和 <code>GOARCH</code>，以及它們在實際開發中的應用。</p>
+<h2 id="為什麼要了解環境變數？"><a href="#為什麼要了解環境變數？" class="headerlink" title="為什麼要了解環境變數？"></a>為什麼要了解環境變數？</h2><p>首先，環境變數是一種簡單而強大的配置方式，讓我們能夠根據需要調整開發環境。例如，當你需要在 Windows 上開發，但希望你的程式碼最終執行在 Linux 伺服器上時，環境變數可以幫助你在開發過程中模擬不同的作業系統環境。</p>
+<h2 id="常見的-Go-環境變數"><a href="#常見的-Go-環境變數" class="headerlink" title="常見的 Go 環境變數"></a>常見的 Go 環境變數</h2><h3 id="1-GOOS"><a href="#1-GOOS" class="headerlink" title="1. GOOS"></a>1. <code>GOOS</code></h3><ul>
+<li><strong>定義：</strong> <code>GOOS</code> 是用來指定目標作業系統的環境變數。</li>
+<li><strong>可選值：</strong> 常見值有 <code>linux</code>、<code>windows</code>、<code>darwin</code>（對應 macOS）等等。</li>
+<li><strong>用途：</strong> 當我們需要交叉編譯時，設定 <code>GOOS</code> 可以讓 Go 編譯器為指定的作業系統生成可執行檔案。</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="2024/04/30/golang/go_env_var/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2024/04/23/golang/go_unit_test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1908,187 +2090,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2024/01/31/golang/go_interface/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="2024/01/31/golang/go_interface/" itemprop="url">[Go] Interface即類型的使用定義</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2024-01-31T00:00:00+08:00">
-                2024-01-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="categories/Go/" itemprop="url" rel="index">
-                    <span itemprop="name">Go</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="2024/01/31/golang/go_interface/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2024/01/31/golang/go_interface/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  1.9k
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在 Go 語言中，<code>interface</code> 是一組方法的集合，透過 <code>type</code> 和 <code>interface</code> 關鍵字來定義。這些方法的集合唯一確定了這個 <code>interface</code> 類型所表示的契約。讓我們來看看一個典型的 <code>interface</code> 類型 <code>MyInterface</code> 的定義：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> MyInterface <span class="keyword">interface</span> &#123;</span><br><span class="line">    M1(<span class="type">int</span>) <span class="type">error</span></span><br><span class="line">    M2(io.Writer, ...<span class="type">string</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>從這個定義中，我們可以看到，<code>interface</code> 類型 <code>MyInterface</code> 包含了兩個方法：<code>M1</code> 和 <code>M2</code>。Go 語言要求 <code>interface</code> 類型聲明中的方法必須是具名的，並且方法名字在這個 <code>interface</code> 類型的方法集合中必須唯一。從 Go 1.14 版本開始，Go 允許嵌入的不同 <code>interface</code> 類型的方法集合存在交集，但前提是交集中的方法不僅名字一樣，連方法簽名（參數列表和返回值列表）也必須一致，否則 Go 編譯器會報錯。</p>
-<p>例如，以下示例中 <code>Interface3</code> 嵌入了 <code>Interface1</code> 和 <code>Interface2</code>，但它們之間的 <code>M1</code> 方法簽名不同，導致編譯出錯：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Interface1 <span class="keyword">interface</span> &#123;</span><br><span class="line">    M1()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> Interface2 <span class="keyword">interface</span> &#123;</span><br><span class="line">    M1(<span class="type">string</span>) </span><br><span class="line">    M2()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Interface3 <span class="keyword">interface</span> &#123;</span><br><span class="line">    Interface1</span><br><span class="line">    Interface2 <span class="comment">// 編譯器報錯：duplicate method M1</span></span><br><span class="line">    M3()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="2024/01/31/golang/go_interface/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2143,7 +2144,7 @@
               
                 <a href="archives">
               
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">63</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
