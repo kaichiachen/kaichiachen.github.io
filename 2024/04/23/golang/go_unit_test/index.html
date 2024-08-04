@@ -90,7 +90,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/golang/overview.jpg">
 <meta property="article:published_time" content="2024-04-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-08-04T16:42:32.798Z">
+<meta property="article:modified_time" content="2024-08-04T16:43:55.302Z">
 <meta property="article:author" content="Kaichia Chen">
 <meta property="article:tag" content="golang">
 <meta property="article:tag" content="Go">
@@ -445,10 +445,11 @@
 <li><strong>提高程式碼質量：</strong> 單元測試可以幫助你找到程式碼中的潛在錯誤，並在開發早期就修復它們。</li>
 <li><strong>減少重複錯誤：</strong> 當發現錯誤並修復後，測試用例將確保這些錯誤不會再次發生。</li>
 <li><strong>簡化重構：</strong> 單元測試為程式碼重構提供了保障，讓你在不改變功能的情況下優化程式碼結構。</li>
-<li><strong>增強信心：</strong> 擁有全面的測試用例可以讓開發者對其程式碼充滿信心，特別是在進行大規模修改時。<span id="more"></span>
-<h2 id="在-Go-中編寫單元測試"><a href="#在-Go-中編寫單元測試" class="headerlink" title="在 Go 中編寫單元測試"></a>在 Go 中編寫單元測試</h2></li>
+<li><strong>增強信心：</strong> 擁有全面的測試用例可以讓開發者對其程式碼充滿信心，特別是在進行大規模修改時。</li>
 </ol>
-<p>Go 語言內建了強大的測試框架，讓單元測試變得簡單易行。只需遵循以下步驟，你就可以開始編寫自己的單元測試。</p>
+<span id="more"></span>
+
+<h2 id="在-Go-中編寫單元測試"><a href="#在-Go-中編寫單元測試" class="headerlink" title="在 Go 中編寫單元測試"></a>在 Go 中編寫單元測試</h2><p>Go 語言內建了強大的測試框架，讓單元測試變得簡單易行。只需遵循以下步驟，你就可以開始編寫自己的單元測試。</p>
 <h3 id="1-撰寫測試函式"><a href="#1-撰寫測試函式" class="headerlink" title="1. 撰寫測試函式"></a>1. 撰寫測試函式</h3><p>Go 中的單元測試檔案以 <code>_test.go</code> 結尾，測試函式的命名通常以 <code>Test</code> 開頭。例如，如果我們有一個計算加法的函式 <code>Add</code>，我們可以撰寫以下測試函式：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;testing&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">    result := Add(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">    expected := <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> result != expected &#123;</span><br><span class="line">        t.Errorf(<span class="string">&quot;Add(2, 3) = %d; want %d&quot;</span>, result, expected)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
