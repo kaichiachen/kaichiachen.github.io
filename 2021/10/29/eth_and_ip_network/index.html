@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="網路的IP位址讓我們路由到LAN(區域網路)，而MAC位址讓我們找到了目標電腦 MAC作用在第二層 - 資料連結層，而IP作用在第三層 - 網路層，關於MAC和IP位址的詳細解說請參考這一篇 那麼，讓我們從第二層 - 資料連結層 開始吧！">
+<meta name="description" content="網路的IP位址讓我們路由到LAN(區域網路)，而MAC位址讓我們找到了目標電腦MAC作用在第二層 - 資料連結層，而IP作用在第三層 - 網路層，關於MAC和IP位址的詳細解說請參考這一篇 那麼，讓我們從第二層 - 資料連結層 開始吧！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[網路]解析第二層及第三層的網路封包結構">
 <meta property="og:url" content="https://kaichiachen.github.io/2021/10/29/eth_and_ip_network/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="網路的IP位址讓我們路由到LAN(區域網路)，而MAC位址讓我們找到了目標電腦 MAC作用在第二層 - 資料連結層，而IP作用在第三層 - 網路層，關於MAC和IP位址的詳細解說請參考這一篇 那麼，讓我們從第二層 - 資料連結層 開始吧！">
+<meta property="og:description" content="網路的IP位址讓我們路由到LAN(區域網路)，而MAC位址讓我們找到了目標電腦MAC作用在第二層 - 資料連結層，而IP作用在第三層 - 網路層，關於MAC和IP位址的詳細解說請參考這一篇 那麼，讓我們從第二層 - 資料連結層 開始吧！">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/eth_header.png">
 <meta property="og:image" content="https://kaichiachen.github.io/images/ip_header.png">
@@ -414,7 +414,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  575
+                  574
                 </span>
               
 
@@ -439,14 +439,10 @@
       
 
       
-        <p><strong>網路的IP位址讓我們路由到LAN(區域網路)，而MAC位址讓我們找到了目標電腦</strong><br>
-MAC作用在第二層 - 資料連結層，而IP作用在第三層 - 網路層，關於MAC和IP位址的詳細解說請參考<a href="/2021/09/23/ipbasic-network">這一篇</a></p>
+        <p><strong>網路的IP位址讓我們路由到LAN(區域網路)，而MAC位址讓我們找到了目標電腦</strong><br>MAC作用在第二層 - 資料連結層，而IP作用在第三層 - 網路層，關於MAC和IP位址的詳細解說請參考<a href="/2021/09/23/ipbasic-network">這一篇</a></p>
 <p>那麼，讓我們從第二層 - 資料連結層 開始吧！</p>
 <span id="more"></span>
-<h3 id="資料連結層">資料連結層</h3>
-<p>資料連結層透過MAC位址進行溝通，所以它的Header包含了固定長度的來源MAC位址和目的地MAC位址，結構如下所示：<br>
-<img src="/images/eth_header.png" alt=""><br>
-我們可以看到資料連結層的header總共有三項資料，除了MAC位址之外還有<code>type</code>，它是一個2 bytes的unsigned short int，具體對應的type可以參考<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/EtherType#Values">維基百科</a>，比較常見的有：</p>
+<h3 id="資料連結層"><a href="#資料連結層" class="headerlink" title="資料連結層"></a>資料連結層</h3><p>資料連結層透過MAC位址進行溝通，所以它的Header包含了固定長度的來源MAC位址和目的地MAC位址，結構如下所示：<br><img src="/images/eth_header.png"><br>我們可以看到資料連結層的header總共有三項資料，除了MAC位址之外還有<code>type</code>，它是一個2 bytes的unsigned short int，具體對應的type可以參考<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/EtherType#Values">維基百科</a>，比較常見的有：</p>
 <ul>
 <li>0x0800 - IPv4</li>
 <li>0x86DD - IPv6</li>
@@ -454,46 +450,34 @@ MAC作用在第二層 - 資料連結層，而IP作用在第三層 - 網路層，
 </ul>
 <p>我們一直都沒說到IP位址和MAC位址怎麼做mapping對應，用的就是ARP協議，它通知路由器IP和MAC位址的對應關係。</p>
 <p>整個header有14個bytes，而這14個bytes後面接的就是網路層的header。</p>
-<h3 id="網路層">網路層</h3>
-<p>網路層提供了路由和尋址的功能，幫助封包導向兩端的最佳路徑，並具有一定的擁塞控制和流量控制的功能。和資料連結層一樣，我們來看看網路層header結構：<br>
-<img src="/images/ip_header.png" alt=""><br>
-這裡列出比較重要的欄位：</p>
+<h3 id="網路層"><a href="#網路層" class="headerlink" title="網路層"></a>網路層</h3><p>網路層提供了路由和尋址的功能，幫助封包導向兩端的最佳路徑，並具有一定的擁塞控制和流量控制的功能。和資料連結層一樣，我們來看看網路層header結構：<br><img src="/images/ip_header.png"><br>這裡列出比較重要的欄位：</p>
 <ul>
-<li>
-<p>Total Length：封包總長度</p>
+<li><p>Total Length：封包總長度</p>
 </li>
-<li>
-<p>Identification：識別碼，通常是為了校驗checksum</p>
+<li><p>Identification：識別碼，通常是為了校驗checksum</p>
 </li>
-<li>
-<p>Fragmentation: 如果要傳輸大封包，能進行切割標記</p>
+<li><p>Fragmentation: 如果要傳輸大封包，能進行切割標記</p>
 </li>
-<li>
-<p>Time To Live(TTL)：經過幾個路由器，如果為0則傳輸失敗</p>
+<li><p>Time To Live(TTL)：經過幾個路由器，如果為0則傳輸失敗</p>
 </li>
-<li>
-<p>Protocol：協定，例如tcp協定、icmp協定等，這和應用層的http、DNS等不同，應用層協定屬於這層協定的一部分。Protocol以數字表示，這裡列舉比較常見的：</p>
+<li><p>Protocol：協定，例如tcp協定、icmp協定等，這和應用層的http、DNS等不同，應用層協定屬於這層協定的一部分。Protocol以數字表示，這裡列舉比較常見的：</p>
 <ul>
 <li>1 -&gt; ICMP</li>
 <li>6 -&gt; TCP</li>
 <li>17 -&gt; UDP</li>
 </ul>
-<p>由於不同的Protocol後續的header長度內容也會不同，故需要加以區分</p>
+<p>  由於不同的Protocol後續的header長度內容也會不同，故需要加以區分</p>
 </li>
-<li>
-<p>Checksum：用來檢錯用的</p>
+<li><p>Checksum：用來檢錯用的</p>
 </li>
-<li>
-<p>Source IP Address：來源IP位址</p>
+<li><p>Source IP Address：來源IP位址</p>
 </li>
-<li>
-<p>Destination IP Address：目的地IP位址</p>
+<li><p>Destination IP Address：目的地IP位址</p>
 </li>
 </ul>
 <p>其header長度總共有20個bytes。</p>
 <hr>
-<h3 id="總結：">總結：</h3>
-<p>我們透過MAC位址在資料連結層找到目標電腦，並使用IP位址在網路層進行路由。MAC和IP位址各自在不同層次發揮重要作用，共同協助封包在網路中的傳輸。</p>
+<h3 id="總結："><a href="#總結：" class="headerlink" title="總結："></a>總結：</h3><p>我們透過MAC位址在資料連結層找到目標電腦，並使用IP位址在網路層進行路由。MAC和IP位址各自在不同層次發揮重要作用，共同協助封包在網路中的傳輸。</p>
 
       
     </div>
@@ -618,7 +602,7 @@ MAC作用在第二層 - 資料連結層，而IP作用在第三層 - 網路層，
               
                 <a href="../../../../archives">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

@@ -442,17 +442,15 @@
 <p>這裡快速地複習一下，vSAN 採用的是雙層架構。第一層硬碟是快取層，一般來說會使用 SSD 硬碟作為快取，裡面有 70% 的容量作為寫入緩衝，30% 的容量是讀取快取。</p>
 <p>什麼是寫入緩衝呢？以上述 RAID-1, FTT=1 的模式來說，每當寫入一個 I/O，會寫入兩個 DataGroup。vSAN 定義的一個完整的寫入 I/O 是 Data 寫進去兩個 DataGroup 裡的 SSD 就算完成 I/O 了，所以寫入緩衝只是暫時放在 SSD，準備要寫進去容量層的 Data。</p>
 <span id="more"></span>
-<h3 id="讀取">讀取</h3>
-<p>在 FTT=1 中，Hybrid 架構中，當資料讀取進行時，會根據硬碟中的 LBA 地址，將不同的資料讀寫請求傳給不同的副本，提升讀的速度。</p>
+
+<h3 id="讀取"><a href="#讀取" class="headerlink" title="讀取"></a>讀取</h3><p>在 FTT=1 中，Hybrid 架構中，當資料讀取進行時，會根據硬碟中的 LBA 地址，將不同的資料讀寫請求傳給不同的副本，提升讀的速度。</p>
 <p>當 VM 裡的應用程式發出讀取請求時，CMMDs 會確認 DOM Owner，然後 DOM Owner 會透過 LBA 確認並找到要讀取的 Component，然後向 Component 所在的 LSOM 發送 I/O request。</p>
 <p>由於 SSD 的容量很珍貴，相同的 Object 資料塊最多只會存一份在某個 vSAN 主機內。如果都不在 SSD 裡，就稱為 cache miss，需要去容量層找。如果容量層用的是 HDD，那檢索的效率就會很低。</p>
 <p>在 All Flash 的架構中，由於 SSD 的 I/O 非常快，就算 cache miss 讀數據還是非常快，所以快取層全都拿來做寫入緩衝了。DOM 會先看快取層有沒有經常被存取的寫入緩衝熱資料，有的話再返回，沒有的話就在容量層檢索資料。</p>
-<h3 id="寫入">寫入</h3>
-<p>在 Hybrid 架構中，當 VM 裡的應用程式發出寫入請求時，Object owner 會把資料寫入他所在的 Host 的快取層內，同時發出請求，把快取層內的東西也寫入進去另一個 Host 的快取層內。當資料預備寫入到容量層的動作要啟動時，就會回傳 ACK 訊號給 Object owner，Object owner 才會跟 VM 裡的應用程式說寫入完成。所以需要注意的是，一個寫入操作不會保證兩個 Host 同時寫入完成，只能保證一個寫入完成代表他們都在寫入緩衝區內了。</p>
+<h3 id="寫入"><a href="#寫入" class="headerlink" title="寫入"></a>寫入</h3><p>在 Hybrid 架構中，當 VM 裡的應用程式發出寫入請求時，Object owner 會把資料寫入他所在的 Host 的快取層內，同時發出請求，把快取層內的東西也寫入進去另一個 Host 的快取層內。當資料預備寫入到容量層的動作要啟動時，就會回傳 ACK 訊號給 Object owner，Object owner 才會跟 VM 裡的應用程式說寫入完成。所以需要注意的是，一個寫入操作不會保證兩個 Host 同時寫入完成，只能保證一個寫入完成代表他們都在寫入緩衝區內了。</p>
 <p>慢慢的，寫入緩衝層越塞越滿，就需要把部分資料寫進去容量層了。vSAN 採用的是電梯式演算法 (Elevator Algorithm)，把寫入緩衝分成多個 Bucket，把相近的 LBA 地址放在同一個 Bucket，當然還會考慮更多因素，例如硬碟使用狀況等等環境因素歸類，以提升寫入容量層的效率。</p>
 <p>All-Flash 和 Hybrid 的寫入方法非常像，只是 All-Flash 是 100% 用於寫入緩衝，Hybrid 是 70% 寫入緩衝。由於快取層的 SSD 還是會經常地被讀寫，所以快取層的 SSD 最好放置耐用性高的 SSD。另外，All Flash 的資料寫入可以啟用 RAID 5/6 達到節省儲存空間的目的，以及重複資料刪除和壓縮的機制。</p>
-<h3 id="總結">總結</h3>
-<ul>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
 <li>vSAN 採用雙層架構，SSD 作為快取層，70% 用於寫入緩衝，30% 用於讀取快取。</li>
 <li>讀取過程中，資料根據 LBA 地址分配到不同副本，提升速度。</li>
 <li>寫入過程中，資料會先寫入快取層，再同步到另一個 Host，最後寫入容量層。</li>
@@ -586,7 +584,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

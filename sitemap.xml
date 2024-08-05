@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kaichiachen.github.io/2024/05/21/golang/go_high_performance_dev/</loc>
+    
+    <lastmod>2024-08-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://kaichiachen.github.io/2024/05/16/golang/go_gc/</loc>
     
     <lastmod>2024-08-05</lastmod>
@@ -681,6 +690,13 @@
   </url>
   
   <url>
+    <loc>https://kaichiachen.github.io/tags/%E7%B6%B2%E8%B7%AF/</loc>
+    <lastmod>2024-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://kaichiachen.github.io/tags/python/</loc>
     <lastmod>2024-08-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -688,28 +704,7 @@
   </url>
   
   <url>
-    <loc>https://kaichiachen.github.io/tags/decorator/</loc>
-    <lastmod>2024-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kaichiachen.github.io/tags/coroutine/</loc>
-    <lastmod>2024-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kaichiachen.github.io/tags/eventloop/</loc>
-    <lastmod>2024-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kaichiachen.github.io/tags/%E7%B6%B2%E8%B7%AF/</loc>
     <lastmod>2024-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -737,6 +732,13 @@
   </url>
   
   <url>
+    <loc>https://kaichiachen.github.io/tags/eventloop/</loc>
+    <lastmod>2024-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://kaichiachen.github.io/tags/concurrent/</loc>
     <lastmod>2024-08-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -745,6 +747,13 @@
   
   <url>
     <loc>https://kaichiachen.github.io/tags/parallel/</loc>
+    <lastmod>2024-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kaichiachen.github.io/tags/decorator/</loc>
     <lastmod>2024-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -765,20 +774,6 @@
   </url>
   
   <url>
-    <loc>https://kaichiachen.github.io/tags/IP/</loc>
-    <lastmod>2024-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kaichiachen.github.io/tags/MAC/</loc>
-    <lastmod>2024-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kaichiachen.github.io/tags/iterator/</loc>
     <lastmod>2024-08-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -787,6 +782,20 @@
   
   <url>
     <loc>https://kaichiachen.github.io/tags/generator/</loc>
+    <lastmod>2024-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kaichiachen.github.io/tags/IP/</loc>
+    <lastmod>2024-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kaichiachen.github.io/tags/MAC/</loc>
     <lastmod>2024-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -905,13 +914,6 @@
   </url>
   
   <url>
-    <loc>https://kaichiachen.github.io/tags/encryption/</loc>
-    <lastmod>2024-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kaichiachen.github.io/tags/esxcli/</loc>
     <lastmod>2024-08-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -933,7 +935,7 @@
   </url>
   
   <url>
-    <loc>https://kaichiachen.github.io/tags/dom/</loc>
+    <loc>https://kaichiachen.github.io/tags/encryption/</loc>
     <lastmod>2024-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -948,13 +950,6 @@
   
   <url>
     <loc>https://kaichiachen.github.io/tags/IO/</loc>
-    <lastmod>2024-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kaichiachen.github.io/tags/disks/</loc>
     <lastmod>2024-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -976,6 +971,20 @@
   
   <url>
     <loc>https://kaichiachen.github.io/tags/nvme/</loc>
+    <lastmod>2024-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kaichiachen.github.io/tags/disks/</loc>
+    <lastmod>2024-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kaichiachen.github.io/tags/dom/</loc>
     <lastmod>2024-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1047,14 +1056,14 @@
   </url>
   
   <url>
-    <loc>https://kaichiachen.github.io/categories/python/</loc>
+    <loc>https://kaichiachen.github.io/categories/%E7%B6%B2%E8%B7%AF/</loc>
     <lastmod>2024-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://kaichiachen.github.io/categories/%E7%B6%B2%E8%B7%AF/</loc>
+    <loc>https://kaichiachen.github.io/categories/python/</loc>
     <lastmod>2024-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

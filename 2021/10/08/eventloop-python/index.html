@@ -445,8 +445,8 @@
 </ul>
 <p>於是就有了 Asyncio。</p>
 <span id="more"></span>
-<h3 id="asyncio-原理">Asyncio 原理</h3>
-<p>Asyncio 和 Python 的程式一樣，實際上是 single thread 的，不過可以不停地切換。只要拿到 GIL 就可以進行任務。這裡的任務是一種特殊的 future object，並且被 Event loop 所控制。</p>
+
+<h3 id="Asyncio-原理"><a href="#Asyncio-原理" class="headerlink" title="Asyncio 原理"></a>Asyncio 原理</h3><p>Asyncio 和 Python 的程式一樣，實際上是 single thread 的，不過可以不停地切換。只要拿到 GIL 就可以進行任務。這裡的任務是一種特殊的 future object，並且被 Event loop 所控制。</p>
 <p>我們可以把任務分成兩個狀態 - 預備狀態和完成狀態。預備狀態指的是任務目前空閒，隨時可以執行；而等待狀態則是任務已經執行，但是被掛著等待某個操作完成，例如 I/O。</p>
 <p>Event loop 有兩個 job list，分別對應兩種狀態，並且選取一個預備狀態的任務執行它，一直到它被交還給 Event loop。當任務被交還給 Event loop 時，Event loop 會根據其是否完成，把任務放進預備或完成狀態的 list：</p>
 <ul>
@@ -454,22 +454,19 @@
 <li>如果未完成，則放進等待狀態。</li>
 </ul>
 <p>然後再遍歷等待狀態 list，看他們是否完成。如果完成再放進預備狀態。如此週而復始，直到所有任務完成。由於 Asyncio 的任務不會被外部因素打斷，所以 Asyncio 裡面的操作不會出現 race condition 的問題。</p>
-<h3 id="例子程式碼">例子程式碼</h3>
-<p>讓我們複習一下這段程式碼：</p>
+<h3 id="例子程式碼"><a href="#例子程式碼" class="headerlink" title="例子程式碼"></a>例子程式碼</h3><p>讓我們複習一下這段程式碼：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">loading</span>(<span class="params">sec</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;loading... needs &#123;&#125; secs to load&#x27;</span>.<span class="built_in">format</span>(sec))</span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(sec)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;OK &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(sec))</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">secs</span>):</span><br><span class="line">    tasks = [asyncio.create_task(loading(sec)) <span class="keyword">for</span> sec <span class="keyword">in</span> secs]</span><br><span class="line">    <span class="keyword">await</span> asyncio.gather(*tasks)</span><br><span class="line"></span><br><span class="line">asyncio.run(main([<span class="number">5</span>, <span class="number">3</span>]))</span><br><span class="line"><span class="comment"># Output:</span></span><br><span class="line"><span class="comment"># loading... needs 5 secs to load</span></span><br><span class="line"><span class="comment"># loading... needs 3 secs to load</span></span><br><span class="line"><span class="comment"># OK 3</span></span><br><span class="line"><span class="comment"># OK 5</span></span><br></pre></td></tr></table></figure>
 <p>在這段程式碼中，<code>async/await</code> 是 asyncio 的一種寫法，代表這個函數或這行程式碼是 non-blocking 的。如果這裡很耗時，那我們就把控制權交還給 Event loop，放進等待狀態 list。另外，<code>asyncio.run()</code> 是 Python 3.7 才有的，在舊版本是這樣寫：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line">loop = asyncio.get_event_loop()</span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">loading</span>(<span class="params">sec</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;loading... needs &#123;&#125; secs to load&#x27;</span>.<span class="built_in">format</span>(sec))</span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(sec)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;OK &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(sec))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">secs</span>):</span><br><span class="line">    loop.run_until_complete(</span><br><span class="line">          asyncio.wait(</span><br><span class="line">             [asyncio.ensure_future(loading(sec)) <span class="keyword">for</span> sec <span class="keyword">in</span> secs]</span><br><span class="line">          )</span><br><span class="line">      )</span><br><span class="line">main([<span class="number">5</span>, <span class="number">3</span>])</span><br><span class="line">loop.close()</span><br><span class="line"><span class="comment"># Output:</span></span><br><span class="line"><span class="comment"># loading... needs 5 secs to load</span></span><br><span class="line"><span class="comment"># loading... needs 3 secs to load</span></span><br><span class="line"><span class="comment"># OK 3</span></span><br><span class="line"><span class="comment"># OK 5</span></span><br></pre></td></tr></table></figure>
-<h3 id="asyncio-有缺點嗎？">Asyncio 有缺點嗎？</h3>
-<p>當然有。我們知道 Asyncio 的 event loop 藉由 async/await 去把 job 控制權交還給 Event loop。所以相應的第三方 library 也要做調整才能完美地利用 Coroutine 提升性能。例如，著名的 <code>requests</code> library 就沒有支持 Asyncio，而相同功能的 <code>aiohttp</code> 則有兼容 Asyncio。</p>
-<h3 id="multi-processing、multi-threading-還是 coroutine？">multi-processing、multi-threading 還是 coroutine？</h3>
-<p>總結來說：</p>
+
+<h3 id="Asyncio-有缺點嗎？"><a href="#Asyncio-有缺點嗎？" class="headerlink" title="Asyncio 有缺點嗎？"></a>Asyncio 有缺點嗎？</h3><p>當然有。我們知道 Asyncio 的 event loop 藉由 async/await 去把 job 控制權交還給 Event loop。所以相應的第三方 library 也要做調整才能完美地利用 Coroutine 提升性能。例如，著名的 <code>requests</code> library 就沒有支持 Asyncio，而相同功能的 <code>aiohttp</code> 則有兼容 Asyncio。</p>
+<h3 id="multi-processing、multi-threading-還是-coroutine？"><a href="#multi-processing、multi-threading-還是-coroutine？" class="headerlink" title="multi-processing、multi-threading 還是 coroutine？"></a>multi-processing、multi-threading 還是 coroutine？</h3><p>總結來說：</p>
 <ul>
 <li>如果是 CPU heavy 的任務，使用 multi-processing。</li>
 <li>如果 I/O 慢或太多，使用 Coroutine。</li>
 <li>反之，如果 I/O 快，使用 multi-threading。</li>
 </ul>
-<h3 id="總結">總結</h3>
-<p>這篇文章帶大家過了 Asyncio Event loop 的原理：</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>這篇文章帶大家過了 Asyncio Event loop 的原理：</p>
 <ul>
 <li>Asyncio 是 single thread 的，但是透過 Event loop，併發地執行不同任務，在程式端享有自主控制權。</li>
 <li>由於打斷是自己控制的，不會出現 race condition 的問題。在 I/O heavy 的情況下，比 multi-threading 的效率更好，因為不用 context switch，且能開啟的任務數量更多。</li>
@@ -601,7 +598,7 @@
               
                 <a href="../../../../archives">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

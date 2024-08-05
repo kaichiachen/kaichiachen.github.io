@@ -441,17 +441,17 @@
 
       
         <p>vSAN 的四大組件：CMMDS、DOM、CLOM、LSOM，從最底層與物理硬碟交互到最上層協同各個 Cluster 裡的 Nodes，各司其職。下圖展示了它們的大致交互邏輯，本文將介紹 vSAN 的 CMMDS。</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
 <p>vSAN DOM（Distributed Object Manager）顧名思義，就是負責管理 Object 以及分散 Component。</p>
 <blockquote>
 <p>Component 是由 LSOM 管理，會在下一篇提到。</p>
 </blockquote>
 <span id="more"></span>
+
 <p>舉例來說，最常見的 RAID-1 Policy 會將一個 Object 完整地複製一份，加上原本的，變成兩個 Components，並將這兩個 Components 分散在不同主機或不同 Fault Domain 上。再加上一個 Witness，當 Cluster 發生故障，例如一個 Node 網路出現問題時，Witness 會協調 I/O 請求應該訪問哪個 Component。</p>
 <p>除了 RAID-1，還有更複雜的 RAID-5/6，也是通過 DOM 去協調應該到哪個 Node 存取 Component 資料。</p>
 <p>每個 DOM Object 有兩個角色：DOM Client 和 DOM Owner。每個 ESXi Node 都有這兩個角色，每個 Object 會有一個專屬的 DOM Owner，而 DOM Client 則存在於每個 Object 所在的 Node 上。</p>
-<h3 id="總結">總結</h3>
-<p>DOM 是在 ESXi kernel 層實現的，具有以下特性：</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>DOM 是在 ESXi kernel 層實現的，具有以下特性：</p>
 <ul>
 <li>vSAN 的 Object 概念存在於 DOM 層，一般稱為 DOM Object。</li>
 <li>DOM Object 根據 RAID Policy 產生 Component 並保證 Component 的數據一致性。</li>
@@ -589,7 +589,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

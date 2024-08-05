@@ -418,7 +418,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  922
+                  919
                 </span>
               
 
@@ -451,27 +451,23 @@
 <p>分散式儲存很多idea就是從RAID來的，只是RAID是提升機櫃與機櫃之間的可靠性，而一般來說的分散式儲存是透過網路串連不同的儲存裝置，更加靈活。</p>
 <p>常見的RAID層級有RAID 0、RAID 1、RAID 5、RAID 6，本篇只介紹上述幾個基礎的RAID架構，架構圖都是來源於維基百科。</p>
 <span id="more"></span>
-<h3 id="raid-0">RAID 0</h3>
-<p>下圖我們可以看到兩個大圓柱，其中一個大圓柱，例如Disk0，就是一塊硬碟，一個小圓柱，例如A1，就是硬碟中的一個Block，我們可以把多個Disk串連，從上層系統來看就是一塊超大硬碟。</p>
-<p><img src="/images/vsan/raid0.png" alt=""></p>
+
+<h3 id="RAID-0"><a href="#RAID-0" class="headerlink" title="RAID 0"></a>RAID 0</h3><p>下圖我們可以看到兩個大圓柱，其中一個大圓柱，例如Disk0，就是一塊硬碟，一個小圓柱，例如A1，就是硬碟中的一個Block，我們可以把多個Disk串連，從上層系統來看就是一塊超大硬碟。</p>
+<p><img src="/images/vsan/raid0.png"></p>
 <p>對於RAID 0，資料寫入的方式會把資料分割然後同時寫入A1、A2，寫完換A3、A4同時寫。所以當一塊硬碟壞了，全部都壞了。所以RAID 0最簡單，最快，但是也最不安全，因為它不會做任何備份。</p>
-<h3 id="raid-1">RAID 1</h3>
-<p>RAID 1和RAID 0類似，但是寫入會一次寫入兩份，一段資料過來，先寫兩份到各自左右兩邊的A1，A1寫完再寫A2。所以RAID 1的資料寫入性能是RAID 0的一半，不過只要一個硬碟活著資料都還在。RAID 1可以並聯更多硬碟以增加可靠性，只是相應的寫入效能會更慢。</p>
-<p><img src="/images/vsan/raid1.png" alt=""></p>
-<h3 id="raid-5">RAID 5</h3>
-<p>RAID 0速度快但不可靠，RAID 1可靠但是硬碟利用率和效能差。所以RAID 1往後都在找一種儲存效能、可靠性和成本兼顧的方式，直到RAID 5才漸漸被市場所接受。</p>
-<p><img src="/images/vsan/raid5.png" alt=""></p>
+<h3 id="RAID-1"><a href="#RAID-1" class="headerlink" title="RAID 1"></a>RAID 1</h3><p>RAID 1和RAID 0類似，但是寫入會一次寫入兩份，一段資料過來，先寫兩份到各自左右兩邊的A1，A1寫完再寫A2。所以RAID 1的資料寫入性能是RAID 0的一半，不過只要一個硬碟活著資料都還在。RAID 1可以並聯更多硬碟以增加可靠性，只是相應的寫入效能會更慢。</p>
+<p><img src="/images/vsan/raid1.png"></p>
+<h3 id="RAID-5"><a href="#RAID-5" class="headerlink" title="RAID 5"></a>RAID 5</h3><p>RAID 0速度快但不可靠，RAID 1可靠但是硬碟利用率和效能差。所以RAID 1往後都在找一種儲存效能、可靠性和成本兼顧的方式，直到RAID 5才漸漸被市場所接受。</p>
+<p><img src="/images/vsan/raid5.png"></p>
 <p>如上圖所示，RAID 5至少需要三塊硬碟，上圖是四塊硬碟的架構。那RAID 5怎麼存資料呢？從第一排開始，資料來了，一樣先存進去A1、A2、A3，然後我們看到了A_p，他是A1、A2、A3的奇偶校驗資料，這樣當一塊硬碟掛了，可以透過奇偶校驗復原資料。</p>
 <p>我們假設A1, A2, A3上的資料分別為1, 3, 5，透過奇偶校驗，1 XOR 3 XOR 5 = 7，A_p設置為7。</p>
 <p>如果A2不小心壞了，要復原資料，只需要把剩餘的都做XOR計算就能復原資料，1 XOR 5 XOR 7 = 3。</p>
 <p>和RAID 0相比，寫入速度較慢，讀取速度差不多，可靠性好很多。</p>
 <p>和RAID 1相比，需要更多硬碟才能保證可靠度，但是硬碟的利用率高很多，寫入速度也較快。</p>
-<h3 id="raid-6">RAID 6</h3>
-<p>RAID 6和RAID 5非常相似，唯一的差別就是需要比RAID 5多一塊硬碟存放第二個奇偶校驗資料，如下圖所示。</p>
-<p><img src="/images/vsan/raid6.png" alt=""></p>
+<h3 id="RAID-6"><a href="#RAID-6" class="headerlink" title="RAID 6"></a>RAID 6</h3><p>RAID 6和RAID 5非常相似，唯一的差別就是需要比RAID 5多一塊硬碟存放第二個奇偶校驗資料，如下圖所示。</p>
+<p><img src="/images/vsan/raid6.png"></p>
 <p>兩個的奇偶校驗演算法不同，所以RAID 6至少需要四塊硬碟，可以容許兩塊硬碟損壞。</p>
-<h3 id="總結">總結</h3>
-<ol>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ol>
 <li><strong>RAID 0</strong>：速度最快，但不安全，沒有備份。</li>
 <li><strong>RAID 1</strong>：可靠性高，寫入效能是RAID 0的一半。</li>
 <li><strong>RAID 5</strong>：兼顧效能、可靠性和成本，至少需要三塊硬碟。</li>
@@ -605,7 +601,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

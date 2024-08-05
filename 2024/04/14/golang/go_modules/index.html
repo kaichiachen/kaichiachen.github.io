@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="在開始講解Go Modules之前，讓我們先回顧一下Go語言在模組管理上的發展歷程。Go語言從1.11版開始引入了Go Modules，這是一種新的package管理方式，用來解決之前GOPATH時代的一些痛點。Go Modules允許我們在專案中定義依賴關係，並且能夠在不同版本之間切換，這大大簡化了專案管理。 一、為什麼需要Go Modules？ 1. 解決版本混亂問題 在Go Modules之">
+<meta name="description" content="在開始講解Go Modules之前，讓我們先回顧一下Go語言在模組管理上的發展歷程。Go語言從1.11版開始引入了Go Modules，這是一種新的package管理方式，用來解決之前GOPATH時代的一些痛點。Go Modules允許我們在專案中定義依賴關係，並且能夠在不同版本之間切換，這大大簡化了專案管理。 一、為什麼需要Go Modules？1. 解決版本混亂問題在Go Modules之前，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Go] 模組管理: Go Moduels的管理">
 <meta property="og:url" content="https://kaichiachen.github.io/2024/04/14/golang/go_modules/index.html">
 <meta property="og:site_name" content="安迪熊">
-<meta property="og:description" content="在開始講解Go Modules之前，讓我們先回顧一下Go語言在模組管理上的發展歷程。Go語言從1.11版開始引入了Go Modules，這是一種新的package管理方式，用來解決之前GOPATH時代的一些痛點。Go Modules允許我們在專案中定義依賴關係，並且能夠在不同版本之間切換，這大大簡化了專案管理。 一、為什麼需要Go Modules？ 1. 解決版本混亂問題 在Go Modules之">
+<meta property="og:description" content="在開始講解Go Modules之前，讓我們先回顧一下Go語言在模組管理上的發展歷程。Go語言從1.11版開始引入了Go Modules，這是一種新的package管理方式，用來解決之前GOPATH時代的一些痛點。Go Modules允許我們在專案中定義依賴關係，並且能夠在不同版本之間切換，這大大簡化了專案管理。 一、為什麼需要Go Modules？1. 解決版本混亂問題在Go Modules之前，">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://kaichiachen.github.io/images/golang/overview.jpg">
 <meta property="article:published_time" content="2024-04-13T16:00:00.000Z">
@@ -440,48 +440,43 @@
 
       
         <p>在開始講解Go Modules之前，讓我們先回顧一下Go語言在模組管理上的發展歷程。Go語言從1.11版開始引入了Go Modules，這是一種新的package管理方式，用來解決之前GOPATH時代的一些痛點。Go Modules允許我們在專案中定義依賴關係，並且能夠在不同版本之間切換，這大大簡化了專案管理。</p>
-<h3 id="一、為什麼需要go-modules？">一、為什麼需要Go Modules？</h3>
-<h4 id="1-解決版本混亂問題">1. 解決版本混亂問題</h4>
-<p>在Go Modules之前，Go的專案是基於GOPATH進行管理的。這導致一個大的問題：所有的module都放在同一個地方，很容易發生不同專案之間的版本衝突。Go Modules通過在每個專案中引入<code>go.mod</code>文件來指定依賴module的版本，從而避免了這個問題。</p>
+<h3 id="一、為什麼需要Go-Modules？"><a href="#一、為什麼需要Go-Modules？" class="headerlink" title="一、為什麼需要Go Modules？"></a>一、為什麼需要Go Modules？</h3><h4 id="1-解決版本混亂問題"><a href="#1-解決版本混亂問題" class="headerlink" title="1. 解決版本混亂問題"></a>1. 解決版本混亂問題</h4><p>在Go Modules之前，Go的專案是基於GOPATH進行管理的。這導致一個大的問題：所有的module都放在同一個地方，很容易發生不同專案之間的版本衝突。Go Modules通過在每個專案中引入<code>go.mod</code>文件來指定依賴module的版本，從而避免了這個問題。</p>
 <span id="more"></span>
-<h4 id="2-提升開發靈活性">2. 提升開發靈活性</h4>
-<p>使用Go Modules，我們可以輕鬆地在本地電腦上開發不同版本的專案，而不必擔心影響其他專案。這種隔離性提高了開發效率。</p>
-<h4 id="3-更加清晰的依賴關係">3. 更加清晰的依賴關係</h4>
-<p>Go專案下的<code>go.mod</code>檔案詳細列出了所有依賴項及其版本，使得依賴關係變得更加透明和可控。</p>
-<h3 id="二、如何使用go-modules？">二、如何使用Go Modules？</h3>
-<h4 id="1-初始化模組">1. 初始化模組</h4>
-<p>在一個新的Go專案中，我們可以通過以下指令初始化一個Go模組：</p>
+
+<h4 id="2-提升開發靈活性"><a href="#2-提升開發靈活性" class="headerlink" title="2. 提升開發靈活性"></a>2. 提升開發靈活性</h4><p>使用Go Modules，我們可以輕鬆地在本地電腦上開發不同版本的專案，而不必擔心影響其他專案。這種隔離性提高了開發效率。</p>
+<h4 id="3-更加清晰的依賴關係"><a href="#3-更加清晰的依賴關係" class="headerlink" title="3. 更加清晰的依賴關係"></a>3. 更加清晰的依賴關係</h4><p>Go專案下的<code>go.mod</code>檔案詳細列出了所有依賴項及其版本，使得依賴關係變得更加透明和可控。</p>
+<h3 id="二、如何使用Go-Modules？"><a href="#二、如何使用Go-Modules？" class="headerlink" title="二、如何使用Go Modules？"></a>二、如何使用Go Modules？</h3><h4 id="1-初始化模組"><a href="#1-初始化模組" class="headerlink" title="1. 初始化模組"></a>1. 初始化模組</h4><p>在一個新的Go專案中，我們可以通過以下指令初始化一個Go模組：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod init &lt;module-name&gt;</span><br></pre></td></tr></table></figure>
+
 <p>這將在專案目錄下創建一個<code>go.mod</code>文件，並將當前目錄標記為Go模組的根目錄。</p>
-<h4 id="2-添加依賴">2. 添加依賴</h4>
-<p>當我們在程式碼中導入一個新的第三方module時，Go會自動將這個module添加到<code>go.mod</code>中：</p>
+<h4 id="2-添加依賴"><a href="#2-添加依賴" class="headerlink" title="2. 添加依賴"></a>2. 添加依賴</h4><p>當我們在程式碼中導入一個新的第三方module時，Go會自動將這個module添加到<code>go.mod</code>中：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p>運行以下指令來更新依賴：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get</span><br></pre></td></tr></table></figure>
+
 <p>這將下載並安裝該module，同時在<code>go.mod</code>中記錄其版本信息。</p>
-<h4 id="3-升級或降級依賴">3. 升級或降級依賴</h4>
-<p>要升級或降級依賴，我們可以手動修改<code>go.mod</code>文件中的版本號，然後運行以下指令：</p>
+<h4 id="3-升級或降級依賴"><a href="#3-升級或降級依賴" class="headerlink" title="3. 升級或降級依賴"></a>3. 升級或降級依賴</h4><p>要升級或降級依賴，我們可以手動修改<code>go.mod</code>文件中的版本號，然後運行以下指令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get &lt;module&gt;@&lt;version&gt;</span><br></pre></td></tr></table></figure>
+
 <p>這樣就可以輕鬆地管理依賴module的版本。</p>
-<h4 id="4-移除不再使用的依賴">4. 移除不再使用的依賴</h4>
-<p>隨著專案的發展，一些依賴module可能不再需要。此時可以使用以下指令清理不必要的依賴：</p>
+<h4 id="4-移除不再使用的依賴"><a href="#4-移除不再使用的依賴" class="headerlink" title="4. 移除不再使用的依賴"></a>4. 移除不再使用的依賴</h4><p>隨著專案的發展，一些依賴module可能不再需要。此時可以使用以下指令清理不必要的依賴：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod tidy</span><br></pre></td></tr></table></figure>
+
 <p>這個指令會刪除<code>go.mod</code>和<code>go.sum</code>中多餘的依賴。</p>
-<h3 id="三、進階技巧">三、進階技巧</h3>
-<h4 id="1-使用私有repo">1. 使用私有Repo</h4>
-<p>在現實中，企業內部開發經常需要使用私有的程式碼Repo。Go Modules支持配置私有Repo，通過設置環境變量<code>GOPRIVATE</code>來指定私有模組：</p>
+<h3 id="三、進階技巧"><a href="#三、進階技巧" class="headerlink" title="三、進階技巧"></a>三、進階技巧</h3><h4 id="1-使用私有Repo"><a href="#1-使用私有Repo" class="headerlink" title="1. 使用私有Repo"></a>1. 使用私有Repo</h4><p>在現實中，企業內部開發經常需要使用私有的程式碼Repo。Go Modules支持配置私有Repo，通過設置環境變量<code>GOPRIVATE</code>來指定私有模組：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GOPRIVATE=github.com/yourcompany/*</span><br></pre></td></tr></table></figure>
+
 <p>這樣，Go在下載模組時會跳過公有代理。</p>
-<h4 id="2-debug版本問題">2. debug版本問題</h4>
-<p>有時候，版本問題會引起一些麻煩。我們可以使用以下指令來查看和解析依賴關係：</p>
+<h4 id="2-debug版本問題"><a href="#2-debug版本問題" class="headerlink" title="2. debug版本問題"></a>2. debug版本問題</h4><p>有時候，版本問題會引起一些麻煩。我們可以使用以下指令來查看和解析依賴關係：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go list -m all</span><br></pre></td></tr></table></figure>
+
 <p>這會列出所有依賴的模組及其版本，幫助我們進行debug。</p>
-<h4 id="3-固定版本">3. 固定版本</h4>
-<p>為了確保專案的穩定性，我們可能需要鎖定某些依賴的版本。可以通過<code>replace</code>指令在<code>go.mod</code>中指定固定版本：</p>
+<h4 id="3-固定版本"><a href="#3-固定版本" class="headerlink" title="3. 固定版本"></a>3. 固定版本</h4><p>為了確保專案的穩定性，我們可能需要鎖定某些依賴的版本。可以通過<code>replace</code>指令在<code>go.mod</code>中指定固定版本：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">replace (</span><br><span class="line">  old/module v1<span class="number">.0</span><span class="number">.0</span> =&gt; <span class="built_in">new</span>/module v1<span class="number">.0</span><span class="number">.0</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
 <p>這樣做能避免在不同環境下出現版本不一致的問題。</p>
-<h3 id="四、結論">四、結論</h3>
-<p>Go Modules的出現極大地改善了Go語言的package管理方式。通過使用Go Modules，我們可以更方便地管理專案依賴，保持版本一致性，並且提高開發的靈活性。對於每一個Go開發者來說，熟悉並掌握Go Modules的使用是非常有必要的。</p>
+<h3 id="四、結論"><a href="#四、結論" class="headerlink" title="四、結論"></a>四、結論</h3><p>Go Modules的出現極大地改善了Go語言的package管理方式。通過使用Go Modules，我們可以更方便地管理專案依賴，保持版本一致性，並且提高開發的靈活性。對於每一個Go開發者來說，熟悉並掌握Go Modules的使用是非常有必要的。</p>
 <p>如果你還沒有使用Go Modules，那麼現在就試試看吧！你會發現它能給你的開發工作帶來多麼大的便利。希望這篇文章能夠幫助你更好地理解和使用Go Modules，讓你的Go開發之旅更加順暢。</p>
 <div style="text-align: center;">
   <a href="../../../../../categories/Go/">Go語言進階學習系列</a>
@@ -613,7 +608,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

@@ -444,42 +444,40 @@
 <p>今天這篇文章，我就帶你來了解一下 Go 程式的執行次序，這樣在後續閱讀和理解 Go 程式碼的時候，你就好比擁有了“通往寶藏的地圖”，可以直接沿著 Go 程式碼執行次序這張“地圖”去閱讀和理解 Go 程式碼，不會在龐大的程式庫中迷失。</p>
 <p>Go 程式由一系列 Go package組成，程式碼的執行也是在各個package之間跳轉。和其他語言一樣，Go 也擁有自己的執行入口 - <strong>main 函數</strong>。這篇文章我們就從 main 函數入手，逐步展開，最終帶你掌握 Go 程式的執行順序。</p>
 <span id="more"></span>
-<h3 id="mainmain-函數：go 應用的入口函數">main.main 函數：Go 應用的入口函數</h3>
-<p>Go 語言中有一個特殊的函數：main package中的 main 函數，也就是 main.main，它是所有 Go 可執行程式的用戶層執行邏輯的入口函數。Go 程式的執行邏輯，會在這個函數內按照它的調用順序展開。</p>
+
+<h3 id="main-main-函數：Go-應用的入口函數"><a href="#main-main-函數：Go-應用的入口函數" class="headerlink" title="main.main 函數：Go 應用的入口函數"></a>main.main 函數：Go 應用的入口函數</h3><p>Go 語言中有一個特殊的函數：main package中的 main 函數，也就是 main.main，它是所有 Go 可執行程式的用戶層執行邏輯的入口函數。Go 程式的執行邏輯，會在這個函數內按照它的調用順序展開。</p>
 <p>入口函數 - main 的定義是這樣的：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// 執行程式邏輯</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>你會發現，main 的定義非常簡單，沒有參數也沒有返回值。而且，Go 語言要求：可執行程式的 main package必須定義 main 函數，否則 Go 編譯器會報錯。在啟動了多個 Goroutine（Go 語言的輕量級userspace執行緒，後面的文章會詳細講解）的 Go 程式中，main.main 函數將在 Go 應用的主要的 Goroutine 中執行。main 函數返回就意味著整個 Go 程式的終結，而且你也不用管這個時候是否還有其他子 Goroutine 正在執行。</p>
 <p>另外還值得我們注意的是，除了 main package外，其他package也可以擁有自己的名為 main 的函數或方法。但按照 Go 的可見性規則（小寫字母開頭的函數無法被導出），非 main package中自定義的 main 函數僅限於package內使用，就像下面程式碼這樣，這是一段在非 main package中定義 main 函數的程式碼：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> pkg1</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    main()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;main func for pkg1&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看到，這裡 main 函數就主要是用來在package pkg1 內部使用的，它是沒法在package外使用的。</p>
 <p>現在我們已經了解了 Go 應用的入口函數 main.main 的特性。不過對於 main package的 main 函數來說，你還需要明確一點，就是它雖然是用戶層邏輯的入口函數，但它卻不一定是Go程式第一個被執行的函數。這是為什麼呢？</p>
 <p>這跟 Go 語言的另一個函數 init 有關。</p>
-<h3 id="init-函數：go package的初始化函數">init 函數：Go package的初始化函數</h3>
-<p>除了前面講過的 main.main 函數之外，Go 語言還有一個特殊函數，它就是用於進行package初始化的 init 函數。和 main.main 函數一樣，init 函數也是一個無參數無返回值的函數：</p>
+<h3 id="init-函數：Go-package的初始化函數"><a href="#init-函數：Go-package的初始化函數" class="headerlink" title="init 函數：Go package的初始化函數"></a>init 函數：Go package的初始化函數</h3><p>除了前面講過的 main.main 函數之外，Go 語言還有一個特殊函數，它就是用於進行package初始化的 init 函數。和 main.main 函數一樣，init 函數也是一個無參數無返回值的函數：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// package初始化邏輯</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>不過對於 init 函數來說，我們還需要注意一點，就是在 Go 程式中我們不能顯式地調用 init，否則就會收到編譯錯誤，就像下面這個範例，它表示的手工顯式調用 init 函數的錯誤做法：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Println(<span class="string">&quot;init invoked&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   init()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>這樣，在構建並運行上面這些範例程式碼之後，Go 編譯器會報下面這個錯誤：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&gt; go run call_init.go </span></span><br><span class="line">./call_init.go:10:2: undefined: init</span><br></pre></td></tr></table></figure>
+
 <p>實際上，Go package可以擁有不止一個 init 函數，每個組成 Go package的 Go 原始檔(.go文件)中，也可以定義 init 函數。</p>
 <p>所以說，在初始化 Go package時，Go 會按照一定的次序，逐一、順序地調用這個package的 init 函數。一般來說，先傳遞給 Go 編譯器的原始檔中的 init 函數，會先被執行；而同一個原始檔中的多個 init 函數，會按定義順序依次執行。</p>
 <p>現在我們就知曉了 main.main 函數可能並不是第一個被執行的函數的原因。所以，當我們要在 main.main 函數執行之前，執行一些函數或語句的時候，我們只需要將它放入 init 函數中就可以了。</p>
 <p>了解了這兩個函數的執行順序之後，我們現在就來整體地看看，一個 Go package的初始化是以何種次序和邏輯進行的。</p>
-<h3 id="go-package的初始化次序">Go package的初始化次序</h3>
-<p>從程式邏輯結構角度來看，Go package是程式邏輯封裝的基本單位，每個package都可以理解為是一個“自治”的、封裝良好的、對外部暴露有限接口的基本單位。一個 Go 程式就是由一組package組成的，程式的初始化就是這些package的初始化。每個 Go package還會有自己所需的外部package、常數、變數、init 函數（其中 main package有 main 函數）等。</p>
-<p>在這裡你要注意：<strong>我們在閱讀和理解程式碼的時候，需要知道這些元素在程式初始化過程中的初始化順序，這樣便於我們確定在某一行程式碼處這些元素的當前狀態。</strong><br>
-簡而言之，記住 Go package的初始化次序並不難，你只需要記住這三點就可以了：</p>
+<h3 id="Go-package的初始化次序"><a href="#Go-package的初始化次序" class="headerlink" title="Go package的初始化次序"></a>Go package的初始化次序</h3><p>從程式邏輯結構角度來看，Go package是程式邏輯封裝的基本單位，每個package都可以理解為是一個“自治”的、封裝良好的、對外部暴露有限接口的基本單位。一個 Go 程式就是由一組package組成的，程式的初始化就是這些package的初始化。每個 Go package還會有自己所需的外部package、常數、變數、init 函數（其中 main package有 main 函數）等。</p>
+<p>在這裡你要注意：<strong>我們在閱讀和理解程式碼的時候，需要知道這些元素在程式初始化過程中的初始化順序，這樣便於我們確定在某一行程式碼處這些元素的當前狀態。</strong><br>簡而言之，記住 Go package的初始化次序並不難，你只需要記住這三點就可以了：</p>
 <ul>
 <li>package按“深度優先DFS”的次序進行初始化；</li>
 <li>每個package內按以“常數 -&gt; 變數 -&gt; init 函數”的順序進行初始化；</li>
 <li>package內的多個 init 函數按出現次序進行自動調用。</li>
 </ul>
-<h3 id="init-函數的用途">init 函數的用途</h3>
-<p>其實，init 函數的這些常用用途，與 init 函數在 Go package初始化過程中的次序密不可分。我們前面講過，Go package初始化時，init 函數的初始化次序在變數之後，這給了開發人員在 init 函數中對package變數進行進一步檢查與操作的機會。</p>
-<h4 id="1-重置package變數值和初始化">1. 重置package變數值和初始化</h4>
-<p>初始化 package 內部會用到的各種變數</p>
-<h4 id="2-在 init 函數中實現“註冊模式”">2. 在 init 函數中實現“註冊模式”</h4>
-<p>為了讓你更好地理解，首先我們來看一段使用 lib/pq package連接 PostgreSQL 資料庫的程式碼範例：</p>
+<h3 id="init-函數的用途"><a href="#init-函數的用途" class="headerlink" title="init 函數的用途"></a>init 函數的用途</h3><p>其實，init 函數的這些常用用途，與 init 函數在 Go package初始化過程中的次序密不可分。我們前面講過，Go package初始化時，init 函數的初始化次序在變數之後，這給了開發人員在 init 函數中對package變數進行進一步檢查與操作的機會。</p>
+<h4 id="1-重置package變數值和初始化"><a href="#1-重置package變數值和初始化" class="headerlink" title="1. 重置package變數值和初始化"></a>1. 重置package變數值和初始化</h4><p>初始化 package 內部會用到的各種變數</p>
+<h4 id="2-在-init-函數中實現“註冊模式”"><a href="#2-在-init-函數中實現“註冊模式”" class="headerlink" title="2. 在 init 函數中實現“註冊模式”"></a>2. 在 init 函數中實現“註冊模式”</h4><p>為了讓你更好地理解，首先我們來看一段使用 lib/pq package連接 PostgreSQL 資料庫的程式碼範例：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;database/sql&quot;</span></span><br><span class="line">    _ <span class="string">&quot;github.com/lib/pq&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    db, err := sql.Open(<span class="string">&quot;postgres&quot;</span>, <span class="string">&quot;user=pqgotest dbname=pqgotest sslmode=verify-full&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> (err != <span class="literal">nil</span>) &#123;</span><br><span class="line">        log.Fatal(err)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    age := <span class="number">21</span></span><br><span class="line">    rows, err := db.Query(<span class="string">&quot;SELECT name FROM users WHERE age = $1&quot;</span>, age)</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>這是一段“神奇”的程式碼，你可以看到範例程式碼是以空導入的方式導入 lib/pq package的，main 函數中沒有使用 pq package的任何變數、函數或方法，這樣就實現了對 PostgreSQL 資料庫的訪問。而這一切的奧秘，全在 pq package的 init 函數中：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">    sql.Register(<span class="string">&quot;postgres&quot;</span>, &amp;Driver&#123;&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -487,11 +485,12 @@
 <p>這種通過在 init 函數中註冊自己的實現的模式，就有效降低了 Go package對外的直接暴露，尤其是package變數的暴露，從而避免了外部通過package變數對package狀態的改動。</p>
 <p>另外，從標準庫 database/sql package的角度來看，這種“註冊模式”實質是一種工廠設計模式的實現，sql.Open 函數就是這個模式中的工廠方法，它根據外部傳入的驅動名稱“生產”出不同類別的資料庫instance。</p>
 <p>現在我們了解了 init 函數的常見用途。init 函數之所以可以勝任這些工作，恰恰是因為它在 Go 應用初始化次序中的特殊“位次”，也就是 main 函數之前，常數和變數初始化之後。</p>
-<h3 id="總結">總結</h3>
-<p><strong>main 函數的特徵</strong></p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p><strong>main 函數的特徵</strong></p>
 <ul>
-<li>Go 應用的用戶層入口函數<br>
-<strong>init 函數的特徵</strong></li>
+<li>Go 應用的用戶層入口函數</li>
+</ul>
+<p><strong>init 函數的特徵</strong></p>
+<ul>
 <li>執行順位排在package內其他語法元素(var, const)的後面；</li>
 <li>每個 init 函數在整個 Go 程式生命週期內僅會被執行一次；</li>
 <li>init 函數是順序執行的，只有當一個 init 函數執行完畢後，才會去執行下一個 init 函數。</li>
@@ -627,7 +626,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
