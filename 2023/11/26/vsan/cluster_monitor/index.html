@@ -419,7 +419,7 @@
                   <span class="post-meta-item-text">字數統計&#58;</span>
                 
                 <span title="字數統計">
-                  620
+                  625
                 </span>
               
 
@@ -445,24 +445,27 @@
 
       
         <p>vSAN作為VMware一個重要的儲存產品，它深度融合了VMware的vSphere，並能透過vCenter一站式管理儲存資源池。我們可以透過vCenter建立vSAN Cluster、創建vSAN Datastore，更能夠在vCenter上直接監控vSAN Cluster的健康和I/O性能狀態。接下來，讓我來介紹如何透過7.0U3的vCenter進行運維管理。</p>
-<h2 id="vSAN-Skyline-Health"><a href="#vSAN-Skyline-Health" class="headerlink" title="vSAN Skyline Health"></a>vSAN Skyline Health</h2><p>vSphere提供了esxcli指令，讓用戶可以透過esxcli指令主動查詢當前ESXi host的硬體、儲存、網路等資訊。那麼，有沒有方法可以被動提示用戶當前vSAN cluster的健康狀態呢？</p>
+<h2 id="vsan-skyline health">vSAN Skyline Health</h2>
+<p>vSphere提供了esxcli指令，讓用戶可以透過esxcli指令主動查詢當前ESXi host的硬體、儲存、網路等資訊。那麼，有沒有方法可以被動提示用戶當前vSAN cluster的健康狀態呢？</p>
 <span id="more"></span>
-
 <p>當我們登入vCenter，點選左邊的vSAN Cluster→Monitor→Skyline Health，就可以看到Cluster健康檢查的細節，如下圖所示：</p>
-<p><img src="/images/vsan/Skyline_Health.png"></p>
+<p><img src="/images/vsan/Skyline_Health.png" alt=""></p>
 <p>vSAN是一個分散式物件儲存系統，因此vSAN Skyline Health會從網路、硬碟、驅動程式/韌體、儲存策略等各個維度進行全盤檢查，以確保vSAN Cluster的各個方面都是健康的。此外，在對ESXi Host進行升級或進入維護模式時，也會進行檢查，防止資料丟失。</p>
-<h2 id="Objects-View"><a href="#Objects-View" class="headerlink" title="Objects View"></a>Objects View</h2><p>我們的VM是以Object的形式儲存在vSAN Storage中的。由於資料的儲存安全非常重要，在vCenter裡，有一個獨立的View讓用戶可以查看Object Health更詳細的訊息。</p>
+<h2 id="objects-view">Objects View</h2>
+<p>我們的VM是以Object的形式儲存在vSAN Storage中的。由於資料的儲存安全非常重要，在vCenter裡，有一個獨立的View讓用戶可以查看Object Health更詳細的訊息。</p>
 <p>當我們登入vCenter，點選左邊的vSAN Cluster→Monitor→Virtual Objects，就可以看到Object健康檢查的細節，如下圖所示：</p>
-<p><img src="/images/vsan/Virutal_Object.png"></p>
+<p><img src="/images/vsan/Virutal_Object.png" alt=""></p>
 <p>由上圖可以看到，我們有三台已經開機的虛擬機，所以有三個Object，分別是VM Home Namespace、VMDK和Swap，並且儲存策略設定為vSAN Default Storage Policy，代表的是RAID-1/FTT-1的策略，即備份一份，最多只容忍丟失一份資料。</p>
-<p>我們勾選想要檢查的Object，並點選”VIEW PLACEMENT DETAILS”，就會進入如下畫面：</p>
-<p><img src="/images/vsan/Physical_Placement.png"></p>
+<p>我們勾選想要檢查的Object，並點選&quot;VIEW PLACEMENT DETAILS&quot;，就會進入如下畫面：</p>
+<p><img src="/images/vsan/Physical_Placement.png" alt=""></p>
 <p>我們可以看到各個Object裡的Component/Witness被分配到哪個ESXi host的物理硬碟上，並且可以檢查該Component是否是健康的。</p>
-<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>不同於前面說的Skyline Health和Object View，Performance Service主要是搜集歷史Cluster/VM的Performance訊息並展示給用戶。我們可以透過Performance View來查看Cluster近一個小時所產生的IOPS/Throughput/Latency/Congestions訊息。</p>
-<p><img src="/images/vsan/Performance_Overview.png"></p>
+<h2 id="performance">Performance</h2>
+<p>不同於前面說的Skyline Health和Object View，Performance Service主要是搜集歷史Cluster/VM的Performance訊息並展示給用戶。我們可以透過Performance View來查看Cluster近一個小時所產生的IOPS/Throughput/Latency/Congestions訊息。</p>
+<p><img src="/images/vsan/Performance_Overview.png" alt=""></p>
 <p>我們也可以細化到單一VM，來觀察虛擬機的Performance使用情況。</p>
-<p><img src="/images/vsan/Performance_VM.png"></p>
-<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
+<p><img src="/images/vsan/Performance_VM.png" alt=""></p>
+<h3 id="總結">總結</h3>
+<ul>
 <li><strong>vSAN Skyline Health</strong>：透過vCenter查看vSAN Cluster健康狀態。</li>
 <li><strong>Objects View</strong>：查看vSAN中虛擬機的Object健康狀況。</li>
 <li><strong>Performance</strong>：監控並分析Cluster和VM的歷史性能數據。</li>
@@ -595,7 +598,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

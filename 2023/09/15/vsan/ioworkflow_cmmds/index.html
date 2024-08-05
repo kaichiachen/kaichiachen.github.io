@@ -441,14 +441,14 @@
 
       
         <p>vSAN的四大Component - CMMDS、DOM、CLOM、LSOM，他們四個從最底層與物理硬碟交互到最上層協同各個Cluster裡的Nodes，彼此各司其職，大致上的交互邏輯如下圖所示，本篇將介紹的是vSAN CMMDS。</p>
-<p><img src="/images/vsan/vsan_ioworkflow.png"></p>
+<p><img src="/images/vsan/vsan_ioworkflow.png" alt=""></p>
 <p>vSAN CMMDS（Cluster Monitoring, Membership, and Directory Service）主要運作在ESXi的kernel層。負責在vSAN Cluster和vSAN Node之間，進行探索、維護等監控任務，並管理Cluster裡的各項資源，例如網路、儲存空間、Component數量等。這些Cluster metadata會以key-value形式存在directory中。</p>
 <span id="more"></span>
-
 <p>由於vSAN是一個分散式儲存系統，directory上面的資料難免會有碰撞和衝突。vSAN CMMDS採取的是master-agent架構，vSAN Cluster會透過Paxos演算法選舉出master node，其他node則為agent。當Object訊息發生異動時，agent會向master node提供更新訊息，由master決定是否要更新。同時，master也會單播（unicast）這些metadata訊息給其他節點。節點彼此間會透過經典的heartbeat傳輸以保證Cluster內的所有node都是健康的。</p>
 <p>vSAN CMMDS為最終一致性架構，意思是如果A對一個Object做寫入或修改，同時B讀取Object的metadata時可能會有過期的資訊。一般來說，1毫秒內可以消除這個資訊不對稱的問題。</p>
 <p>到目前為止，vSAN CMMDS聽起來像是vSAN內部的一個Backend Service，專門搜集Cluster的metadata然後存著。那麼，vSAN的哪個Component會對CMMDS發出request呢？是DOM（Distribute Object Manager）。我們會在下一篇提到DOM。</p>
-<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><ul>
+<h3 id="總結">總結</h3>
+<ul>
 <li>CMMDS負責搜集Cluster的metadata，例如網路、儲存空間、Component數量等。</li>
 <li>CMMDS以key-value的形式儲存metadata，各個ESXi host可以query這些資料。</li>
 <li>CMMDS是分散式系統架構，每個node可擔任master、agent或backup的角色。agent向master提供Cluster metadata，master決定是否更新，backup則作為master的備份，萬一master掛掉可以替代。</li>
@@ -582,7 +582,7 @@
               
                 <a href="../../../../../archives">
               
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

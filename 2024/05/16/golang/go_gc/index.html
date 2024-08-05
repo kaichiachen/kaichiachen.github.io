@@ -42,7 +42,7 @@
 
   
   
-  <link href="../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="../../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -50,29 +50,27 @@
 
 
 
-<link href="../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="../../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="../../images/apple-touch-icon-next.png?v=5.1.4">
+<link href="../../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../../images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../../images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="../../images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../../images/favicon-16x16-next.png?v=5.1.4">
 
 
+  <link rel="mask-icon" href="../../../../../images/logo.svg?v=5.1.4" color="#222">
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
 
 
+  <meta name="keywords" content="golang,Go," />
 
 
 
@@ -81,14 +79,23 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="安迪熊">
-<meta property="og:url" content="https://kaichiachen.github.io/archives/2021/index.html">
+
+
+<meta name="description" content="在程式開發的過程中，記憶體管理是一個非常重要的議題。如果記憶體管理不當，可能會導致程式崩潰或效能下降。在 Go 語言中，記憶體管理的關鍵就在於它的垃圾回收（Garbage Collection，簡稱 GC）機制。垃圾回收能自動管理記憶體，減輕開發者的負擔，讓我們更專注於程式的邏輯與功能開發。今天，我們就來深入了解一下 Go 語言的垃圾回收機制，以及它是如何提高程式效能的。同時，作為一個擅長 Pyt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Go] 記憶體管理: 垃圾回收機制">
+<meta property="og:url" content="https://kaichiachen.github.io/2024/05/16/golang/go_gc/index.html">
 <meta property="og:site_name" content="安迪熊">
+<meta property="og:description" content="在程式開發的過程中，記憶體管理是一個非常重要的議題。如果記憶體管理不當，可能會導致程式崩潰或效能下降。在 Go 語言中，記憶體管理的關鍵就在於它的垃圾回收（Garbage Collection，簡稱 GC）機制。垃圾回收能自動管理記憶體，減輕開發者的負擔，讓我們更專注於程式的邏輯與功能開發。今天，我們就來深入了解一下 Go 語言的垃圾回收機制，以及它是如何提高程式效能的。同時，作為一個擅長 Pyt">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://kaichiachen.github.io/images/golang/overview.jpg">
+<meta property="article:published_time" content="2024-05-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-05T06:29:27.020Z">
 <meta property="article:author" content="Kaichia Chen">
-<meta property="article:tag" content="鍇嘉">
+<meta property="article:tag" content="golang">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kaichiachen.github.io/images/golang/overview.jpg">
 
 
 
@@ -118,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://kaichiachen.github.io/archives/2021/"/>
+  <link rel="canonical" href="https://kaichiachen.github.io/2024/05/16/golang/go_gc/"/>
 
 
 
 
 
-  <title>歸檔 | 安迪熊</title>
+  <title>[Go] 記憶體管理: 垃圾回收機制 | 安迪熊</title>
   
 
 
@@ -155,7 +162,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -294,410 +301,304 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
-         
+          <h1 class="post-title" itemprop="name headline">[Go] 記憶體管理: 垃圾回收機制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2024-05-16T00:00:00+08:00">
+                2024-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        好! 目前共計 65 篇文章。 繼續努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../../categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2021">2021</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2024/05/16/golang/go_gc/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2021/11/30/influence_people_book/" itemprop="url">
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye">&nbsp;閱讀次數:</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">[閱讀]人性的弱點</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  1.9k
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-11-30T00:00:00+08:00"
-              content="2021-11-30" >
-          11-30
-        </time>
-      </div>
+              
 
-    </header>
-  </article>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2021/11/11/stop_worrying_book/" itemprop="url">
-              
-                <span itemprop="name">[閱讀]人性的優點</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-11-11T00:00:00+08:00"
-              content="2021-11-11" >
-          11-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2021/10/29/eth_and_ip_network/" itemprop="url">
-              
-                <span itemprop="name">[網路]解析第二層及第三層的網路封包結構</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-10-29T00:00:00+08:00"
-              content="2021-10-29" >
-          10-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>在程式開發的過程中，記憶體管理是一個非常重要的議題。如果記憶體管理不當，可能會導致程式崩潰或效能下降。在 Go 語言中，記憶體管理的關鍵就在於它的垃圾回收（Garbage Collection，簡稱 GC）機制。垃圾回收能自動管理記憶體，減輕開發者的負擔，讓我們更專注於程式的邏輯與功能開發。今天，我們就來深入了解一下 Go 語言的垃圾回收機制，以及它是如何提高程式效能的。同時，作為一個擅長 Python 的程式語言愛好者，我們也將比較 Go 與 Python 在垃圾回收方面的不同。</p>
+<h2 id="什麼是垃圾回收？">什麼是垃圾回收？</h2>
+<p>簡單來說，垃圾回收是一種自動管理記憶體的技術。它負責回收不再使用的記憶體空間，防止記憶體洩漏。這就像有個勤快的清潔工，不停地清理不再需要的雜物，讓房間保持整潔有序。</p>
+<h3 id="垃圾回收的基本流程">垃圾回收的基本流程</h3>
+<ol>
+<li><strong>標記階段（Mark）：</strong> 垃圾回收器會遍歷所有的變數，找出那些仍然被引用的物件，並將它們標記為“活的”。</li>
+<li><strong>清除階段（Sweep）：</strong> 清除階段會釋放掉那些沒有被標記的物件，回收它們所佔用的記憶體空間。</li>
+<li><strong>壓縮階段（Compaction，可選）：</strong> 這個階段會整理記憶體，將分散的空間合併成連續的區塊，以提高記憶體的使用效率。</li>
+</ol>
+<h2 id="go-語言的垃圾回收機制">Go 語言的垃圾回收機制</h2>
+<p>Go 語言使用一種稱為「非分代三色標記-清除」的垃圾回收機制。這種機制的特點是，垃圾回收的過程與程式執行是同時進行的（即併發），這樣可以減少程式執行中斷的時間。</p>
+<span id="more"></span>
+<h3 id="三色標記法">三色標記法</h3>
+<p>Go 的垃圾回收使用三色標記法來追蹤物件的狀態：</p>
+<ul>
+<li><strong>白色（White）：</strong> 尚未被檢查的物件。</li>
+<li><strong>灰色（Gray）：</strong> 已被檢查且仍需遞迴檢查的物件。</li>
+<li><strong>黑色（Black）：</strong> 已被檢查且不再需要檢查的物件。</li>
+</ul>
+<p>在標記階段，所有物件一開始都是白色的。垃圾回收器從根物件（如全域變數和堆疊上的變數）開始，將這些物件標記為灰色。然後，它會依次處理灰色物件，將它們引用的物件標記為灰色，並將自己標記為黑色。當所有灰色物件都被處理完畢後，白色物件即為不再使用的垃圾。</p>
+<h3 id="併發垃圾回收">併發垃圾回收</h3>
+<p>Go 的垃圾回收器是併發進行的，也就是說，它在程式執行的同時進行垃圾回收工作。這樣做的好處是能夠減少應用程式的停頓時間，讓使用者感覺程式更加流暢。當然，這也帶來了一定的挑戰，因為需要在垃圾回收與程式邏輯之間保持資料的一致性。</p>
+<h2 id="python-與 go 的垃圾回收機制比較">Python 與 Go 的垃圾回收機制比較</h2>
+<p>Python 也是一種廣泛使用的程式語言，其垃圾回收機制與 Go 有一些不同之處。下面我們來看看這兩種語言的垃圾回收機制有何不同。</p>
+<h3 id="python-的垃圾回收">Python 的垃圾回收</h3>
+<p>Python 使用兩種策略來管理記憶體：<strong>引用計數（Reference Counting）</strong> 和 <strong>循環垃圾回收（Cycle Garbage Collection）</strong>。</p>
+<ol>
+<li>
+<p><strong>引用計數：</strong></p>
+<p>Python 主要依賴引用計數來管理記憶體。每個物件都有一個計數器，用來記錄有多少引用指向它。當計數器變為零時，物件所佔用的記憶體會立即被釋放。</p>
+<ul>
+<li><strong>優點</strong>：引用計數能夠立即釋放不再使用的物件，降低記憶體使用。</li>
+<li><strong>缺點</strong>：無法處理循環引用，這可能會導致記憶體洩漏。</li>
+</ul>
+</li>
+<li>
+<p><strong>循環垃圾回收：</strong></p>
+<p>為了解決引用計數的缺點，Python 還引入了循環垃圾回收器。這個機制會定期檢查物件的引用Graph，找出那些有循環引用的物件，並釋放它們。</p>
+</li>
+</ol>
+<h3 id="go-與 python 的差異">Go 與 Python 的差異</h3>
+<ul>
+<li><strong>併發性：</strong> Go 的垃圾回收器是併發的，這讓它能夠在程式執行時進行垃圾回收，減少停頓時間。而 Python 的垃圾回收器則是單執行緒的，可能會在回收時暫停程式執行。</li>
+<li><strong>記憶體管理：</strong> Go 使用非分代的三色標記-清除法，更加適合長時間運行的伺服器應用。而 Python 使用分代垃圾回收策略，適合多變數、小物件的處理。</li>
+<li><strong>語言特性：</strong> Python 的動態性和高層抽象使得記憶體管理較為簡單，但可能導致一些性能問題；Go 則傾向於提供更高效的記憶體管理，但要求開發者在設計上更加謹慎。</li>
+</ul>
+<h2 id="垃圾回收對效能的影響">垃圾回收對效能的影響</h2>
+<p>雖然垃圾回收能夠自動管理記憶體，減輕開發者的負擔，但它也會對程式的效能產生影響。</p>
+<ol>
+<li><strong>延遲（Latency）：</strong> 雖然 Go 的垃圾回收器盡量減少延遲，但仍然可能在某些情況下出現短暫的卡頓，特別是在回收大量記憶體時。</li>
+<li><strong>記憶體佔用（Memory Footprint）：</strong> 垃圾回收器需要額外的記憶體來追蹤物件狀態，這可能導致整體記憶體佔用增加。</li>
+<li><strong>CPU 開銷（CPU Overhead）：</strong> 垃圾回收需要消耗 CPU 資源，這可能會與程式的正常運行產生競爭。</li>
+</ol>
+<h2 id="如何優化垃圾回收的效能">如何優化垃圾回收的效能</h2>
+<p>為了減少垃圾回收對效能的影響，我們可以採取以下幾種優化策略：</p>
+<ol>
+<li><strong>減少記憶體分配：</strong> 儘量重用物件，避免不必要的記憶體分配和釋放。<br>
+例如，使用物件池（object pool）來管理可重用的物件，減少垃圾回收器的工作量。</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bufferPool = sync.Pool&#123;</span><br><span class="line">    New: <span class="function"><span class="keyword">func</span><span class="params">()</span></span> <span class="keyword">interface</span>&#123;&#125; &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">make</span>([]<span class="type">byte</span>, <span class="number">1024</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">process</span><span class="params">(data []<span class="type">byte</span>)</span></span> &#123;</span><br><span class="line">    buf := bufferPool.Get().([]<span class="type">byte</span>)</span><br><span class="line">    <span class="keyword">defer</span> bufferPool.Put(buf)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 buf 進行處理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>
+<p><strong>減少長壽命物件：</strong><br>
+儘量縮短物件的生命週期，特別是那些佔用大量記憶體的物件。<br>
+考慮將大型資料結構分解成小的模塊，根據需要動態加載和釋放。</p>
+</li>
+<li>
+<p><strong>提高記憶體局部性：</strong> 優化資料結構，讓相互關聯的資料儘量靠近，增加緩存命中率。</p>
+<p>例如，對於頻繁使用的資料，可以將其緊湊地儲存在連續的記憶體中。</p>
+</li>
+<li>
+<p><strong>配置 GOGC 參數：</strong> <code>GOGC</code> 是 Go 的一個環境變數，用於調整垃圾回收的頻率。默認值是 100，表示在Queue的大小增加 100% 時觸發垃圾回收。</p>
+<p>如果你的應用不太依賴即時的記憶體回收，可以增加 <code>GOGC</code> 的值以減少回收次數：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GOGC=200</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="總結">總結</h2>
+<ol>
+<li><strong>Go 的併發垃圾回收</strong>：</li>
+</ol>
+<ul>
+<li>Go 語言使用「非分代三色標記-清除」垃圾回收機制，採用併發方式運行垃圾回收，減少程式停頓時間，適合長時間運行的伺服器應用。</li>
+</ul>
+<ol start="2">
+<li><strong>Go 與 Python 的垃圾回收差異</strong>：</li>
+</ol>
+<ul>
+<li>Python 使用引用計數和循環垃圾回收，主要依賴單執行緒運行。相比之下，Go 的併發垃圾回收更適合多執行緒應用，能有效降低程式延遲。</li>
+</ul>
+<ol start="3">
+<li><strong>垃圾回收的效能優化策略</strong>：</li>
+</ol>
+<ul>
+<li>減少不必要的記憶體分配，重用物件，縮短物件生命週期，提高記憶體局部性，並合理調整 GOGC 參數以優化程式效能。</li>
+</ul>
+<div style="text-align: center;">
+  <a href="../../../../../categories/Go/">Go語言進階學習系列</a>
+  <img src="/images/golang/overview.jpg" alt="" />
+</div>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2021/10/25/socket_usage_network/" itemprop="url">
-              
-                <span itemprop="name">[網路]Socket - 網路程式的大門</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-10-25T00:00:00+08:00"
-              content="2021-10-25" >
-          10-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2021/10/20/garbage-collection-python/" itemprop="url">
-              
-                <span itemprop="name">[Python進階]Python的記憶體垃圾回收機制</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-10-20T00:00:00+08:00"
-              content="2021-10-20" >
-          10-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2021/10/15/think_money_book/" itemprop="url">
-              
-                <span itemprop="name">[閱讀]金錢超思考</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-10-15T00:00:00+08:00"
-              content="2021-10-15" >
-          10-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2021/10/10/gil-python/" itemprop="url">
-              
-                <span itemprop="name">[Python進階]Python的GIL</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-10-10T00:00:00+08:00"
-              content="2021-10-10" >
-          10-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2021/10/08/eventloop-python/" itemprop="url">
-              
-                <span itemprop="name">[Python進階]Asyncio的Event loop</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-10-08T00:00:00+08:00"
-              content="2021-10-08" >
-          10-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2021/10/05/futures-python/" itemprop="url">
-              
-                <span itemprop="name">[Python進階]Python的並行計算 - Futures</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-10-05T00:00:00+08:00"
-              content="2021-10-05" >
-          10-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="../../2021/10/03/7habits_book/" itemprop="url">
-              
-                <span itemprop="name">[閱讀]與成功有約：高效能人士的七個習慣</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-10-03T00:00:00+08:00"
-              content="2021-10-03" >
-          10-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../../tags/golang/" rel="tag"># golang</a>
+          
+            <a href="../../../../../tags/Go/" rel="tag"># Go</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../../03/golang/go_performance_analysis/" rel="next" title="[Go] Go語言的基本性能分析">
+                <i class="fa fa-chevron-left"></i> [Go] Go語言的基本性能分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="page/2/">2</a><a class="extend next" rel="next" href="page/2/">&gt;</a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -705,6 +606,20 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -731,7 +646,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="../../images/avatar.jpg"
+                src="../../../../../images/avatar.jpg"
                 alt="" />
             
               <p class="site-author-name" itemprop="name"></p>
@@ -743,7 +658,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="..">
+                <a href="../../../../../archives">
               
                   <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">文章</span>
@@ -755,7 +670,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="../../categories/index.html">
+                <a href="../../../../../categories/index.html">
                   <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
@@ -766,7 +681,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="../../tags/index.html">
+                <a href="../../../../../tags/index.html">
                   <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
@@ -905,60 +820,64 @@
 
   
   
-    <script type="text/javascript" src="../../lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="../../../../../lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="../../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="../../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="../../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 
   
 
 
-  <script type="text/javascript" src="../../js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../../js/src/utils.js?v=5.1.4"></script>
 
-  <script type="text/javascript" src="../../js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="../../js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="../../js/src/schemes/pisces.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../../js/src/motion.js?v=5.1.4"></script>
 
 
 
   
+  
+
+
+  <script type="text/javascript" src="../../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
 
-  <script type="text/javascript" src="../../js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="../../../../../js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -971,6 +890,18 @@
       <script id="dsq-count-scr" src="https://kaichiablog.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://kaichiachen.github.io/2024/05/16/golang/go_gc/';
+          this.page.identifier = '2024/05/16/golang/go_gc/';
+          this.page.title = '[Go] 記憶體管理: 垃圾回收機制';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kaichiablog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   
