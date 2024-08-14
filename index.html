@@ -309,6 +309,184 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2024/06/01/golang/go_dependency_injection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="2024/06/01/golang/go_dependency_injection/" itemprop="url">[Go] 用Fx進行依賴注入(Dependency Injection)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2024-06-01T00:00:00+08:00">
+                2024-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="2024/06/01/golang/go_dependency_injection/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2024/06/01/golang/go_dependency_injection/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  1.1k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="什麼是依賴注入"><a href="#什麼是依賴注入" class="headerlink" title="什麼是依賴注入?"></a>什麼是依賴注入?</h2><p>首先，什麼是依賴注入呢？依賴注入（Dependency Injection，簡稱DI）是一種設計模式，主要用來解決物件之間的依賴性問題。當一個物件需要使用另一個物件時，我們通常會在這個物件的內部去創建它所需的依賴物件。這樣一來，物件之間就會產生緊密的耦合性，使得程式碼變得不靈活，也很難進行測試和維護。</p>
+<p>依賴注入的目的是將依賴物件的創建責任轉移給外部系統，通過單例模式或構造函數(constructor)來將依賴注入到需要的物件中。這樣一來，我們可以更方便地替換或擴展物件的依賴，也能更容易進行單元測試，因為可以輕鬆地注入模擬物件（mock objects）。</p>
+<h3 id="傳統的依賴注入"><a href="#傳統的依賴注入" class="headerlink" title="傳統的依賴注入"></a>傳統的依賴注入</h3><p>在進入主題之前，我們來看一個不使用任何依賴注入框架的範例：</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="2024/06/01/golang/go_dependency_injection/" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2024/05/21/golang/go_high_performance_dev/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1929,185 +2107,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io2024/02/29/golang/go_goroutine/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="安迪熊">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="2024/02/29/golang/go_goroutine/" itemprop="url">[Go] goroutine是怎麼工作的？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2024-02-29T00:00:00+08:00">
-                2024-02-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="categories/Go/" itemprop="url" rel="index">
-                    <span itemprop="name">Go</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="2024/02/29/golang/go_goroutine/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2024/02/29/golang/go_goroutine/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字數統計&#58;</span>
-                
-                <span title="字數統計">
-                  1.4k
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在這篇<a href="../../../../../2024/02/23/golang/go_concurrent/">Go中最強的魔法: 併發程式執行</a>的文章中，我們探討了併發的基本概念以及Go語言中實現併發的機制—Goroutine。這些內容對於剛接觸Go的Gopher來說，可以說是入門級的學習資料。</p>
-<p>但是，你可能會好奇，既然Go不是採用傳統的基於執行緒的併發模型，那Go的運行時是如何管理和調度(Schedule)眾多Goroutine的呢？實際上，這些是Go語言核心開發團隊的關注點，普通開發者通常不需要深入了解。不過深入理解Goroutine的調度原理對於寫出高效能的Go程式碼是非常有幫助的。</p>
-<p>接下來，讓我們一起簡要探索一下Goroutine調度器的工作原理。</p>
-<h3 id="Goroutine調度器"><a href="#Goroutine調度器" class="headerlink" title="Goroutine調度器"></a>Goroutine調度器</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="2024/02/29/golang/go_goroutine/" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2162,7 +2161,7 @@
               
                 <a href="archives">
               
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
