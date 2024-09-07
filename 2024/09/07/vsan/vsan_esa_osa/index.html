@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="google9e3a62cf2ff948b9.html" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../../images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../../images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../../images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="../../../../../images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vmware,vsan,vsan esa,vsan osa," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="隨著 VMware vSAN 的演進，最新的 vSAN 版本分為兩種架構：原生的 vSAN Original Storage Architecture (OSA) 和全新的 vSAN Express Storage Architecture (ESA)。這兩者在架構上的差異，不僅影響了儲存效能和資源配置，也改變了 vSAN 的未來發展方向。在這篇文章中，我們將深入探討 OSA 與 ESA 的架構差">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[vSAN] VMware vSAN OSA &amp; ESA 技術簡介">
+<meta property="og:url" content="https://kaichiachen.github.io/2024/09/07/vsan/vsan_esa_osa/index.html">
+<meta property="og:site_name" content="安迪熊">
+<meta property="og:description" content="隨著 VMware vSAN 的演進，最新的 vSAN 版本分為兩種架構：原生的 vSAN Original Storage Architecture (OSA) 和全新的 vSAN Express Storage Architecture (ESA)。這兩者在架構上的差異，不僅影響了儲存效能和資源配置，也改變了 vSAN 的未來發展方向。在這篇文章中，我們將深入探討 OSA 與 ESA 的架構差">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-09-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-07T06:50:03.099Z">
+<meta property="article:author" content="Kaichia Chen">
+<meta property="article:tag" content="vmware">
+<meta property="article:tag" content="vsan">
+<meta property="article:tag" content="vsan esa">
+<meta property="article:tag" content="vsan osa">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://kaichiachen.github.io/2024/09/07/vsan/vsan_esa_osa/"/>
+
+
+
+
+
+  <title>[vSAN] VMware vSAN OSA & ESA 技術簡介 | 安迪熊</title>
+  
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZBL46EL44R"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZBL46EL44R');
+    }
+  </script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">安迪熊</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技術、閱讀、生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站點地圖
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜尋
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6193902941623391"
+     crossorigin="anonymous"></script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kaichiachen.github.io">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../../images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="安迪熊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[vSAN] VMware vSAN OSA & ESA 技術簡介</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2024-09-07T00:00:00+08:00">
+                2024-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../../categories/vSAN/" itemprop="url" rel="index">
+                    <span itemprop="name">vSAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2024/09/07/vsan/vsan_esa_osa/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye">&nbsp;閱讀次數:</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字數統計&#58;</span>
+                
+                <span title="字數統計">
+                  2.2k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>隨著 VMware vSAN 的演進，最新的 vSAN 版本分為兩種架構：原生的 vSAN Original Storage Architecture (OSA) 和全新的 vSAN Express Storage Architecture (ESA)。這兩者在架構上的差異，不僅影響了儲存效能和資源配置，也改變了 vSAN 的未來發展方向。在這篇文章中，我們將深入探討 OSA 與 ESA 的架構差異，並簡單提及配置上的不同之處，同時也會介紹一下 LFS、B-tree 的原理與應用。</p>
+<h3 id="架構上的關鍵差異"><a href="#架構上的關鍵差異" class="headerlink" title="架構上的關鍵差異"></a>架構上的關鍵差異</h3><p>vSAN OSA 是在 vSAN 8 之前的 vSAN 版本架构基础上更新发展而来的，它同样使用双层架构，使用市场上广为存在，且通过兼容性验证的高速 SSD 作为寫入Cache层，加上 HDD 或 SSD 作为容量层的架构提供 HCI 集群儲存资源。ESA 則是完全為 NVMe 設計的單層儲存架構，整個就是為高效能而生，SSD 不再只是快取，而是主力。資料處理變得更快、更直接，少了中間的拖泥帶水，讀寫效率自然大幅提升。之所以有這樣的改變是因為舊有的儲存架構沒辦法再透過替換更快的硬碟來達到等比例的性能提升了。</p>
+<span id="more"></span>
+
+<h3 id="打造順暢資料流：LFS-和-B-tree"><a href="#打造順暢資料流：LFS-和-B-tree" class="headerlink" title="打造順暢資料流：LFS 和 B-tree"></a>打造順暢資料流：LFS 和 B-tree</h3><p>在 ESA 中，資料的寫入更像是一條高速公路，完全就是為了速度而設計的！這全都得感謝 Log-Structured File System (LFS) 的功勞。LFS 就像個神奇的小幫手，把資料先寫進一個大筆記本裡，再一次性寫入儲存設備，不用一直來回重複地寫。LFS不像傳統檔案系統那樣隨機寫入到各處。這種順序寫入的方式能大幅減少硬碟尋址時間，特別適合 SSD 和 NVMe 這類依賴順序寫入性能的儲存設備。這種順序寫入的方式大大減少了隨機 I/O 的時間，讓資料處理變得飛快！</p>
+<h5 id="LFS-的工作原理"><a href="#LFS-的工作原理" class="headerlink" title="LFS 的工作原理"></a>LFS 的工作原理</h5><p>LFS 將所有的寫入操作都視為是日誌的一部分，當有新資料寫入時，LFS 並不會直接覆蓋舊資料，而是將新的資料寫入到日誌的末端。系統定期會進行「清理」操作，將不再需要的舊資料移除，這個過程稱為「日誌清理 (log cleaning)」。</p>
+<p><strong>LFS 的優勢</strong></p>
+<ol>
+<li>   寫入效能優化<br>透過順序寫入，LFS 能夠顯著提高寫入速度，因為它不需要頻繁的隨機寫入操作，這特別適合現代 SSD 的設計。</li>
+<li>   延長 SSD 壽命<br>LFS 減少了隨機寫入和擦除操作的頻率，從而延長了 SSD 的使用壽命。這對於需要大量寫入操作的系統尤為重要。</li>
+<li>   簡化的寫入流程<br>因為 LFS 將資料順序寫入，寫入操作變得簡單而高效，且系統不需要過多的寫入邏輯處理，這樣的設計減少了系統的運行負擔。</li>
+</ol>
+<p><strong>LFS 的其他應用</strong></p>
+<ol>
+<li>   NoSQL 資料庫<br>很多 NoSQL 資料庫，如 Cassandra 和 InfluxDB，採用了 LFS 的概念進行資料寫入，這讓資料庫的寫入速度大幅提升，適合高速資料流入的場景，如物聯網數據、金融交易數據等。</li>
+<li>   快取系統<br>LFS 的順序寫入特性非常適合快取系統的需求，如 Redis 的快取磁碟後端。LFS 讓快取系統能快速持久化大量資料而不影響效能。</li>
+<li>   日誌儲存<br>LFS 非常適合用於日誌檔案的儲存，因為日誌本身就是順序的資料流。在需要大規模日誌記錄的系統中，LFS 提供了一個簡單且高效的解決方案。</li>
+</ol>
+<p>B-tree (Balanced Tree) 也是 ESA 的得力助手，它負責管理大量的metadata，像是資料庫的Index，幫助系統快速定位資料。這種結構特別適合需要大量查找和更新的情況，不僅穩定而且高效。B-tree 是一種自平衡樹結構，廣泛應用於資料庫和檔案系統中。它的主要特點是保持資料的排序結構，並允許快速的查找、插入、刪除和更新操作(均為Log(n))。B-tree 的節點包含多個資料項和指向子節點的指標，這使得它在處理大規模數據時非常高效。</p>
+<h5 id="B-tree-的工作原理"><a href="#B-tree-的工作原理" class="headerlink" title="B-tree 的工作原理"></a>B-tree 的工作原理</h5><p>B-tree 的結構類似於一顆多節點樹，每個節點可以有多個子節點，而非像二元樹那樣僅有兩個子節點。這樣的設計有助於<strong>降低樹的高度</strong>，從而減少資料查找的深度，增強查找效率。當你在 B-tree 中插入或刪除資料時，樹會自動進行重排和分裂，保持平衡，確保所有的操作都能在對數時間內完成。</p>
+<p><strong>B-tree 的優勢</strong></p>
+<ol>
+<li>   高效查找<br>B-tree 在處理大資料集時，能保持穩定的查找性能，因為它的結構能有效降低樹的高度。</li>
+<li>   I/O友善<br>由於 B-tree 的節點可以存儲多筆資料，這減少了資料讀取時磁碟的 I/O 操作次數，尤其適合硬碟驅動器這類讀寫速度較慢的存儲設備。</li>
+<li>   高穩定性<br>B-tree 自平衡的特性保證了查找、插入、刪除的時間複雜度始終保持在 O(log n)，適合高頻率資料操作的場景。</li>
+</ol>
+<p><strong>B-tree 的其他應用</strong></p>
+<ol>
+<li>   資料庫索引<br>幾乎所有的關聯式資料庫，如 MySQL、PostgreSQL、Oracle，都使用 B-tree 作為索引結構。這讓資料查詢變得快捷而高效，即便是在數億條資料的情況下，查找速度依然相當快。</li>
+<li>   檔案系統<br>B-tree 被用於許多檔案系統中，如 NTFS、HFS+ 等，負責管理文件的元資料，這些元資料包括文件名稱、大小、位置等。透過 B-tree，檔案系統能更迅速地定位文件並執行操作。</li>
+<li>   儲存引擎<br>B-tree 還常用於儲存引擎的內部結構，如 RocksDB 和 LevelDB，這些儲存引擎廣泛應用於大數據和物聯網的情境中，用於高效管理龐大的 Key-Value 資料。</li>
+</ol>
+<h3 id="為何-ESA-比-OSA-性能更好？"><a href="#為何-ESA-比-OSA-性能更好？" class="headerlink" title="為何 ESA 比 OSA 性能更好？"></a>為何 ESA 比 OSA 性能更好？</h3><ol>
+<li>全 NVMe SSD的效能爆發<br>ESA 不再使用傳統的 HDD，而是全數改採 NVMe SSD，這個改變就像把你的老牛車換成了超跑！NVMe 的速度幾乎是傳統 SSD 的 10 倍，再加上 ESA 精簡的資料處理路徑，把很多小寫入搜集起來一次大寫入，資料傳輸和存取效率更上一層樓。</li>
+<li>分散式metadata管理<br>OSA 的metadata是集中管理的，這就像塞車一樣，所有車子都擠在一條路上。但 ESA 就聰明多了，採用分散式的metadata管理，每個節點都有自己的快速通道，不用再在metadata的瓶頸上擠破頭，讓系統更流暢。</li>
+<li>資料壓縮與去重的最佳化<br>在 ESA 裡頭，資料壓縮和去重是內建的功能，就像有個會打掃的管家，不但幫你省空間，還能加速資料的寫入和讀取。這讓整個系統的性能不僅提升，也降低了存儲成本，真是一舉兩得！</li>
+</ol>
+<h3 id="配置更簡單，管理更輕鬆"><a href="#配置更簡單，管理更輕鬆" class="headerlink" title="配置更簡單，管理更輕鬆"></a>配置更簡單，管理更輕鬆</h3><p>在配置方面，OSA 需要花時間在磁碟群組和 RAID 配置上，而 ESA 的配置過程變得簡單多了。全閃存的 ESA 不再區分快取層與容量層，硬體一旦配置完成，系統即可立即運行。運維上，ESA 提供了更直覺化的管理介面，讓系統監控與優化變得輕而易舉。這對於企業的 IT 團隊來說，減少了不少配置和維護的煩惱。</p>
+<h3 id="總結-ESA-vs-OSA："><a href="#總結-ESA-vs-OSA：" class="headerlink" title="總結 ESA vs. OSA："></a>總結 ESA vs. OSA：</h3><ol>
+<li><strong>架構革新與效能提升</strong>：ESA 採用全閃存和 NVMe 設計，透過分散式metadata管理和高效資料壓縮技術，顯著提升資料讀寫效能和系統穩定性，相較於 OSA 傳統硬碟混合架構更具優勢。</li>
+<li><strong>LFS 與 B-tree 的應用</strong>：LFS 順序寫入提高了寫入速度並延長儲存壽命；B-tree 則優化了資料查找和管理，讓資料處理更加迅速。</li>
+<li><strong>簡化配置與靈活管理</strong>：ESA 精簡了系統配置流程，提供更直觀的管理界面，讓系統擴展和維護更輕鬆，適合現代企業儲存需求。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../../tags/vmware/" rel="tag"># vmware</a>
+          
+            <a href="../../../../../tags/vsan/" rel="tag"># vsan</a>
+          
+            <a href="../../../../../tags/vsan-esa/" rel="tag"># vsan esa</a>
+          
+            <a href="../../../../../tags/vsan-osa/" rel="tag"># vsan osa</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../../../06/01/golang/go_dependency_injection/" rel="next" title="[Go] 用Fx進行依賴注入(Dependency Injection)">
+                <i class="fa fa-chevron-left"></i> [Go] 用Fx進行依賴注入(Dependency Injection)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="../../../../../images/avatar.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../../archives">
+              
+                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../../categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../../tags/index.html">
+                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/kaichiachen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:kaichiasjtu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/chenkaijia" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kaichia Chen</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../../js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../../js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="../../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../../js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://kaichiablog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://kaichiachen.github.io/2024/09/07/vsan/vsan_esa_osa/';
+          this.page.identifier = '2024/09/07/vsan/vsan_esa_osa/';
+          this.page.title = '[vSAN] VMware vSAN OSA & ESA 技術簡介';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kaichiablog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
